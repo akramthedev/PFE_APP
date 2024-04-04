@@ -1,4 +1,4 @@
-.Auth{
+.OTPVERIFY{
     height: 100vh;
     width: 100%;
     overflow: hidden;
@@ -8,7 +8,7 @@
     justify-content: center;
 }
 
-.Auth form{
+.OTPVERIFY form{
     display: flex;
     flex-direction: column;
     align-items: center;

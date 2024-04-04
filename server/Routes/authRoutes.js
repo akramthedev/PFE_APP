@@ -2,7 +2,9 @@ const express = require('express');
 const users = require('../Models/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const nodemailer = require("nodemailer");
+const sendEmail = require('../Helpers/EmailSender');
+const nodemailer = require('nodemailer');
+const generateRandomNumber = require("../Helpers/generateOTP");
 
 const router = express.Router();
  
@@ -20,25 +22,18 @@ router.post('/register', async (req, res)=>{
         else{
             const saltRound = await bcrypt.genSalt(4);
             const hashedPassword = await bcrypt.hash(password, saltRound);
+            const randomNumber = generateRandomNumber();
             const isCreated = await users.create({
                 fullName,
                 email, 
-                password : hashedPassword
+                password : hashedPassword, 
+                otp : randomNumber.toString(), 
+                isVerified : false
             });
             if(isCreated){
-                const token = jwt.sign(
-                    {
-                        _id : isCreated._id, 
-                    },
-                    process.env.TOKEN_PASS,
-                    {
-                        expiresIn : "4d"
-                    }
-                );
-                res.status(200).send({
-                    token : token, 
-                    _id   : isCreated._id,                      
-                });
+                await sendEmail(email, randomNumber);
+                res.status(200).send(isCreated._id);
+
             }
             else{
                 res.status(202).send('Oops, something went wrong!');
@@ -62,19 +57,24 @@ router.post('/login', async (req, res)=>{
         else{
             const isMatch = await bcrypt.compare(password, isFound.password);
             if(isMatch){
-                const token = jwt.sign(
-                    {
-                        _id : isFound._id, 
-                    },
-                    process.env.TOKEN_PASS,
-                    {
-                        expiresIn : "4d"
-                    }
-                );
-                res.status(200).send({
-                    token : token, 
-                    _id   : isFound._id,                      
-                });
+                if(isFound.isVerified){
+                    const token = jwt.sign(
+                        {
+                            _id : isFound._id, 
+                        },
+                        process.env.TOKEN_PASS,
+                        {
+                            expiresIn : "4d"
+                        }
+                    );
+                    res.status(200).send({
+                        token : token, 
+                        _id   : isFound._id,                      
+                    });
+                }
+                else{
+                    res.status(266).send(isFound._id);
+                }
             }
             else{
                 res.status(202).send('Error');
@@ -83,6 +83,52 @@ router.post('/login', async (req, res)=>{
     } 
     catch (error) {
         res.status(500).send(error.message);    
+    }
+});
+
+
+router.get('/resendotp/:idUser', async(req, res)=>{
+    try {
+        const randomNumber = generateRandomNumber();
+        const {idUser} = req.params;
+        const isUpdated = await users.findByIdAndUpdate(idUser,{
+            otp : randomNumber.toString(), 
+        });
+        if(isUpdated){
+            sendEmail(isUpdated.email, randomNumber.toString());
+            res.status(200).send(isUpdated);
+        }
+        else{
+            res.status(202).send('Oops, something went wrong!');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+})
+
+ 
+router.post('/verifyOtp', async (req, res) => {
+    try {
+        const { otp, idUser } = req.body;
+        if (!idUser) return res.status(404).send('User Not Found');
+
+        const user = await users.findById(idUser);
+        if (!user) return res.status(404).send('User Not Found');
+        if (otp !== user.otp) return res.status(400).send('Incorrect OTP');
+
+        const updatedUser = await users.findOneAndUpdate(
+            { email: user.email },
+            { otp: "666", isVerified: true },
+            { new: true }
+        );
+
+        if (!updatedUser) return res.status(500).send('Oops, something went wrong while updating!');
+
+        const token = jwt.sign({ _id: updatedUser._id }, process.env.TOKEN_PASS, { expiresIn: "4d" });
+        res.status(200).send(token);
+    } catch (error) {
+        res.status(500).send(error.message);
     }
 });
 

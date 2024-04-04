@@ -15,6 +15,10 @@ const schemaUsers = new mongoose.Schema({
         type : String, 
         required : true
     },
+    otp : {
+        type : String, 
+        required : false
+    },
     isVerified : {
         type : Boolean, 
         default : false

@@ -12,7 +12,7 @@ app.set('trust proxy', true);
 app.use(express.json());
 app.use(cors());
 app.listen(process.env.PORT, ()=>{
-    console.log(clc.yellow.bold("Connected to Server"));
+    console.log(clc.magenta.bold("Connected to Server"));
     Connect();
 });
 
