@@ -55,30 +55,37 @@ router.post('/login', async (req, res)=>{
             res.status(204).send('User not existing...');
         }
         else{
-            const isMatch = await bcrypt.compare(password, isFound.password);
-            if(isMatch){
-                if(isFound.isVerified){
-                    const token = jwt.sign(
-                        {
-                            _id : isFound._id, 
-                        },
-                        process.env.TOKEN_PASS,
-                        {
-                            expiresIn : "4d"
-                        }
-                    );
-                    res.status(200).send({
-                        token : token, 
-                        _id   : isFound._id,                      
-                    });
-                }
-                else{
-                    res.status(266).send(isFound._id);
-                }
+            if(isFound.status === "suspended"){
+                res.status(237).send("Blocked");   
             }
             else{
-                res.status(202).send('Error');
-            }
+
+                const isMatch = await bcrypt.compare(password, isFound.password);
+
+                if(isMatch){
+                    if(isFound.isVerified){
+                        const token = jwt.sign(
+                            {
+                                _id : isFound._id, 
+                            },
+                            process.env.TOKEN_PASS,
+                            {
+                                expiresIn : "4d"
+                            }
+                        );
+                        res.status(200).send({
+                            token : token, 
+                            _id   : isFound._id,                      
+                        });
+                    }
+                    else{
+                        res.status(266).send(isFound._id);
+                    }
+                }
+                else{
+                    res.status(202).send('Error');
+                }
+            }            
         }
     } 
     catch (error) {

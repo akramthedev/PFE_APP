@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import './OTPverify.css';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import LoaderSpin from '../../Assets/spinwhite.svg';
+import '../../Components/index.css';
 
 
 
@@ -11,13 +13,19 @@ const OTPverify = () => {
 
     const [otp, setOtp] = useState(null);
     const [isError, setisError] = useState(false);
+    const [isLoading, setisLoading] = useState(false);
+    const [isSent, setisSent] = useState(false);
+    const [errorSending, seterrorSending] = useState(false);
 
-    const handleSubmitOtp = async(EVENT)=>{
-        EVENT.preventDefault();
+
+
+    const handleSubmitOtp = async(event)=>{
+        event.preventDefault();
         setisError(false);
+        setisLoading(true);
         try{
             const idUser = localStorage.getItem('idUser');
-            if(otp){
+            if(otp && idUser){
                 const resp = await axios.post(`http://localhost:3001/auth/verifyOtp`, {
                     otp : otp, 
                     idUser : idUser
@@ -35,58 +43,82 @@ const OTPverify = () => {
             console.log(e.message);
             setisError(true);
         }
-    }
-    const reSendOtp = async(EVENT)=>{
-        EVENT.preventDefault();
-        setisError(false);
-        try{
-            const idUser = localStorage.getItem('idUser');
-
-            const resp = await axios.get(`http://localhost:3001/auth/resendotp/${idUser}`);
-            if(resp.status === 200){
-                setOtp("");
-                alert('Resent successfully ...');
-            }
-            else{
-                setOtp("");
-                alert('Not Sent ...');
-            }
+        finally{
+            setisLoading(false);
         }
-        catch(e){
-            setOtp("");
-            console.log(e.message);
-            alert('500 Not Sent ...');
+    }
+    const reSendOtp = async()=>{
+        const idUser = localStorage.getItem('idUser');        
+        setisError(false);
+        setisSent(true);
+        if(idUser && !isSent){
+            try{
+
+                const resp = await axios.get(`http://localhost:3001/auth/resendotp/${idUser}`);
+                if(resp.status === 200){
+                    setOtp("");
+                    seterrorSending(false);
+                }
+                else{
+                    setOtp("");
+                    seterrorSending(true);
+                }
+            }
+            catch(e){
+                setOtp("");
+                console.log(e.message);
+                seterrorSending(true);
+            }
         }
     }
 
 
   return (
     <div className='OTPVERIFY' >
-       <form  onSubmit={handleSubmitOtp} >
-        <h1>Please Verify Your Account</h1>
-            <br />
-            <p>
-                We've sent you an otp to your email 
-            </p>
-            <input type="text" value={otp} onChange={(e)=>{setOtp(e.target.value);}} />
-            <br />
+       <form className='formLR'  onSubmit={handleSubmitOtp} >
+            <div className="rowOne">
+                <h1>Please Verify Your Account</h1>
+                <p>
+                An OTP has been sent. If you didn't find it, please check your spam folder.
+                </p>
+            </div>
+             
+            
+            <input type="text" placeholder='Enter 7-digit OTP' value={otp} onChange={(e)=>{setisError(false);setisSent(false);setOtp(e.target.value);}} />
+             
             <button
                 type='submit'
+                className={isLoading ? "btnSubmitAuth noPointerEvent" : "btnSubmitAuth"}
+                disabled={isLoading}
             >
-                Verify OTP
+                Verify
+                {
+                    isLoading && <img src={LoaderSpin} alt='Loading...'/>
+                }
             </button>
-            <br />
-            <button
-                type='button'
-                onClick={reSendOtp}
-            >
-                You have not received an OTP ? click here
-            </button>
+            
+            <span className='zodq' onClick={reSendOtp}>
+                Didn't receive an OTP?&nbsp;&nbsp;<span className="qdhio">Click here</span>
+            </span>
+       
+            {
+                <div className={isError ? "Status showStatus" : "Status"}>
+                    Invalid OTP
+                </div>
+            }
+            {
+                <div className={ isSent ? "Status Status1 showStatus" : "Status Status1"}>
+                {
+                    errorSending ? <span>OTP sent successfully! Check your mail.</span>
+                  :
+                  <span className='ssqdufoc'>
+                    Oops, something went wrong!
+                  </span>
+                }
+                </div>
+            }
        </form>
-       <br /><br />
-       {
-        isError && "Incorrect OTP"
-       }
+       
     </div>
   )
 }

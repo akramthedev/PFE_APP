@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import "./Auth.css";
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import LoaderSpin from '../../Assets/spinwhite.svg';
+import Status from '../../Components/Status';
 
 
 const Auth = () => {
@@ -11,7 +13,7 @@ const Auth = () => {
   const [fullName, setfullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [alreadyAccount, setalreadyAccount] = useState(false);
+  const [alreadyAccount, setalreadyAccount] = useState(true);
   const [isLoading, setisLoading] = useState(false);
   const [error, seterror] = useState({
     status : null, 
@@ -41,7 +43,7 @@ const Auth = () => {
           if(resp.status === 266){
             localStorage.removeItem("idUser");
             localStorage.setItem('idUser', resp.data);
-            navigate('/verify-email');
+            navigate('/auth/verify-email');
           }
           else{
             seterror({
@@ -59,7 +61,7 @@ const Auth = () => {
         });
         if(resp.status === 200){
           localStorage.setItem('idUser', resp.data);
-          navigate("/verify-email");
+          navigate("/auth/verify-email");
         }
         else {
           seterror({
@@ -87,63 +89,98 @@ const Auth = () => {
     <div className='Auth'>
       <form
         onSubmit={handleSubmit}
+        className={alreadyAccount ? "formLR" : "formLR extendsForm"}
       >
-        {
-          !alreadyAccount && 
-          <input 
+
+        {/*<div className="rowZero" />*/}
+        <div className="rowOne">
+          <h1>
+          {
+            !alreadyAccount ? "Create an account" : "Sign in" 
+          }
+          </h1>
+          
+        </div>
+         
+        <input 
             type="text" 
-            placeholder='Full Name' 
+            placeholder='Your Full Name' 
             value={fullName} 
             onChange={(event)=>{
               setfullName(event.target.value);
-            }} 
-          />
-        }
+              seterror({
+                status : null, 
+                isEnabled : false, 
+              });
+            }}
+            className={!alreadyAccount ? "showIt inputFullName" : "inputFullName"}
+        />
+        
         <input 
           type="text" 
-          placeholder='Email Address' 
+          placeholder='Your Email Address' 
           value={email} 
           onChange={(event)=>{
             setEmail(event.target.value);
+            seterror({
+              status : null, 
+              isEnabled : false, 
+            })
           }} 
         />
         <input 
           type="password" 
-          placeholder='Password' 
+          placeholder='Your Password' 
           value={password} 
           onChange={(event)=>{
             setPassword(event.target.value);
+            seterror({
+              status : null, 
+              isEnabled : false, 
+            })
           }} 
         />
         <button
           type='submit'
-          className='btnSubmitAuth'
+          className={isLoading ? "btnSubmitAuth noPointerEvent" : "btnSubmitAuth"}
           disabled={isLoading}
         >
           {
-            isLoading ? "Processing...":
+            alreadyAccount ? 
             <>
-            {
-              alreadyAccount ? "Login" : "Register"
-            }
+                Login
+                {
+                  isLoading && <img  src={LoaderSpin}  alt='loading...' />
+                }
+            </> :
+            <>
+                Register
+                {
+                  isLoading && <img  src={LoaderSpin}  alt='loading...' />
+                }
             </>
           }
+
+
         </button>
-        <p>
+        <p className='zjfd'>
           {
             !alreadyAccount ? 
-            <span onClick={()=>{setalreadyAccount(!alreadyAccount);setEmail("");setPassword("");setfullName("");}} className="linkSpan">Already an account? Log in</span> : 
-            <span onClick={()=>{setalreadyAccount(!alreadyAccount);setEmail("");setPassword("");}} className="linkSpan">No Account? Create one </span>
+            <>Already an account?&nbsp;&nbsp;<span onClick={()=>{setalreadyAccount(!alreadyAccount);seterror({status : null, isEnabled : false});setEmail("");setPassword("");setfullName("");}} className="linkSpan">Log in</span></> : 
+            <>No Account?&nbsp;&nbsp;<span onClick={()=>{setalreadyAccount(!alreadyAccount);seterror({status : null, isEnabled : false});setEmail("");setPassword("");}} className="linkSpan">Create one </span></>
           }
         </p>
-        <p>
-        {
-          error.isEnabled &&
-          <>{error.status}&nbsp;|&nbsp;{error.msg}</>
-        }
-        </p>
+     
+        <Status
+          alreadyAccount={alreadyAccount}
+          status={error.status}
+          isEnabled={error.isEnabled}
+        />
+
       </form>
-      
+
+     
+
     </div>
   )
 }

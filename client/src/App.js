@@ -3,6 +3,9 @@ import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import Auth from './Pages/Auth/Auth';
 import OTPverify from './Pages/OTPverify/OTPverify';
+import Contact from './Pages/Contact/Contact';
+ 
+
 
 function App() {
 
@@ -24,9 +27,21 @@ function App() {
             } 
           />
           <Route  
-            path='/verify-email' 
+            path='/auth/verify-email' 
             element={
               !token ? <OTPverify /> : <Navigate to="/" />
+            } 
+          />
+          <Route  
+            path='/contact' 
+            element={
+              <Contact/>
+            } 
+          />
+          <Route  
+            path='*' 
+            element={
+              <Navigate to="/" />
             } 
           />
         </Routes>

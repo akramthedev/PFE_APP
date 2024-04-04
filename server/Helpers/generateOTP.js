@@ -1,6 +1,6 @@
 
 function generateRandomNumber() {
-    return Math.floor(Math.random() * 90000) + 10000;
+    return Math.floor(Math.random() * 90000) + 100000;
 }
 
 

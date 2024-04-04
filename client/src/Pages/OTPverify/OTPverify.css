@@ -14,3 +14,205 @@
     align-items: center;
     justify-content: center;
 }
+
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+.OTPVERIFY{
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.OTPVERIFY .formLR{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 390px;
+    overflow: hidden;
+    transition: 0.33s all ease-in-out;
+    width: 510px;
+    background-color: white;
+    justify-content: center;
+    border-radius: 0.77rem;
+}
+
+.formLR .rowOne{
+    min-height: 66px;
+    display: flex;
+    width: 360px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.rowOne h1{
+    text-align: center;
+    font-family: "Merriweather", serif; 
+    font-weight: 800;
+    margin-bottom: .7rem;
+    font-size: 1.5rem;
+    transition: .3s all ease-in-out;
+}
+.rowOne p{
+    line-height: 1.2;
+    font-size: 14px;
+    color: gray;
+    font-weight: 400;
+    text-align: center;
+    max-width: 400px;
+    margin-bottom: 1rem;
+}
+
+.formLR input{
+    height: 38px;
+    width: 290px;
+    border: 1px solid #b2b2b2;
+    border-radius: 0.2rem;
+    outline: none;
+    margin-bottom: 0.5rem;
+    padding: 0 1rem;
+    text-align: left;
+    font-size: 15px;
+    padding-left: 1rem;
+
+}
+.formLR input:focus{
+    border: 1px solid #8C52FF;
+    border: 1px solid black;
+}
+
+.formLR{
+    position: relative;
+}
+.rowZero{
+    height: 27px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    
+    background-image: url("../../Assets/mac.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%; 
+}
+.formLR .btnSubmitOTPVERIFY{
+    height: 38px;
+    width: 290px;
+    border: 1px solid #8C52FF;
+    border-radius: 0.2rem;
+    outline: none;
+    margin-top: .777rem;
+    text-align: center;
+    position: relative;
+    font-weight: 500;
+    font-size: 15px;
+    background-color: #8C52FF;
+    color: white;
+    cursor: pointer;
+    transition: .2s all ease-in-out;
+    margin-bottom: 1.67rem;
+}
+.formLR .btnSubmitOTPVERIFY:hover{
+    background-color: #7d3efc;
+    color: white;
+}
+.formLR .zjfd{
+    font-size: 15px;
+    font-weight: 500;
+    cursor: default;
+}
+.formLR .zjfd .linkSpan{
+    color: #8400ff;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.formLR .zjfd .linkSpan:hover{
+    color: #7300df;
+}
+
+.OTPVERIFY .extendsForm {
+    height: 466px;
+}
+.formLR .inputFullName{
+    height: 0px;
+    visibility: hidden;
+    opacity: 1;
+    width: 290px;
+    border: 1px solid #b2b2b2;
+    border-radius: 0.2rem;
+    outline: none;
+    margin-bottom: 0.5rem;
+    padding: 0 1rem;
+    text-align: left;
+    font-size: 15px;
+    padding-left: 1rem;
+    transition: .35s all ease-in-out;
+
+}
+.formLR .inputFullName:focus{
+    border: 1px solid #8C52FF;
+    border: 1px solid black;
+}
+.formLR .showIt{
+    visibility: visible;
+    opacity: 1;
+    height: 38px;    
+}
+.formLR .noPointerEvent{
+    cursor: not-allowed;
+}
+
+.formLR .noPointerEvent img{
+    position: absolute;
+    right: 10px;
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+
+.formLR .zodq{
+    font-size: 15px;
+    font-weight: 500;
+    cursor: default;
+    z-index: 999;
+    height: 20px;
+    margin-bottom: 0.3rem;
+} 
+.formLR .qdhio{
+    color: #8400ff;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.formLR .qdhio:hover{
+    color: #6d00d2;
+}
+.formLR .btnSubmitAuth{
+    position: relative;
+}
+
+.formLR .noPointerEvent{
+    cursor: not-allowed;
+}
+
+.formLR .btnSubmitAuth img{
+    position: absolute;
+    right: 6px;
+    height: 37px;
+    width: 37px;
+    bottom:0px;
+    object-fit: cover;
+    border-radius: 50%;
+}

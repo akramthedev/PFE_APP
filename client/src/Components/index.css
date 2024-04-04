@@ -1,0 +1,41 @@
+.Status{
+    height: 0;
+    margin-top: 0rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: red;
+    transition: 0.44s all ease-in-out;
+    opacity: 0;
+    width: 350px;
+    display: flex;
+    text-align: center;
+}
+.Status span { text-align: center;margin-top: 2.5rem;line-height: 1.2;}
+.Status1{
+    height: 0;
+    margin-top: 0rem;
+    color: rgb(18, 164, 18);
+}
+.showStatus{
+    height: 30px;
+    margin-top: 0.7rem;
+    visibility: visible;
+    opacity: 1;
+}
+.Status .ssqdufoc{
+    color: red;
+}
+
+.contactUs{
+    color: rgb(209, 2, 2);
+    font-weight: 500;
+     cursor: pointer;
+}
+.contactUs:hover{
+    text-decoration: underline;
+
+}
+.contactUs:hover{
+    color: rgb(154, 0, 0);
+}
