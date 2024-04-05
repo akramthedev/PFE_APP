@@ -39,3 +39,79 @@
 .contactUs:hover{
     color: rgb(154, 0, 0);
 }
+
+
+.createPost{
+    width: 90%;
+    height: 140px;
+    border-radius: 0.4rem;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: #242526;
+    cursor: pointer;
+}
+.cp1{
+    height:80px;
+    width: 100%;
+    padding: 0 3rem;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    border-bottom: 1px solid #494a4b;
+}
+.cp2{
+    height: calc(100% - 80px);
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+}
+.cp2 button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: #b0b3b8;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+}
+.cp2 button img{
+    margin-right: 0.5rem;
+    height: 30px;
+    cursor: pointer;
+    width: 30px;
+    object-fit: cover;
+    margin-bottom: 0.3rem;
+}
+.cp1{
+
+}
+.cp1 img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+
+}
+.cp1 input{
+    height: 40px;
+    width: 100%;
+    padding: 0 1rem;
+    cursor: pointer;
+    outline: none;
+    font-size: 14px;
+    border: none;
+    border-radius: 5rem;
+    background-color: #3a3b3c;
+}
+.cp1 input::placeholder{
+    color: white;
+}

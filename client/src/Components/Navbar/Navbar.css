@@ -1,18 +1,23 @@
 .Navbar{
     width: 100%;
-    padding: 0 11rem;
+    padding: 0rem;
     display: flex;
     align-items: center;
-    height: 70px;
+    height: 80px;
+    background-color: #18191a;
     justify-content: space-between;
+    position: sticky;
+    top: 0px;
+    z-index: 9999;
 }
 .part1{
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: auto;
+    width: 30%;
 }
+
 .part1 img{
     cursor: pointer;
     height: 30px;
@@ -20,16 +25,24 @@
     margin-right: 2.77rem;
     object-fit: cover;
 }
-.part2{
-    height: 100%;
-    min-width: 455px;
+.part2121{
+    width: 60%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    height: 100%;
+}
+.part2{
+    height: 100%;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
 }
 .part2p1{
     height: 100%;
-    width: 330px;
+    width: 190px;
+    padding-right: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: right;
@@ -37,10 +50,11 @@
 }
 .part2p2{
     height: 100%;
-    width: 90px;
+    width: 70px;
+    margin-left: 3rem;
     display: flex;
     align-items: center;
-    justify-content: right;
+    justify-content: center;
 }
 .part2p2 img{
     height:41px;
@@ -48,50 +62,53 @@
     object-fit: cover;
     cursor: pointer;
     border-radius: 50%;
+    margin-right: 0.666rem;
     border: 1px solid rgb(0, 0, 0);
     user-select: none;
 }
 
 .linkNav{
-    margin-left: 1.5rem;
-    height: 40px;
+    margin-left: 1rem;
+    height: 38px;
+    width: 38px;
     background-color: transparent;
     outline: none;
     border: none;
-    width: 30px;
-    font-size: 1.05rem;
+    color: #e4e6eb;
+    font-size: 1.1rem;
     position: relative;
     cursor: pointer;
+    background-color: #3a3b3c;
+    border-radius: 50%;
     transition: 0.2s all ease-in-out;
 }
 
 .linkNav:hover{
-    color: #8b8b8b;
+    background-color: #4e5052;
 }
 
 .bulle{
     position: absolute;
-    height: 20px;
-    width: 20px;
+    height: 21px;
+    width: 21px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
     display: flex;
     align-items: center;
     justify-content: center;
-    top: -1px;
-    right: -6px;
-    border: 1px solid white;
-    background-color: #ff0000;
+    top: -2px;
+    right: -8px;
+    border: 2px solid #282a2b;
+    background-color: red;
     color: white;
     border-radius: 50%;
 }
 
 .searchUser{
-    width: 300px;
-    border-radius: 3rem;
-    height: 34px;
+    width: 90%;
+    border-radius: 5rem;
+    height: 39px;
     position: relative;
-    border: 1px solid #828282;
     overflow: hidden;
 }
 
@@ -100,19 +117,29 @@
     outline: none;
     border: none;
     height: 100%;
+    color: #babdc1;
     padding: 0 1rem;
+    background-color: #353637;
     padding-right: 3.3rem;
     font-size: 15px;
+    font-weight: 500;
+    transition: 0.2s all ease-in-out;
+}
+.searchUser input::placeholder{
+    color: #b0b3b8;
+}
+.searchUser input:focus{
+    background-color: #3a3b3d;
 }
 .searchUser .search{
     position: absolute;
     z-index: 9;
     right: 0px;
     top: 0;
-    height: 34px;
-    width: 34px;
-    background-color: black;
-    color: white;
+    height: 39px;
+    width: 39px;
+    background-color: #242526;
+    color : #babdc1;
     outline: none;
     border: none;
     cursor: pointer;
@@ -123,12 +150,12 @@
 .popUp{
     position: absolute;
     z-index: 90;
-    background-color: white;
+    background-color: #3a3b3c;
     visibility: hidden;
     opacity: 0;
-    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;    
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transition: 0.4s all ease-in-out;
-    border: 1px solid gainsboro;
+    border: 1px solid #3a3b3c;
     bottom: -288px;
     right: 0px;
     height: 300px;
@@ -154,10 +181,10 @@
 }
 .caseOne{
     height: 66px;
-    width: 90px;
+    width: 83px;
     display: flex;
     align-items: center;
-    color: #4c4c4c;
+    color: #e4e6eb;
     justify-content: center;
 }
 .caseOne img{
@@ -169,9 +196,9 @@
 }
 .caseTwo{
     height: 66px;
-    font-weight: 600;
-    color: #4c4c4c;
-    width: calc(100% - 90px);
+    font-weight: 500;
+    color: #e4e6eb;
+    width: calc(100% - 70px);
     display: flex;
     align-items: center;
     justify-content: left;
@@ -179,18 +206,21 @@
 }
 .rowjh:hover{
     cursor: pointer;
-    background-color: #f7f7f7;
+    background-color: #494a4b;
 }
 .caseOne2{
     width: 77px;
 }
 .caseTwo2{
+    font-size: 15px;
     width: calc(100% - 77px);
 }
 .rowjh:hover .caseTwo{
-    text-decoration: underline;
 }
 .caseOne i{
-    font-size: 1.18rem;
-    color: #4c4c4c;
+    font-size: 1.1rem;
+    color: #e4e6eb;
+}
+.part2p2 .fa-angle-up, .part2p2 .fa-angle-down{
+    color: #babdc1;
 }

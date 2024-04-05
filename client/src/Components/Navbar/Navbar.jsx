@@ -18,7 +18,7 @@ const Navbar = () => {
         <div className="part1">
             <img 
                 title='Xplorium' 
-                src="https://res.cloudinary.com/dqprleeyt/image/upload/v1712276227/and_parkle___2_-removebg-preview_b0dfnq.png" 
+                src='https://res.cloudinary.com/dqprleeyt/image/upload/v1712318887/and_parkle___3_-removebg-preview_lyfila.png'
                 alt=""
                 onClick={()=>{
                     navigate("/");
@@ -26,11 +26,12 @@ const Navbar = () => {
                 }}
             />
             
+        </div>
+        <div className="part2121">
             <form className="searchUser">
                 <button type='submit' className='search' ><i className="fa-solid fa-magnifying-glass"></i></button>
-                <input type="text" placeholder='Xplore for a friend...' />
+                <input type="text" placeholder='Search...' />
             </form>
-            
         </div>
         <div className="part2">
             <div className="part2p1">
@@ -68,13 +69,16 @@ const Navbar = () => {
                 </button>
 
             </div>
-            <div className="part2p2">
+            <div
+                className="part2p2"
+            >
                 <img 
-                    onClick={()=>{setIsProfileClicked(!isProfileClicked);}}                    
-                    src="https://t3.ftcdn.net/jpg/05/59/53/30/360_F_559533081_YXhuGfGC6ebbwr7eubkPr2HKeKTvNEAQ.jpg" 
+                    src="https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png" 
                     alt="Profile" 
+                    onClick={()=>{setIsProfileClicked(!isProfileClicked);}}
                     key={isProfileClicked ? 123 : 321}
                 />
+                {isProfileClicked ? <i  className='fa-solid fa-angle-up'></i> : <i  className='fa-solid fa-angle-down'></i>}
                 <div
                     className={
                         isProfileClicked ? "showPopUp popUp" : "popUp"
@@ -83,7 +87,7 @@ const Navbar = () => {
                 >
                     <div className="rowjh">
                         <div className="caseOne">
-                            <img src="https://t3.ftcdn.net/jpg/05/59/53/30/360_F_559533081_YXhuGfGC6ebbwr7eubkPr2HKeKTvNEAQ.jpg" alt="" />
+                            <img src="https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png" alt="" />
                         </div>
                         <div className="caseTwo">
                             Akram El Basri
@@ -113,7 +117,13 @@ const Navbar = () => {
                             Display & Accessibility 
                         </div>
                     </div>
-                    <div className="rowjh">
+                    <div className="rowjh"
+                        onClick={()=>{
+                            localStorage.removeItem('idUser')
+                            localStorage.removeItem('token')
+                            navigate(0);
+                        }}
+                    >
                         <div className="caseOne caseOne2">
                             <i className="fa-solid fa-right-from-bracket"></i>
                         </div>
