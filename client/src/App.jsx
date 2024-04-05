@@ -1,3 +1,4 @@
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import Home from './Pages/Home/Home';
@@ -17,12 +18,26 @@ import Help from "./Pages/Help/Help";
 import Accessibility from "./Pages/Accessibility/Accessibility";
 import AdminPanel from "./Pages/AdminPanel/AdminPanel";
 import AdserPanel from "./Pages/AdserPanel/AdserPanel";
+import io from 'socket.io-client';
 
 
 
 function App() {
 
-  const token = localStorage.getItem('token');
+  let socket = io.connect("http://localhost:3001/");
+  const token  = localStorage.getItem('token');
+  const idUser = localStorage.getItem('idUser'); 
+
+
+  const enterGlobalRoom = ()=>{
+    if(token && idUser){
+      socket.emit("enterGlobalRoom",idUser);
+    }
+  }
+
+  useEffect(()=>{
+    enterGlobalRoom();
+  }, []);
 
   return (
       <BrowserRouter>
@@ -46,27 +61,27 @@ function App() {
           <Route  
             path='/' 
             element={
-              token ? <Home /> : <Navigate to="/auth" />
+              token ? <Home socket={socket} /> : <Navigate to="/auth" />
             } 
           />
 
           <Route  
             path='/profile/:id' 
             element={
-              token ? <Profile /> : <Navigate to="/auth" />
+              token ? <Profile socket={socket} /> : <Navigate to="/auth" />
             } 
           />
           
           <Route  
             path='/page/:id' 
             element={
-              token ? <Page /> : <Navigate to="/auth" />
+              token ? <Page socket={socket} /> : <Navigate to="/auth" />
             } 
           />
           <Route  
             path='/group/:id' 
             element={
-              token ? <Group /> : <Navigate to="/auth" />
+              token ? <Group socket={socket} /> : <Navigate to="/auth" />
             } 
           />
           
@@ -80,21 +95,21 @@ function App() {
           <Route  
             path='/notifications' 
             element={
-              token ? <Notifications /> : <Navigate to="/auth" />
+              token ? <Notifications socket={socket} /> : <Navigate to="/auth" />
             } 
           />
           
           <Route  
             path='/requests' 
             element={
-              token ? <Requests /> : <Navigate to="/auth" />
+              token ? <Requests socket={socket} /> : <Navigate to="/auth" />
             } 
           />
           
           <Route  
             path='/discussions' 
             element={
-              token ? <Discussions /> : <Navigate to="/auth" />
+              token ? <Discussions socket={socket} /> : <Navigate to="/auth" />
             } 
           />
 
@@ -129,14 +144,14 @@ function App() {
           <Route  
             path='/admin/panel' 
             element={
-              token ? <AdminPanel /> : <Navigate to="/auth" />
+              token ? <AdminPanel socket={socket} /> : <Navigate to="/auth" />
             } 
           />
           
           <Route  
             path='/adser/panel' 
             element={
-              token ? <AdserPanel /> : <Navigate to="/auth" />
+              token ? <AdserPanel socket={socket} /> : <Navigate to="/auth" />
             } 
           />
           

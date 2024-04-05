@@ -1,5 +1,5 @@
 import React from 'react'; // Removed {useState} as it's not being used
-import './index.css';
+import '../index.css';
 import {useNavigate} from 'react-router-dom';
 
 const Status = ({ alreadyAccount, status, isEnabled }) => {

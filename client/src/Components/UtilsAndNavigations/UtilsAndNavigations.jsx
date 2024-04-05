@@ -1,14 +1,21 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './UtilsAndNavigations.css';
 import {useNavigate } from 'react-router-dom';
 
 
 
-const UtilsAndNavigations = () => {
+const UtilsAndNavigations = ({socket}) => {
 
 
   const navigate = useNavigate();
+  const [OnlineNumber, setOnlineNumber] = useState(null);
 
+
+  useEffect(()=>{
+      socket.on('getNumOnlineUsers', (data)=>{
+          setOnlineNumber(data);
+      });
+  }, [socket]);
 
   return (
     <div className='UtilsAndNavigations' >
@@ -41,16 +48,11 @@ const UtilsAndNavigations = () => {
 
       <div className="ruler"/>
 
-      <div className="rowX"
-        onClick={()=>{
-          localStorage.setItem('contacts', "true");
-          navigate("/profile/666");
-        }}
-      >
+      <div className="rowX rowXNoHover">
         <div className="xxx">
-          <i className='fa-solid fa-user-group'></i>
+          <i className='fa-solid fa-signal'></i>
         </div>
-        <span>Contacts</span>
+        <span><div className="connectedBull"></div>Online members&nbsp;&nbsp;:&nbsp;&nbsp;{OnlineNumber && `${OnlineNumber}`}</span>
       </div>
 
       <div className="rowX"
@@ -164,6 +166,51 @@ const UtilsAndNavigations = () => {
             <span>Red Pill MGTOW</span>
           </div>
         </div>
+
+        <br />
+
+        <div className="rowX"
+          onClick={()=>{
+            localStorage.setItem('saved', "true");
+            navigate("/contact");
+          }}  
+        >
+          <div className="xxx">
+            <i className="fa-solid fa-arrows-to-circle"></i>
+          </div>
+          <span>Content policy</span>
+        </div>
+
+        <div className="rowX"
+          onClick={()=>{
+            localStorage.setItem('saved', "true");
+            navigate("/contact");
+          }}  
+        >
+          <div className="xxx">
+            <i className="fa-solid fa-shield-halved"></i>
+          </div>
+          <span>Privacy policy</span>
+        </div>
+
+        <div className="rowX"
+          onClick={()=>{
+            localStorage.setItem('saved', "true");
+            navigate("/contact");
+          }}  
+        >
+          <div className="xxx">
+            <i className='fa-solid fa-book-open'></i>
+          </div>
+          <span>Terms of use</span>
+        </div>
+
+
+        <div className="rowXXX rowX"
+        >
+          Xplorium, Inc. © 2024. All rights reserved.
+        </div>
+
 
     </div>
   )

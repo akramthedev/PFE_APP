@@ -3,7 +3,7 @@ import "./Auth.css";
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import LoaderSpin from '../../Assets/spinwhite.svg';
-import Status from '../../Components/Status';
+import Status from '../../Components/Status/Status';
 
 
 const Auth = () => {

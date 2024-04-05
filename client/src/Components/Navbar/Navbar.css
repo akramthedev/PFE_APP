@@ -22,7 +22,7 @@
     cursor: pointer;
     height: 30px;
     width: auto;
-    margin-right: 2.77rem;
+    margin-right: 0.4rem;
     object-fit: cover;
 }
 .part2121{
@@ -215,8 +215,7 @@
     font-size: 15px;
     width: calc(100% - 77px);
 }
-.rowjh:hover .caseTwo{
-}
+ 
 .caseOne i{
     font-size: 1.1rem;
     color: #e4e6eb;
@@ -224,3 +223,4 @@
 .part2p2 .fa-angle-up, .part2p2 .fa-angle-down{
     color: #babdc1;
 }
+ 

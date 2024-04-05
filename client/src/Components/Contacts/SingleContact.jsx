@@ -3,7 +3,7 @@ import "./Contacts.css";
 import {useNavigate} from 'react-router-dom';
 
 
-const SingleContact = () => {
+const SingleContact = ({socket, contact}) => {
 
   const navigate = useNavigate();
 

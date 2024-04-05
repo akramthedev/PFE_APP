@@ -2,8 +2,9 @@ import React from 'react'
 import './Contacts.css';
 import SingleContact from './SingleContact.jsx';
 
-const Contacts = () => {
+const Contacts = ({socket}) => {
 
+  const contact = null;
   
   return (
     <div className='Contacts'>
@@ -11,11 +12,7 @@ const Contacts = () => {
           Contacts <span className='qduov'>(4)</span>
         </div>
         <div className="AllContact">
-          <SingleContact />
-          <SingleContact />
-          <SingleContact />
-          <SingleContact />
-          <SingleContact />
+          <SingleContact socket={socket} contact={contact} />
         </div>
     </div>
   )

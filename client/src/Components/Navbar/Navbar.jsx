@@ -4,14 +4,29 @@ import {useNavigate} from 'react-router-dom';
 import useOutsideAlerter  from '../../Helpers/HidePopUp';
 
 
-const Navbar = () => {
+const Navbar = ({socket}) => {
 
     const navigate = useNavigate();
-    const [isProfileClicked, setIsProfileClicked] = useState(false);
     const popupRef = useRef(null);  
+    const token = localStorage.getItem("token");  
+    const idUser = localStorage.getItem("idUser");  
+    const [isProfileClicked, setIsProfileClicked] = useState(false);
+   
+
 
     useOutsideAlerter(popupRef, setIsProfileClicked);
 
+
+    const handleLogout = ()=>{
+        socket.emit("logoutAndQuitGR");
+        setTimeout(()=>{
+            localStorage.removeItem('idUser');
+            localStorage.removeItem('token');
+            navigate(0);
+        },100);
+    }
+
+    
 
   return (
     <div className='Navbar' >
@@ -25,7 +40,6 @@ const Navbar = () => {
                     navigate(0);
                 }}
             />
-            
         </div>
         <div className="part2121">
             <form className="searchUser">
@@ -135,16 +149,14 @@ const Navbar = () => {
                     </div>
                     <div className="rowjh"
                         onClick={()=>{
-                            localStorage.removeItem('idUser')
-                            localStorage.removeItem('token')
-                            navigate(0);
+                            handleLogout();
                         }}
                     >
                         <div className="caseOne caseOne2">
                             <i className="fa-solid fa-right-from-bracket"></i>
                         </div>
                         <div className="caseTwo caseTwo2">
-                            Sing out
+                            Sign out
                         </div>
                     </div>
                 </div>
