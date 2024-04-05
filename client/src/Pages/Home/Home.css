@@ -1,0 +1,10 @@
+.Home{
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+}
+.logo{
+    object-fit: cover;
+    height: 32px;
+    width: auto;
+}

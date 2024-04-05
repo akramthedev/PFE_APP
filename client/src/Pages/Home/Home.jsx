@@ -1,11 +1,12 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './Home.css';
+import Navbar from '../../Components/Navbar/Navbar';
 
 
 const Home = () => {
   return (
     <div className='Home'>
-        Home Page
+      <Navbar />
     </div>
   )
 }
