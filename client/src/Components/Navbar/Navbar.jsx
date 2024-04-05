@@ -4,14 +4,13 @@ import {useNavigate} from 'react-router-dom';
 import useOutsideAlerter  from '../../Helpers/HidePopUp';
 
 
-const Navbar = ({socket}) => {
+const Navbar = ({socket, dataUserCurrent, isFetchingUser}) => {
 
     const navigate = useNavigate();
     const popupRef = useRef(null);  
     const token = localStorage.getItem("token");  
     const idUser = localStorage.getItem("idUser");  
     const [isProfileClicked, setIsProfileClicked] = useState(false);
-   
 
 
     useOutsideAlerter(popupRef, setIsProfileClicked);
@@ -86,12 +85,15 @@ const Navbar = ({socket}) => {
             <div
                 className="part2p2"
             >
-                <img 
-                    src="https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png" 
-                    alt="Profile" 
-                    onClick={()=>{setIsProfileClicked(!isProfileClicked);}}
-                    key={isProfileClicked ? 123 : 321}
-                />
+                {
+                    (dataUserCurrent && !isFetchingUser) &&
+                    <img 
+                        src={dataUserCurrent.profilePic}
+                        alt="Profile" 
+                        onClick={()=>{setIsProfileClicked(!isProfileClicked);}}
+                        key={isProfileClicked ? 123 : 321}
+                    /> 
+                }
                 {isProfileClicked ? <i  className='fa-solid fa-angle-up'></i> : <i  className='fa-solid fa-angle-down'></i>}
                 <div
                     className={
@@ -101,14 +103,22 @@ const Navbar = ({socket}) => {
                 >
                     <div className="rowjh"
                         onClick={()=>{
-                            navigate("/profile/666");
+                            if(dataUserCurrent){
+                                navigate(`/profile/${dataUserCurrent._id}`);
+                            }
                         }}
                     >
                         <div className="caseOne">
-                            <img src="https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png" alt="" />
+                        {
+                            (dataUserCurrent && !isFetchingUser) &&
+                            <img src={dataUserCurrent.profilePic} alt="" />
+                        }
                         </div>
                         <div className="caseTwo">
-                            Akram El Basri
+                        {
+                            (dataUserCurrent && !isFetchingUser) &&
+                            dataUserCurrent.fullName    
+                        }
                         </div>
                     </div>
                     <div className="rowjh"

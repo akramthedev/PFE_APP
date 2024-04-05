@@ -4,9 +4,10 @@ const cors          =  require('cors');
 const clc           =  require("cli-color");
 const Connect       =  require('./Helpers/Database');
 const authRoutes    =  require('./Routes/authRoutes');
-const http            =   require('http');
-const { Server }      =   require('socket.io');
-
+const userRoutes    =  require('./Routes/userRoutes');
+const http          =   require('http');
+const { Server }    =   require('socket.io');
+ 
 
 
 //    CONFIGURATIONS
@@ -31,6 +32,7 @@ const io = new Server(
 
 //    API EVENTS
 app.use('/auth', authRoutes);
+app.use('/user', userRoutes);
 
 
 //   WEBSOCKETS EVENTS
@@ -69,6 +71,16 @@ io.on('connect', (socket)=>{
         const idUser = getUserBySocketID(socket.id);
         removeUser(idUser);
         clearInterval(interval);
+    });
+
+    socket.on('CheckingOfConnectionStatus', (idUser)=>{
+        const user = usersOnline.find(user => user.idUser === idUser);
+        if(user){
+            io.to(socket.id).emit('ConnectionStatus', { idUser : idUser, status: 'online' });
+        }
+        else{
+            io.to(socket.id).emit('ConnectionStatus', { idUser : idUser, status: 'notOnline' });
+        }
     });
 
     function sendNumOnline(){

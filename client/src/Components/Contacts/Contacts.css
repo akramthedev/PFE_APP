@@ -75,3 +75,12 @@
     color: #979a9e;
     margin-left: 0.4rem;
 }
+.qdjic{
+    color: #979a9e;
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 14px;
+}
+.bulleConnectionStatusRED{
+    background-color: red;
+}

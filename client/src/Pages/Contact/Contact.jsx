@@ -6,7 +6,7 @@ import "./Contact.css";
 const Contact = () => {
   return (
     <div className='Contact'>
-        Contact Page
+      Contact Page
     </div>
   )
 }

@@ -4,7 +4,7 @@ import {useNavigate } from 'react-router-dom';
 
 
 
-const UtilsAndNavigations = ({socket}) => {
+const UtilsAndNavigations = ({socket, isFetchingUser, dataUserCurrent}) => {
 
 
   const navigate = useNavigate();
@@ -34,16 +34,26 @@ const UtilsAndNavigations = ({socket}) => {
 
       <div className="rowX"
         onClick={()=>{
-          navigate("/profile/666");
+          if(dataUserCurrent && !isFetchingUser){
+            navigate(`/profile/${dataUserCurrent._id}`);
+          }
         }}
       >
         <div className="xxx xxxxxx">
+        {
+          !isFetchingUser && dataUserCurrent && 
           <img 
-            src="https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png"
+            src={dataUserCurrent.profilePic}
             alt="yourprofilePicture"
           />
+        }
         </div>
-        <span>Akram El Basri</span>
+        <span>
+        {
+          !isFetchingUser && dataUserCurrent && 
+          dataUserCurrent.fullName
+        }
+        </span>
       </div>
 
       <div className="ruler"/>
@@ -58,7 +68,9 @@ const UtilsAndNavigations = ({socket}) => {
       <div className="rowX"
         onClick={()=>{
           localStorage.setItem('saved', "true");
-          navigate("/profile/666");
+          if(dataUserCurrent && !isFetchingUser){
+            navigate(`/profile/${dataUserCurrent._id}`);
+          }
         }}  
       >
         <div className="xxx">
