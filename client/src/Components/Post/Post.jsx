@@ -9,7 +9,7 @@ const Post = () => {
 
     const [isCommentClicked, setIsCommentClicked] = useState(false);
     const [isLoveClick, setIsLoveClick] = useState(false);
-    const [isAddNewFriend, setisAddNewFriend] = useState(false);
+    const [IsBookMarked, setIsBookMarked] = useState(false);
 
     const [numberComment, setnumberComment] = useState(34);
     const [numberLikes, setnumberLikes] = useState(63);
@@ -29,16 +29,16 @@ const Post = () => {
                 </div>
             </div>
             <div 
-                className={isAddNewFriend ? "c2 c222" : "c2"}
+                className={IsBookMarked ? "c2" : "c2"}
                 onClick={()=>{
-                    setisAddNewFriend(true);
+                    setIsBookMarked(!IsBookMarked);
                 }}
             >
             {
-                isAddNewFriend ? 
-                <i className="fa-solid fa-check"></i>
+                !IsBookMarked ? 
+                <i class="fa-regular fa-bookmark"></i>
                 :
-                <i className="fa-solid fa-flag"></i>
+                <i className="fa-solid fa-bookmark"></i>
             }
             </div>
         </div>

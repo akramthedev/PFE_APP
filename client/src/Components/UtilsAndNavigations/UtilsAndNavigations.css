@@ -1,0 +1,95 @@
+.UtilsAndNavigations{
+    height: 100%;
+    overflow-y: scroll;
+    width:70%;
+}
+
+.rowX{
+    min-height: 20px;
+    width: 100%;
+    margin-bottom: 1.3rem;
+    display: flex;
+    align-items: center;
+    border-radius: 0.3rem;
+    transition: 0.2s all ease-in-out;
+    cursor: pointer;
+}
+.rowX:hover{
+    background-color: #232527;
+}
+.rowXX{
+  margin-bottom: .8rem;
+  display: flex;
+  align-items: center;
+}
+
+.rowX .xxx img{
+    height: 31px;
+    width:  31px;
+    object-fit: cover;
+    margin-left: 0.3rem;
+    border-radius: 50%;
+}
+.rowX span{
+    color: #dde3e9;
+    font-size: 15px;
+}
+
+.xxx{
+    height: 29px;
+    width: 29px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: .7rem;
+}
+.xxx i{
+    color: #9c33ff;
+    font-size: 1.1rem;
+    margin-left: .5rem;
+}
+
+.ruler{
+    height: 1.5px;
+    width: 100%;
+    background-color: #46494b;
+    border-radius: 2rem;
+    margin-bottom: 1.3rem;
+    margin-top: 0.2rem;
+}
+
+.UtilsAndNavigations .xxxxxx{
+    height: 39px;
+    width: 39px;
+}
+
+.rowJaja{
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    padding-top: 0.888rem;
+    border-left: 1px solid #616467;
+    width: calc(100% - 2.5rem);
+    margin-left: 2.5rem;
+}
+.flesh{
+    height: 1px;
+    width: 30px;
+    background-color: #616467;
+}
+.rowXX{
+    border-radius: 0.4rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.rowXNoHover{
+    cursor: default;
+}
+.rowXNoHover:hover{
+    background-color: transparent;
+}
+.rowXX{
+    margin-bottom: 0;
+    padding-top: 0.45rem;
+    padding-bottom: 0.45rem;
+}

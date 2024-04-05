@@ -21,6 +21,9 @@
     margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
+    border-radius: 0.3rem;
+    transition: 0.2s all ease-in-out;
+    cursor: pointer;
 }
 
 .jackijack{
@@ -46,4 +49,7 @@
     font-size: 13px ;
     font-weight: 500;
     text-align: center;
+}
+.rowAds:hover{
+    background-color: #232527;
 }

@@ -6,7 +6,7 @@ const Contacts = () => {
   return (
     <div className='Contacts'>
         <div className="sponsored">
-          Contacts
+          Contacts <span className='qduov'>(4)</span>
         </div>
         <div className="AllContact">
           <SingleContact />
