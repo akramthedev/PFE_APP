@@ -1,0 +1,129 @@
+.Post{
+    background-color: #242526;
+    width: 90%;
+    min-height: 150px;
+    height: auto;
+    margin: 0 auto;
+    margin-bottom: 1.5rem;
+    border-radius: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.5rem;
+}
+
+.rowP0{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.rowP1{
+    justify-content: space-between;
+    height: 70px;
+    align-items: center;
+}
+.c1{
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+.c11{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+.c11 img{
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.c12{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    margin-left: .4rem;
+    height: 30px;
+}
+.c12 span:first-child{
+    height: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #e4e6eb;
+}
+.c12 span:last-child{
+    color: #b0b3b8;
+    height: 17px;
+    font-size: 13px;
+    font-weight: 400;
+}
+.c2{
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e4e6eb;
+    font-size: .9rem;
+    border-radius: 50%;
+    background-color: #3a3b3c;
+    cursor: pointer;
+    padding-left: 0.2rem;
+    transition: .2s all ease-in-out;
+}
+.c2:hover{
+    background-color: #494a4b;
+}
+.rowP2{
+    height: auto;
+    font-size: 19px;
+    font-weight: 600;
+    color: #e4e6eb;
+    margin-top: 0.3rem;
+    min-height: 50px;
+    margin-bottom: 20px;
+}
+.rowP4{
+    font-size: 12px;
+    color: #b0b3b8;
+    font-weight: 500;
+    height: 40px;
+}
+.rowP3{
+    height: auto;
+}
+.rowP3 img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0.24rem;
+}
+
+.rowP5{
+    justify-content: center;
+    height: 50px;
+    align-items: baseline;
+}
+.rowP5 button{
+    height: 33px;
+    margin: 0 0.9rem;
+    min-width: 35px;
+    display: flex;
+    background-color: transparent;
+    color: #b0b3b8;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.24rem;
+    align-items: center;
+    padding: 0 0.2rem;
+    justify-content: center;
+    transition: .2s all ease-in-out;
+}
+.rowP5 button i{
+    margin-left: 0.4rem;
+}
+.rowP5 button:hover{
+    background-color: #313234;
+}

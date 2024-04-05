@@ -2,7 +2,7 @@ import React from 'react'
 import '../index.css';
 import Camera from '../../Assets/v.png';
 import Picture from '../../Assets/image.png';
-import Feeling from '../../Assets/b.png';
+import Feeling from '../../Assets/jack.png';
 
 const CreatePost = () => {
   return (

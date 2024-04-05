@@ -51,6 +51,7 @@
     flex-direction: column;
     background-color: #242526;
     cursor: pointer;
+    margin-bottom: 1.2rem;
 }
 .cp1{
     height:80px;
