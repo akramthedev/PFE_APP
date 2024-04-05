@@ -1,0 +1,50 @@
+.Birthdays{
+    height: 90px;
+    width: 75%;
+    margin-left: 25%;
+    margin-bottom: 1.2rem;
+}
+.Birthdays .sponsored{
+    height: 30px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e4e6eb;
+    margin-bottom: 0rem;
+}
+.Birthdays .rowAds{
+    height: 70px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.Birthdays .jackijack{
+    width: calc(100% - 80px);
+    display: flex;
+    flex-direction: column;
+    padding-left: 0.5rem;
+}
+.Birthdays .rowAds img{
+    height: 40px;
+    width:40px;
+    object-fit: cover;
+    border-radius: 0.3rem;
+    margin-right: 1rem;
+    margin-left: 1.2rem;
+}
+.Birthdays .jackijack span:first-child{
+    color: #d8d9de;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 600;
+}
+.Birthdays .jackijack span:last-child{
+    color: #a6a8ad;
+    font-size: 13px ;
+    font-weight: 500;
+    text-align: left;
+}

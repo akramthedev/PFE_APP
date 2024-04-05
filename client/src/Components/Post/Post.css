@@ -9,6 +9,7 @@
     display: flex;
     flex-direction: column;
     padding: 0 1.5rem;
+    transition: 0.35s all ease-in-out;
 }
 
 .rowP0{
@@ -69,7 +70,6 @@
     border-radius: 50%;
     background-color: #3a3b3c;
     cursor: pointer;
-    padding-left: 0.2rem;
     transition: .2s all ease-in-out;
 }
 .c2:hover{
@@ -104,6 +104,8 @@
     justify-content: center;
     height: 50px;
     align-items: baseline;
+    border-top: 1px solid #494a4b;
+    padding-top: 0.5rem;
 }
 .rowP5 button{
     height: 33px;
@@ -117,7 +119,7 @@
     cursor: pointer;
     border-radius: 0.24rem;
     align-items: center;
-    padding: 0 0.2rem;
+    padding: 0 0.4rem;
     justify-content: center;
     transition: .2s all ease-in-out;
 }
@@ -126,4 +128,40 @@
 }
 .rowP5 button:hover{
     background-color: #313234;
+}
+
+.rowP5 .lsclsc:hover{
+    cursor: default;
+    background-color: transparent;
+}
+.rowP5 button .fa-heartRED{
+    color: red;
+} 
+
+.c222{
+    cursor: default;
+}
+.c222:hover{
+    background-color: #3a3b3c;
+}
+.rowP6{
+    height: 0;
+    transition: 0.34s all ease-in-out;
+}
+.showrowP6{
+    height: 222px;
+    width: 100%;
+    margin-bottom: 20px;
+    background-color:#28292b;
+    border-radius: 0.23rem;
+}
+.jack{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: red;
+    font-size: 14px;
+    font-weight: 400;
 }

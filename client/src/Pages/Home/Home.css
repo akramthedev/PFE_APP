@@ -26,5 +26,9 @@
     width: 30%;
     margin-top: 0px;
     position: sticky;
-    top: 75px;
+    top: 80px;
+    overflow-y: scroll;
+}
+*{
+    scroll-behavior: smooth;
 }

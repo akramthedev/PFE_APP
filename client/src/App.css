@@ -4,3 +4,10 @@
   box-sizing: border-box;
   font-family: "Mukta", sans-serif;
 }
+
+::-webkit-scrollbar-track{
+  width: 0px;
+}
+::-webkit-scrollbar{
+  width: 0px;
+}

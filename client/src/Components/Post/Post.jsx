@@ -1,10 +1,22 @@
-import React from 'react'
+import React, {useState} from 'react'
 import "./Post.css";
-
-
+import {useNavigate} from 'react-router-dom'
 
 const Post = () => {
-  return (
+
+
+    const naviagte = useNavigate();
+
+    const [isCommentClicked, setIsCommentClicked] = useState(false);
+    const [isLoveClick, setIsLoveClick] = useState(false);
+    const [isAddNewFriend, setisAddNewFriend] = useState(false);
+
+    const [numberComment, setnumberComment] = useState(34);
+    const [numberLikes, setnumberLikes] = useState(63);
+    const [numberViews, setnumberViews] = useState(813);
+
+
+    return (
     <div className='Post'>
         <div className=" rowP0 rowP1">
             <div className="c1">
@@ -16,16 +28,26 @@ const Post = () => {
                     <span>seasonedwebdev@gmail.com</span>
                 </div>
             </div>
-            <div className="c2">
-                <i className="fa-solid fa-user-plus"></i>
+            <div 
+                className={isAddNewFriend ? "c2 c222" : "c2"}
+                onClick={()=>{
+                    setisAddNewFriend(true);
+                }}
+            >
+            {
+                isAddNewFriend ? 
+                <i className="fa-solid fa-check"></i>
+                :
+                <i className="fa-solid fa-flag"></i>
+            }
             </div>
         </div>
         <div className=" rowP0 rowP2">
-            Hello World..
+            Hail to the kings of rock & roll ! 
         </div>
         <div className=" rowP0 rowP3">
             <img 
-                src="https://whc.unesco.org/uploads/thumbs/activity_725-2148-704-20220308132126.jpg" 
+                src='https://bravewords.com/medias-static/images/features/2014/SlashGroupImage.jpg'
                 alt=""
             />
         </div>
@@ -36,24 +58,64 @@ const Post = () => {
             
             <button
                 className='lsc'
+                onClick={()=>{
+                    if(isLoveClick){
+                        setnumberLikes(numberLikes-1);
+                        setIsLoveClick(false);
+                    }
+                    else{
+                        setnumberLikes(numberLikes+1);
+                        setIsLoveClick(true);
+                    }
+                }}
             >
-                2357
-                <i className="fa-regular fa-heart"></i>
+                {numberLikes}
+                {
+                    isLoveClick ? 
+                    <i className="fa-solid fa-heart fa-heartRED"></i>
+                    :
+                    <i className="fa-regular fa-heart"></i>
+                }
             </button>
             <button
                 className='lsc'
+                onClick={()=>{
+                    setIsCommentClicked(!isCommentClicked);
+                    setTimeout(()=>{
+                        if(isCommentClicked){
+                            //scroll to top 
+                            window.scrollTo({
+                                top:window.scrollY - 100, 
+                                behaviort : 'smooth'
+                            })
+                        }
+                        else{
+                            //scroll  to bottom 
+                            window.scrollTo({
+                                top :window.scrollY + 100, 
+                                behaviort : 'smooth'
+                            })
+                        }
+                    },200);
+                }}
             >
-                41
-                <i className="fa-regular fa-comment"></i>
+                {numberComment}
+                {
+                    isCommentClicked ? 
+                    <i className="fa-solid fa-comment"></i>
+                    :
+                    <i className="fa-regular fa-comment"></i>
+                }
             </button>
             <button
-                className='lsc'
+                className=' lsc lsclsc'
             >
-                3795
+                {numberViews}
                 <i class="fa-solid fa-chart-simple"></i>
-            </button>
-           
-            
+            </button>            
+        </div>
+        <div className={isCommentClicked ? "rowP6 showrowP6" : "rowP6"}>
+
         </div>
     </div>
   )
