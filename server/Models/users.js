@@ -15,14 +15,6 @@ const schemaUsers = new mongoose.Schema({
         type : String, 
         required : true
     },
-    otp : {
-        type : String, 
-        required : false
-    },
-    isVerified : {
-        type : Boolean, 
-        default : false
-    },
     profilePic: {
         type: String,
         default: 'https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg' 
@@ -31,10 +23,13 @@ const schemaUsers = new mongoose.Schema({
         type: String,
         default: 'https://live.staticflickr.com/3745/10353673376_ec7a400972_b.jpg' 
     },
-    role: {
+    bio: {
         type: String,
-        default: 'user',  
-        enum: ['user', 'admin', 'moderator']  
+        default: '',
+    },
+    address: {
+        type : String, 
+        required : false
     },
     phoneNumber: {
         type: String,
@@ -44,20 +39,34 @@ const schemaUsers = new mongoose.Schema({
         type: Date,
         required: false,
     },
-    address: {
-        type : String, 
-        required : false
-    },
     status: {
         type: String,
         enum: ['active', 'suspended', 'inactive'],
         default: 'active'
     },
-    friends: [],
-    bio: {
+    role: {
         type: String,
-        default: '',
+        default: 'user',  
+        enum: ['user', 'admin', 'adser']  
     },
+    isVerified : {
+        type : Boolean, 
+        default : false
+    },
+    contacts: [],
+    pages : [], 
+    groups : [],
+    bookmarks : [], 
+    attemptstoConnect : {
+        type : Number, 
+        required : false, 
+        default : 0
+    },
+    otp : {
+        type : String, 
+        required : false
+    },
+    
 }, {
     timestamps : true
 });

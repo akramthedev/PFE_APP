@@ -1,21 +1,35 @@
 import React from 'react'
 import './UtilsAndNavigations.css';
+import {useNavigate } from 'react-router-dom';
+
 
 
 const UtilsAndNavigations = () => {
 
 
+  const navigate = useNavigate();
+
+
   return (
     <div className='UtilsAndNavigations' >
       
-      <div className="rowX">
+      <div className="rowX"
+        onClick={()=>{
+          navigate("/");
+          navigate(0);
+        }}
+      >
         <div className="xxx">
           <i className='fa-solid fa-house'></i>
         </div>
         <span>Home</span>
       </div>
 
-      <div className="rowX">
+      <div className="rowX"
+        onClick={()=>{
+          navigate("/profile/666");
+        }}
+      >
         <div className="xxx xxxxxx">
           <img 
             src="https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png"
@@ -27,14 +41,24 @@ const UtilsAndNavigations = () => {
 
       <div className="ruler"/>
 
-      <div className="rowX">
+      <div className="rowX"
+        onClick={()=>{
+          localStorage.setItem('contacts', "true");
+          navigate("/profile/666");
+        }}
+      >
         <div className="xxx">
           <i className='fa-solid fa-user-group'></i>
         </div>
         <span>Contacts</span>
       </div>
 
-      <div className="rowX">
+      <div className="rowX"
+        onClick={()=>{
+          localStorage.setItem('saved', "true");
+          navigate("/profile/666");
+        }}  
+      >
         <div className="xxx">
           <i className='fa-solid fa-bookmark'></i>
         </div>
@@ -50,7 +74,13 @@ const UtilsAndNavigations = () => {
       </div>
       
         <div className="rowJaja">
-          <div className="rowX rowXX">
+          
+          
+          <div className="rowX rowXX"
+            onClick={()=>{
+              navigate("/page/666");
+            }}
+          >
             <div className="flesh" />
             <div className=" xxx xxxxxx">
               <img 
@@ -61,7 +91,11 @@ const UtilsAndNavigations = () => {
             <span>Red Pill MGTOW</span>
           </div>
 
-          <div className="rowX rowXX">
+          <div className="rowX rowXX"
+            onClick={()=>{
+              navigate("/page/666");
+            }}
+          >
             <div className="flesh" />
             <div className=" xxx xxxxxx">
               <img 
@@ -85,7 +119,11 @@ const UtilsAndNavigations = () => {
       
         <div className="rowJaja">
           
-          <div className="rowX rowXX">
+          <div className="rowX rowXX"
+            onClick={()=>{
+              navigate("/group/666");
+            }}
+          >
             <div className="flesh" />
             <div className=" xxx xxxxxx">
               <img 
@@ -96,7 +134,11 @@ const UtilsAndNavigations = () => {
             <span>Red Pill MGTOW</span>
           </div>
 
-          <div className="rowX rowXX">
+          <div className="rowX rowXX"
+            onClick={()=>{
+              navigate("/group/666");
+            }}
+          >
             <div className="flesh" />
             <div className=" xxx xxxxxx">
               <img 
@@ -107,7 +149,11 @@ const UtilsAndNavigations = () => {
             <span>Red Pill MGTOW</span>
           </div>
 
-          <div className="rowX rowXX">
+          <div className="rowX rowXX"
+            onClick={()=>{
+              navigate("/group/666");
+            }}
+          >
             <div className="flesh" />
             <div className=" xxx xxxxxx">
               <img 

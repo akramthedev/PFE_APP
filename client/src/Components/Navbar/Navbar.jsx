@@ -39,7 +39,7 @@ const Navbar = () => {
                
 
                 <button 
-                    onClick={()=>{navigate('/')}}
+                    onClick={()=>{navigate('/requests')}}
                     className='linkNav'
                 >
                      <div className="bulle">
@@ -49,7 +49,7 @@ const Navbar = () => {
                 </button>
 
                 <button 
-                    onClick={()=>{navigate('/')}}
+                    onClick={()=>{navigate('/notifications')}}
                     className='linkNav'
                 >
                     <div className="bulle">
@@ -59,7 +59,7 @@ const Navbar = () => {
                 </button>
 
                 <button 
-                    onClick={()=>{navigate('/')}}
+                    onClick={()=>{navigate('/discussions')}}
                     className='linkNav'
                 >
                     <div className="bulle">
@@ -85,7 +85,11 @@ const Navbar = () => {
                     }
                     ref={popupRef}
                 >
-                    <div className="rowjh">
+                    <div className="rowjh"
+                        onClick={()=>{
+                            navigate("/profile/666");
+                        }}
+                    >
                         <div className="caseOne">
                             <img src="https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png" alt="" />
                         </div>
@@ -93,7 +97,11 @@ const Navbar = () => {
                             Akram El Basri
                         </div>
                     </div>
-                    <div className="rowjh">
+                    <div className="rowjh"
+                        onClick={()=>{
+                            navigate("/settings");
+                        }}
+                    >
                         <div className="caseOne caseOne2">
                             <i className="fa-solid fa-gear"></i>
                         </div>
@@ -101,7 +109,11 @@ const Navbar = () => {
                             Setting & Privacy
                         </div>
                     </div>
-                    <div className="rowjh">
+                    <div className="rowjh"
+                        onClick={()=>{
+                            navigate("/help");
+                        }}
+                    >
                         <div className="caseOne caseOne2">
                             <i className="fa-solid fa-circle-info"></i>
                         </div>
@@ -109,7 +121,11 @@ const Navbar = () => {
                             Help & Support 
                         </div>
                     </div>
-                    <div className="rowjh">
+                    <div className="rowjh"
+                        onClick={()=>{
+                            navigate("/accessibility");
+                        }}
+                    >
                         <div className="caseOne caseOne2">
                             <i className="fa-solid fa-universal-access"></i>
                         </div>

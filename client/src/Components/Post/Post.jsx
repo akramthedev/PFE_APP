@@ -19,7 +19,11 @@ const Post = () => {
     return (
     <div className='Post'>
         <div className=" rowP0 rowP1">
-            <div className="c1">
+            <div className="c1"
+                onClick={()=>{
+                    naviagte('/profile/666');
+                }}
+            >
                 <div className="c11">
                     <img src="https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png" alt="" />
                 </div>
@@ -47,7 +51,7 @@ const Post = () => {
         </div>
         <div className=" rowP0 rowP3">
             <img 
-                src='https://bravewords.com/medias-static/images/features/2014/SlashGroupImage.jpg'
+                src='https://www.moshville.co.uk/wordpress/wp-content/uploads/2022/05/Slash-featuring-Myles-Kennedy-and-the-Conspirators-2012-Travis-Shinn.jpg'
                 alt=""
             />
         </div>

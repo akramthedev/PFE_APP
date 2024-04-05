@@ -3,6 +3,8 @@ import './Contacts.css';
 import SingleContact from './SingleContact.jsx';
 
 const Contacts = () => {
+
+  
   return (
     <div className='Contacts'>
         <div className="sponsored">
