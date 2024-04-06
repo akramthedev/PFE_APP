@@ -7,17 +7,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #18191a;
 }
 
 .Auth .formLR{
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 390px;
+    min-height: 260px;
     overflow: hidden;
     transition: 0.33s all ease-in-out;
     width: 510px;
-    background-color: white;
+    margin-top:1rem;
+    background-color: #18191a;
     justify-content: center;
     border-radius: 0.77rem;
 }
@@ -26,25 +28,23 @@
     min-height: 66px;
     display: flex;
     width: 360px;
-    align-items: center;
+    align-items: baseline;
     justify-content: center;
     flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    
 }
 .rowOne h1{
     text-align: center;
     font-family: "Merriweather", serif; 
     font-weight: 800;
     margin-bottom: .7rem;
-    font-size: 1.5rem;
+    font-size: 1.3rem !important;
+    color: #e4e6eb;
     transition: .3s all ease-in-out;
 }
 .rowOne p{
     line-height: 1.2;
     font-size: 14px;
-    color: gray;
     font-weight: 400;
     text-align: center;
     max-width: 400px;
@@ -54,19 +54,23 @@
 .formLR input{
     height: 38px;
     width: 290px;
-    border: 1px solid #b2b2b2;
+    border: none;
     border-radius: 0.2rem;
     outline: none;
+    background-color:#292a2b ;
+    color: #e4e6eb;
     margin-bottom: 0.5rem;
     padding: 0 1rem;
     text-align: left;
+    border: none !important;
     font-size: 15px;
     padding-left: 1rem;
-
+}
+.formLR input::placeholder{
+    color: #8f939b;
 }
 .formLR input:focus{
-    border: 1px solid #8C52FF;
-    border: 1px solid black;
+    border: 1px solid rgb(88, 90, 92);
 }
 
 .formLR{
@@ -105,30 +109,31 @@
     color: white;
 }
 .formLR .zjfd{
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 400;
     cursor: default;
+    color: #d6d9e0 !important;
 }
 .formLR .zjfd .linkSpan{
-    color: #8400ff;
-    font-size: 15px;
-    font-weight: 600;
+    color: #b5b8bf !important;
+    font-size: 16px;
+    font-weight: 400;
     text-decoration: underline;
     cursor: pointer;
 }
 .formLR .zjfd .linkSpan:hover{
-    color: #7300df;
+    color: #83858b !important;
 }
 
 .Auth .extendsForm {
-    height: 466px;
+    min-height: 300px;
 }
 .formLR .inputFullName{
     height: 0px;
     visibility: hidden;
     opacity: 0;
     width: 290px;
-    border: 1px solid #b2b2b2;
+    border: 1px solid #3a3b3c;
     border-radius: 0.2rem;
     outline: none;
     margin-bottom: 0.5rem;
@@ -140,7 +145,6 @@
 
 }
 .formLR .inputFullName:focus{
-    border: 1px solid #8C52FF;
     border: 1px solid black;
 }
 .formLR .showIt{
@@ -161,3 +165,18 @@
     object-fit: cover;
     border-radius: 50%;
 }
+
+.Auth .Xplorium{
+    height: 80px;
+    width: auto;
+    object-fit: cover;
+    visibility: hidden;
+    opacity: 0;
+    transition: 1s all ease-in-out;
+}
+
+.Auth .showXplorium{
+    opacity: 1;
+    visibility: visible;
+}
+

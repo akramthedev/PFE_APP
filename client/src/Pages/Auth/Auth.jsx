@@ -9,6 +9,9 @@ import Status from '../../Components/Status/Status';
 const Auth = () => {
 
   const navigate = useNavigate();
+  const Xplorium = "https://res.cloudinary.com/dqprleeyt/image/upload/v1712318887/and_parkle___3_-removebg-preview_lyfila.png";
+  const [isRendered, setisRendered] = useState(false);
+  
 
   const [fullName, setfullName] = useState("");
   const [email, setEmail] = useState("");
@@ -83,10 +86,22 @@ const Auth = () => {
   }
 
 
+
+  useEffect(()=>{
+    setTimeout(()=>{
+      setisRendered(true);
+    }, 500);
+  }, []);
  
 
   return (
     <div className='Auth'>
+
+      <img 
+        src={Xplorium}
+        alt="Xplorium"
+        className={isRendered ? "Xplorium showXplorium" : "Xplorium"}
+      />
       <form
         onSubmit={handleSubmit}
         className={alreadyAccount ? "formLR" : "formLR extendsForm"}

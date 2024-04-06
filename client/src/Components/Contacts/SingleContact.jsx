@@ -96,11 +96,16 @@ const SingleContact = ({socket, contact}) => {
                 />
               }
               
+            {
+              dataContact && 
+              <>
               {
                 isOnline ? <div className="bulleConnectionStatus" />
                 :
                 <div className="bulleConnectionStatus bulleConnectionStatusRED" />
               }
+              </>
+            }
  
             </div>
             <span>

@@ -1,15 +1,27 @@
-import React from 'react'
+import React, {useState} from 'react'
 import '../index.css';
 import Camera from '../../Assets/v.png';
 import Picture from '../../Assets/image.png';
 import Feeling from '../../Assets/jack.png';
 
-const CreatePost = () => {
+const CreatePost = ({isFetchingUser, dataUserCurrent}) => {
+  
+    const [isCreateClicked, setisCreateClicked] = useState(false);
+  
+  
   return (
-    <div className="createPost">
+    
+    <div className="createPost"
+        
+        onClick={()=>{
+          if(!isFetchingUser && dataUserCurrent){
+            setisCreateClicked(true);
+            }
+          }}
+        >
             <div className="cp1">
-                <img src="https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png" alt="" />
-                <input type="text" placeholder="What's on your mind Akram ? ..." disabled />
+                <img src={dataUserCurrent && dataUserCurrent.profilePic} alt="" />
+                <input type="text" placeholder={ !dataUserCurrent ? `What's on your mind...`:`What's on your mind ${dataUserCurrent.fullName} ? ...`} disabled />
             </div>
             <div className="cp2">
               <button>

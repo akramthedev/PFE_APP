@@ -47,7 +47,7 @@ const Navbar = ({socket, dataUserCurrent, isFetchingUser}) => {
             </form>
         </div>
         <div className="part2">
-            <div className="part2p1">
+            <div className={dataUserCurrent && dataUserCurrent.role !== "user" ? "part2p1 part2p1admin": "part2p1"}>
  
                
 
@@ -80,6 +80,26 @@ const Navbar = ({socket, dataUserCurrent, isFetchingUser}) => {
                     </div>
                     <i className="fa-solid fa-envelope"></i>
                 </button>
+                
+                {
+                    (dataUserCurrent && (dataUserCurrent.role === "admin" || dataUserCurrent.role === "adser") ) &&
+                    <button 
+                        onClick={
+                        ()=>{
+                            if(dataUserCurrent && dataUserCurrent.role === "admin"){
+                                navigate('/admin/panel')
+                            }
+                            else{
+                                navigate('/adser/panel')
+                            }
+                        }}
+                        className='linkNav'
+                    >
+                        <i className="fa-solid fa-chart-line"></i>
+                    </button>
+                }
+
+                
 
             </div>
             <div

@@ -46,7 +46,12 @@
     display: flex;
     align-items: center;
     justify-content: right;
-
+}
+.part2p1admin{
+    width: 240px;
+}
+.part2p1admin  .linkNav{
+    margin: 0 0.6rem;
 }
 .part2p2{
     height: 100%;
