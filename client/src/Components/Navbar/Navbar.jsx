@@ -128,6 +128,7 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
                         onClick={()=>{
                             if(dataUserCurrent){
                                 navigate(`/profile/${dataUserCurrent._id}`);
+                                setIsProfileClicked(!isProfileClicked);
                             }
                         }}
                     >
@@ -147,6 +148,7 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
                     <div className="rowjh"
                         onClick={()=>{
                             navigate("/settings");
+                            setIsProfileClicked(!isProfileClicked);
                         }}
                     >
                         <div className="caseOne caseOne2">
@@ -159,6 +161,7 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
                     <div className="rowjh"
                         onClick={()=>{
                             navigate("/help");
+                            setIsProfileClicked(!isProfileClicked);
                         }}
                     >
                         <div className="caseOne caseOne2">
@@ -171,6 +174,7 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
                     <div className="rowjh"
                         onClick={()=>{
                             navigate("/accessibility");
+                            setIsProfileClicked(!isProfileClicked);
                         }}
                     >
                         <div className="caseOne caseOne2">

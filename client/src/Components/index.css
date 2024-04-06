@@ -116,3 +116,9 @@
 .cp1 input::placeholder{
     color: white;
 }
+.createPostProfile{
+    width: 100%;
+}
+.createPostProfile .cp1Profile{
+    padding: 0 4rem;
+}

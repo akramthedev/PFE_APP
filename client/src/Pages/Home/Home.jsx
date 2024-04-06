@@ -28,7 +28,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
               <UtilsAndNavigations  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
             </div>
             <div className="h2">
-              <CreatePost  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
+              <CreatePost ajusting="home" isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
               <Post  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
               <PostAds /> 
             </div>
