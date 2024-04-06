@@ -25,6 +25,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser }) => {
   const [loading, setLoading] = useState(true);
   const [visitedUser, setVisitedUser] = useState(null);
   const [isPostsClicked, setisPostsClicked] = useState(true);
+  const [requestMade, setrequestMade] = useState(null);
  
 
   useEffect(() => {
@@ -32,6 +33,30 @@ const Profile = ({ dataUserCurrent, isFetchingUser }) => {
       setLoading(true);
       try {
         if (token && id) {
+
+          //see if the id is in the requests data
+          if(id !== currentId){
+            const response2 = await axios.post(`http://localhost:3001/request/checking`,{
+              currentId : currentId, 
+              idVisited : idVisited
+            }, {
+              headers: { 
+                Authorization: `Bearer ${token}`
+              }
+            });
+            if(response2.status === 200){
+              if(response2.data.sender === currentId){
+                setrequestMade("youAreTheSender");
+              }
+              else{
+                setrequestMade("heIsTheSender");
+              }
+            }
+            else{
+              setrequestMade("none");
+            }
+          }
+
           const response = await axios.get(`http://localhost:3001/user/${id}`, {
             headers: {
               Authorization: `Bearer ${token}`
@@ -54,6 +79,18 @@ const Profile = ({ dataUserCurrent, isFetchingUser }) => {
     fetchUser();
   }, [id]);
 
+   
+
+  const handleRequestClicked = async ()=>{
+
+    try{
+
+    }
+    catch(e){
+      console.log(e.message);
+    }
+  }
+
   return (
     <div className='Home Profile'>
       <Navbar isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
@@ -64,7 +101,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser }) => {
             :
             <>
             {
-              visitedUser &&
+              (visitedUser && dataUserCurrent) &&
               <>
               
                 <div className="rowCover">
@@ -99,11 +136,23 @@ const Profile = ({ dataUserCurrent, isFetchingUser }) => {
                     <>
                       <button 
                         onClick={()=>{
-
+                          handleRequestClicked();
                         }}
                         className="sendrequestFriendShip"
                       >
-                        <i className='fa-solid fa-user-plus'></i>&nbsp;Add Contact
+                      { requestMade && 
+                      <>
+                        {
+                          requestMade === "none" ? 
+                          <><i className='fa-solid fa-user-plus'></i>&nbsp;Add Contact</>
+                          : requestMade === "youAreTheSender" ? 
+                          <><i className='fa-solid fa-check'></i>&nbsp;Request Sent</>
+                          : requestMade === "heIsTheSender" && 
+                          <><i className='fa-solid fa-check'></i>&nbsp;Request Received</>
+
+                        }                         
+                      </>
+                      }
                       </button>
                       <button 
                         onClick={()=>{

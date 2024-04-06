@@ -27,6 +27,33 @@ router.post('/create' ,async(req, res)=>{
 
 
 
+router.post('/checking', async (req, res) => {
+    try {
+        const { currentId, idVisited } = req.body;
+
+        const request = await requests.findOne({
+            $or: [
+                { sender: currentId, sentTo: idVisited },
+                { sender: idVisited, sentTo: currentId }
+            ]
+        });
+
+        if (request) {
+            res.status(200).send(request);
+        } else {
+            res.status(202).send('Request not found');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
+
+
 router.get('/user/:idUser' ,async(req, res)=>{
     try{
         const {idUser} = req.params;
