@@ -16,6 +16,20 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
       msg : null
     }
 
+    const [isseen, setisseen] = useState(notif.seen);
+    const [isHovered, setIsHovered] = useState(false);
+ 
+
+    useEffect(()=>{
+      const x =  ()=>{
+        setTimeout(async ()=>{
+          setisseen(true);
+          await axios.get(`http://localhost:3001/notif/updateSeen/${notif._id}`)
+        }, 1000);
+      }
+      x()
+    }, []);
+
     const handleDeleteNotif = async()=>{
       try{
         const resp = await axios.delete(`http://localhost:3001/notif/${notif._id}`);
@@ -49,8 +63,19 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
         <HttpRequestStatus responseX={ResponseRequest}/>
         {
           notif.type === "Welcoming" ? 
-          <div key={index} className='SingleNotification'>
-            <button
+          <div 
+            onMouseEnter={()=>{
+              setIsHovered(true);
+            }}
+            key={index}
+            onMouseLeave={()=>{
+              setIsHovered(false);
+            }}
+            className='SingleNotification'
+          >
+            {
+              isHovered && 
+              <button
               onClick={()=>{
                 handleDeleteNotif();
               }}
@@ -58,6 +83,7 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
             >
               <i className='fa-solid fa-trash'></i>
             </button>
+            }
             <div className="content content2">
               {
                 notif.title
@@ -109,15 +135,27 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
             </div>
           </div>
           : notif.type === "Friend Accepted" ? 
-            <div key={index} className=' SingleNotification3'>
-                <button
+            <div 
+              onMouseEnter={()=>{
+                setIsHovered(true);
+              }}
+              key={index}
+              onMouseLeave={()=>{
+                setIsHovered(false);
+              }}
+              className=' SingleNotification3'
+            >
+                {
+                    isHovered && 
+                    <button
                     onClick={()=>{
                       handleDeleteNotif();
                     }}
-                    className='deleteSingleNotif'
+                    className={isHovered ? "deleteSingleNotif showdeleteSingleNotif":  "deleteSingleNotif"}
                   >
-                  <i className='fa-solid fa-trash'></i>
-                </button>
+                    <i className='fa-solid fa-trash'></i>
+                  </button>
+                  }
                 <div className="content">
                   {
                     notif.title
@@ -128,7 +166,9 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
                   notif.description1
                 }
                 </div>
-               
+              <span className={isseen ? " isnotseen isseen" : "isnotseen"}>
+                 <i className='fa-solid fa-check-double'></i>
+              </span>
             </div>
           :
           <div key={index} className='SingleNotification'>

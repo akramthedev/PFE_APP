@@ -1,23 +1,71 @@
 import React, {useState, useEffect, useRef} from 'react'
 import "./Navbar.css";
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 import useOutsideAlerter  from '../../Helpers/HidePopUp';
 import { useSocket } from '../../Helpers/SocketContext';
-
+import axios from 'axios';
 
 
 const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
 
     const navigate = useNavigate();
     const popupRef = useRef(null);  
+    const location = useLocation();
+    const {pathname} = location;
     const { socket, onlineUsers } = useSocket();
     const token = localStorage.getItem("token");  
     const idUser = localStorage.getItem("idUser");  
     const [isProfileClicked, setIsProfileClicked] = useState(false);
+    const [unSeenNotifs, setunSeenNotifs] = useState(0);
+    const [requestNumber, setrequestNumber] = useState(0);
 
 
     useOutsideAlerter(popupRef, setIsProfileClicked);
 
+    const fetchUnseenNotifNumber = async()=>{
+        try{
+            if(idUser){
+                const resp = await axios.get(`http://localhost:3001/notif/getUnseen/${idUser}`);
+                if(resp){
+                    setunSeenNotifs(resp.data.length);
+                }
+            }
+        }
+        catch(e){
+            console.log(e.message);
+        }
+    }
+
+    const fetchReqNumber = async()=>{
+        try{
+            if(idUser){
+                const resp = await axios.get(`http://localhost:3001/request/user/${idUser}`);
+                if(resp){
+                    setrequestNumber(resp.data.length);
+                }
+            }
+        }
+        catch(e){
+            console.log(e.message);
+        }
+    }
+ 
+
+    useEffect(() => {
+        
+        const intervalId = setInterval(() => {
+            if(pathname === "/notifications"){
+                setunSeenNotifs(0);
+            }
+            else{
+                fetchUnseenNotifNumber();
+            }
+            fetchReqNumber();
+        }, 1000); 
+
+        return () => clearInterval(intervalId);
+      }, []); 
+      
 
     const handleLogout = ()=>{
         socket.emit("logoutAndQuitGR");
@@ -27,6 +75,7 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
             navigate(0);
         },100);
     }
+
 
     
 
@@ -58,9 +107,12 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
                     onClick={()=>{navigate('/requests');}}
                     className='linkNav'
                 >
-                     <div className="bulle">
-                        1
-                    </div>
+                     {
+                        requestNumber !== 0 && 
+                        <div className="bulle">
+                            {requestNumber}
+                        </div>
+                     }
                     <i className="fa-solid fa-user-group"></i>
                 </button>
 
@@ -68,9 +120,12 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
                     onClick={()=>{navigate('/notifications');}}
                     className='linkNav'
                 >
-                    <div className="bulle">
-                        4
-                    </div>
+                    {
+                        unSeenNotifs !== 0 && 
+                        <div className="bulle">
+                            {unSeenNotifs}
+                        </div>
+                    }
                     <i className="fa-solid fa-bell"></i>
                 </button>
 

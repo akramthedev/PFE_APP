@@ -10,6 +10,8 @@ import BirthDays from '../../Components/BirthDays/BirthDays';
 import UtilsAndNavigations from '../../Components/UtilsAndNavigations/UtilsAndNavigations';
 import axios from "axios";
 import PostSuggestedUsers from '../../Components/Post/PostSuggestedUsers';
+import OpenerMp3 from '../../MP3Sounds/openingAuth.wav';
+
 
 
 
@@ -17,7 +19,28 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
 
     const token = localStorage.getItem('token');
     const idUser = localStorage.getItem('idUser');
-     
+    //const first = localStorage.getItem('firstConnection');
+
+    /*
+    
+    useEffect(()=>{
+      const x = ()=>{
+        if(first === "yes"){
+          const audio = new Audio(OpenerMp3); 
+      
+          setTimeout(() => {
+            audio.play(); 
+          }, 500);
+    
+          localStorage.setItem('firstConnection', "no");
+        }
+      }
+      x();
+    }, []);
+    
+    */
+  
+
 
   return (
     <div className='Home'>

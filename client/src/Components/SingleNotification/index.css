@@ -52,7 +52,13 @@
     top: 12px;
     right: 12px;
     cursor: pointer;
-    transition: .2s all ease-in-out;
+    transition: .4s all ease-in-out;
+    visibility: hidden;
+    opacity: 0;
+}
+.showdeleteSingleNotif{
+    opacity: 1;
+    visibility: visible;
 }
 .deleteSingleNotif:hover{
     background-color: red;
@@ -90,3 +96,15 @@
     font-weight: 600;
     font-family: "Libre Caslon Text", serif;
 }
+
+.isnotseen{
+    position: absolute;
+    bottom: .1rem;
+    right: .5rem;
+    font-size: 14px;
+    color: rgb(132, 132, 132);
+}
+.isseen{
+    color: rgb(172, 83, 255);
+}
+

@@ -4,6 +4,8 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import LoaderSpin from '../../Assets/spinwhite.svg';
 import Status from '../../Components/Status/Status';
+import OpenerMp3 from '../../MP3Sounds/openingAuth.wav'
+
 
 
 const Auth = () => {
@@ -12,7 +14,7 @@ const Auth = () => {
   const Xplorium = "https://res.cloudinary.com/dqprleeyt/image/upload/v1712318887/and_parkle___3_-removebg-preview_lyfila.png";
   const [isRendered, setisRendered] = useState(false);
   
-
+  const [isAudioReady, setIsAudioReady] = useState(false);
   const [fullName, setfullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,6 +42,7 @@ const Auth = () => {
         if(resp.status === 200){
           localStorage.setItem('token', resp.data.token);
           localStorage.setItem('idUser', resp.data._id);
+          localStorage.setItem('firstConnection', "yes");
           navigate(0);
         }
         else {
@@ -97,16 +100,20 @@ const Auth = () => {
   }
 
 
+    
 
-  useEffect(()=>{
-    setTimeout(()=>{
-      setisRendered(true);
-    }, 500);
-  }, []);
- 
+    useEffect(() => {
+
+        const timeoutId = setTimeout(() => {
+            setisRendered(true);
+        }, 666);
+
+        return () => clearTimeout(timeoutId);
+    }, []);
+
 
   return (
-    <div className='Auth'>
+    <div id="x" className='Auth'>
 
       <img 
         src={Xplorium}

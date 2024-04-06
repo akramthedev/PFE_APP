@@ -106,6 +106,11 @@ const notifSchema = new mongoose.Schema({
     eventName : {
         type : String, 
         required : false
+    }, 
+    seen : {
+        type : Boolean, 
+        required : false, 
+        default : false
     }
     
 }, {

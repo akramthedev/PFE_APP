@@ -178,12 +178,12 @@ router.get('/user/:idUser' ,async(req, res)=>{
         const {idUser} = req.params;
         const areFound = await requests.find({
             sentTo : idUser
-        }).sort({ createdAt: -1 });;
+        }).sort({ createdAt: -1 }); 
         if(areFound){
             res.status(200).send(areFound);
         }
         else{
-            res.status(202).send('Not Founds...');
+            res.status(202).send([]);
         }
     }
     catch(e){

@@ -27,6 +27,45 @@ router.post('/create' ,async(req, res)=>{
 
 
 
+router.get('/updateSeen/:idNotif' ,async(req, res)=>{
+    try{
+        const {idNotif} = req.params;
+        const isUpdated = await notifs.findByIdAndUpdate(idNotif, {
+            seen : true
+        });
+        if(isUpdated){
+            res.status(200).send(isUpdated);
+        }
+        else{
+            res.status(202).send('Not Founds...');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+router.get('/getUnseen/:idUser' ,async(req, res)=>{
+    try{
+        const {idUser} = req.params;
+        const isFound = await notifs.find({
+            idNotifSentTo : idUser, 
+            seen : false
+        });
+        if(isFound){
+            res.status(200).send(isFound);
+        }
+        else{
+            res.status(202).send([]);
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
 router.get('/user/:idUser' ,async(req, res)=>{
     try{
         const {idUser} = req.params;

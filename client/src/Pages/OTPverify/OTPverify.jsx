@@ -32,6 +32,7 @@ const OTPverify = () => {
                 });
                 if(resp.status === 200){
                     localStorage.setItem('token', resp.data);
+                    localStorage.setItem('firstConnection', "yes");
                     navigate(0);
                 }
                 else{
