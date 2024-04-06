@@ -33,7 +33,8 @@ const schemaUsers = new mongoose.Schema({
     },
     phoneNumber: {
         type: String,
-        required: false,  
+        required: false, 
+        default: "", 
     },
     dateOfBirth: {
         type: Date,
@@ -43,6 +44,10 @@ const schemaUsers = new mongoose.Schema({
         type: String,
         enum: ['active', 'suspended', 'inactive'],
         default: 'active'
+    },
+    portfolio: {
+        type: String,
+        default: ''
     },
     role: {
         type: String,

@@ -13,6 +13,25 @@ import AdserSymbol from '../../Assets/AdserSymbol.jsx';
 import CreatePost from '../../Components/CreatePost/CreatePost.jsx';
 
 
+const allPhotos = [
+  'https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png', 
+  'https://res.cloudinary.com/dqprleeyt/image/upload/v1709819133/jackjack_tcbzyi.png', 
+  'https://res.cloudinary.com/dqprleeyt/image/upload/v1697120096/chrome-capture-2023-9-12_gkby7h.png', 
+  'https://media.istockphoto.com/id/1147066751/photo/hispanic-adult-standing-outside-and-smiling.jpg?s=612x612&w=0&k=20&c=5BWiJRFV-eqg7gDFlu8khQ7Eol_dvsip0Ds2p_zDwAo=', 
+  'https://media.gettyimages.com/id/1285156699/photo/middle-aged-man-portrait.jpg?s=612x612&w=gi&k=20&c=FgNweHnbkQTNhQW2nUfLUn7yq5aegsz5wKJI0pKN6DQ=',
+  'https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png', 
+  'https://res.cloudinary.com/dqprleeyt/image/upload/v1709819133/jackjack_tcbzyi.png', 
+  'https://res.cloudinary.com/dqprleeyt/image/upload/v1697120096/chrome-capture-2023-9-12_gkby7h.png', 
+  'https://media.istockphoto.com/id/1147066751/photo/hispanic-adult-standing-outside-and-smiling.jpg?s=612x612&w=0&k=20&c=5BWiJRFV-eqg7gDFlu8khQ7Eol_dvsip0Ds2p_zDwAo=', 
+  'https://media.gettyimages.com/id/1285156699/photo/middle-aged-man-portrait.jpg?s=612x612&w=gi&k=20&c=FgNweHnbkQTNhQW2nUfLUn7yq5aegsz5wKJI0pKN6DQ=',
+  'https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png', 
+  'https://res.cloudinary.com/dqprleeyt/image/upload/v1709819133/jackjack_tcbzyi.png', 
+  'https://res.cloudinary.com/dqprleeyt/image/upload/v1697120096/chrome-capture-2023-9-12_gkby7h.png', 
+  'https://media.istockphoto.com/id/1147066751/photo/hispanic-adult-standing-outside-and-smiling.jpg?s=612x612&w=0&k=20&c=5BWiJRFV-eqg7gDFlu8khQ7Eol_dvsip0Ds2p_zDwAo=', 
+  'https://media.gettyimages.com/id/1285156699/photo/middle-aged-man-portrait.jpg?s=612x612&w=gi&k=20&c=FgNweHnbkQTNhQW2nUfLUn7yq5aegsz5wKJI0pKN6DQ=',
+
+]
+
 
 
 const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
@@ -311,10 +330,73 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                 <div className="rowYU">
                   <div className="BIOPHOTOS">
                     <div className="BIO">
-
+                      <div className="About">
+                        About
+                      </div>
+                      <div className="About About1">
+                        {
+                          visitedUser.bio
+                        }
+                      </div>
+                      <div className="About About2">
+                        <div className="caseOnA1">
+                          <i className='fa-solid fa-envelope'></i>
+                        </div>
+                        <div className="caseOnA2">
+                          {visitedUser.email}
+                        </div>
+                      </div>
+                      {
+                        visitedUser.phoneNumber && 
+                        <div className="About About2">
+                          <div className="caseOnA1">
+                            <i className='fa-solid fa-phone'></i>
+                          </div>
+                          <div className="caseOnA2">
+                            {visitedUser.phoneNumber}
+                          </div>
+                        </div>
+                      }
+                      {
+                        visitedUser.portfolio && 
+                        <div className="About About2">
+                          <div className="caseOnA1">
+                            <i className='fa-solid fa-globe'></i>
+                          </div>
+                          <div className="caseOnA2">
+                            <a href={"https://"+visitedUser.portfolio} target='_blank' >{visitedUser.portfolio}</a>
+                          </div>
+                        </div>
+                      }
+                      {
+                        visitedUser.address && 
+                        <div className="About About2">
+                          <div className="caseOnA1">
+                            <i className='fa-solid fa-location-dot'></i>
+                          </div>
+                          <div className="caseOnA2">
+                            {visitedUser.address}
+                          </div>
+                        </div>
+                      }
                     </div>
                     <div className="Photos">
-
+                      <div className="About">
+                        Media
+                      </div>
+                      <div className="AboutMedia">
+                      {
+                        allPhotos.slice(0, 9).map((photo, index) => {
+                          return (
+                            <img
+                              src={photo}
+                              key={index} // Consider using a more unique identifier for keys if available
+                              alt={`${photo}-${index}`} // Changed the plus sign to a hyphen for standard alt text formatting
+                            />
+                          )
+                        })
+                      }
+                      </div>
                     </div>
                   </div>
                   <div className="OthersAndCreatePostAndPosts">
