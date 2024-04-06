@@ -84,6 +84,38 @@ const Profile = ({ dataUserCurrent, isFetchingUser }) => {
                       null
                     }
                   </h1>
+
+                  {
+                    (dataUserCurrent && (dataUserCurrent._id === id) ) ? 
+                      <button 
+                        onClick={()=>{
+                          
+                        }}
+                        className="messageFriendShip"
+                      >
+                        <i className='fa-solid fa-pen'></i>&nbsp;Modify Profile
+                      </button>
+                    :
+                    <>
+                      <button 
+                        onClick={()=>{
+
+                        }}
+                        className="sendrequestFriendShip"
+                      >
+                        <i className='fa-solid fa-user-plus'></i>&nbsp;Add Contact
+                      </button>
+                      <button 
+                        onClick={()=>{
+                          
+                        }}
+                        className="messageFriendShip"
+                      >
+                        <i className='fa-solid fa-message'></i>&nbsp;Message
+                      </button>
+                  </>
+                  }
+
                 </div>
                 <div className="rowYU">
                   <div className="BIOPHOTOS">
@@ -125,6 +157,10 @@ const Profile = ({ dataUserCurrent, isFetchingUser }) => {
                       (dataUserCurrent && (dataUserCurrent._id === id))
                       &&
                       <CreatePost ajusting="profile" dataUserCurrent={dataUserCurrent} isFetchingUser={isFetchingUser} />
+                    }
+
+                    {
+
                     }
 
 

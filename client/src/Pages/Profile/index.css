@@ -22,7 +22,7 @@
 }
 
 .rowProfPicAndFullName{
-    height: 50px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: left;
@@ -116,7 +116,6 @@
     cursor: pointer;
     font-size: 15px;
     display: flex;
-    font-weight: 500;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -133,4 +132,43 @@
 .navabarOfProfile .AddColorBlueviolet{
     color: #a341ff;
 
+}
+
+.sendrequestFriendShip{
+    position: absolute;
+    right: 130px;
+    width: auto;
+    padding: 0.333rem 0.999rem;
+    border-radius: 0.25rem;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    font-size: 15px;
+    align-items: center;
+    color: white;
+    background-color: #9a2fff;
+    transition: .2s all ease-in-out;
+}
+.sendrequestFriendShip:hover{
+    background-color: #7903e8;
+}
+.messageFriendShip{
+    position: absolute;
+    right: 0px;
+    width: auto;
+    padding: 0.333rem 0.999rem;
+    border-radius: 0.25rem;
+    outline: none;
+    font-size: 15px;
+    border: none;
+    display: flex;
+    align-items: center;
+    color: white;
+    background-color: #3a3b3c;
+    cursor: pointer;
+    transition: .2s all ease-in-out;
+}
+.messageFriendShip i, .sendrequestFriendShip i{
+    margin-right: 0.3rem;
 }
