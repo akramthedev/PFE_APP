@@ -1,85 +1,83 @@
-import React, {useState, useEffect} from 'react'
-import './index.css';
-import {useNavigate, useParams} from 'react-router-dom'
-import '../Home/Home.css'
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import Navbar from '../../Components/Navbar/Navbar';
 import Ads from '../../Components/Ads/Ads';
 import BirthDays from '../../Components/BirthDays/BirthDays';
 import Contacts from '../../Components/Contacts/Contacts';
-import axios  from 'axios';
+import './index.css';
+import '../Home/Home.css';
 
 
-const Profile = ({ dataUserCurrent, isFetchingUser}) => {
+
+const Profile = ({ dataUserCurrent, isFetchingUser }) => {
+
 
   const { id } = useParams();
   const token = localStorage.getItem('token');
-  const idVisited = id;  
-  const currentId = dataUserCurrent&&dataUserCurrent._id;
+  const idVisited = id;
+  const currentId = dataUserCurrent?._id;
 
+  const [loading, setLoading] = useState(true);
+  const [visitedUser, setVisitedUser] = useState(null);
 
-  const [dataUserVisited, setDataUserVisited] = useState(null);
-  const [loadingDataUserVisited, setloadingDataUserVisited] = useState(true);
+ 
 
-
-  const fetchUserInformations = async ()=>{
-    if(token && currentId && (currentId !== idVisited)){
-      try{
-        const resp = await axios.get(`http://localhost:3001/user/${idVisited}`, {
-          headers : {
-            Authorization : `Bearer ${token}`
+  useEffect(() => {
+    const fetchUser = async () => {
+      setLoading(true);
+      try {
+        if (token && id) {
+          const response = await axios.get(`http://localhost:3001/user/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          if (response.status === 200) {
+            setVisitedUser(response.data);
+          } else {
+            throw new Error('Failed to fetch user data');
           }
-        });
-        if(resp.status === 200){
-          setDataUserVisited(resp.data);
         }
-        else{
-          alert('404 | Oops, something went wrong !');
-        }
+      } catch (error) {
+        console.error(error);
+        alert('Failed to fetch user data');
+      } finally {
+        setLoading(false);
       }
-      catch(e){
-        alert('500 | Oops, something went wrong !');
-        console.log(e.message);
-      } finally{
-        setloadingDataUserVisited(false);
-      }
-    }
-  }
+    };
 
-
-  useEffect(()=>{
-    fetchUserInformations();
-  }, [idVisited]);
+    fetchUser();
+  }, [id]);
 
   return (
     <div className='Home Profile'>
-      <Navbar isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
+      <Navbar isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
       <div className="home2">
         <div className="h0">
-        {
-          dataUserCurrent && (currentId === idVisited) ? "Your profile, "+dataUserCurrent.fullName
-          :
-          <>
           {
-            loadingDataUserVisited ? "Loading Data of the visited user"
+            loading ? "Loading..."
             :
             <>
             {
-              dataUserVisited && 
-              dataUserVisited.fullName
+              visitedUser &&
+              <>
+              {
+                visitedUser.fullName
+              }
+              </>
             }
             </>
           }
-          </>
-        }
         </div>
         <div className="h3">
           <Ads />
-          <BirthDays  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
-          <Contacts    isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}   />
+          <BirthDays isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
+          <Contacts isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;
