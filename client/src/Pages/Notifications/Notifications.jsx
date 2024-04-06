@@ -36,11 +36,17 @@ const Notifications = ({socket ,isFetchingUser, dataUserCurrent}) => {
             setAllNotifications(resp.data);
           }
           else{
-            alert('Error 202');
+            ResponseRequest = {
+              status :202, 
+              msg : 'Oops, something went wrong!'
+            }
           }
         }
         catch(e){
-          alert('500 | Error Server');
+          ResponseRequest = {
+            status :500, 
+            msg : 'Oops, something went wrong!'
+          }
           console.log(e.message);
         } finally{
           setIsFecthingAllNotif(false);
@@ -80,7 +86,7 @@ const Notifications = ({socket ,isFetchingUser, dataUserCurrent}) => {
   return (
     <div className='Home'>
       
-      
+
 
         {
           (!isFetchingUser && dataUserCurrent && !isFetchingAllNotifs) && 

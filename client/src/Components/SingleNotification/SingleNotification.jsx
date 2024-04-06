@@ -14,9 +14,11 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
       try{
         const resp = await axios.delete(`http://localhost:3001/notif/${notif._id}`);
         reRenderParentComponent();
-        ResponseRequest = {
-          status : resp.status, 
-          msg : resp.data
+        if(resp){
+          ResponseRequest = {
+            status : resp.status, 
+            msg : resp.data
+          }
         }
       }
       catch(e){

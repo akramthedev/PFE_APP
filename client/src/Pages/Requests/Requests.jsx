@@ -7,6 +7,7 @@ import Contacts from '../../Components/Contacts/Contacts';
 import BirthDays from '../../Components/BirthDays/BirthDays';
 import UtilsAndNavigations from '../../Components/UtilsAndNavigations/UtilsAndNavigations';
 import axios from "axios";
+import HttpRequestStatus from '../../Components/HttpRequestStatus/HttpRequestStatus';
 
 
 const Requests = ({socket ,isFetchingUser, dataUserCurrent}) => {
@@ -17,6 +18,11 @@ const Requests = ({socket ,isFetchingUser, dataUserCurrent}) => {
     const [AllRequests,setAllRequests] = useState(null);
     const [isFetchingAllRequests,setIsFecthingAllRequests] = useState(true);
 
+
+    let ResponseRequest = {
+      status : null,
+      msg : null, 
+    }
     
     const fetchUserRequests = async ()=>{
       if(idUser && token){
@@ -31,11 +37,17 @@ const Requests = ({socket ,isFetchingUser, dataUserCurrent}) => {
             setAllRequests(resp.data);
           }
           else{
-            alert('Error 202');
+            ResponseRequest = {
+              status : 202,
+              msg : "Oops, something went wrong!", 
+            }
           }
         }
         catch(e){
-          alert('500 | Error Server');
+          ResponseRequest = {
+            status : 202,
+            msg : "Oops, something went wrong with the server!", 
+          }
           console.log(e.message);
         } finally{
           setIsFecthingAllRequests(false);
@@ -48,10 +60,16 @@ const Requests = ({socket ,isFetchingUser, dataUserCurrent}) => {
     }, []);
  
 
-    const handleDeleteAllNotifs = async ()=>{
+    const handleRejectAllRequests = async ()=>{
       if(AllRequests && AllRequests.length !== 0){
         try {
-          await axios.delete(`http://localhost:3001/request/user/${idUser}`);
+          const resp =  await axios.delete(`http://localhost:3001/request/user/${idUser}`);
+          if(resp){
+            ResponseRequest = {
+              status : resp.status, 
+              msg : resp.data
+            }
+          }
         }
         catch(e){
           console.log(e.messgae);
@@ -65,6 +83,11 @@ const Requests = ({socket ,isFetchingUser, dataUserCurrent}) => {
   return (
     <div className='Home'>
       
+        {
+          (!isFetchingUser && dataUserCurrent && !isFetchingAllRequests) && 
+          <HttpRequestStatus responseX={ResponseRequest} />
+        }
+
           <Navbar socket={socket} isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
           <div className="home2">
             <div className="h1">
@@ -74,7 +97,7 @@ const Requests = ({socket ,isFetchingUser, dataUserCurrent}) => {
               <div className="jackiChan">
                 Friend Requests
                 <button
-                  onClick={handleDeleteAllNotifs}
+                  onClick={handleRejectAllRequests}
                   className={AllRequests ? (AllRequests.length !== 0 ? 'deleteAllNotif' : 'deleteAllNotif notAllowed') : "deleteAllNotif notAllowed"}  
                 >
                   Reject All 
