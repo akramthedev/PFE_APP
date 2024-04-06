@@ -9,7 +9,9 @@ import Contacts from '../../Components/Contacts/Contacts';
 import BirthDays from '../../Components/BirthDays/BirthDays';
 import UtilsAndNavigations from '../../Components/UtilsAndNavigations/UtilsAndNavigations';
 import axios from "axios";
-import HttpRequestStatus from '../../Components/HttpRequestStatus/HttpRequestStatus';
+import PostSuggestedUsers from '../../Components/Post/PostSuggestedUsers';
+
+
 
 const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
 
@@ -30,7 +32,8 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
             <div className="h2">
               <CreatePost ajusting="home" isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
               <Post  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
-              <PostAds /> 
+              <PostAds />
+              <PostSuggestedUsers  /> 
             </div>
             <div className="h3">
               <Ads />
