@@ -52,6 +52,106 @@ router.post('/checking', async (req, res) => {
 
 
 
+router.post('/accept', async (req, res) => {
+    try {
+        const { sender, sentTo } = req.body;
+
+        const request = await requests.findOne({
+            sender: sender,
+            sentTo: sentTo
+        });
+
+        if (request) {
+            // Remove the request
+            await requests.deleteOne({
+                sender: sender,
+                sentTo: sentTo
+            });
+
+            // Update user 1
+            const isUser1Updated = await users.findByIdAndUpdate(sender, {
+                $push: {
+                    contacts: sentTo
+                }
+            });
+
+            // Update user 2
+            const isUser2Updated = await users.findByIdAndUpdate(sentTo, {
+                $push: {
+                    contacts: sender
+                }
+            });
+
+            if (isUser1Updated && isUser2Updated) {
+                res.status(200).send("GOOD");
+            } else {
+                res.status(202).send("OOpsy");
+            }
+        } else {
+            res.status(202).send('Request not found');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
+router.post('/reject', async (req, res) => {
+    try {
+        const { sender, sentTo } = req.body;
+
+        await requests.deleteOne({
+            sender : sender, 
+            sentTo : sentTo
+        });
+        console.log(sender +"   " +sentTo)
+        
+        res.status(200).send("Deleted...");
+         
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
+router.post('/remove', async (req, res) => {
+    try {
+        const { sender, sentTo } = req.body;
+
+        const isUser1Updated = await users.findByIdAndUpdate(sender, {
+            $pull: {
+                contacts: sentTo
+            }
+        });
+
+        // Update user 2
+        const isUser2Updated = await users.findByIdAndUpdate(sentTo, {
+            $pull: {
+                contacts: sender
+            }
+        });
+
+        if (isUser1Updated && isUser2Updated) {
+            res.status(200).send("GOOD");
+        } else {
+            res.status(202).send("OOpsy");
+        }
+         
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
 
 
 router.get('/user/:idUser' ,async(req, res)=>{

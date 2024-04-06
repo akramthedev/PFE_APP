@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import useOutsideAlerter from '../../Helpers/HidePopUp.js'
 import Navbar from '../../Components/Navbar/Navbar';
 import Ads from '../../Components/Ads/Ads';
 import BirthDays from '../../Components/BirthDays/BirthDays';
@@ -14,48 +15,30 @@ import CreatePost from '../../Components/CreatePost/CreatePost.jsx';
 
 
 
-const Profile = ({ dataUserCurrent, isFetchingUser }) => {
+const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
 
 
   const { id } = useParams();
   const token = localStorage.getItem('token');
   const idVisited = id;
-  const currentId = dataUserCurrent?._id;
-
+  const currentId = localStorage.getItem('idUser');
+  const popUpRef = useRef(null); 
   const [loading, setLoading] = useState(true);
   const [visitedUser, setVisitedUser] = useState(null);
   const [isPostsClicked, setisPostsClicked] = useState(true);
   const [requestMade, setrequestMade] = useState(null);
+  const [popUp, setpopUp] = useState(false);
  
+  useOutsideAlerter(popUpRef, setpopUp);
 
   useEffect(() => {
     const fetchUser = async () => {
       setLoading(true);
+      
       try {
         if (token && id) {
 
-          //see if the id is in the requests data
-          if(id !== currentId){
-            const response2 = await axios.post(`http://localhost:3001/request/checking`,{
-              currentId : currentId, 
-              idVisited : idVisited
-            }, {
-              headers: { 
-                Authorization: `Bearer ${token}`
-              }
-            });
-            if(response2.status === 200){
-              if(response2.data.sender === currentId){
-                setrequestMade("youAreTheSender");
-              }
-              else{
-                setrequestMade("heIsTheSender");
-              }
-            }
-            else{
-              setrequestMade("none");
-            }
-          }
+          
 
           const response = await axios.get(`http://localhost:3001/user/${id}`, {
             headers: {
@@ -64,6 +47,44 @@ const Profile = ({ dataUserCurrent, isFetchingUser }) => {
           });
           if (response.status === 200) {
             setVisitedUser(response.data);
+
+            if(id !== currentId){
+            
+              if(response.data.contacts.includes(currentId)){
+                setrequestMade('contact');
+              }
+              else{
+                    const response2 = await axios.post(`http://localhost:3001/request/checking`,{
+                    currentId : currentId, 
+                    idVisited : idVisited
+                  }, {
+                    headers: { 
+                      Authorization: `Bearer ${token}`
+                    }
+                  });
+                  if(response2.status === 200){
+                    if(response2.data.sender === currentId){
+                      console.log("Already Sent ")
+                      setrequestMade("youAreTheSender");
+                    }
+                    else{
+                      setrequestMade("heIsTheSender");
+                      console.log("He sent you.. Wanna confirm or reject?")
+  
+                    }
+                    console.log(response2.data); 
+                  }
+                  else{
+                    setrequestMade("none");
+                    console.log(response2.data);
+                    console.log("You Can send a request for friendship.")
+                  }
+              }
+  
+  
+            }
+
+
           } else {
             throw new Error('Failed to fetch user data');
           }
@@ -81,13 +102,95 @@ const Profile = ({ dataUserCurrent, isFetchingUser }) => {
 
    
 
-  const handleRequestClicked = async ()=>{
-
+  const HandleRemoveContact = async()=>{
     try{
+      setrequestMade('none');
+      const resp = await axios.post('http://localhost:3001/request/remove', {
+        sender : currentId, 
+        sentTo : id, 
+        type : "twoPeople"
+      });
+      if(resp){
+        setVisitedUser(prevVisitedUser => ({
+          ...prevVisitedUser,
+          contacts: prevVisitedUser.contacts.filter(contact => contact !== currentId)
+        }));
+        setrequestMade('none');
+        fetchCurrentUser();
+      }
+      else{
+        setrequestMade('none');
+      }
+    }
+    catch(e){
+      setrequestMade('none');
+      console.log(e.message);
+    }
+  }
 
+
+  const handleRequestClicked = async ()=>{
+    try{
+      if(visitedUser.contacts.includes(currentId)){
+        HandleRemoveContact();
+      }
+      else{
+        //now for the requestMade
+        if(requestMade === "none" ){
+          setrequestMade('youAreTheSender');
+          //create request 
+          const resp = await axios.post('http://localhost:3001/request/create', {
+            sender : currentId, 
+            sentTo : id, 
+            type : "twoPeople"
+          });
+          if(resp.status === 200){
+            console.log("Request Sent");
+          }
+          else{
+            alert('Oops, something went wrong!');
+          }
+        }
+        else if (requestMade === "heIsTheSender"){
+          setpopUp(!popUp);
+        }
+        else{
+          console.log('you can not do anything...');
+        }
+      }
     }
     catch(e){
       console.log(e.message);
+    }
+  }
+
+  const handleRequestClicked2 = async (state)=>{
+    if(visitedUser){
+      setpopUp(!popUp);
+        try{
+          if(state === "accept"){
+            //axios 
+            setrequestMade("contact");
+            await axios.post('http://localhost:3001/request/accept', {
+              sender : visitedUser._id, 
+              sentTo : currentId, 
+              type : "twoPeople"
+            });
+            fetchCurrentUser();
+          }
+          else{
+            setrequestMade("none");
+            await axios.post('http://localhost:3001/request/reject', {
+              sender : visitedUser._id, 
+              sentTo : currentId, 
+              type : "twoPeople"
+            });
+            fetchCurrentUser();
+          }
+        }
+        catch(e){
+          console.log(e.message);
+        }
     }
   }
 
@@ -134,24 +237,63 @@ const Profile = ({ dataUserCurrent, isFetchingUser }) => {
                       </button>
                     :
                     <>
+                      <div ref={popUpRef} className={popUp ? "popUp showpopUp" : "popUp"}>
+                          <button
+                            onClick={()=>{
+                              setpopUp(!popUp);
+                            }}
+                            className="closePopUp2"
+                          >
+                            <i className='fa-solid fa-xmark'></i>
+                          </button>
+                          <button
+                            onClick={()=>{
+                              handleRequestClicked2("accept")
+                            }}
+                            className='acc acc1'
+                          >
+                            Accept
+                          </button>
+                          <button
+                            onClick={()=>{
+                              handleRequestClicked2("reject")
+                            }}
+                            className='acc acc2'
+                          >
+                            Reject
+                          </button>
+                        </div>
+
                       <button 
                         onClick={()=>{
                           handleRequestClicked();
                         }}
+                        key={popUp ? 134 : 234}
                         className="sendrequestFriendShip"
                       >
-                      { requestMade && 
-                      <>
-                        {
-                          requestMade === "none" ? 
-                          <><i className='fa-solid fa-user-plus'></i>&nbsp;Add Contact</>
-                          : requestMade === "youAreTheSender" ? 
-                          <><i className='fa-solid fa-check'></i>&nbsp;Request Sent</>
-                          : requestMade === "heIsTheSender" && 
-                          <><i className='fa-solid fa-check'></i>&nbsp;Request Received</>
+                        
+                      {
+                        visitedUser.contacts.includes(dataUserCurrent._id) ? 
+                          <><i className='fa-solid fa-user-minus'></i>&nbsp;Remove Contact</>
+                        :
+                        <>
+                        { 
+                          requestMade && 
+                          <>
+                            {
+                              requestMade === "none" ? 
+                              <><i className='fa-solid fa-user-plus'></i>&nbsp;Add Contact</>
+                              : requestMade === "youAreTheSender" ? 
+                              <><i className='fa-solid fa-check'></i>&nbsp;Request Sent</>
+                              : requestMade === "heIsTheSender" ?
+                              <><i className='fa-solid fa-eye'></i>&nbsp;Request Received</>
+                              : requestMade === "contact" &&
+                              <><i className='fa-solid fa-user-minus'></i>&nbsp;Remove User</>
 
-                        }                         
-                      </>
+                            }                         
+                          </>
+                         }
+                        </>
                       }
                       </button>
                       <button 
