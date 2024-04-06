@@ -11,7 +11,9 @@
     padding: 0 1.5rem;
     transition: 0.35s all ease-in-out;
 }
-
+.ajustPost{
+    width: 100%;
+}
 .rowP0{
     width: 100%;
     display: flex;

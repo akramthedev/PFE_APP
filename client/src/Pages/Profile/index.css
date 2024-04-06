@@ -71,14 +71,14 @@
 
 .OthersAndCreatePostAndPosts{
     width: 64%;
-    min-height: 2000px;
     margin-top: 20px;
+    min-height: 748px;
     display: flex;
     flex-direction: column;
 }
 .BIO{
     height: auto;
-    min-height: 200px;
+    min-height: 100px;
     width: 100%;
     border-radius: 0.2rem;
     background-color: #242526;
@@ -123,7 +123,7 @@
 .Photos{
     height: auto;
     min-height: 100px;
-    max-height: 400px;
+    cursor: pointer;
     padding: 0.7rem;
     width: 100%;
     border-radius: 0.2rem;
@@ -147,7 +147,7 @@
     border-radius: 0.2rem;
     outline: none;
     border: none;
-    transition: 0.2s all ease-in-out;
+    transition: 0.1s all ease-in-out;
     background-color: transparent;
     color: #e4e6eb;
     cursor: pointer;
@@ -159,7 +159,6 @@
 }
 .navabarOfProfile button:hover{
     color: #a341ff;
-    background-color: #313234;
 }
 
 .navabarOfProfile button i{
@@ -168,7 +167,9 @@
 }
 .navabarOfProfile .AddColorBlueviolet{
     color: #a341ff;
-
+}
+.navabarOfProfile .AddColorBlueviolet:hover{
+    color: #7901e8;
 }
 
 .sendrequestFriendShip{

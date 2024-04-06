@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import './index.css';
+import formatCreatedAt from '../../Helpers/GetTimeAndDate';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 
@@ -99,6 +100,13 @@ const SingleRequest = ({request, index, reRenderParentComponent, renderUserInfos
                   Reject Request
                 </button>
               </div>
+
+              <span className="timeOuDate">
+              {
+                request && request.createdAt && 
+                formatCreatedAt(request.createdAt)
+              }
+              </span>
 
           </div>
 

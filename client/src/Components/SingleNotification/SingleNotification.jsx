@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import './index.css';
+import formatCreatedAt from '../../Helpers/GetTimeAndDate';
 import axios from 'axios';
 import HttpRequestStatus from '../HttpRequestStatus/HttpRequestStatus';
 import {useNavigate} from 'react-router-dom';
@@ -168,6 +169,12 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
                 </div>
               <span className={isseen ? " isnotseen isseen" : "isnotseen"}>
                  <i className='fa-solid fa-check-double'></i>
+              </span>
+              <span className="timeOuDate">
+              {
+                notif && notif.createdAt && 
+                formatCreatedAt(notif.createdAt)
+              }
               </span>
             </div>
           :

@@ -88,7 +88,6 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
                 alt=""
                 onClick={()=>{
                     navigate("/");
-                    navigate(0);
                 }}
             />
         </div>

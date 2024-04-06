@@ -1,5 +1,6 @@
 import React, { useState,useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Post from '../../Components/Post/Post.jsx';
 import axios from 'axios';
 import useOutsideAlerter from '../../Helpers/HidePopUp.js'
 import Navbar from '../../Components/Navbar/Navbar';
@@ -45,6 +46,10 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   const [loading, setLoading] = useState(true);
   const [visitedUser, setVisitedUser] = useState(null);
   const [isPostsClicked, setisPostsClicked] = useState(true);
+  const [isMediaClicked, setisMediaClicked] = useState(false);
+  const [isAboutClicked, setisAboutClicked] = useState(false);
+  const [isContactsClicked, setisContactsClicked] = useState(false);
+  const [isGroupsClicked, setisGroupsClicked] = useState(false);
   const [requestMade, setrequestMade] = useState(null);
   const [popUp, setpopUp] = useState(false);
  
@@ -119,6 +124,19 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
     fetchUser();
   }, [id]);
 
+
+  useEffect(()=>{
+
+    const x = ()=>{
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior : "instant",
+      });    
+    }
+    x();
+
+}, []);
    
 
   const HandleRemoveContact = async()=>{
@@ -380,7 +398,17 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                         </div>
                       }
                     </div>
-                    <div className="Photos">
+                    <div className="Photos"
+                      onClick={()=>{
+                        if(!isMediaClicked){
+                          setisAboutClicked(false);
+                          setisGroupsClicked(false);
+                          setisContactsClicked(false);
+                          setisPostsClicked(false);
+                          setisMediaClicked(true);
+                        }
+                      }}
+                    >
                       <div className="About">
                         Media
                       </div>
@@ -403,24 +431,77 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
 
                     <div className="navabarOfProfile">
                       <button
+                        onClick={()=>{
+                          if(!isPostsClicked){
+                            setisMediaClicked(false);
+                            setisAboutClicked(false);
+                            setisGroupsClicked(false);
+                            setisContactsClicked(false);
+                            setisPostsClicked(true);
+                          }
+                        }}
                         className={isPostsClicked && "AddColorBlueviolet"}
                       >
                         <i className='fa-solid fa-list'></i>
                         <span>Posts</span>
                       </button>
-                      <button>
+                      <button
+                        className={isMediaClicked && "AddColorBlueviolet"}
+                        onClick={()=>{
+                          if(!isMediaClicked){
+                            setisAboutClicked(false);
+                            setisGroupsClicked(false);
+                            setisContactsClicked(false);
+                            setisPostsClicked(false);
+                            setisMediaClicked(true);
+                          }
+                        }}
+                      >
                         <i className='fa-solid fa-image'></i>
                         <span>Images</span>
                       </button>
-                      <button>
+                      <button
+                        className={isAboutClicked && "AddColorBlueviolet"}
+                        onClick={()=>{
+                          if(!isAboutClicked){
+                            setisMediaClicked(false);
+                            setisGroupsClicked(false);
+                            setisContactsClicked(false);
+                            setisPostsClicked(false);
+                            setisAboutClicked(true);
+                          }
+                        }}
+                      >
                         <i className='fa-solid fa-address-card'></i>
                         <span>About</span>
                       </button>
-                      <button>
+                      <button
+                        className={isContactsClicked && "AddColorBlueviolet"}
+                        onClick={()=>{
+                          if(!isContactsClicked){
+                            setisMediaClicked(false);
+                            setisAboutClicked(false);
+                            setisGroupsClicked(false);
+                            setisPostsClicked(false);
+                            setisContactsClicked(true);
+                          }
+                        }}
+                      >
                         <i className='fa-solid fa-user-group'></i>
                         <span>Contacts</span>
                       </button>
-                      <button>
+                      <button
+                        className={isGroupsClicked && "AddColorBlueviolet"}
+                        onClick={()=>{
+                          if(!isGroupsClicked){
+                            setisMediaClicked(false);
+                            setisAboutClicked(false);
+                            setisContactsClicked(false);
+                            setisPostsClicked(false);
+                            setisGroupsClicked(true);
+                          }
+                        }}
+                      >
                         <i className='fa-solid fa-people-group'></i>
                         <span>Groups</span>
                       </button>
@@ -432,9 +513,11 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                       <CreatePost ajusting="profile" dataUserCurrent={dataUserCurrent} isFetchingUser={isFetchingUser} />
                     }
 
-                    {
+                    <Post ajusting={"yes"} />
+                    <Post ajusting={'yes'} />
+                    <Post ajusting={'yes'} />
+                    <Post ajusting={'yes'} />
 
-                    }
 
 
                   </div>

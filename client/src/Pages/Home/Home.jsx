@@ -40,7 +40,18 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
     
     */
   
+    useEffect(()=>{
 
+      const x = ()=>{
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior : "instant",
+        });    
+      }
+      x();
+
+  }, []);
 
   return (
     <div className='Home'>

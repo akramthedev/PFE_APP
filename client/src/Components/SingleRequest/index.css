@@ -118,3 +118,10 @@
     background-color: rgb(206, 2, 2);
     color: white;
 }
+.SingleNotification .timeOuDate{
+    color: gray !important;
+    font-size: 13px !important;
+    position: absolute;
+    right: 5px;
+    bottom: 1px;
+}

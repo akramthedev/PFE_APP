@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import "./Post.css";
 import {useNavigate} from 'react-router-dom'
 
-const Post = () => {
+const Post = ({ajusting}) => {
 
 
     const naviagte = useNavigate();
@@ -17,7 +17,7 @@ const Post = () => {
 
 
     return (
-    <div className='Post'>
+    <div className={ajusting === "yes" ? "Post ajustPost" : "Post"}>
         <div className=" rowP0 rowP1">
             <div className="c1"
                 onClick={()=>{

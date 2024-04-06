@@ -107,4 +107,10 @@
 .isseen{
     color: rgb(172, 83, 255);
 }
-
+.timeOuDate{
+    color: gray;
+    font-size: 13px;
+    position: absolute;
+    right: 2rem;
+    bottom: 1px;
+}

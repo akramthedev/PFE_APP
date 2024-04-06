@@ -19,6 +19,21 @@ const Requests = ({socket ,isFetchingUser, dataUserCurrent, renderUserInfos}) =>
     const [isFetchingAllRequests,setIsFecthingAllRequests] = useState(true);
 
 
+
+    useEffect(()=>{
+
+      const x = ()=>{
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior : "instant",
+        });    
+      }
+      x();
+  
+  }, []);
+
+  
     let ResponseRequest = {
       status : null,
       msg : null, 
