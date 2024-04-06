@@ -1,0 +1,85 @@
+
+.Home{
+    background-color: #18191a;
+    padding: 0 2rem;
+}
+.home2{
+    width: 100%;
+    display: flex;
+}
+.h1{
+    height: calc(100vh - 80px);
+    width: 30%;
+    margin-top: 0px;
+    position: sticky;
+    top: 80px;
+}
+.h2{
+    width: 60%;
+    min-height: calc(100vh - 80px);
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    padding-top: 5px;
+}
+.h3{
+    height: calc(100vh - 80px);
+    width: 30%;
+    margin-top: 0px;
+    position: sticky;
+    top: 80px;
+    overflow-y: scroll;
+}
+*{
+    scroll-behavior: smooth;
+}
+
+.jackiChan{
+    width: 80%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    color: #e4e6eb;
+    font-weight: 600;
+    font-size: 1.4rem;
+    margin: 0 auto;
+    padding-left: 0.33rem;
+    margin-bottom: 2rem;
+    font-family: "Libre Caslon Text", serif;
+}
+.jackiChan {
+    position: relative;
+}
+.deleteAllNotif{
+    position: absolute;
+    right: 0px;
+    height: 31px;
+    width: 100px;
+    border: 1px solid red;
+    outline: none;
+    font-size: 14px;
+    border-radius: 0.23rem;
+    background-color: transparent;
+    color: red;
+    cursor: pointer;
+    transition: .2s all ease-in-out;
+}
+.deleteAllNotif:hover{
+    background-color: red;
+    color: white;
+}
+
+
+.sdjoqc{
+    color: gray;
+    text-align: center;
+    margin: 0 auto;
+}
+.notAllowed{
+    cursor: not-allowed;
+}
+.notAllowed:hover{
+    background-color: transparent;
+    color: red;
+}

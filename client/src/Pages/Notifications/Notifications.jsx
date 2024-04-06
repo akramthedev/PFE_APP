@@ -46,6 +46,20 @@ const Notifications = ({socket ,isFetchingUser, dataUserCurrent}) => {
     useEffect(()=>{
       fetchUserNotifications();
     }, []);
+ 
+
+    const handleDeleteAllNotifs = async ()=>{
+      if(AllNotifications && AllNotifications.length !== 0){
+        try {
+          await axios.delete(`http://localhost:3001/notif/user/${idUser}`);
+        }
+        catch(e){
+          console.log(e.messgae);
+        } finally{
+          fetchUserNotifications();
+        }
+      }
+    }
 
 
   return (
@@ -58,21 +72,28 @@ const Notifications = ({socket ,isFetchingUser, dataUserCurrent}) => {
             </div>
             <div className="h2">
               <div className="jackiChan">
-                Your notifications
+                Notifications 
+                
+                <button
+                  onClick={handleDeleteAllNotifs}
+                  className={AllNotifications ? (AllNotifications.length !== 0 ? 'deleteAllNotif' : 'deleteAllNotif notAllowed') : "deleteAllNotif notAllowed"}  
+                >
+                  Delete All 
+                </button>
               </div>
               {
-                isFetchingAllNotifs ? "Loading ..."
+                isFetchingAllNotifs ? <span className='sdjoqc'>Loading ...</span>
                 :
                 <>
                 {
                   AllNotifications && 
                   <>
                   {
-                    AllNotifications.length === 0  ? "No notification yet..."
+                    AllNotifications.length === 0  ? <span className='sdjoqc'>No notification yet...</span>
                     :
                     AllNotifications.map((notif, index)=>{
                       return(
-                        <SingleNotification notif={notif} index={index} />
+                        <SingleNotification reRenderParentComponent={fetchUserNotifications} notif={notif} index={index} />
                       )
                     })
                   }

@@ -47,5 +47,39 @@
     padding-left: 0.33rem;
     margin-bottom: 2rem;
     font-family: "Libre Caslon Text", serif;
+}
+.jackiChan {
+    position: relative;
+}
+.deleteAllNotif{
+    position: absolute;
+    right: 0px;
+    height: 31px;
+    width: 100px;
+    border: 1px solid red;
+    outline: none;
+    font-size: 14px;
+    border-radius: 0.23rem;
+    background-color: transparent;
+    color: red;
+    cursor: pointer;
+    transition: .2s all ease-in-out;
+}
+.deleteAllNotif:hover{
+    background-color: red;
+    color: white;
+}
 
+
+.sdjoqc{
+    color: gray;
+    text-align: center;
+    margin: 0 auto;
+}
+.notAllowed{
+    cursor: not-allowed;
+}
+.notAllowed:hover{
+    background-color: transparent;
+    color: red;
 }

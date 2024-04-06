@@ -1,6 +1,6 @@
 const express = require('express');
 const users = require('../Models/users');
-const notifs = require('../Models/notifs');
+const requests = require('../Modelsrequests');
 const sendEmail = require('../Helpers/EmailSender');
 const verifyToken = require('../Middlewares/verifyToken');
 
@@ -11,7 +11,7 @@ const router = express.Router();
 router.post('/create' ,async(req, res)=>{
     try{
         const data = req.body;
-        const isCreated = await notifs.create(data);
+        const isCreated = await requests.create(data);
         if(isCreated){
             res.status(200).send(isCreated);
         }
@@ -30,8 +30,8 @@ router.post('/create' ,async(req, res)=>{
 router.get('/user/:idUser' ,async(req, res)=>{
     try{
         const {idUser} = req.params;
-        const areFound = await notifs.find({
-            idNotifSentTo : idUser
+        const areFound = await requests.find({
+            sentTo : idUser
         });
         if(areFound){
             res.status(200).send(areFound);
@@ -47,10 +47,10 @@ router.get('/user/:idUser' ,async(req, res)=>{
 
 
 
-router.delete('/:idNotif' ,async(req, res)=>{
+router.delete('/:idRequest' ,async(req, res)=>{
     try{
-        const {idNotif} = req.params;
-        const isDeleted = await notifs.findByIdAndDelete(idNotif);
+        const {idRequest} = req.params;
+        const isDeleted = await requests.findByIdAndDelete(idRequest);
         if(isDeleted){
             res.status(200).send(isDeleted);
         }
@@ -67,7 +67,7 @@ router.delete('/:idNotif' ,async(req, res)=>{
 router.delete('/user/:idUser' ,async(req, res)=>{
     try{
         const {idUser} = req.params;
-        const { deletedCount } = await notifs.deleteMany({ idNotifSentTo: idUser });
+        const { deletedCount } = await requests.deleteMany({ sentTo: idUser });
         if (deletedCount > 0) {
             console.log(deletedCount);
             res.status(200).send({ message: `${deletedCount} notifications deleted successfully.` });

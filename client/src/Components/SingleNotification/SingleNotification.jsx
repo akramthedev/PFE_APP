@@ -1,8 +1,25 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './index.css';
+import axios from 'axios';
 
-const SingleNotification = ({notif, index}) => {
-  
+
+const SingleNotification = ({notif, index, reRenderParentComponent}) => {
+
+
+
+    const handleDeleteNotif = async()=>{
+      try{
+        await axios.delete(`http://localhost:3001/notif/${notif._id}`);
+        reRenderParentComponent();
+      }
+      catch(e){
+        console.log(e.message);
+      } finally{
+        reRenderParentComponent();
+      }
+    }
+
+
     return (
       <>
       {
@@ -11,6 +28,14 @@ const SingleNotification = ({notif, index}) => {
         {
           notif.type === "Welcoming" ? 
           <div key={index} className='SingleNotification'>
+            <button
+              onClick={()=>{
+                handleDeleteNotif();
+              }}
+              className='deleteSingleNotif'
+            >
+              <i className='fa-solid fa-trash'></i>
+            </button>
             <div className="rowTitleNotif rowTitleNotif2">
               {
                 notif.title
