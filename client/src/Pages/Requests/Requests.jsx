@@ -10,7 +10,7 @@ import axios from "axios";
 import HttpRequestStatus from '../../Components/HttpRequestStatus/HttpRequestStatus';
 
 
-const Requests = ({socket ,isFetchingUser, dataUserCurrent}) => {
+const Requests = ({socket ,isFetchingUser, dataUserCurrent, renderUserInfos}) => {
 
     const token = localStorage.getItem('token');
     const idUser = localStorage.getItem('idUser');
@@ -111,7 +111,7 @@ const Requests = ({socket ,isFetchingUser, dataUserCurrent}) => {
                     :
                     AllRequests.map((request, index)=>{
                       return(
-                        <SingleRequest reRenderParentComponent={fetchUserRequests} request={request} index={index} />
+                        <SingleRequest  renderUserInfos={renderUserInfos}  reRenderParentComponent={fetchUserRequests} request={request} index={index} />
                       )
                     })
                   }

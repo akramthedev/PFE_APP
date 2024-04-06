@@ -149,7 +149,7 @@ function App() {
           <Route  
             path='/requests' 
             element={
-              token ? <Requests  isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}  /> : <Navigate to="/auth" />
+              token ? <Requests renderUserInfos={fetchUser} isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}  /> : <Navigate to="/auth" />
             } 
           />
           

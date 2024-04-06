@@ -1,6 +1,7 @@
 const express = require('express');
 const users = require('../Models/users');
 const requests = require('../Models/requests');
+const notifs = require('../Models/notifs');
 const sendEmail = require('../Helpers/EmailSender');
 const verifyToken = require('../Middlewares/verifyToken');
 
@@ -75,6 +76,7 @@ router.post('/accept', async (req, res) => {
                 }
             });
 
+
             // Update user 2
             const isUser2Updated = await users.findByIdAndUpdate(sentTo, {
                 $push: {
@@ -82,7 +84,24 @@ router.post('/accept', async (req, res) => {
                 }
             });
 
+
             if (isUser1Updated && isUser2Updated) {
+                let data1 = {
+                    title : `🎉 Congratulations! You and ${isUser1Updated.fullName} are now friends!`, 
+                    description1 : "Start chatting, sharing, and enjoying your friendship together!", 
+                    type : "Friend Accepted", 
+                    idNotifSentTo : sentTo
+                }
+                let data2 = {
+                    title : `🎉 Congratulations! You and ${isUser2Updated.fullName} are now friends!`, 
+                    description1 : "Start chatting, sharing, and enjoying your friendship together!",
+                    idNotifSentTo :  sender,
+                    type : "Friend Accepted", 
+                }
+                
+                await notifs.create(data1);
+                await notifs.create(data2);
+
                 res.status(200).send("GOOD");
             } else {
                 res.status(202).send("OOpsy");

@@ -7,12 +7,23 @@
     margin: 0 auto;
     margin-bottom: 1.67rem;
     padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
 }
 .rowTitleNotif{
-    height: auto;
-    width: 95%;
-    margin: 0 auto;
+    height: 49px;
+    width: 49px;
+    margin: 0;
+    margin-right: 1rem;
+    margin-left: 1rem;
     color: gainsboro;
+}
+.rowTitleNotif img{
+    height: 49px;;
+    width: 49px;;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
 }
 .rowImgCompany{
     display: flex;
@@ -36,8 +47,8 @@
 .deleteSingleNotif{
     position: absolute;
     right: 0px;
-    height: 31px;
-    width: 31px;
+    height: 29px;
+    width: 29px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,7 +58,6 @@
     border-radius: 0.23rem;
     background-color: transparent;
     color: red;
-    padding-top: .14rem;
     border-radius: 50%;
     top: 12px;
     right: 12px;
@@ -56,5 +66,55 @@
 }
 .deleteSingleNotif:hover{
     background-color: red;
+    color: white;
+}
+
+.SingleNotification span{
+    color: #e4e6eb;
+    font-size: 15px;
+}
+
+.rowii{
+    display: flex;
+    align-items: center;
+}
+.rowiirowii{
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 0;
+}
+
+.btnbtn{
+    width: 49%;
+    cursor: pointer;
+    margin : 0 10px;
+    height: 35px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 4px;
+    transition: .2s all ease-in-out;
+    border-radius: 0.25rem;
+    outline: none;
+    border: none;
+}
+.accpt{
+    border: 1px solid #9a2fff;
+    background-color: #982efa;
+    color: white;
+}
+.accpt:hover{
+    border: 1px solid #9a2fff;
+    background-color: #6e0acd;
+    color: white;
+}
+.reject{
+    border: 1px solid red;
+    background-color: rgb(255, 44, 44);
+    color: white;
+}
+
+.reject:hover{
+    border: 1px solid red;
+    background-color: rgb(206, 2, 2);
     color: white;
 }

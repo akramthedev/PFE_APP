@@ -2,8 +2,14 @@ import React, {useState, useEffect} from 'react'
 import './index.css';
 import axios from 'axios';
 import HttpRequestStatus from '../HttpRequestStatus/HttpRequestStatus';
+import {useNavigate} from 'react-router-dom';
+
+
 
 const SingleNotification = ({notif, index, reRenderParentComponent}) => {
+
+
+    const navigate = useNavigate();
 
     let ResponseRequest = {
       status : null, 
@@ -102,6 +108,28 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
               <img src="https://res.cloudinary.com/dqprleeyt/image/upload/v1712318887/and_parkle___3_-removebg-preview_lyfila.png" alt="" />
             </div>
           </div>
+          : notif.type === "Friend Accepted" ? 
+            <div key={index} className=' SingleNotification3'>
+                <button
+                    onClick={()=>{
+                      handleDeleteNotif();
+                    }}
+                    className='deleteSingleNotif'
+                  >
+                  <i className='fa-solid fa-trash'></i>
+                </button>
+                <div className="content">
+                  {
+                    notif.title
+                  }
+                </div>
+                <div className="content">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+                  notif.description1
+                }
+                </div>
+               
+            </div>
           :
           <div key={index} className='SingleNotification'>
             
