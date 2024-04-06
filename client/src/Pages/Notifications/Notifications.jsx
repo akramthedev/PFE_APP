@@ -7,6 +7,7 @@ import Contacts from '../../Components/Contacts/Contacts';
 import BirthDays from '../../Components/BirthDays/BirthDays';
 import UtilsAndNavigations from '../../Components/UtilsAndNavigations/UtilsAndNavigations';
 import axios from "axios";
+import HttpRequestStatus from '../../Components/HttpRequestStatus/HttpRequestStatus';
 
 
 const Notifications = ({socket ,isFetchingUser, dataUserCurrent}) => {
@@ -16,7 +17,11 @@ const Notifications = ({socket ,isFetchingUser, dataUserCurrent}) => {
     
     const [AllNotifications,setAllNotifications] = useState(null);
     const [isFetchingAllNotifs,setIsFecthingAllNotif] = useState(true);
-
+    
+    let ResponseRequest = {
+      status : null,
+      msg : null, 
+    }
     
     const fetchUserNotifications = async ()=>{
       if(idUser && token){
@@ -51,10 +56,20 @@ const Notifications = ({socket ,isFetchingUser, dataUserCurrent}) => {
     const handleDeleteAllNotifs = async ()=>{
       if(AllNotifications && AllNotifications.length !== 0){
         try {
-          await axios.delete(`http://localhost:3001/notif/user/${idUser}`);
+          const resp = await axios.delete(`http://localhost:3001/notif/user/${idUser}`);
+          if(resp){
+            ResponseRequest = {
+              status : resp.status, 
+              msg : resp.data
+            }
+          }
         }
         catch(e){
-          console.log(e.messgae);
+          console.log(e.message);
+          ResponseRequest = {
+            status : 500, 
+            msg : e.message
+          }
         } finally{
           fetchUserNotifications();
         }
@@ -65,6 +80,14 @@ const Notifications = ({socket ,isFetchingUser, dataUserCurrent}) => {
   return (
     <div className='Home'>
       
+      
+
+        {
+          (!isFetchingUser && dataUserCurrent && !isFetchingAllNotifs) && 
+          <HttpRequestStatus responseX={ResponseRequest} />
+        }
+
+
           <Navbar socket={socket} isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
           <div className="home2">
             <div className="h1">

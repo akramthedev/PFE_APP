@@ -1,0 +1,43 @@
+.HttpRequestStatusPoPuP {
+    z-index: 9999999;
+    position: fixed;
+    transition: 0.5s top ease-in-out;
+    top: -66px;
+    min-height: 45px;
+    max-height: 56px;
+    min-width: 240px;
+    padding: 0 2rem;
+    max-width: 333px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    backdrop-filter: blur(6px) saturate(200%);
+    -webkit-backdrop-filter: blur(6px) saturate(200%);
+    background-color: rgba(127, 0, 231, 0.658);    
+    border-radius: 0.24rem;
+    border: 1px solid rgb(143, 34, 245);
+}
+ 
+.showHttpRequestStatusPoPuP {
+    top: 2rem;
+}
+
+.closePopUp{
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    border-radius: 50%;
+    height: 19px;
+    width: 19px;
+    border: 1px solid blueviolet;
+    background-color: blueviolet;
+    color: white;
+    cursor: pointer;
+    font-size: 13px;
+}
+.closePopUp i{
+    font-size: 13px;
+}

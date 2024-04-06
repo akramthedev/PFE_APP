@@ -1,19 +1,30 @@
 import React, {useState, useEffect} from 'react'
 import './index.css';
 import axios from 'axios';
-
+import HttpRequestStatus from '../HttpRequestStatus/HttpRequestStatus';
 
 const SingleNotification = ({notif, index, reRenderParentComponent}) => {
 
-
+    let ResponseRequest = {
+      status : null, 
+      msg : null
+    }
 
     const handleDeleteNotif = async()=>{
       try{
-        await axios.delete(`http://localhost:3001/notif/${notif._id}`);
+        const resp = await axios.delete(`http://localhost:3001/notif/${notif._id}`);
         reRenderParentComponent();
+        ResponseRequest = {
+          status : resp.status, 
+          msg : resp.data
+        }
       }
       catch(e){
         console.log(e.message);
+        ResponseRequest = {
+          status : 500, 
+          msg : e.message
+        }
       } finally{
         reRenderParentComponent();
       }
@@ -22,9 +33,11 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
 
     return (
       <>
+       
       {
         notif && 
         <>
+        <HttpRequestStatus responseX={ResponseRequest}/>
         {
           notif.type === "Welcoming" ? 
           <div key={index} className='SingleNotification'>

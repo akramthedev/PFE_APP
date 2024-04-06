@@ -9,18 +9,19 @@ import Contacts from '../../Components/Contacts/Contacts';
 import BirthDays from '../../Components/BirthDays/BirthDays';
 import UtilsAndNavigations from '../../Components/UtilsAndNavigations/UtilsAndNavigations';
 import axios from "axios";
+import HttpRequestStatus from '../../Components/HttpRequestStatus/HttpRequestStatus';
 
-
-const Home = ({socket, isFetchingUser, dataUserCurrent}) => {
+const Home = ({socket, isFetchingUser, dataUserCurrent, ResponseRequest}) => {
 
     const token = localStorage.getItem('token');
     const idUser = localStorage.getItem('idUser');
-    
-   
+     
 
   return (
     <div className='Home'>
       
+        
+
           <Navbar socket={socket} isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
           <div className="home2">
             <div className="h1">

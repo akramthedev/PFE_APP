@@ -20,7 +20,7 @@ import Accessibility from "./Pages/Accessibility/Accessibility";
 import AdminPanel from "./Pages/AdminPanel/AdminPanel";
 import AdserPanel from "./Pages/AdserPanel/AdserPanel";
 import { useSocket } from './Helpers/SocketContext';
-
+import HttpRequestStatus from './Components/HttpRequestStatus/HttpRequestStatus';
 
 
 
@@ -32,6 +32,7 @@ function App() {
 
   const [isFetchingUser, setIsFetchingUser] = useState(true);
   const [dataUserCurrent, setdataUserCurrent] = useState(null);
+  const [ResponseRequest, setResponseRequest] = useState(null);
 
    
   const fetchUser = async ()=>{
@@ -45,13 +46,23 @@ function App() {
         if(resp.status === 200){
           console.log(resp.data);
           setdataUserCurrent(resp.data);
+          setResponseRequest({
+            status : 200, 
+            msg : "User Fetched"
+          });
         }
         else{
-          alert('Error 202');
+          setResponseRequest({
+            status : 201, 
+            msg : "User Not Fetched"
+          });
         }
       }
       catch(e){
-        alert('500 | Error Server');
+        setResponseRequest({
+          status : 500, 
+          msg : "Oops, something went wrong with the server!"
+        });
         console.log(e.message);
       } finally{
         setIsFetchingUser(false);
@@ -77,7 +88,7 @@ function App() {
 
   return (
       <BrowserRouter>
-        <Routes>
+        <Routes> 
           
 
           <Route  
@@ -97,7 +108,7 @@ function App() {
           <Route  
             path='/' 
             element={
-              token ? <Home  isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} /> : <Navigate to="/auth" />
+              token ? <Home ResponseRequest={ResponseRequest}  isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} /> : <Navigate to="/auth" />
             } 
           />
 

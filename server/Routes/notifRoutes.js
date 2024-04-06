@@ -52,10 +52,10 @@ router.delete('/:idNotif' ,async(req, res)=>{
         const {idNotif} = req.params;
         const isDeleted = await notifs.findByIdAndDelete(idNotif);
         if(isDeleted){
-            res.status(200).send(isDeleted);
+            res.status(200).send("The notification deleted successfully!");
         }
         else{
-            res.status(202).send('Not Founds...');
+            res.status(202).send('Something went wrong! The notification not deleted..');
         }
     }
     catch(e){
