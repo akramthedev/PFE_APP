@@ -32,7 +32,7 @@ router.get('/user/:idUser' ,async(req, res)=>{
         const {idUser} = req.params;
         const areFound = await notifs.find({
             idNotifSentTo : idUser
-        });
+        }).sort({ createdAt: -1 });
         if(areFound){
             res.status(200).send(areFound);
         }

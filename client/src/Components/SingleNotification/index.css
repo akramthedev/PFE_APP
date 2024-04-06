@@ -14,18 +14,18 @@
     margin: 0 auto;
     color: gainsboro;
 }
-.rowImgCompany{
+.contentImg{
     display: flex;
     align-items: center;
     justify-content: right;
 }
-.rowImgCompany img{
+.contentImg img{
     height: 29px;
     width: auto;
     object-fit: cover;
 }
 .rowTitleNotif2{
-    font-weight: 500;
+    font-weight: 700;
     font-size: 1.04rem;
     font-family: "Libre Caslon Text", serif;
 }
@@ -84,4 +84,9 @@
 .content{
     width: 100%;
     color: gainsboro;
+}
+
+.content2{
+    font-weight: 600;
+    font-family: "Libre Caslon Text", serif;
 }

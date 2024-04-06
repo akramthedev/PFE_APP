@@ -58,7 +58,7 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
             >
               <i className='fa-solid fa-trash'></i>
             </button>
-            <div className="rowTitleNotif rowTitleNotif2">
+            <div className="content content2">
               {
                 notif.title
               }
@@ -66,7 +66,7 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
             <br />
             {
               notif.description1 !== '' && 
-              <div className="rowTitleNotif">
+              <div className="content">
               {
                 notif.description1
               }
@@ -74,7 +74,7 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
             }
             {
               notif.description2 !== '' && 
-              <div className="rowTitleNotif">
+              <div className="content">
               {
                 notif.description2
               }
@@ -82,7 +82,7 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
             }
             {
               notif.description3 !== '' && 
-              <div className="rowTitleNotif">
+              <div className="content">
               {
                 notif.description3
               }
@@ -90,7 +90,7 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
             }
             {
               notif.description4 !== '' && 
-              <div className="rowTitleNotif">
+              <div className="content">
               {
                 notif.description4
               }
@@ -98,13 +98,13 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
             }
             {
               notif.description5 !== '' && 
-              <div className="rowTitleNotif">
+              <div className="content">
               {
                 notif.description5
               }
             </div>
             }
-            <div className="rowTitleNotif rowImgCompany">
+            <div className="content contentImg">
               <img src="https://res.cloudinary.com/dqprleeyt/image/upload/v1712318887/and_parkle___3_-removebg-preview_lyfila.png" alt="" />
             </div>
           </div>
