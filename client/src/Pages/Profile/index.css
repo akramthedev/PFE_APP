@@ -173,7 +173,7 @@
     margin-right: 0.3rem;
 }
 
-.popUp{
+.popUpx{
     opacity: 0;
     transition: 0.3s all ease-in-out;
     position: absolute;
@@ -189,11 +189,11 @@
     justify-content: center;
     flex-direction: row;
 }
-.showpopUp{
+.showpopUpx{
     visibility: visible;
     opacity: 1;
 }
-.closePopUp2{
+.closePopUpx2{
     height: 23px;
     width: 23px;
     border-radius: 50%;
@@ -208,7 +208,7 @@
     color: #45484a;
 }
 
-.popUp .acc{
+.popUpx .acc{
     width: 120px;
     cursor: pointer;
     margin : 0 10px;

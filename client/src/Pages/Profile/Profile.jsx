@@ -237,12 +237,12 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                       </button>
                     :
                     <>
-                      <div ref={popUpRef} className={popUp ? "popUp showpopUp" : "popUp"}>
+                      <div ref={popUpRef} className={popUp ? "popUpx showpopUpx" : "popUpx"}>
                           <button
                             onClick={()=>{
                               setpopUp(!popUp);
                             }}
-                            className="closePopUp2"
+                            className="closePopUpx2"
                           >
                             <i className='fa-solid fa-xmark'></i>
                           </button>
