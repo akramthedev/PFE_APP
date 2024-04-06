@@ -11,7 +11,7 @@ import UtilsAndNavigations from '../../Components/UtilsAndNavigations/UtilsAndNa
 import axios from "axios";
 import HttpRequestStatus from '../../Components/HttpRequestStatus/HttpRequestStatus';
 
-const Home = ({socket, isFetchingUser, dataUserCurrent, ResponseRequest}) => {
+const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
 
     const token = localStorage.getItem('token');
     const idUser = localStorage.getItem('idUser');
@@ -22,10 +22,10 @@ const Home = ({socket, isFetchingUser, dataUserCurrent, ResponseRequest}) => {
       
         
 
-          <Navbar socket={socket} isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
+          <Navbar  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
           <div className="home2">
             <div className="h1">
-              <UtilsAndNavigations socket={socket} isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
+              <UtilsAndNavigations  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
             </div>
             <div className="h2">
               <CreatePost  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
@@ -35,7 +35,7 @@ const Home = ({socket, isFetchingUser, dataUserCurrent, ResponseRequest}) => {
             <div className="h3">
               <Ads />
               <BirthDays  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
-              <Contacts    isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} socket={socket}  />
+              <Contacts    isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}   />
             </div>
           </div>
        

@@ -1,0 +1,11 @@
+.Profile .h0{
+    min-height: calc(100vh - 81px);
+    height: auto;
+    width: 77%;
+    margin-top: 0px;
+    position: relative;
+    background-color: red;
+}
+.Profile .h3{
+    width: 23%;
+}

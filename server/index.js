@@ -6,7 +6,7 @@ const Connect           =  require('./Helpers/Database');
 const authRoutes        =  require('./Routes/authRoutes');
 const userRoutes        =  require('./Routes/userRoutes');
 const notifsRoutes      =  require('./Routes/notifRoutes');
-const requestsRoutes    =  require('./Routes/notifRoutes');
+const requestsRoutes    =  require('./Routes/requestRoutes');
 const http              =  require('http');
 const { Server }        =  require('socket.io');
  

@@ -26,11 +26,7 @@ const Notifications = ({socket ,isFetchingUser, dataUserCurrent}) => {
     const fetchUserNotifications = async ()=>{
       if(idUser && token){
         try{
-          const resp = await axios.get(`http://localhost:3001/notif/user/${idUser}`, {
-            headers : {
-              Authorization : `Bearer ${token}`
-            }
-          });
+          const resp = await axios.get(`http://localhost:3001/notif/user/${idUser}`);
           if(resp.status === 200){
             console.log(resp.data);
             setAllNotifications(resp.data);
@@ -77,7 +73,7 @@ const Notifications = ({socket ,isFetchingUser, dataUserCurrent}) => {
             msg : e.message
           }
         } finally{
-          fetchUserNotifications();
+            fetchUserNotifications();
         }
       }
     }

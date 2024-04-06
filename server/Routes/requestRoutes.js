@@ -1,6 +1,6 @@
 const express = require('express');
 const users = require('../Models/users');
-const requests = require('../Modelsrequests');
+const requests = require('../Models/requests');
 const sendEmail = require('../Helpers/EmailSender');
 const verifyToken = require('../Middlewares/verifyToken');
 

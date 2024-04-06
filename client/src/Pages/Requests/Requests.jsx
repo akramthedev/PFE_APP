@@ -27,11 +27,7 @@ const Requests = ({socket ,isFetchingUser, dataUserCurrent}) => {
     const fetchUserRequests = async ()=>{
       if(idUser && token){
         try{
-          const resp = await axios.get(`http://localhost:3001/request/user/${idUser}`, {
-            headers : {
-              Authorization : `Bearer ${token}`
-            }
-          });
+          const resp = await axios.get(`http://localhost:3001/request/user/${idUser}`);
           if(resp.status === 200){
             console.log(resp.data);
             setAllRequests(resp.data);
