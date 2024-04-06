@@ -6,6 +6,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #18191a;
+
 }
 
 .OTPVERIFY form{
@@ -13,6 +15,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
 }
 
 
@@ -25,17 +28,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #18191a;
+
 }
 
 .OTPVERIFY .formLR{
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 390px;
+    min-height: 333px;
     overflow: hidden;
     transition: 0.33s all ease-in-out;
     width: 510px;
-    background-color: white;
+    background-color: #18191a;
     justify-content: center;
     border-radius: 0.77rem;
 }
@@ -55,18 +60,18 @@
     text-align: center;
     font-family: "Merriweather", serif; 
     font-weight: 800;
-    margin-bottom: .7rem;
+    margin-bottom: 1rem;
     font-size: 1.5rem;
     transition: .3s all ease-in-out;
 }
 .rowOne p{
-    line-height: 1.2;
+    line-height: 1.4;
     font-size: 14px;
     color: gray;
     font-weight: 400;
     text-align: center;
     max-width: 400px;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 .formLR input{
@@ -83,8 +88,7 @@
 
 }
 .formLR input:focus{
-    border: 1px solid #8C52FF;
-    border: 1px solid black;
+    
 }
 
 .formLR{
@@ -126,6 +130,7 @@
     font-size: 15px;
     font-weight: 500;
     cursor: default;
+    color: #b6aeae;
 }
 .formLR .zjfd .linkSpan{
     color: #8400ff;
@@ -186,10 +191,11 @@
     cursor: default;
     z-index: 999;
     height: 20px;
+    color: gainsboro !important;
     margin-bottom: 0.3rem;
 } 
 .formLR .qdhio{
-    color: #8400ff;
+    color: rgb(182, 182, 182);
     font-size: 15px;
     font-weight: 600;
     text-decoration: underline;
@@ -197,7 +203,7 @@
 }
 
 .formLR .qdhio:hover{
-    color: #6d00d2;
+    color: rgb(154, 154, 154);
 }
 .formLR .btnSubmitAuth{
     position: relative;

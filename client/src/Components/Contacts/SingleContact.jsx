@@ -2,15 +2,17 @@ import React, {useState, useEffect} from 'react'
 import "./Contacts.css";
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import { useSocket } from '../../Helpers/SocketContext';
 
 
-const SingleContact = ({socket, contact}) => {
+const SingleContact = ({contact}) => {
 
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
     const [isFetchingUser, setIsFetchingUser] = useState(true);
     const [dataContact, setdataContact] = useState(null);
     const [isOnline, setisOnline] = useState(false);
+    const { socket } = useSocket();
 
 
     const fetchUser = async ()=>{

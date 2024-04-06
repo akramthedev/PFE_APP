@@ -2,12 +2,15 @@ import React, {useState, useEffect, useRef} from 'react'
 import "./Navbar.css";
 import {useNavigate} from 'react-router-dom';
 import useOutsideAlerter  from '../../Helpers/HidePopUp';
+import { useSocket } from '../../Helpers/SocketContext';
 
 
-const Navbar = ({socket, dataUserCurrent, isFetchingUser}) => {
+
+const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
 
     const navigate = useNavigate();
     const popupRef = useRef(null);  
+    const { socket, onlineUsers } = useSocket();
     const token = localStorage.getItem("token");  
     const idUser = localStorage.getItem("idUser");  
     const [isProfileClicked, setIsProfileClicked] = useState(false);
@@ -52,7 +55,7 @@ const Navbar = ({socket, dataUserCurrent, isFetchingUser}) => {
                
 
                 <button 
-                    onClick={()=>{navigate('/requests')}}
+                    onClick={()=>{navigate('/requests');}}
                     className='linkNav'
                 >
                      <div className="bulle">
@@ -62,7 +65,7 @@ const Navbar = ({socket, dataUserCurrent, isFetchingUser}) => {
                 </button>
 
                 <button 
-                    onClick={()=>{navigate('/notifications')}}
+                    onClick={()=>{navigate('/notifications');}}
                     className='linkNav'
                 >
                     <div className="bulle">
@@ -72,7 +75,7 @@ const Navbar = ({socket, dataUserCurrent, isFetchingUser}) => {
                 </button>
 
                 <button 
-                    onClick={()=>{navigate('/discussions')}}
+                    onClick={()=>{navigate('/discussions');}}
                     className='linkNav'
                 >
                     <div className="bulle">

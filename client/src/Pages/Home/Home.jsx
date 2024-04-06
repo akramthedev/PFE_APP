@@ -11,44 +11,12 @@ import UtilsAndNavigations from '../../Components/UtilsAndNavigations/UtilsAndNa
 import axios from "axios";
 
 
-const Home = ({socket}) => {
+const Home = ({socket, isFetchingUser, dataUserCurrent}) => {
 
     const token = localStorage.getItem('token');
     const idUser = localStorage.getItem('idUser');
     
-    const [isFetchingUser, setIsFetchingUser] = useState(true);
-    const [dataUserCurrent, setdataUserCurrent] = useState(null);
-
-    
-    const fetchUser = async ()=>{
-      if(idUser && token){
-        try{
-          const resp = await axios.get(`http://localhost:3001/user/${idUser}`, {
-            headers : {
-              Authorization : `Bearer ${token}`
-            }
-          });
-          if(resp.status === 200){
-            console.log(resp.data);
-            setdataUserCurrent(resp.data);
-          }
-          else{
-            alert('Error 202');
-          }
-        }
-        catch(e){
-          alert('500 | Error Server');
-          console.log(e.message);
-        } finally{
-          setIsFetchingUser(false);
-        }
-      }
-    }
-
-    useEffect(()=>{
-      fetchUser();
-    }, []);
-
+   
 
   return (
     <div className='Home'>

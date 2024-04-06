@@ -1,21 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import './UtilsAndNavigations.css';
-import {useNavigate } from 'react-router-dom';
+import {useNavigate, useLocation } from 'react-router-dom';
+import { useSocket } from '../../Helpers/SocketContext';
+
+const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent}) => {
 
 
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { pathname } = location;
+    const { socket, onlineUsers } = useSocket();
 
-const UtilsAndNavigations = ({socket, isFetchingUser, dataUserCurrent}) => {
-
-
-  const navigate = useNavigate();
-  const [OnlineNumber, setOnlineNumber] = useState(null);
-
-
-  useEffect(()=>{
-      socket.on('getNumOnlineUsers', (data)=>{
-          setOnlineNumber(data);
-      });
-  }, [socket]);
+    
 
   return (
     <div className='UtilsAndNavigations' >
@@ -23,7 +19,6 @@ const UtilsAndNavigations = ({socket, isFetchingUser, dataUserCurrent}) => {
       <div className="rowX"
         onClick={()=>{
           navigate("/");
-          navigate(0);
         }}
       >
         <div className="xxx">
@@ -62,7 +57,7 @@ const UtilsAndNavigations = ({socket, isFetchingUser, dataUserCurrent}) => {
         <div className="xxx">
           <i className='fa-solid fa-signal'></i>
         </div>
-        <span><div className="connectedBull"></div>Online members&nbsp;&nbsp;:&nbsp;&nbsp;{OnlineNumber && `${OnlineNumber}`}</span>
+        <span><div className="connectedBull"></div>Online members&nbsp;&nbsp;:&nbsp;&nbsp;{onlineUsers && socket  && `${onlineUsers }`}</span>
       </div>
 
       <div className="rowX"

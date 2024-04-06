@@ -63,6 +63,17 @@ const Auth = () => {
           password : password
         });
         if(resp.status === 200){
+          const dataNotif = {
+            title : "🎉 Welcome to Xplorium! 🎉 ", 
+            description1 : `Hello ${fullName}, We're thrilled to have you join our community!`, 
+            description2 : "Whether you're here to connect with friends, discover new content, or share your experiences...",
+            description3 : "We hope you find Xplorium to be a welcoming and engaging space!",
+            description4 : "Best regards,",
+            description5 : "Xplorium Team",
+            type : "Welcoming", 
+            idNotifSentTo : resp.data,
+          };
+          await axios.post('http://localhost:3001/notif/create', dataNotif)
           localStorage.setItem('idUser', resp.data);
           navigate("/auth/verify-email");
         }

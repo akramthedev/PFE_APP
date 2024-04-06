@@ -1,0 +1,31 @@
+.SingleNotification{
+    height: auto;
+    min-height: 100px;
+    border-radius: 0.3rem;
+    background-color: #242526;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 1.67rem;
+    padding: 2rem 1rem;
+}
+.rowTitleNotif{
+    height: auto;
+    width: 95%;
+    margin: 0 auto;
+    color: gainsboro;
+}
+.rowImgCompany{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+.rowImgCompany img{
+    height: 29px;
+    width: auto;
+    object-fit: cover;
+}
+.rowTitleNotif2{
+    font-weight: 500;
+    font-size: 1.04rem;
+    font-family: "Libre Caslon Text", serif;
+}

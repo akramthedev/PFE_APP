@@ -2,7 +2,7 @@ import React from 'react'
 import './Contacts.css';
 import SingleContact from './SingleContact.jsx';
 
-const Contacts = ({socket, isFetchingUser, dataUserCurrent}) => {
+const Contacts = ({isFetchingUser, dataUserCurrent}) => {
 
   
   return (
@@ -29,7 +29,7 @@ const Contacts = ({socket, isFetchingUser, dataUserCurrent}) => {
             {
               dataUserCurrent.contacts.map((contact)=>{
                 return(
-                  <SingleContact contact={contact} socket={socket} />
+                  <SingleContact contact={contact} />
                 )
               })
             }

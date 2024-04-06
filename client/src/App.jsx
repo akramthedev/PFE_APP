@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
+import axios from 'axios';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import Auth from './Pages/Auth/Auth';
@@ -18,19 +19,54 @@ import Help from "./Pages/Help/Help";
 import Accessibility from "./Pages/Accessibility/Accessibility";
 import AdminPanel from "./Pages/AdminPanel/AdminPanel";
 import AdserPanel from "./Pages/AdserPanel/AdserPanel";
-import io from 'socket.io-client';
+import { useSocket } from './Helpers/SocketContext';
+
 
 
 
 function App() {
+ 
+  const token = localStorage.getItem('token');
+  const idUser = localStorage.getItem('idUser');
+  const { socket } = useSocket();
 
-  let socket = io.connect("http://localhost:3001/");
-  const token  = localStorage.getItem('token');
-  const idUser = localStorage.getItem('idUser'); 
+  const [isFetchingUser, setIsFetchingUser] = useState(true);
+  const [dataUserCurrent, setdataUserCurrent] = useState(null);
 
+   
+  const fetchUser = async ()=>{
+    if(idUser && token){
+      try{
+        const resp = await axios.get(`http://localhost:3001/user/${idUser}`, {
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
+        if(resp.status === 200){
+          console.log(resp.data);
+          setdataUserCurrent(resp.data);
+        }
+        else{
+          alert('Error 202');
+        }
+      }
+      catch(e){
+        alert('500 | Error Server');
+        console.log(e.message);
+      } finally{
+        setIsFetchingUser(false);
+      }
+    }
+  }
+
+
+  
+  useEffect(()=>{
+    fetchUser();
+  }, []);
 
   const enterGlobalRoom = ()=>{
-    if(token && idUser){
+    if(token && idUser && socket){
       socket.emit("enterGlobalRoom",idUser);
     }
   }
@@ -61,27 +97,27 @@ function App() {
           <Route  
             path='/' 
             element={
-              token ? <Home socket={socket} /> : <Navigate to="/auth" />
+              token ? <Home  isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} /> : <Navigate to="/auth" />
             } 
           />
 
           <Route  
             path='/profile/:id' 
             element={
-              token ? <Profile socket={socket} /> : <Navigate to="/auth" />
+              token ? <Profile  /> : <Navigate to="/auth" />
             } 
           />
           
           <Route  
             path='/page/:id' 
             element={
-              token ? <Page socket={socket} /> : <Navigate to="/auth" />
+              token ? <Page  /> : <Navigate to="/auth" />
             } 
           />
           <Route  
             path='/group/:id' 
             element={
-              token ? <Group socket={socket} /> : <Navigate to="/auth" />
+              token ? <Group  /> : <Navigate to="/auth" />
             } 
           />
           
@@ -95,21 +131,21 @@ function App() {
           <Route  
             path='/notifications' 
             element={
-              token ? <Notifications socket={socket} /> : <Navigate to="/auth" />
+              token ? <Notifications isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}  /> : <Navigate to="/auth" />
             } 
           />
           
           <Route  
             path='/requests' 
             element={
-              token ? <Requests socket={socket} /> : <Navigate to="/auth" />
+              token ? <Requests  /> : <Navigate to="/auth" />
             } 
           />
           
           <Route  
             path='/discussions' 
             element={
-              token ? <Discussions socket={socket} /> : <Navigate to="/auth" />
+              token ? <Discussions  /> : <Navigate to="/auth" />
             } 
           />
 
@@ -144,14 +180,14 @@ function App() {
           <Route  
             path='/admin/panel' 
             element={
-              token ? <AdminPanel socket={socket} /> : <Navigate to="/auth" />
+              token ? <AdminPanel  /> : <Navigate to="/auth" />
             } 
           />
           
           <Route  
             path='/adser/panel' 
             element={
-              token ? <AdserPanel socket={socket} /> : <Navigate to="/auth" />
+              token ? <AdserPanel  /> : <Navigate to="/auth" />
             } 
           />
           

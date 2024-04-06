@@ -5,6 +5,7 @@ const clc           =  require("cli-color");
 const Connect       =  require('./Helpers/Database');
 const authRoutes    =  require('./Routes/authRoutes');
 const userRoutes    =  require('./Routes/userRoutes');
+const notifsRoutes    =  require('./Routes/notifRoutes');
 const http          =   require('http');
 const { Server }    =   require('socket.io');
  
@@ -33,6 +34,8 @@ const io = new Server(
 //    API EVENTS
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
+app.use('/notif', notifsRoutes);
+
 
 
 //   WEBSOCKETS EVENTS
