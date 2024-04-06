@@ -1,27 +1,93 @@
-import React, {useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import "./Post.css";
 import {useNavigate} from 'react-router-dom'
+import formatCreatedAt from '../../Helpers/GetTimeAndDate';
+import axios from 'axios';
 
-const Post = ({ajusting}) => {
+
+const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent}) => {
 
 
     const naviagte = useNavigate();
-
+    const postRef = useRef(null);
+    
     const [isCommentClicked, setIsCommentClicked] = useState(false);
     const [isLoveClick, setIsLoveClick] = useState(false);
     const [IsBookMarked, setIsBookMarked] = useState(false);
 
-    const [numberComment, setnumberComment] = useState(34);
-    const [numberLikes, setnumberLikes] = useState(63);
-    const [numberViews, setnumberViews] = useState(813);
+    const [numberComment, setnumberComment] = useState(null);
+    const [numberLikes, setnumberLikes] = useState(null);
+    const [numberViews, setnumberViews] = useState(null);
+    const [isSeen, setIsSeen] = useState(false);
+    const [timeSpent, setTimeSpent] = useState(0);
+
+    const startTimeRef = useRef(null);
+    const stopTimeRef = useRef(null);
+
+    useEffect(()=>{
+        if(post){
+            setnumberLikes(post.likes.length);
+            setnumberComment(post.comments.length);
+            setnumberViews(post.views);
+        }
+    }, []);
+
+
+
+    const addViewToPost = async ()=>{
+        try{
+            const resp = await axios.get(`http://localhost:3001/post/addView/${post._id}`);
+            if(resp.status === 200){
+                setnumberViews(resp.data.views);
+            }
+        }
+        catch(e){
+            console.log(e.message);
+        }
+    }
+
+
+
+
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting && !isSeen) {
+                    setIsSeen(true);
+                    setnumberViews(number => number + 1);
+                    addViewToPost();
+                }
+            },
+            {
+                root: null, // viewport
+                rootMargin: '0px', // margin around the root
+                threshold: 0.666, // 66.6% of the element visible
+            }
+        );
+
+        if (postRef.current) {
+            observer.observe(postRef.current);
+        }
+
+        // Cleanup function
+        return () => {
+            if (postRef.current) {
+                observer.unobserve(postRef.current);
+            }
+        };
+    }, [postRef, isSeen]);
+
 
 
     return (
-    <div className={ajusting === "yes" ? "Post ajustPost" : "Post"}>
-        <div className=" rowP0 rowP1">
+        <>
+        {
+            post && <div className={ajusting === "yes" ? "Post ajustPost" : "Post"}>
+        <div  ref={postRef} className=" rowP0 rowP1">
             <div className="c1"
                 onClick={()=>{
-                    naviagte('/profile/666');
+                    naviagte(`/profile/${post.creator}`);
                 }}
             >
                 <div className="c11">
@@ -46,30 +112,41 @@ const Post = ({ajusting}) => {
             }
             </div>
         </div>
+        {post.description !== "" &&
         <div className=" rowP0 rowP2">
-            Hail to the kings of rock & roll ! 
+            {post.description}
         </div>
-        <div className=" rowP0 rowP3">
-            <img 
-                src='https://www.moshville.co.uk/wordpress/wp-content/uploads/2022/05/Slash-featuring-Myles-Kennedy-and-the-Conspirators-2012-Travis-Shinn.jpg'
-                alt=""
-            />
-        </div>
+        }
+        {
+            post.image !== "" && 
+            <div className=" rowP0 rowP3">
+                <img 
+                    src={post.image}
+                    alt=""
+                />
+            </div>
+        }
         <div className="rowP0 rowP4">
-            7:35 PM&nbsp;&nbsp;•&nbsp;&nbsp;Apr 5, 2024
+        {
+            formatCreatedAt(post.createdAt)
+        }
         </div>
         <div className="rowP0 rowP5">
             
+          
             <button
                 className='lsc'
                 onClick={()=>{
                     if(isLoveClick){
                         setnumberLikes(numberLikes-1);
                         setIsLoveClick(false);
+                        //axios request here 
                     }
                     else{
                         setnumberLikes(numberLikes+1);
                         setIsLoveClick(true);
+                        //axios request here 
+
                     }
                 }}
             >
@@ -81,6 +158,7 @@ const Post = ({ajusting}) => {
                     <i className="fa-regular fa-heart"></i>
                 }
             </button>
+ 
             <button
                 className='lsc'
                 onClick={()=>{
@@ -111,17 +189,22 @@ const Post = ({ajusting}) => {
                     <i className="fa-regular fa-comment"></i>
                 }
             </button>
+            
             <button
                 className=' lsc lsclsc'
             >
                 {numberViews}
                 <i class="fa-solid fa-chart-simple"></i>
-            </button>            
+            </button>   
+
+
         </div>
         <div className={isCommentClicked ? "rowP6 showrowP6" : "rowP6"}>
 
         </div>
     </div>
+    }
+    </>
   )
 }
 

@@ -6,6 +6,7 @@ const Connect           =  require('./Helpers/Database');
 const authRoutes        =  require('./Routes/authRoutes');
 const userRoutes        =  require('./Routes/userRoutes');
 const notifsRoutes      =  require('./Routes/notifRoutes');
+const postsRoutes       =  require('./Routes/postRoutes');
 const requestsRoutes    =  require('./Routes/requestRoutes');
 const http              =  require('http');
 const { Server }        =  require('socket.io');
@@ -37,7 +38,7 @@ app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/notif', notifsRoutes);
 app.use('/request', requestsRoutes);
-
+app.use('/post', postsRoutes);
 
 //   WEBSOCKETS EVENTS
 

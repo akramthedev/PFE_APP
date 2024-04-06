@@ -19,26 +19,33 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
 
     const token = localStorage.getItem('token');
     const idUser = localStorage.getItem('idUser');
-    //const first = localStorage.getItem('firstConnection');
+    const [allPosts, setAllPosts] = useState([]);
+    const [postLoading, setpostLoading] = useState(true);
 
-    /*
-    
-    useEffect(()=>{
-      const x = ()=>{
-        if(first === "yes"){
-          const audio = new Audio(OpenerMp3); 
-      
-          setTimeout(() => {
-            audio.play(); 
-          }, 500);
-    
-          localStorage.setItem('firstConnection', "no");
+    const fetchAllPosts = async ()=>{
+      try{
+        setpostLoading(true);
+        const resp = await axios.get('http://localhost:3001/post/');
+        if(resp.status === 200){
+          setAllPosts(resp.data);
+        }
+        else{
+          setAllPosts([]);
         }
       }
-      x();
+      catch(e){
+        console.log(e.message);
+      } finally{
+        setpostLoading(false);
+      }
+    }
+
+
+    useEffect(()=>{
+      fetchAllPosts();
     }, []);
+
     
-    */
   
     useEffect(()=>{
 
@@ -65,9 +72,37 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
             </div>
             <div className="h2">
               <CreatePost ajusting="home" isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
-              <Post  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
-              <PostAds />
-              <PostSuggestedUsers  /> 
+              {
+                postLoading ? 
+                <>
+                  Loading All Posts...
+                </>
+                :
+                <>
+                {
+                  allPosts && <>
+                    {
+                      allPosts.length === 0 ? 
+                      <>
+                        No Post yet
+                      </>
+                      :
+                      <>
+                        {
+                          allPosts.map((post, index)=>{
+                            return(
+                              <Post  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                            )
+                          })
+                        }
+                        <PostAds />
+                        <PostSuggestedUsers  />
+                      </>
+                    }
+                  </>
+                }
+                </>
+              } 
             </div>
             <div className="h3">
               <Ads />

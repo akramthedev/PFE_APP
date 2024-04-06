@@ -12,26 +12,7 @@ import '../Home/Home.css';
 import AdminSymbol from '../../Assets/AdminSymbol.jsx';
 import AdserSymbol from '../../Assets/AdserSymbol.jsx';
 import CreatePost from '../../Components/CreatePost/CreatePost.jsx';
-
-
-const allPhotos = [
-  'https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png', 
-  'https://res.cloudinary.com/dqprleeyt/image/upload/v1709819133/jackjack_tcbzyi.png', 
-  'https://res.cloudinary.com/dqprleeyt/image/upload/v1697120096/chrome-capture-2023-9-12_gkby7h.png', 
-  'https://media.istockphoto.com/id/1147066751/photo/hispanic-adult-standing-outside-and-smiling.jpg?s=612x612&w=0&k=20&c=5BWiJRFV-eqg7gDFlu8khQ7Eol_dvsip0Ds2p_zDwAo=', 
-  'https://media.gettyimages.com/id/1285156699/photo/middle-aged-man-portrait.jpg?s=612x612&w=gi&k=20&c=FgNweHnbkQTNhQW2nUfLUn7yq5aegsz5wKJI0pKN6DQ=',
-  'https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png', 
-  'https://res.cloudinary.com/dqprleeyt/image/upload/v1709819133/jackjack_tcbzyi.png', 
-  'https://res.cloudinary.com/dqprleeyt/image/upload/v1697120096/chrome-capture-2023-9-12_gkby7h.png', 
-  'https://media.istockphoto.com/id/1147066751/photo/hispanic-adult-standing-outside-and-smiling.jpg?s=612x612&w=0&k=20&c=5BWiJRFV-eqg7gDFlu8khQ7Eol_dvsip0Ds2p_zDwAo=', 
-  'https://media.gettyimages.com/id/1285156699/photo/middle-aged-man-portrait.jpg?s=612x612&w=gi&k=20&c=FgNweHnbkQTNhQW2nUfLUn7yq5aegsz5wKJI0pKN6DQ=',
-  'https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png', 
-  'https://res.cloudinary.com/dqprleeyt/image/upload/v1709819133/jackjack_tcbzyi.png', 
-  'https://res.cloudinary.com/dqprleeyt/image/upload/v1697120096/chrome-capture-2023-9-12_gkby7h.png', 
-  'https://media.istockphoto.com/id/1147066751/photo/hispanic-adult-standing-outside-and-smiling.jpg?s=612x612&w=0&k=20&c=5BWiJRFV-eqg7gDFlu8khQ7Eol_dvsip0Ds2p_zDwAo=', 
-  'https://media.gettyimages.com/id/1285156699/photo/middle-aged-man-portrait.jpg?s=612x612&w=gi&k=20&c=FgNweHnbkQTNhQW2nUfLUn7yq5aegsz5wKJI0pKN6DQ=',
-
-]
+import { useSocket } from '../../Helpers/SocketContext';
 
 
 
@@ -39,6 +20,8 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
 
 
   const { id } = useParams();
+  let allPhotos = [];
+  const { socket } = useSocket();
   const token = localStorage.getItem('token');
   const idVisited = id;
   const currentId = localStorage.getItem('idUser');
@@ -231,6 +214,9 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
     }
   }
 
+ 
+
+
   return (
     <div className='Home Profile'>
       <Navbar isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
@@ -414,6 +400,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                       </div>
                       <div className="AboutMedia">
                       {
+                        allPhotos.length !== 0 ? 
                         allPhotos.slice(0, 9).map((photo, index) => {
                           return (
                             <img
@@ -423,6 +410,10 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                             />
                           )
                         })
+                        :
+                        <span style={{fontSize : "13px", color : "gainsboro", textAlign : "center", width: "300px", marginTop : ".8rem"}}>
+                          No media was found
+                        </span>
                       }
                       </div>
                     </div>
