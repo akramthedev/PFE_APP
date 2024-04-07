@@ -14,6 +14,7 @@ import AdserSymbol from '../../Assets/AdserSymbol.jsx';
 import CreatePost from '../../Components/CreatePost/CreatePost.jsx';
 import { useSocket } from '../../Helpers/SocketContext';
 import SkeltonPost2 from '../../Components/Post/SkeltonPost2.jsx';
+import SingleContact from '../../Components/SingleContact/SingleContact.jsx';
 
 
 
@@ -78,6 +79,11 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
 
   useEffect(()=>{
     const x = ()=>{
+      setisAboutClicked(false);
+      setisContactsClicked(false);
+      setisGroupsClicked(false);
+      setisMediaClicked(false);
+      setisPostsClicked(true);
       setallPostsWithImages([]);
     }
     x();
@@ -502,7 +508,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                         className={isPostsClicked && "AddColorBlueviolet"}
                       >
                         <i className='fa-solid fa-list'></i>
-                        <span>Posts</span>
+                        <span>{allPosts && allPosts.length} Posts</span>
                       </button>
                       <button
                         className={isMediaClicked && "AddColorBlueviolet"}
@@ -517,7 +523,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                         }}
                       >
                         <i className='fa-solid fa-image'></i>
-                        <span>Images</span>
+                        <span>{(allPosts && allPostsWithImages) && allPostsWithImages.length} Images</span>
                       </button>
                       <button
                         className={isAboutClicked && "AddColorBlueviolet"}
@@ -547,7 +553,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                         }}
                       >
                         <i className='fa-solid fa-user-group'></i>
-                        <span>Contacts</span>
+                        <span>{visitedUser && visitedUser.contacts.length} {visitedUser && visitedUser.contacts.length <=1 ? "Contact" : "Contacts"}</span>
                       </button>
                       <button
                         className={isGroupsClicked && "AddColorBlueviolet"}
@@ -562,7 +568,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                         }}
                       >
                         <i className='fa-solid fa-people-group'></i>
-                        <span>Groups</span>
+                        <span>{visitedUser && visitedUser.groups.length} {visitedUser && visitedUser.groups.length <=1 ? "Group" : "Groups"}</span>
                       </button>
                     </div>
 
@@ -591,7 +597,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                               allPosts && <>
                                 {
                                   allPosts.length === 0 ? 
-                                  <span className='zsjdqoc'>
+                                  <span className='zsjdqoczsjdqoc'>
                                     No Post Yet
                                   </span>
                                   :
@@ -648,7 +654,22 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                       </div> : 
                       isContactsClicked ? 
                       <>
-                        Contacts Clicked
+                      {
+                        visitedUser.contacts.length === 0 ? 
+                        <span className='zsjdqoc'>
+                          No contacts yet..
+                        </span>
+                        :
+                        <div className='contactsContainer'>
+                        {
+                          visitedUser.contacts.map((contact, index)=>{
+                            return(
+                              <SingleContact contact={contact}  />
+                            )
+                          })
+                        }
+                        </div>
+                      }
                       </> :
                       isGroupsClicked &&
                       <>

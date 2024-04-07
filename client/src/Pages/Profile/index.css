@@ -339,3 +339,25 @@
     object-fit: cover;
     border-radius: 0.25rem;
 }
+.contactsContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+.zsjdqoc{
+    color: rgb(171, 171, 171);
+    font-size: 14px;
+    text-align: center;
+    width: 200%;
+    margin-top: 3rem;
+}
+.zsjdqoczsjdqoc{
+    color: rgb(171, 171, 171);
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+    margin-top: 3rem;
+}
