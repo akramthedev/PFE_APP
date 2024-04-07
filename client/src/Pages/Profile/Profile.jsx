@@ -1,5 +1,7 @@
 import React, { useState,useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import './index.css';
+import '../Home/Home.css';
 import Post from '../../Components/Post/Post.jsx';
 import axios from 'axios';
 import useOutsideAlerter from '../../Helpers/HidePopUp.js'
@@ -7,8 +9,6 @@ import Navbar from '../../Components/Navbar/Navbar';
 import Ads from '../../Components/Ads/Ads';
 import BirthDays from '../../Components/BirthDays/BirthDays';
 import Contacts from '../../Components/Contacts/Contacts';
-import './index.css';
-import '../Home/Home.css';
 import AdminSymbol from '../../Assets/AdminSymbol.jsx';
 import AdserSymbol from '../../Assets/AdserSymbol.jsx';
 import CreatePost from '../../Components/CreatePost/CreatePost.jsx';
@@ -41,6 +41,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   const [postLoading, setpostLoading] = useState(true);
   const [isImgClicked, setisImgClicked] = useState(false);
   const [imgSrcClicked,setImgSrcClicked] = useState("");
+  const [IsModifyProfileClicked,setIsModifyProfileClicked] = useState(false);
 
   useOutsideAlerter(popUpRef, setpopUp);
 
@@ -294,6 +295,11 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   return (
     <div className='Home Profile'>
       <Navbar isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
+      <div className={IsModifyProfileClicked ? "imageClickedFixedPosition showimageClickedFixedPosition" : "imageClickedFixedPosition"}>
+        <div className={IsModifyProfileClicked ? "containerEditProfile showcontainerEditProfile" : "containerEditProfile"}>
+
+        </div>
+      </div>
       <div className="home2">
         <div className="h0">
                     <div ref={popUpRef} className={popUp ? "popUpx showpopUpx" : "popUpx"}>
@@ -352,7 +358,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                     (dataUserCurrent && (dataUserCurrent._id === id) ) ? 
                       <button 
                         onClick={()=>{
-                          
+                          setIsModifyProfileClicked(true);
                         }}
                         className="messageFriendShip"
                       >

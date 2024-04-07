@@ -3,9 +3,7 @@ import "./BirthDays.css";
 import Gift from '../../Assets/giftbox.png';
 import {useNavigate} from 'react-router-dom';
 
-
 const BirthDays = () => {
- 
 
   return (
     <div className='Birthdays'>

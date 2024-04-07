@@ -410,3 +410,17 @@
 .Aboutx88{
     margin: 1.3rem 0rem;
 }
+.containerEditProfile{
+    height: 600px;
+    width: 500px;
+    background-color: #242526;
+    border-radius: 0.4rem;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.4s all ease-in-out;
+}
+.showcontainerEditProfile{
+    opacity: 1;
+    visibility: visible;
+}
