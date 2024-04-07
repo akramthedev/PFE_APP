@@ -23,5 +23,52 @@ router.get('/:id', verifyToken ,async(req, res)=>{
 });
 
 
+router.post('/updateinfos', verifyToken ,async(req, res)=>{
+    try{
+        const {
+            idUser ,
+            fullName , 
+            profilePic  , 
+            coverPic ,
+            bio  ,
+            BigAbout , 
+            address , 
+            dateOfBirth , 
+            phoneNumber  ,
+            portfolio 
+        } = req.body;
+        
+        const idToken = req.user._id
+
+        if(idToken === idUser){
+            const isUpdated = await users.findByIdAndUpdate(idUser, {
+                fullName, 
+                profilePic, 
+                coverPic,
+                bio,
+                BigAbout, 
+                address, 
+                dateOfBirth, 
+                phoneNumber,
+                portfolio 
+            }, {new : true});
+            if(isUpdated){
+                res.status(200).send(isUpdated);
+            }
+            else{
+                res.status(202).send('Not Found...');
+            }
+        }
+        else{
+            res.status(401).send("Not Authentified...")
+        }
+        
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
 
 module.exports = router;

@@ -55,23 +55,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   const [modWebsite, setmodWebsite] = useState("");
 
 
-  useEffect(()=>{
-    const x = ()=>{
-      if(!isFetchingUser && dataUserCurrent){
-        setModFullname(dataUserCurrent.fullName);
-        setModPictureProfile(dataUserCurrent.profilePic);
-        setModCoverPicture(dataUserCurrent.coverPic);
-        setModBio(dataUserCurrent.bio);
-        setModAbout(dataUserCurrent.BigAbout);
-        setmodphoneNumber(dataUserCurrent.phoneNumber); 
-        setmodAdress(dataUserCurrent.address);
-        setmoddateOfBirth(dataUserCurrent.dateOfBirth);
-        setmodWebsite(dataUserCurrent.portfolio);
-      }
-    }
-    x();
-  }, [id]);
-
+   
 
   useOutsideAlerter(popUpRef, setpopUp);
   useOutsideAlerter(popUpRef2, setIsModifyProfileClicked);
@@ -123,6 +107,11 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   }, [id]);
 
 
+  const convertToYYYYMMDD = (isoString) => {
+    return isoString.split('T')[0];
+  };
+
+
   useEffect(() => {
     const fetchUser = async () => {
       setLoading(true);
@@ -130,7 +119,15 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
       try {
         if (token && id) {
 
-          
+            setModFullname("");
+            setModPictureProfile("");
+            setModCoverPicture("");
+            setModBio("");
+            setModAbout("");
+            setmodphoneNumber(""); 
+            setmodAdress("");
+            setmoddateOfBirth("");
+            setmodWebsite("");
 
           const response = await axios.get(`http://localhost:3001/user/${id}`, {
             headers: {
@@ -139,7 +136,19 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
           });
           if (response.status === 200) {
             setVisitedUser(response.data);
-
+            
+            setModFullname(response.data.fullName);
+            setModPictureProfile(response.data.profilePic);
+            setModCoverPicture(response.data.coverPic);
+            setModBio(response.data.bio);
+            setModAbout(response.data.BigAbout);
+            setmodphoneNumber(response.data.phoneNumber); 
+            setmodAdress(response.data.address);
+            if(response.data.dateOfBirth){
+              const dateOnlyString = convertToYYYYMMDD(response.data.dateOfBirth);
+              setmoddateOfBirth(dateOnlyString);
+            }            
+            setmodWebsite(response.data.portfolio);
             if(id !== currentId){
             
               if(response.data.contacts.includes(currentId)){
@@ -303,33 +312,72 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
 
   useEffect(()=>{
     const x = ()=>{
-      if(isAboutClicked){
-
-      }
-      else if(isContactsClicked){
-
-      }
-      else if(isGroupsClicked){
-
-      }
-      else if (isMediaClicked){
-        //fetchAllPosts();
-      }
-      else if(isPostsClicked){
+      if(isPostsClicked){
         fetchAllPosts();
       }
     }
     x();
   }, [isAboutClicked, isContactsClicked, isGroupsClicked, isMediaClicked, isPostsClicked]);
 
+  const [loaderUpdating,setloaderUpdating] = useState(false);
 
   const handleSubmitUpdatedDocuments = async (e)=>{
     e.preventDefault();
     try{
-      
+      if(modFullname.length >= 3 && token){
+        setloaderUpdating(true);
+        let ProfilP;
+        let CoverP;
+        if(modCoverPicture === "" || modCoverPicture.length < 20){
+          CoverP = "https://live.staticflickr.com/3745/10353673376_ec7a400972_b.jpg"
+        }
+        else{
+          CoverP = modCoverPicture
+        }
+        if(modPictureProfile === "" || modPictureProfile.length < 20){
+          ProfilP = "https://oasys.ch/wp-content/uploads/2019/03/photo-avatar-profil.png"
+        }
+        else{
+          ProfilP = modPictureProfile
+        }
+
+        const resp = await axios.post('http://localhost:3001/user/updateinfos',{
+            idUser      :   currentId,
+            fullName    :   modFullname, 
+            profilePic  :   ProfilP, 
+            coverPic    :   CoverP,
+            bio         :   modBio ,
+            
+            BigAbout    :   modAbout, 
+            address     :   modAdress, 
+            dateOfBirth :   moddateOfBirth, 
+            phoneNumber :   modphoneNumber ,
+            portfolio   :   modWebsite,
+        }, {
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
+        if(resp.status === 200){
+          //he sends new data
+          setVisitedUser(resp.data);
+          setIsModifyProfileClicked(false);
+        }
+        else{
+          setIsModifyProfileClicked(false);
+          alert('Oops, something went wrong...');
+        }
+      }
+      else{
+        setIsModifyProfileClicked(false);
+        alert('Empty Fields...');
+      }
     }
     catch(er){
       console.log(er.message);
+      alert('Oops, something went wrong...');
+    } finally{
+      setloaderUpdating(false);
     }
   }
 
@@ -349,10 +397,14 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
           <div className="About About66 About6688">  
             Edit profile
           </div>
-          <div className="About About66">
+          <div className="About About66">  
             <span>Full Name : </span>  
             <input 
               type="text"
+              value={modFullname}
+              onChange={(e)=>{
+                setModFullname(e.target.value)
+              }}
               placeholder='Modify your full name...'
               spellCheck={false}  
             />
@@ -361,6 +413,10 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
             <span>Profile Picture : </span> 
             <input 
               type="text"
+              value={modPictureProfile}
+              onChange={(e)=>{
+                setModPictureProfile(e.target.value)
+              }}
               placeholder='Modify your profile picture...'
               spellCheck={false}  
             />
@@ -369,6 +425,10 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
             <span>Cover Picture : </span> 
             <input 
               type="text"
+              value={modCoverPicture}
+              onChange={(e)=>{
+                setModCoverPicture(e.target.value);
+              }}
               placeholder='Modify your cover picture...'
               spellCheck={false}  
             />
@@ -377,6 +437,10 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
             <span>Phone Number : </span> 
             <input 
               type="text"
+              value={modphoneNumber}
+              onChange={(e)=>{
+                setmodphoneNumber(e.target.value);
+              }}
               placeholder='Modify your phone number...'
               spellCheck={false}  
             />
@@ -386,6 +450,10 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
             <span>Address : </span> 
             <input 
               type="text"
+              value={modAdress}
+              onChange={(e)=>{
+                setmodAdress(e.target.value)
+              }}
               placeholder='Modify your address...'
               spellCheck={false}  
             />
@@ -394,6 +462,10 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
             <span>Portfolio : </span> 
             <input 
               type="text"
+              value={modWebsite}
+              onChange={(e)=>{
+                setmodWebsite(e.target.value);
+              }}
               placeholder='Modify your portfolio website...'
               spellCheck={false}  
             />
@@ -401,7 +473,11 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
           <div className="About About66"> 
             <span>Date Of Birth : </span> 
             <input 
-              type="text"
+              type="date"
+              value={moddateOfBirth}
+              onChange={(e)=>{
+                setmoddateOfBirth(e.target.value)
+              }}
               placeholder='Modify your date of birth...'
               spellCheck={false}  
             />
@@ -410,6 +486,10 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
             <span>Bio : </span> 
             <textarea 
               type="text"
+              value={modBio}
+              onChange={(e)=>{
+                setModBio(e.target.value);
+              }}
               placeholder='Modify your bio...'
               spellCheck={false}  
             ></textarea>
