@@ -1,0 +1,277 @@
+.Status{
+    height: 0;
+    margin-top: 0rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: red;
+    transition: 0.44s all ease-in-out;
+    opacity: 0;
+    width: 350px;
+    display: flex;
+    text-align: center;
+}
+.Status span { text-align: center;margin-top: 2.5rem;line-height: 1.2;}
+.Status1{
+    height: 0;
+    margin-top: 0rem;
+    color: rgb(18, 164, 18);
+}
+.showStatus{
+    height: 30px;
+    margin-top: 0.7rem;
+    visibility: visible;
+    opacity: 1;
+}
+.Status .ssqdufoc{
+    color: red;
+}
+
+.contactUs{
+    color: rgb(209, 2, 2);
+    font-weight: 500;
+     cursor: pointer;
+}
+.contactUs:hover{
+    text-decoration: underline;
+
+}
+.contactUs:hover{
+    color: rgb(154, 0, 0);
+}
+
+
+.createPost{
+    width: 80%;
+    height: 140px;
+    border-radius: 0.4rem;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: #242526;
+    cursor: pointer;
+    margin-bottom: 1.2rem;
+}
+.cp1{
+    height:80px;
+    width: 100%;
+    padding: 0 1.5rem;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    border-bottom: 1px solid #494a4b;
+}
+.cp2{
+    height: calc(100% - 80px);
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4rem;
+}
+.cp2 button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: #b0b3b8;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+}
+.cp2 button img{
+    margin-right: 0.5rem;
+    height: 30px;
+    cursor: pointer;
+    width: 30px;
+    object-fit: cover;
+    margin-bottom: 0.3rem;
+}
+.cp1{
+
+}
+.cp1 img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+
+}
+.cp1 input{
+    height: 40px;
+    width: 100%;
+    padding: 0 1rem;
+    cursor: pointer;
+    outline: none;
+    font-size: 14px;
+    border: none;
+    border-radius: 5rem;
+    background-color: #3a3b3c;
+}
+.cp1 input::placeholder{
+    color: white;
+}
+.createPostProfile{
+    width: 100%;
+}
+.createPostProfile .cp1Profile{
+    padding: 0 4rem;
+}
+
+.popUpCreatePost{
+    visibility: hidden;
+    opacity: 0;
+    transition: .4s all ease-in-out;
+    z-index: 999999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.815);
+}
+.showpopUpCreatePost{
+    visibility: visible;
+    opacity: 1;
+}
+.containerpopUpCreatePost{
+    height: 480px;
+    width:666px;
+    position: relative;
+    padding: 2rem;
+    border-radius: 0.4rem;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+    background-color: #18191a;
+}
+.closePcp{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background-color: #242526;
+    color: #b0b3b8;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.rowZ1{
+    color: #e4e6eb;
+    font-size: 1.2rem;
+    font-weight: 600;
+    height: auto;
+    min-height: 50px;
+}
+
+.popUpCreatePost  textarea{
+    height: 263px ;
+    width: 100%;
+    resize: none ;
+    outline: none;
+    border-radius: 0.23rem;
+    background-color: #242526;
+    border: 1px solid #242526;
+    color: #c2c4c7;
+    font-family: system-ui,sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 1rem;
+    position: relative;
+}
+.popUpCreatePost textarea:focus{
+    border: 1px solid #3b3c3e;
+}
+.zowZ2{
+    position: relative;
+}
+.zowZ2 input{
+    height: 37px ;
+    width: 100%;
+    resize: none ;
+    outline: none;
+    border-radius: 0.23rem;
+    background-color: #242526;
+    border: 1px solid #242526;
+    color: #c2c4c7;
+    font-family: system-ui,sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: .5rem;
+    padding:0  1rem;
+}.popUpCreatePost input:focus{
+    border: 1px solid #3b3c3e;
+}
+.zowZ2 .sjqdkc{
+    height: 37px ;
+    width: 100%;
+    resize: none ;
+    outline: none;
+    border-radius: 0.23rem;
+    background-color: #242526;
+    border: 1px solid #242526;
+    color: #c2c4c7;
+    font-family: system-ui,sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding:0  1rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: .25s all ease-in-out;
+    background-color: #5310b0;
+
+}
+.zowZ2 button:hover{
+    background-color: #6e1ce1;
+}
+.emojiBtn{
+    position: absolute;
+    right: 0;
+    bottom: 9px;
+    border-radius: 0rem;
+    height: 40px;
+    border-top-left-radius : 0.4rem ;
+    cursor: pointer;
+    width: 40px;
+    outline: none;
+    border: none;
+    background-color: #18191a;
+    border-bottom-right-radius: 0.3rem;
+    transition: .2s all ease-in-out;
+}
+.emojiBtn:hover{
+    background-color: #343637 !important;
+}
+.emojiShow{
+    height: 200px;
+    width: 260px;
+    position: absolute;
+    border-radius: 0.3rem;
+    background-color: #1f2021;
+    bottom: 9px;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    user-select: none;
+}
+.emojiShow span{
+    height: 30px;
+    user-select: none;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.emojiShow span:hover{
+    background-color: #8b39ff;
+}
