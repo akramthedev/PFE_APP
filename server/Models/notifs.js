@@ -112,6 +112,11 @@ const notifSchema = new mongoose.Schema({
         type : Boolean, 
         required : false, 
         default : false
+    }, 
+    idPost : {
+        type : String, 
+        required : false, 
+        default : "",
     }
     
 }, {

@@ -28,9 +28,10 @@ router.post('/create', verifyToken ,async(req, res)=>{
 
             let dataNotification = {
                 title: `🚀 Success! Your post has been created!`,
-                description1: "Your post is now live and visible to others. Keep sharing your thoughts and experiences!",
+                description1: "Keep sharing your thoughts and experiences with other people!",
                 idNotifSentTo: creator,
-                type: "Post Created" 
+                type: "Post Created", 
+                idPost :  isCreated._id
             }
             
             await notifs.create(dataNotification);

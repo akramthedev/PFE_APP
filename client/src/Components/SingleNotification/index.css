@@ -114,3 +114,29 @@
     right: 2rem;
     bottom: 1px;
 }
+
+.visitPost{
+    width: 300px;
+    height: 34px;
+    color: white;
+    background-color: #7518cb;
+
+    font-weight: 500;
+    font-size: 14px;
+    width: 91%;
+    margin: 0 auto;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.24rem;
+    outline: none;
+    transition: 0.24s all ease-in-out;
+}
+.visitPost:hover{
+    background-color: #952cf8;
+}
+.content2{
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

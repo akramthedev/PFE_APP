@@ -172,7 +172,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
     }
     x();
 
-}, []);
+  }, []);
    
 
   const HandleRemoveContact = async()=>{

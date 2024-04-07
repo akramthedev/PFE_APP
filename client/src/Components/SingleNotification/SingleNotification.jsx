@@ -19,6 +19,7 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
 
     const [isseen, setisseen] = useState(notif.seen);
     const [isHovered, setIsHovered] = useState(false);
+    const idUser = localStorage.getItem('idUser');
  
 
     useEffect(()=>{
@@ -166,6 +167,58 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
                   notif.description1
                 }
+                </div>
+              <span className={isseen ? " isnotseen isseen" : "isnotseen"}>
+                 <i className='fa-solid fa-check-double'></i>
+              </span>
+              <span className="timeOuDate">
+              {
+                notif && notif.createdAt && 
+                formatCreatedAt(notif.createdAt)
+              }
+              </span>
+            </div>
+          : notif.type === "Post Created"? 
+          <div 
+              onMouseEnter={()=>{
+                setIsHovered(true);
+              }}
+              key={index}
+              onMouseLeave={()=>{
+                setIsHovered(false);
+              }}
+              className=' SingleNotification3'
+            >
+                {
+                    isHovered && 
+                    <button
+                    onClick={()=>{
+                      handleDeleteNotif();
+                    }}
+                    className={isHovered ? "deleteSingleNotif showdeleteSingleNotif":  "deleteSingleNotif"}
+                  >
+                    <i className='fa-solid fa-trash'></i>
+                  </button>
+                  }
+                <div className="content">
+                  {
+                    notif.title
+                  }
+                </div>
+                <div className="content">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+                  notif.description1
+                }
+                </div>
+                <div className="content content2">
+                  <button
+                    className='visitPost'
+                    onClick={()=>{
+                      navigate(`/profile/${idUser}`);
+                    }}
+                  >
+                    View Post
+                  </button>
                 </div>
               <span className={isseen ? " isnotseen isseen" : "isnotseen"}>
                  <i className='fa-solid fa-check-double'></i>

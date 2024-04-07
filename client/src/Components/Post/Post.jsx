@@ -201,7 +201,7 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
         {
         
         (post && !loadingDataUser && dataAuthorPost) ? 
-        <div className={ajusting === "yes" ? "Post ajustPost" : "Post"}>
+        <div id={post._id}  className={ajusting === "yes" ? "Post ajustPost" : "Post"}>
         
             <div  ref={postRef} className=" rowP0 rowP1">
                 <div className="c1"
