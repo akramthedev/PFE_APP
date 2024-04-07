@@ -1,3 +1,7 @@
+.Profile{
+    overflow-x: hidden;
+}
+
 .Profile .h0{
     min-height: calc(100vh - 81px);
     height: auto;
@@ -360,4 +364,40 @@
     text-align: center;
     width: 100%;
     margin-top: 3rem;
+}
+
+.addColorRedToRequest{
+    background-color: red;
+}
+.addColorRedToRequest:hover{
+    background-color: rgb(200, 0, 0);
+}
+
+.AboutClickedContainer{
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+.Aboutx88{
+    width: 100%;
+    height: auto;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    color: #b0b3b8;
+}   
+.Aboutx88 h1{
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #e4e6eb;
+}
+
+.Aboutx88 img{
+    height: auto;
+     max-height: 150px;
+    object-fit: cover;
+    width: 100%;
+}
+.Aboutx88{
+    margin: 1.3rem 0rem;
 }

@@ -27,6 +27,10 @@ const schemaUsers = new mongoose.Schema({
         type: String,
         default: '',
     },
+    BigAbout : {
+        type : String, 
+        required : false
+    },
     address: {
         type : String, 
         required : false
@@ -57,6 +61,11 @@ const schemaUsers = new mongoose.Schema({
     isVerified : {
         type : Boolean, 
         default : false
+    },
+    MBTI : {
+        type : String, 
+        default : "none", 
+        required : false
     },
     contacts: [],
     pages : [], 

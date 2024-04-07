@@ -48,6 +48,7 @@ const notifSchema = new mongoose.Schema({
             "Friend Rejected", 
             "Comment on Post",
             "Like on Post",
+            "Post Created",
             "Profile Update",
             "New Group Created",
             "Group Deleted",

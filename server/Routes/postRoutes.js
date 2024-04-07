@@ -1,6 +1,7 @@
 const express = require('express');
 const posts = require('../Models/posts');
 const users = require('../Models/users');
+const notifs = require('../Models/notifs');
 const sendEmail = require('../Helpers/EmailSender');
 const verifyToken = require('../Middlewares/verifyToken');
 
@@ -24,6 +25,15 @@ router.post('/create', verifyToken ,async(req, res)=>{
             type
         });
         if(isCreated){
+
+            let dataNotification = {
+                title: `🚀 Success! Your post has been created!`,
+                description1: "Your post is now live and visible to others. Keep sharing your thoughts and experiences!",
+                idNotifSentTo: creator,
+                type: "Post Created" 
+            }
+            
+            await notifs.create(dataNotification);
             res.status(200).send("Post Created...");
         }
         else{

@@ -366,7 +366,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                           handleRequestClicked();
                         }}
                         key={popUp ? 134 : 234}
-                        className="sendrequestFriendShip"
+                        className={requestMade === "contact"?"sendrequestFriendShip addColorRedToRequest" : "sendrequestFriendShip" }
                       >
                         
                       {
@@ -618,9 +618,35 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
 
                       </> : 
                       isAboutClicked ? 
-                      <>
-                        About Clicked
-                      </> : 
+                      <div className='AboutClickedContainer'>
+                        <div className="Aboutx88">
+                          <h1>About</h1>
+                        </div>
+                        <div className="Aboutx88">
+                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
+                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
+                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
+                        </div>
+                        <div className="Aboutx88">
+                          <img
+                            src='https://wienerholocaustlibrary.org/wp-content/uploads/2021/01/IMG_1897-scaled.jpg'
+                            alt=''
+                          />
+                        </div>
+                        <div className="Aboutx88">
+                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
+                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
+                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
+                          <br /><br />
+                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
+                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
+                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
+                          <br /><br />
+                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
+                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
+                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
+                        </div>
+                      </div> : 
                       isMediaClicked ?
                         <div className='mediaContainer'>
                           {
@@ -656,7 +682,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                       <>
                       {
                         visitedUser.contacts.length === 0 ? 
-                        <span className='zsjdqoc'>
+                        <span className='zsjdqoczsjdqoc'>
                           No contacts yet..
                         </span>
                         :
