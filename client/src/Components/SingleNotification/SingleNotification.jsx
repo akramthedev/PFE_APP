@@ -56,6 +56,17 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
     }
 
 
+    const postVisitedAxiosReq = async()=>{
+      try{
+        await axios.get(`http://localhost:3001/notif/visitedClicked/${notif._id}`);
+      }
+      catch(e){
+        console.log(e.message);
+      }
+    }
+
+
+
     return (
       <>
        
@@ -211,14 +222,18 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
                 }
                 </div>
                 <div className="content content2">
+                {
+                  !notif.isPostClicked &&
                   <button
                     className='visitPost'
                     onClick={()=>{
+                      postVisitedAxiosReq();
                       navigate(`/profile/${idUser}`);
                     }}
                   >
                     View Post
                   </button>
+                }
                 </div>
               <span className={isseen ? " isnotseen isseen" : "isnotseen"}>
                  <i className='fa-solid fa-check-double'></i>

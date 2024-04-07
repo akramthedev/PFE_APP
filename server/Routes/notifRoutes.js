@@ -101,6 +101,24 @@ router.delete('/:idNotif' ,async(req, res)=>{
         res.status(500).send(e.message);
     }
 });
+router.get('/visitedClicked/:idPost' ,async(req, res)=>{
+    try{
+        const {idPost} = req.params;
+        const isUpdated = await notifs.findByIdAndUpdate(idPost, {
+            isPostClicked : true
+        });
+        if(isUpdated){
+            res.status(200).send("The notification updated successfully!");
+        }
+        else{
+            res.status(202).send('Something went wrong! The notification not updated..');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
 
 
 router.delete('/user/:idUser' ,async(req, res)=>{

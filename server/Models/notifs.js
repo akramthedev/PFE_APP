@@ -117,6 +117,11 @@ const notifSchema = new mongoose.Schema({
         type : String, 
         required : false, 
         default : "",
+    },
+    isPostClicked : {
+        type : Boolean, 
+        required : false, 
+        default : false,
     }
     
 }, {

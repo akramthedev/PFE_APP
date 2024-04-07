@@ -296,6 +296,32 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
       <Navbar isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
       <div className="home2">
         <div className="h0">
+                    <div ref={popUpRef} className={popUp ? "popUpx showpopUpx" : "popUpx"}>
+                          <button
+                            onClick={()=>{
+                              setpopUp(!popUp);
+                            }}
+                            className="closePopUpx2"
+                          >
+                            <i className='fa-solid fa-xmark'></i>
+                          </button>
+                          <button
+                            onClick={()=>{
+                              handleRequestClicked2("accept")
+                            }}
+                            className='acc acc1'
+                          >
+                            Accept
+                          </button>
+                          <button
+                            onClick={()=>{
+                              handleRequestClicked2("reject")
+                            }}
+                            className='acc acc2'
+                          >
+                            Reject
+                          </button>
+                        </div>
           {
             loading ? "Loading..."
             :
@@ -334,32 +360,6 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                       </button>
                     :
                     <>
-                      <div ref={popUpRef} className={popUp ? "popUpx showpopUpx" : "popUpx"}>
-                          <button
-                            onClick={()=>{
-                              setpopUp(!popUp);
-                            }}
-                            className="closePopUpx2"
-                          >
-                            <i className='fa-solid fa-xmark'></i>
-                          </button>
-                          <button
-                            onClick={()=>{
-                              handleRequestClicked2("accept")
-                            }}
-                            className='acc acc1'
-                          >
-                            Accept
-                          </button>
-                          <button
-                            onClick={()=>{
-                              handleRequestClicked2("reject")
-                            }}
-                            className='acc acc2'
-                          >
-                            Reject
-                          </button>
-                        </div>
 
                       <button 
                         onClick={()=>{

@@ -1,6 +1,4 @@
-.Profile{
-    overflow-x: hidden;
-}
+
 
 .Profile .h0{
     min-height: calc(100vh - 81px);
@@ -18,10 +16,12 @@
     height: 160px;
     border-radius: 0.2rem;
     overflow: hidden;
+    z-index: 50;
 }
 .rowCover img{
     height: 100%;
     width: 100%;
+    z-index: 50;
     object-fit: cover;
 }
 
@@ -217,11 +217,10 @@
 
 .popUpx{
     opacity: 0;
-    transition: 0.3s all ease-in-out;
+    transition: 0s all ease-in-out;
     position: absolute;
     height: 80px;
-    z-index: 10;
-    top: -72px;
+    top: -200px;
     right: 130px;
     background-color: whitesmoke;
     width: 330px;
@@ -230,8 +229,10 @@
     align-items: center;
     justify-content: center;
     flex-direction: row;
+    border-radius: 0.35rem;
 }
 .showpopUpx{
+    top: 90px;
     visibility: visible;
     opacity: 1;
 }
