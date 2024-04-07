@@ -3,6 +3,8 @@ import "./Post.css";
 import {useNavigate} from 'react-router-dom'
 import formatCreatedAt from '../../Helpers/GetTimeAndDate';
 import axios from 'axios';
+import SkeltonPost from './SkeltonPost';
+
 
 
 const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent}) => {
@@ -19,10 +21,54 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent}) => {
     const [numberLikes, setnumberLikes] = useState(null);
     const [numberViews, setnumberViews] = useState(null);
     const [isSeen, setIsSeen] = useState(false);
-    const [timeSpent, setTimeSpent] = useState(0);
 
-    const startTimeRef = useRef(null);
-    const stopTimeRef = useRef(null);
+
+
+    const token = localStorage.getItem('token');
+    const idUser = localStorage.getItem('idUser');
+
+    const [loadingDataUser, setloadingDataUser] = useState(true);
+    const [dataAuthorPost, setdataAuthorPost] = useState(null);
+
+    
+    const fetchUser = async ()=>{
+        if(post  && token){
+        try{
+            const resp = await axios.get(`http://localhost:3001/user/${post.creator}`, {
+            headers : {
+                Authorization : `Bearer ${token}`
+            }
+            });
+            if(resp.status === 200){
+                setdataAuthorPost(resp.data);
+                //handling the likes 
+                if(post.likes.includes(idUser)){
+                    setIsLoveClick(true);
+                }
+                else{
+                    setIsLoveClick(false);
+                }
+            }
+            else{
+                alert('Error');
+            }
+        }
+        catch(e){
+            console.log(e.message);
+            alert('Error');
+        } finally{
+            setloadingDataUser(false);
+        }
+        }
+    }
+
+
+    
+    useEffect(()=>{
+        fetchUser();
+    }, []);
+
+
 
     useEffect(()=>{
         if(post){
@@ -35,14 +81,16 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent}) => {
 
 
     const addViewToPost = async ()=>{
-        try{
-            const resp = await axios.get(`http://localhost:3001/post/addView/${post._id}`);
-            if(resp.status === 200){
-                setnumberViews(resp.data.views);
+        if(post){
+            try{
+                const resp = await axios.get(`http://localhost:3001/post/addView/${post._id}`);
+                if(resp.status === 200){
+                    setnumberViews(resp.data.views);
+                }
             }
-        }
-        catch(e){
-            console.log(e.message);
+            catch(e){
+                console.log(e.message);
+            }
         }
     }
 
@@ -52,12 +100,14 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent}) => {
 
     useEffect(() => {
         const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting && !isSeen) {
-                    setIsSeen(true);
-                    setnumberViews(number => number + 1);
-                    addViewToPost();
-                }
+            ([entry]) => {     
+                if(post){    
+                    if (entry.isIntersecting && !isSeen) {
+                        setIsSeen(true);
+                        setnumberViews(number => number + 1);
+                        addViewToPost();
+                    }
+                }              
             },
             {
                 root: null, // viewport
@@ -76,133 +126,153 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent}) => {
                 observer.unobserve(postRef.current);
             }
         };
-    }, [postRef, isSeen]);
+    }, [postRef, isSeen, idUser, loadingDataUser, dataAuthorPost]);
 
+
+    const handleLick = async ()=>{
+        try{
+            await axios.get(`http://localhost:3001/post/likeProcess/${post._id}`,  {
+                headers : {
+                    Authorization : `Bearer ${token}`
+                }
+            });
+        }
+        catch(e){
+            console.log(e.message);
+        }
+        
+    }
 
 
     return (
         <>
         {
-            post && <div className={ajusting === "yes" ? "Post ajustPost" : "Post"}>
-        <div  ref={postRef} className=" rowP0 rowP1">
-            <div className="c1"
-                onClick={()=>{
-                    naviagte(`/profile/${post.creator}`);
-                }}
-            >
-                <div className="c11">
-                    <img src="https://akramelbasri.com/static/media/img.bbbb721ddafd04f09a9d.png" alt="" />
+        
+        (post && !loadingDataUser && dataAuthorPost) ? 
+        <div className={ajusting === "yes" ? "Post ajustPost" : "Post"}>
+        
+            <div  ref={postRef} className=" rowP0 rowP1">
+                <div className="c1"
+                    onClick={()=>{
+                        naviagte(`/profile/${post.creator}`);
+                    }}
+                >
+                    <div className="c11">
+                        <img src={dataAuthorPost.profilePic} alt="" />
+                    </div>
+                    <div className="c12">
+                        <span>{dataAuthorPost.fullName}</span>
+                        <span>{dataAuthorPost.email}</span>
+                    </div>
                 </div>
-                <div className="c12">
-                    <span>Akram El Basri</span>
-                    <span>seasonedwebdev@gmail.com</span>
+                <div 
+                    className={IsBookMarked ? "c2" : "c2"}
+                    onClick={()=>{
+                        setIsBookMarked(!IsBookMarked);
+                    }}
+                >
+                {
+                    !IsBookMarked ? 
+                    <i class="fa-regular fa-bookmark"></i>
+                    :
+                    <i className="fa-solid fa-bookmark"></i>
+                }
                 </div>
             </div>
-            <div 
-                className={IsBookMarked ? "c2" : "c2"}
-                onClick={()=>{
-                    setIsBookMarked(!IsBookMarked);
-                }}
-            >
+            {post.description !== "" &&
+            <div className=" rowP0 rowP2">
+                {post.description}
+            </div>
+            }
             {
-                !IsBookMarked ? 
-                <i class="fa-regular fa-bookmark"></i>
-                :
-                <i className="fa-solid fa-bookmark"></i>
+                post.image !== "" && 
+                <div className=" rowP0 rowP3">
+                    <img 
+                        src={post.image}
+                        alt=""
+                    />
+                </div>
+            }
+            <div className="rowP0 rowP4">
+            {
+                formatCreatedAt(post.createdAt)
             }
             </div>
-        </div>
-        {post.description !== "" &&
-        <div className=" rowP0 rowP2">
-            {post.description}
-        </div>
-        }
-        {
-            post.image !== "" && 
-            <div className=" rowP0 rowP3">
-                <img 
-                    src={post.image}
-                    alt=""
-                />
-            </div>
-        }
-        <div className="rowP0 rowP4">
-        {
-            formatCreatedAt(post.createdAt)
-        }
-        </div>
-        <div className="rowP0 rowP5">
+            <div className="rowP0 rowP5">
+                
             
-          
-            <button
-                className='lsc'
-                onClick={()=>{
-                    if(isLoveClick){
-                        setnumberLikes(numberLikes-1);
-                        setIsLoveClick(false);
-                        //axios request here 
-                    }
-                    else{
-                        setnumberLikes(numberLikes+1);
-                        setIsLoveClick(true);
-                        //axios request here 
-
-                    }
-                }}
-            >
-                {numberLikes}
-                {
-                    isLoveClick ? 
-                    <i className="fa-solid fa-heart fa-heartRED"></i>
-                    :
-                    <i className="fa-regular fa-heart"></i>
-                }
-            </button>
- 
-            <button
-                className='lsc'
-                onClick={()=>{
-                    setIsCommentClicked(!isCommentClicked);
-                    setTimeout(()=>{
-                        if(isCommentClicked){
-                            //scroll to top 
-                            window.scrollTo({
-                                top:window.scrollY - 100, 
-                                behaviort : 'smooth'
-                            })
+                <button
+                    className='lsc'
+                    onClick={()=>{
+                        if(isLoveClick){
+                            setnumberLikes(numberLikes-1);
+                            setIsLoveClick(false);
+                            //axios request here 
+                            handleLick();
                         }
                         else{
-                            //scroll  to bottom 
-                            window.scrollTo({
-                                top :window.scrollY + 100, 
-                                behaviort : 'smooth'
-                            })
+                            setnumberLikes(numberLikes+1);
+                            setIsLoveClick(true);
+                            //axios request here 
+                            handleLick();
                         }
-                    },200);
-                }}
-            >
-                {numberComment}
-                {
-                    isCommentClicked ? 
-                    <i className="fa-solid fa-comment"></i>
-                    :
-                    <i className="fa-regular fa-comment"></i>
-                }
-            </button>
-            
-            <button
-                className=' lsc lsclsc'
-            >
-                {numberViews}
-                <i class="fa-solid fa-chart-simple"></i>
-            </button>   
+                    }}
+                >
+                    {numberLikes}
+                    {
+                        isLoveClick ? 
+                        <i className="fa-solid fa-heart fa-heartRED"></i>
+                        :
+                        <i className="fa-regular fa-heart"></i>
+                    }
+                </button>
+    
+                <button
+                    className='lsc'
+                    onClick={()=>{
+                        setIsCommentClicked(!isCommentClicked);
+                        setTimeout(()=>{
+                            if(isCommentClicked){
+                                //scroll to top 
+                                window.scrollTo({
+                                    top:window.scrollY - 100, 
+                                    behaviort : 'smooth'
+                                })
+                            }
+                            else{
+                                //scroll  to bottom 
+                                window.scrollTo({
+                                    top :window.scrollY + 100, 
+                                    behaviort : 'smooth'
+                                })
+                            }
+                        },200);
+                    }}
+                >
+                    {numberComment}
+                    {
+                        isCommentClicked ? 
+                        <i className="fa-solid fa-comment"></i>
+                        :
+                        <i className="fa-regular fa-comment"></i>
+                    }
+                </button>
+                
+                <button
+                    className=' lsc lsclsc'
+                >
+                    {numberViews}
+                    <i class="fa-solid fa-chart-simple"></i>
+                </button>   
 
 
+            </div>
+            <div className={isCommentClicked ? "rowP6 showrowP6" : "rowP6"}>
+
+            </div>
         </div>
-        <div className={isCommentClicked ? "rowP6 showrowP6" : "rowP6"}>
-
-        </div>
-    </div>
+        :
+        <SkeltonPost/>
     }
     </>
   )

@@ -11,7 +11,7 @@ import UtilsAndNavigations from '../../Components/UtilsAndNavigations/UtilsAndNa
 import axios from "axios";
 import PostSuggestedUsers from '../../Components/Post/PostSuggestedUsers';
 import OpenerMp3 from '../../MP3Sounds/openingAuth.wav';
-
+import SkeltonPost from '../../Components/Post/SkeltonPost';
 
 
 
@@ -75,7 +75,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
               {
                 postLoading ? 
                 <>
-                  Loading All Posts...
+                  <SkeltonPost /><SkeltonPost />
                 </>
                 :
                 <>

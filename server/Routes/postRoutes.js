@@ -113,6 +113,46 @@ router.get('/user/:iduser' ,async(req, res)=>{
 
 
 
+router.get('/likeProcess/:idPost',verifyToken,async(req, res)=>{
+    try{
+        const {
+            idPost
+        } = req.params;
+        const idUser = req.user._id
+
+        const isFound = await posts.findById(idPost);
+
+        if(isFound){
+            if(isFound.likes.includes(idUser)){
+                //pull
+                await posts.findByIdAndUpdate(idPost, {
+                    $pull : {
+                        likes : idUser
+                    }
+                })
+                res.status(200).send("Jack");
+            }
+            else{
+                await posts.findByIdAndUpdate(idPost, {
+                    $push : {
+                        likes : idUser
+                    }
+                })
+                res.status(200).send("Jack");
+            }
+        }
+        else{
+            res.status(201).send('Post Not Found ... ');
+        }
+
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+
 router.get('/' ,async(req, res)=>{
     try{
 
