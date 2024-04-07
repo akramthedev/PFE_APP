@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../Pages/Home/Home.css';
+import "./Post.css";
 
 
 const SkeltonPost = () => {

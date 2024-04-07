@@ -13,7 +13,7 @@ import AdminSymbol from '../../Assets/AdminSymbol.jsx';
 import AdserSymbol from '../../Assets/AdserSymbol.jsx';
 import CreatePost from '../../Components/CreatePost/CreatePost.jsx';
 import { useSocket } from '../../Helpers/SocketContext';
-import SkeltonPost from '../../Components/Post/SkeltonPost.jsx';
+import SkeltonPost2 from '../../Components/Post/SkeltonPost2.jsx';
 
 
 
@@ -21,7 +21,6 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
 
 
   const { id } = useParams();
-  let allPhotos = [];
   const { socket } = useSocket();
   const token = localStorage.getItem('token');
   const idVisited = id;
@@ -37,7 +36,10 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   const [requestMade, setrequestMade] = useState(null);
   const [popUp, setpopUp] = useState(false);
   const [allPosts, setAllPosts] = useState([]);
+  const [allPostsWithImages, setallPostsWithImages] = useState([]);
   const [postLoading, setpostLoading] = useState(true);
+  const [isImgClicked, setisImgClicked] = useState(false);
+  const [imgSrcClicked,setImgSrcClicked] = useState("");
 
   useOutsideAlerter(popUpRef, setpopUp);
 
@@ -47,6 +49,20 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
       const resp = await axios.get(`http://localhost:3001/post/user/${id}`);
       if(resp.status === 200){
         setAllPosts(resp.data);
+        if(resp.data.length !== 0){
+          setTimeout(()=>{
+            setallPostsWithImages(null);
+            setallPostsWithImages([]);
+            resp.data.map((post, index)=>{
+              if(post.image !== ''){
+                setallPostsWithImages(prevPosts=>[
+                  ...prevPosts, 
+                  post.image
+                ])
+              }
+            })
+          }, 700 );
+        }
       }
       else{
         setAllPosts([]);
@@ -61,6 +77,10 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
 
 
   useEffect(()=>{
+    const x = ()=>{
+      setallPostsWithImages([]);
+    }
+    x();
     fetchAllPosts();
   }, [id]);
 
@@ -242,6 +262,27 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   }
 
  
+
+  useEffect(()=>{
+    const x = ()=>{
+      if(isAboutClicked){
+
+      }
+      else if(isContactsClicked){
+
+      }
+      else if(isGroupsClicked){
+
+      }
+      else if (isMediaClicked){
+        //fetchAllPosts();
+      }
+      else if(isPostsClicked){
+        fetchAllPosts();
+      }
+    }
+    x();
+  }, [isAboutClicked, isContactsClicked, isGroupsClicked, isMediaClicked, isPostsClicked]);
 
 
   return (
@@ -427,14 +468,14 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                       </div>
                       <div className="AboutMedia">
                       {
-                        allPhotos.length !== 0 ? 
-                        allPhotos.slice(0, 9).map((photo, index) => {
+                        allPostsWithImages.length !== 0 ? 
+                        allPostsWithImages.slice(0, 9).map((image, index) => {
                           return (
-                            <img
-                              src={photo}
-                              key={index} // Consider using a more unique identifier for keys if available
-                              alt={`${photo}-${index}`} // Changed the plus sign to a hyphen for standard alt text formatting
-                            />
+                              <img
+                                src={image}
+                                key={index} // Consider using a more unique identifier for keys if available
+                                alt={`${image}-${index}`} // Changed the plus sign to a hyphen for standard alt text formatting
+                              />
                           )
                         })
                         :
@@ -525,42 +566,99 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                       </button>
                     </div>
 
-                    {
-                      (dataUserCurrent && (dataUserCurrent._id === id))
-                      &&
-                      <CreatePost reRenderParentCompo={fetchAllPosts}  ajusting="profile" dataUserCurrent={dataUserCurrent} isFetchingUser={isFetchingUser} />
-                    }
+                    
+                    
 
                     {
-                      postLoading ? 
+                      isPostsClicked ? 
                       <>
-                        <SkeltonPost />
-                        <SkeltonPost />
-                      </>
-                      :
-                      <>
-                      {
-                        allPosts && <>
+                          
                           {
-                            allPosts.length === 0 ? 
-                            <span className='zsjdqoc'>
-                              No Post Yet
-                            </span>
+                            (dataUserCurrent && (dataUserCurrent._id === id))
+                            &&
+                            <CreatePost reRenderParentCompo={fetchAllPosts}  ajusting="profile" dataUserCurrent={dataUserCurrent} isFetchingUser={isFetchingUser} />
+                          }
+
+                          {
+                            postLoading ? 
+                            <>
+                              <SkeltonPost2  />
+                              <SkeltonPost2  />
+                            </>
                             :
                             <>
-                              {
-                                allPosts.map((post, index)=>{
-                                  return(
-                                    <Post reRenderParentCompo={fetchAllPosts} ajusting={"yes"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
-                                  )
-                                })
-                              }
+                            {
+                              allPosts && <>
+                                {
+                                  allPosts.length === 0 ? 
+                                  <span className='zsjdqoc'>
+                                    No Post Yet
+                                  </span>
+                                  :
+                                  <>
+                                    {
+                                      allPosts.map((post, index)=>{
+                                        return(
+                                          <Post reRenderParentCompo={fetchAllPosts} ajusting={"yes"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                                        )
+                                      })
+                                    }
+                                  </>
+                                }
+                              </>
+                            }
                             </>
                           }
-                        </>
-                      }
+
+                      </> : 
+                      isAboutClicked ? 
+                      <>
+                        About Clicked
+                      </> : 
+                      isMediaClicked ?
+                        <div className='mediaContainer'>
+                          {
+                              (allPosts && allPostsWithImages) && <>
+                                {
+                                  allPostsWithImages.length === 0 ? 
+                                  <span className='zsjdqoc'>
+                                    No Media Yet
+                                  </span>
+                                  :
+                                  <>
+                                    {
+                                      allPostsWithImages.map((image, index)=>{
+                                        return(
+                                          <img
+                                            onClick={()=>{
+                                              setisImgClicked(true);
+                                              setImgSrcClicked(image)
+                                            }}
+                                            key={index}
+                                            src={image}
+                                            alt='image'
+                                          />
+                                        )
+                                      })
+                                    }
+                                  </>
+                                }
+                              </>
+                            }
+                      </div> : 
+                      isContactsClicked ? 
+                      <>
+                        Contacts Clicked
+                      </> :
+                      isGroupsClicked &&
+                      <>
+                        Groups Clicked
                       </>
                     }
+
+
+
+
 
                   </div>
                 </div>
@@ -578,6 +676,24 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
           <Contacts isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
         </div>
       </div>
+      {
+        isImgClicked && 
+        <div 
+          onClick={()=>{
+            setisImgClicked(false);
+            setImgSrcClicked('');
+          }}
+          className='imageClickedFixedPosition'
+        >
+        {
+          imgSrcClicked !== "" && 
+          <img 
+            src={imgSrcClicked}
+            alt=""
+          />
+        }
+        </div>
+      }
     </div>
   );
 };

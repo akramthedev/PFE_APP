@@ -235,3 +235,94 @@
     width: 100%;
     margin-top: 5rem;
 }
+
+
+.PostSkelton{
+    min-height: 160px;
+    height: auto;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 1.8rem;
+    border-radius: 0.3rem;
+    animation: skeleton-loading 0.28s linear infinite alternate;
+}
+
+.PostSkelton2{
+    width: 100%;
+}
+.rowContent{
+    width: 100%;
+    padding: 0 1.5rem;
+    height: 70px;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+}
+.imgSkelton{
+    border-radius: 50%;
+    height: 70px;
+    width: 70px;
+    animation: skeleton-loading2 0.28s linear infinite alternate;
+    margin-right: 1.1rem;
+}
+ 
+
+.fullNameSkelton{
+    width: 110px;
+    height: 20px;
+    border-radius: 5rem;
+    animation: skeleton-loading2 0.28s linear infinite alternate;
+}
+
+.rowContent2{
+    width: 100%;
+    padding: 0 2rem;
+    margin-top: 1rem;
+    display: flex;
+    margin-bottom: 1rem;
+    position: relative;
+    flex-direction: column !important;
+}
+.rowContent2 .fullNameSkelton{
+    margin-bottom: 0.6rem;
+}
+.rowContent2 .DescriptionSkelton{
+    width: 333px;
+    height: 20px;
+    border-radius: 5rem;
+    animation: skeleton-loading2 0.28s linear infinite alternate;
+}
+
+.rowContent2 .DescriptionSkelton2{
+    max-width: 500px;
+    width: 90%;
+    margin-bottom: 1rem;
+}
+
+
+@keyframes skeleton-loading {
+    0% {
+      background-color: hsl(0, 3%, 17%);
+    }
+    100% {
+      background-color: hsl(0, 3%, 25%);
+    }
+}
+
+
+@keyframes skeleton-loading2 {
+    0% {
+      background-color: hsl(0, 2%, 19%);
+    }
+    100% {
+      background-color: hsl(0, 4%, 17%);
+    }
+}
+
+
+.PostSkelton{
+    width: 80% !important;
+}
+.PostSkelton2{
+    width: 100% !important;
+}
