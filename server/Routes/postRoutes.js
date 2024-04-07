@@ -8,7 +8,7 @@ const verifyToken = require('../Middlewares/verifyToken');
 const router = express.Router();
 
 
-router.post('/create' ,async(req, res)=>{
+router.post('/create', verifyToken ,async(req, res)=>{
     try{
         const {
             creator,

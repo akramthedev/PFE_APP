@@ -8,7 +8,7 @@ import SkeltonPost2 from './SkeltonPost2';
 
 
 
-const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent}) => {
+const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
 
 
     const naviagte = useNavigate();
@@ -182,7 +182,12 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent}) => {
             </div>
             {post.description !== "" &&
             <div className=" rowP0 rowP2">
-                {post.description}
+                {post.description.split('\n').map((line, index) => (
+                    <>
+                    {line}
+                    <br />
+                    </>
+                ))}
             </div>
             }
             {

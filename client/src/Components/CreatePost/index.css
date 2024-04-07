@@ -260,13 +260,12 @@
     z-index: 10;
     display: flex;
     flex-wrap: wrap;
-    gap: 2px;
     user-select: none;
 }
 .emojiShow span{
-    height: 30px;
+    height: 31px;
     user-select: none;
-    width: 30px;
+    width: 31px;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -4,16 +4,22 @@ import Camera from '../../Assets/v.png';
 import Picture from '../../Assets/image.png';
 import Feeling from '../../Assets/jack.png';
 import ClickOutsider from '../../Helpers/HidePopUp';
- 
+import axios from 'axios';
 
-const CreatePost = ({ajusting, isFetchingUser, dataUserCurrent}) => {
+
+
+const CreatePost = ({ajusting, isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
   
 
+    const idUser = localStorage.getItem('idUser');
+    const token = localStorage.getItem('token');
     const popUpCP = useRef(null);
     const pôpUpEmojis = useRef(null);
     const [isCreateClicked, setisCreateClicked] = useState(false);
     const [emojiShow, setEmojiShow] = useState(false);
     const [textArea, settextArea] = useState('');
+    const [images, setimages] = useState('');
+    const [isSubmitClicked, setisSubmitClicked] = useState(false);
 
     ClickOutsider(popUpCP, setisCreateClicked); 
     ClickOutsider(pôpUpEmojis, setEmojiShow); 
@@ -33,12 +39,49 @@ const CreatePost = ({ajusting, isFetchingUser, dataUserCurrent}) => {
       settextArea(textArea => textArea + emoji);
     };
 
+    const handleSubmit = async(event)=>{
+      setisSubmitClicked(true);
+      event.preventDefault();
+      if(token && idUser){
+        if(images === "" && textArea === ""){
+          console.log("Empty Field");
+        }
+        else{
+          try{
+            const resp = await axios.post("http://localhost:3001/post/create/", {
+              creator : idUser, 
+              image : images, 
+              description : textArea, 
+              type : "normal"          
+            }, {
+              headers : {
+                Authorization : `Bearer ${token}`
+              }
+            }); 
+            if(resp.status=== 200){
+              reRenderParentCompo();
+              setisCreateClicked(false);
+              setimages("");
+              settextArea("");
+            }
+            else{
+              alert("Error Creating Post");
+            }
+          }
+          catch(error){
+            alert("Error Creating Post");
+            console.log(error.message);
+          }
+        }
+      }
+    }
+
   return (
     <>
 
 
       <div   className={isCreateClicked ? "popUpCreatePost showpopUpCreatePost" : "popUpCreatePost"}>
-        <form encType='multipart/form-data' ref={popUpCP} className="containerpopUpCreatePost">
+        <form onSubmit={handleSubmit}  ref={popUpCP} className="containerpopUpCreatePost">
           <button 
             className="closePcp"
             onClick={()=>{
@@ -51,7 +94,7 @@ const CreatePost = ({ajusting, isFetchingUser, dataUserCurrent}) => {
             Create new post
           </div>
           <div className="zowZ2">
-            <textarea onChange={(e)=>{settextArea(e.target.value)}}  spellCheck={false} onClick={()=>{setEmojiShow(false);}} placeholder='Type something...' >
+            <textarea  value={textArea} onChange={(e)=>{setisSubmitClicked(false);settextArea(e.target.value)}}  spellCheck={false} onClick={()=>{setEmojiShow(false);}} placeholder='Type something...' >
             </textarea>
             {
               emojiShow && 
@@ -81,12 +124,13 @@ const CreatePost = ({ajusting, isFetchingUser, dataUserCurrent}) => {
             </button>
           </div>
           <div className="zowZ2">
-            <input type="text" placeholder='Your image URL' spellCheck={false} />
+            <input value={images} onChange={(e)=>{setisSubmitClicked(false);setimages(e.target.value)}} type="text" placeholder='Your image URL' spellCheck={false} />
           </div>
           <div className="zowZ2">
             <button
               className='sjqdkc'
               type='submit'
+              disabled={isSubmitClicked}
             >
               Lunch the post
             </button>
