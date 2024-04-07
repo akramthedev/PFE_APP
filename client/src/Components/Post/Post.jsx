@@ -15,6 +15,8 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
     const naviagte = useNavigate();
     const postRef = useRef(null);
     
+    const [isImgClicked, setisImgClicked] = useState(false);
+    const [imgSrcClicked,setImgSrcClicked] = useState("");
     const [isCommentClicked, setIsCommentClicked] = useState(false);
     const [isLoveClick, setIsLoveClick] = useState(false);
     const [IsBookMarked, setIsBookMarked] = useState(false);
@@ -202,7 +204,24 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
         
         (post && !loadingDataUser && dataAuthorPost) ? 
         <div id={post._id}  className={ajusting === "yes" ? "Post ajustPost" : "Post"}>
-        
+            
+
+                <div 
+                    onClick={()=>{
+                        setisImgClicked(false);
+                        setImgSrcClicked('');
+                    }}
+                    className={isImgClicked ? "imageClickedFixedPosition showimageClickedFixedPosition" : "imageClickedFixedPosition"}
+                    >
+                    {
+                    imgSrcClicked !== "" && 
+                    <img 
+                        src={imgSrcClicked}
+                        alt=""
+                    />
+                    }
+                </div>
+
             <div  ref={postRef} className=" rowP0 rowP1">
                 <div className="c1"
                     onClick={()=>{
@@ -260,6 +279,10 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
                 post.image !== "" && 
                 <div className=" rowP0 rowP3">
                     <img 
+                        onClick={()=>{
+                            setisImgClicked(true);
+                            setImgSrcClicked(post.image)
+                        }}
                         src={post.image}
                         alt=""
                     />

@@ -723,25 +723,23 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
           <Contacts isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
         </div>
       </div>
-      {
-        isImgClicked && 
-        <div 
-          onClick={()=>{
-            setisImgClicked(false);
-            setImgSrcClicked('');
-          }}
-          className='imageClickedFixedPosition'
-        >
-        {
-          imgSrcClicked !== "" && 
-          <img 
-            src={imgSrcClicked}
-            alt=""
-          />
-        }
-        </div>
-      }
-    </div>
+      
+          <div 
+            onClick={()=>{
+              setisImgClicked(false);
+              setImgSrcClicked('');
+            }}
+            className={isImgClicked ? "imageClickedFixedPosition showimageClickedFixedPosition" : "imageClickedFixedPosition"}
+          >
+            {
+              imgSrcClicked !== "" && 
+              <img 
+                src={imgSrcClicked}
+                alt=""
+              />
+            }
+          </div>
+      </div>
   );
 };
 
