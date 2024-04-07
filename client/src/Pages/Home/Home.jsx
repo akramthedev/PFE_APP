@@ -65,7 +65,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
       
         
 
-          <Navbar  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
+          <Navbar  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent}  />
           <div className="home2">
             <div className="h1">
               <UtilsAndNavigations  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
@@ -75,7 +75,8 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
               {
                 postLoading ? 
                 <>
-                  <SkeltonPost /><SkeltonPost />
+                  <SkeltonPost />
+                  <SkeltonPost />
                 </>
                 :
                 <>
@@ -83,15 +84,15 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
                   allPosts && <>
                     {
                       allPosts.length === 0 ? 
-                      <>
+                      <span className='zsjdqoc'>
                         No Post yet
-                      </>
+                      </span>
                       :
                       <>
                         {
                           allPosts.map((post, index)=>{
                             return(
-                              <Post  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                              <Post ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
                             )
                           })
                         }

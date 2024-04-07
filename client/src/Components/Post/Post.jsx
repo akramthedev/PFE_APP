@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom'
 import formatCreatedAt from '../../Helpers/GetTimeAndDate';
 import axios from 'axios';
 import SkeltonPost from './SkeltonPost';
+import SkeltonPost2 from './SkeltonPost2';
 
 
 
@@ -272,7 +273,11 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent}) => {
             </div>
         </div>
         :
-        <SkeltonPost/>
+        <>
+        {
+            ajusting === "yes" ? <SkeltonPost2/> : <SkeltonPost/>
+        }
+        </>
     }
     </>
   )

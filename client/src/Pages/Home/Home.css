@@ -43,6 +43,9 @@
     animation: skeleton-loading 0.28s linear infinite alternate;
 }
 
+.PostSkelton2{
+    width: 100%;
+}
 .rowContent{
     width: 100%;
     padding: 0 1.5rem;
@@ -87,7 +90,8 @@
 }
 
 .rowContent2 .DescriptionSkelton2{
-    width: 500px;
+    max-width: 500px;
+    width: 90%;
     margin-bottom: 1rem;
 }
 
@@ -110,6 +114,10 @@
       background-color: hsl(0, 4%, 17%);
     }
 }
-
-
-
+.zsjdqoc{
+    color: rgb(171, 171, 171);
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+    margin-top: 3rem;
+}

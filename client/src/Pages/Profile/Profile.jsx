@@ -13,6 +13,7 @@ import AdminSymbol from '../../Assets/AdminSymbol.jsx';
 import AdserSymbol from '../../Assets/AdserSymbol.jsx';
 import CreatePost from '../../Components/CreatePost/CreatePost.jsx';
 import { useSocket } from '../../Helpers/SocketContext';
+import SkeltonPost from '../../Components/Post/SkeltonPost.jsx';
 
 
 
@@ -35,8 +36,34 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   const [isGroupsClicked, setisGroupsClicked] = useState(false);
   const [requestMade, setrequestMade] = useState(null);
   const [popUp, setpopUp] = useState(false);
- 
+  const [allPosts, setAllPosts] = useState([]);
+  const [postLoading, setpostLoading] = useState(true);
+
   useOutsideAlerter(popUpRef, setpopUp);
+
+  const fetchAllPosts = async ()=>{
+    try{
+      setpostLoading(true);
+      const resp = await axios.get(`http://localhost:3001/post/user/${id}`);
+      if(resp.status === 200){
+        setAllPosts(resp.data);
+      }
+      else{
+        setAllPosts([]);
+      }
+    }
+    catch(e){
+      console.log(e.message);
+    } finally{
+      setpostLoading(false);
+    }
+  }
+
+
+  useEffect(()=>{
+    fetchAllPosts();
+  }, [id]);
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -504,12 +531,36 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                       <CreatePost ajusting="profile" dataUserCurrent={dataUserCurrent} isFetchingUser={isFetchingUser} />
                     }
 
-                    <Post ajusting={"yes"} />
-                    <Post ajusting={'yes'} />
-                    <Post ajusting={'yes'} />
-                    <Post ajusting={'yes'} />
-
-
+                    {
+                      postLoading ? 
+                      <>
+                        <SkeltonPost />
+                        <SkeltonPost />
+                      </>
+                      :
+                      <>
+                      {
+                        allPosts && <>
+                          {
+                            allPosts.length === 0 ? 
+                            <span className='zsjdqoc'>
+                              No Post Yet
+                            </span>
+                            :
+                            <>
+                              {
+                                allPosts.map((post, index)=>{
+                                  return(
+                                    <Post ajusting={"yes"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                                  )
+                                })
+                              }
+                            </>
+                          }
+                        </>
+                      }
+                      </>
+                    }
 
                   </div>
                 </div>

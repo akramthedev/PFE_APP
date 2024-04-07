@@ -87,6 +87,7 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
                 src='https://res.cloudinary.com/dqprleeyt/image/upload/v1712318887/and_parkle___3_-removebg-preview_lyfila.png'
                 alt=""
                 onClick={()=>{
+                    
                     navigate("/");
                 }}
             />
@@ -147,7 +148,7 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
                                 navigate('/admin/panel')
                             }
                             else{
-                                navigate('/adser/panel')
+                                navigate('/adser/panel');
                             }
                         }}
                         className='linkNav'
