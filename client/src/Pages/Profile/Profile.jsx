@@ -27,6 +27,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   const idVisited = id;
   const currentId = localStorage.getItem('idUser');
   const popUpRef = useRef(null); 
+  const popUpRef2 = useRef(null); 
   const [loading, setLoading] = useState(true);
   const [visitedUser, setVisitedUser] = useState(null);
   const [isPostsClicked, setisPostsClicked] = useState(true);
@@ -43,7 +44,37 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   const [imgSrcClicked,setImgSrcClicked] = useState("");
   const [IsModifyProfileClicked,setIsModifyProfileClicked] = useState(false);
 
+  const [modFullname, setModFullname] = useState("");
+  const [modPictureProfile, setModPictureProfile] = useState("");
+  const [modCoverPicture, setModCoverPicture] = useState("");
+  const [modBio, setModBio] = useState("");
+  const [modAbout, setModAbout] = useState("");
+  const [modAdress, setmodAdress] = useState("");
+  const [moddateOfBirth, setmoddateOfBirth] = useState("");
+  const [modphoneNumber, setmodphoneNumber] = useState("");
+  const [modWebsite, setmodWebsite] = useState("");
+
+
+  useEffect(()=>{
+    const x = ()=>{
+      if(!isFetchingUser && dataUserCurrent){
+        setModFullname(dataUserCurrent.fullName);
+        setModPictureProfile(dataUserCurrent.profilePic);
+        setModCoverPicture(dataUserCurrent.coverPic);
+        setModBio(dataUserCurrent.bio);
+        setModAbout(dataUserCurrent.BigAbout);
+        setmodphoneNumber(dataUserCurrent.phoneNumber); 
+        setmodAdress(dataUserCurrent.address);
+        setmoddateOfBirth(dataUserCurrent.dateOfBirth);
+        setmodWebsite(dataUserCurrent.portfolio);
+      }
+    }
+    x();
+  }, [id]);
+
+
   useOutsideAlerter(popUpRef, setpopUp);
+  useOutsideAlerter(popUpRef2, setIsModifyProfileClicked);
 
   const fetchAllPosts = async ()=>{
     try{
@@ -292,13 +323,117 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   }, [isAboutClicked, isContactsClicked, isGroupsClicked, isMediaClicked, isPostsClicked]);
 
 
+  const handleSubmitUpdatedDocuments = async (e)=>{
+    e.preventDefault();
+    try{
+      
+    }
+    catch(er){
+      console.log(er.message);
+    }
+  }
+
   return (
     <div className='Home Profile'>
       <Navbar isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
       <div className={IsModifyProfileClicked ? "imageClickedFixedPosition showimageClickedFixedPosition" : "imageClickedFixedPosition"}>
-        <div className={IsModifyProfileClicked ? "containerEditProfile showcontainerEditProfile" : "containerEditProfile"}>
+        <form onSubmit={handleSubmitUpdatedDocuments} ref={popUpRef2} className={IsModifyProfileClicked ? "containerEditProfile showcontainerEditProfile" : "containerEditProfile"}>
+          <button
+            onClick={()=>{
+              setIsModifyProfileClicked(!IsModifyProfileClicked);
+            }}
+            className=" closePopUpx2 closePopUpx3"
+          >
+            <i className='fa-solid fa-xmark'></i>
+          </button>
+          <div className="About About66 About6688">  
+            Edit profile
+          </div>
+          <div className="About About66">
+            <span>Full Name : </span>  
+            <input 
+              type="text"
+              placeholder='Modify your full name...'
+              spellCheck={false}  
+            />
+          </div>
+          <div className="About About66"> 
+            <span>Profile Picture : </span> 
+            <input 
+              type="text"
+              placeholder='Modify your profile picture...'
+              spellCheck={false}  
+            />
+          </div>
+          <div className="About About66"> 
+            <span>Cover Picture : </span> 
+            <input 
+              type="text"
+              placeholder='Modify your cover picture...'
+              spellCheck={false}  
+            />
+          </div>
+          <div className="About About66"> 
+            <span>Phone Number : </span> 
+            <input 
+              type="text"
+              placeholder='Modify your phone number...'
+              spellCheck={false}  
+            />
+          </div>
+          
+          <div className="About About66"> 
+            <span>Address : </span> 
+            <input 
+              type="text"
+              placeholder='Modify your address...'
+              spellCheck={false}  
+            />
+          </div>
+          <div className="About About66"> 
+            <span>Portfolio : </span> 
+            <input 
+              type="text"
+              placeholder='Modify your portfolio website...'
+              spellCheck={false}  
+            />
+          </div>
+          <div className="About About66"> 
+            <span>Date Of Birth : </span> 
+            <input 
+              type="text"
+              placeholder='Modify your date of birth...'
+              spellCheck={false}  
+            />
+          </div>
+          <div className="About About66 About68 ">
+            <span>Bio : </span> 
+            <textarea 
+              type="text"
+              placeholder='Modify your bio...'
+              spellCheck={false}  
+            ></textarea>
+          </div>
 
-        </div>
+          {/*
+          <div className="About About66 About68">
+            <span>About : </span> 
+            <textarea 
+              className='textAreaOfAbout'
+              type="text"
+              placeholder='Modify your about section...'
+              spellCheck={false}  
+            ></textarea>
+          </div>
+          */}
+
+          <div className="About About66 About777">
+            <button>
+              Save Changes
+            </button>
+          </div>
+
+        </form>
       </div>
       <div className="home2">
         <div className="h0">
@@ -362,7 +497,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                         }}
                         className="messageFriendShip"
                       >
-                        <i className='fa-solid fa-pen'></i>&nbsp;Modify Profile
+                        <i className='fa-solid fa-pen'></i>&nbsp;Edit Profile
                       </button>
                     :
                     <>

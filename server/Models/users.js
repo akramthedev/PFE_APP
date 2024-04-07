@@ -27,7 +27,7 @@ const schemaUsers = new mongoose.Schema({
         type: String,
         default: '',
     },
-    BigAbout : {
+    BigAbout :{
         type : String, 
         required : false
     },
