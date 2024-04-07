@@ -551,7 +551,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                               {
                                 allPosts.map((post, index)=>{
                                   return(
-                                    <Post ajusting={"yes"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                                    <Post reRenderParentCompo={fetchAllPosts} ajusting={"yes"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
                                   )
                                 })
                               }

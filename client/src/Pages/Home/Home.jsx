@@ -92,7 +92,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
                         {
                           allPosts.map((post, index)=>{
                             return(
-                              <Post ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                              <Post reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
                             )
                           })
                         }

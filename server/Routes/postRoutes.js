@@ -60,6 +60,28 @@ router.get('/:id' ,async(req, res)=>{
 });
 
 
+router.delete('/:id' ,async(req, res)=>{
+    try{
+        const {
+            id
+        } = req.params;
+
+        const isDeleted = await posts.findByIdAndDelete(id);
+
+        if(isDeleted){
+            res.status(200).send("Is Deleted successfully ! ");
+        }
+        else{
+            res.status(201).send('Post Not deleted ... ');
+        }
+
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
 
 router.get('/addView/:id' ,async(req, res)=>{
     try{

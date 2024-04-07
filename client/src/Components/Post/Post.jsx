@@ -17,7 +17,7 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
     const [isCommentClicked, setIsCommentClicked] = useState(false);
     const [isLoveClick, setIsLoveClick] = useState(false);
     const [IsBookMarked, setIsBookMarked] = useState(false);
-
+    const [isDeleted, setIsDeleted ] = useState(false);
     const [numberComment, setnumberComment] = useState(null);
     const [numberLikes, setnumberLikes] = useState(null);
     const [numberViews, setnumberViews] = useState(null);
@@ -145,6 +145,21 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
     }
 
 
+    const handleDeletePost = async()=>{
+        try{
+            const resp = await axios.delete(`http://localhost:3001/post/${post._id}`);
+            if(resp.status === 200){
+                reRenderParentCompo();
+            }
+            else{
+                setIsDeleted(false);
+            }
+        }
+        catch(e){
+            setIsDeleted(false);
+        }
+    }
+
     return (
         <>
         {
@@ -166,19 +181,34 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
                         <span>{dataAuthorPost.email}</span>
                     </div>
                 </div>
-                <div 
-                    className={IsBookMarked ? "c2" : "c2"}
-                    onClick={()=>{
-                        setIsBookMarked(!IsBookMarked);
-                    }}
-                >
                 {
-                    !IsBookMarked ? 
-                    <i class="fa-regular fa-bookmark"></i>
+                    dataAuthorPost._id === idUser ? 
+                    <div 
+                        className="c2"
+                        onClick={()=>{
+                            handleDeletePost();
+                        }}
+                    >
+                    {
+                        !isDeleted &&
+                        <i class="fa-solid fa-trash"></i>
+                    }
+                    </div>
                     :
-                    <i className="fa-solid fa-bookmark"></i>
+                    <div 
+                        className={IsBookMarked ? "c2" : "c2"}
+                        onClick={()=>{
+                            setIsBookMarked(!IsBookMarked);
+                        }}
+                    >
+                    {
+                        !IsBookMarked ? 
+                        <i class="fa-regular fa-bookmark"></i>
+                        :
+                        <i className="fa-solid fa-bookmark"></i>
+                    }
+                    </div>
                 }
-                </div>
             </div>
             {post.description !== "" &&
             <div className=" rowP0 rowP2">
