@@ -5,6 +5,7 @@ import formatCreatedAt from '../../Helpers/GetTimeAndDate';
 import axios from 'axios';
 import SkeltonPost from './SkeltonPost';
 import SkeltonPost2 from './SkeltonPost2';
+import SingleComment from '../SingleComment/SingleComment';
 
 
 
@@ -22,8 +23,8 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
     const [numberLikes, setnumberLikes] = useState(null);
     const [numberViews, setnumberViews] = useState(null);
     const [isSeen, setIsSeen] = useState(false);
-
-
+    const [allComments, setAllComments] = useState(null);
+    const [commentaire, setcommentaire] = useState("");
 
     const token = localStorage.getItem('token');
     const idUser = localStorage.getItem('idUser');
@@ -76,6 +77,7 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
             setnumberLikes(post.likes.length);
             setnumberComment(post.comments.length);
             setnumberViews(post.views);
+            setAllComments(post.comments);
         }
     }, []);
 
@@ -159,6 +161,40 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
             setIsDeleted(false);
         }
     }
+
+
+
+    const handleSubmitcommentaire = async (ev)=>{
+        ev.preventDefault();
+        if(commentaire !== ""){
+            setAllComments(prevComments => [
+                ...prevComments, 
+                { commentator: idUser, comment: commentaire, _id : "666" }
+            ]);
+            
+            setnumberComment(number=>number+1);
+
+            try{
+                const resp = await axios.post(`http://localhost:3001/post/addComment`, {
+                    idPost : post._id,
+                    commentator : idUser, 
+                    comment : commentaire
+                });
+                if(resp.status === 200){
+                    setcommentaire("");
+                }
+                else{
+                    setcommentaire("");
+                }
+            }
+            catch(er){
+                console.log(er.message);
+            }
+    
+        }
+    }
+
+
 
     return (
         <>
@@ -304,7 +340,46 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
 
             </div>
             <div className={isCommentClicked ? "rowP6 showrowP6" : "rowP6"}>
-
+                <div className="containerOfAllComents">
+                {
+                    !allComments ? 
+                    <div className='wdc'>
+                        Fetching comments...
+                    </div> 
+                    :
+                    <>
+                    {
+                        allComments.length !== 0 ?
+                        allComments.map((comment, index)=>{
+                            return(
+                                <SingleComment comment={comment} />
+                            )
+                        })
+                        :
+                        <div className='wdc'>
+                            No comment yet..
+                        </div>
+                    }
+                    </>
+                }
+                </div>
+                {
+                    isCommentClicked && 
+                    <form onSubmit={handleSubmitcommentaire}  className="writingcomment">
+                        <input 
+                            type="text"
+                            placeholder='Write your comment...'
+                            spellCheck={false}
+                            value={commentaire}
+                            onChange={(e)=>{setcommentaire(e.target.value);}}
+                        />
+                        <button
+                            type='submit'
+                        >
+                            <i className='fa-solid fa-paper-plane'></i>
+                        </button>
+                    </form>
+                }
             </div>
         </div>
         :

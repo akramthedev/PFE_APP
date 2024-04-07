@@ -197,4 +197,32 @@ router.get('/' ,async(req, res)=>{
 
 
 
+router.post('/addComment' ,async(req, res)=>{
+    try{
+        const {
+            idPost, commentator, comment
+        } = req.body;
+
+        const isFoundAndUpdated = await posts.findByIdAndUpdate(idPost,{
+            $push : {
+                comments : {commentator : commentator,comment : comment }
+            }
+        });
+
+        if(isFoundAndUpdated){
+            res.status(200).send(isFoundAndUpdated);
+        }
+        else{
+            res.status(201).send('Post Not Found ... ');
+        }
+
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+
+
 module.exports = router;

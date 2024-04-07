@@ -151,7 +151,7 @@
     transition: 0.34s all ease-in-out;
 }
 .showrowP6{
-    height: 222px;
+    height: 262px;
     width: 100%;
     margin-bottom: 20px;
     background-color:#28292b;
@@ -166,4 +166,72 @@
     color: red;
     font-size: 14px;
     font-weight: 400;
+}
+
+.rowP6{
+    display: flex;
+    flex-direction: column;
+}
+.containerOfAllComents{
+    height: 212px;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.containerOfAllComents::-webkit-scrollbar{
+    width: 5px;
+    background-color: #989b9e;
+}
+.containerOfAllComents::-webkit-scrollbar-track{
+    width: 5px;
+    background-color: #494a4b;
+}
+.writingcomment{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 0.3rem;
+}
+
+.writingcomment input{
+    height: 50px;
+    width: calc(100% - 50px);
+    outline: none;
+    border: none;
+    background-color: #3a3b3c;
+    transition: 0.2s all ease-in-out;
+    color: #c7cbcf;
+    font-size: 14px;
+    padding: 0 1rem;
+    border-radius: 0.3rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.writingcomment input::placeholder{
+    color: #c7cbcf;
+}
+.writingcomment button{
+    height: 50px;
+    width: 50px;
+    outline: none;
+    border: none;
+    background-color: #3a3b3c;
+    transition: 0.2s all ease-in-out;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    color: #c7cbcf;
+    border-bottom-right-radius: 0.3rem;
+}
+.writingcomment button:hover{
+    color: #9c33ff;
+}
+.wdc{
+    font-size: 13px;
+    color: gainsboro;
+    text-align: center;
+    width: 100%;
+    margin-top: 5rem;
 }
