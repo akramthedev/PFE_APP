@@ -448,8 +448,11 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
     <div className='Home Profile'>
       <Navbar isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
       
-      <div className={isBClicked ? "isBClicked showisBClicked" : "isBClicked"}>
+          <div className={isBClicked ? "isBClicked showisBClicked" : "isBClicked"}>
             <div ref={refref} className={isBClicked ? "isContainerB showisContainerB" : "isContainerB"}>
+            <div className="rowzodjq">
+              Wish a Happy Birthday!
+            </div>
             {
               TheOnesWhoHaveBirthday && 
               TheOnesWhoHaveBirthday.length !== 0 && 

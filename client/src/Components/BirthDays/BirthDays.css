@@ -84,7 +84,7 @@
     background-color: #1b1a1afa;
     border-radius: 0.4rem;
     display: flex;
-    padding: 3rem 1rem;
+    padding: 1.4rem 1rem;
     flex-direction: column;
 }
 .showisContainerB{
@@ -124,4 +124,12 @@
 }
 .wishHimHappyBirthday:hover{
     background-color: rgb(104, 25, 177);
+}
+
+.rowzodjq{
+    color: gainsboro;
+    margin-bottom: 1rem;
+    margin-left: 0.5rem;
+    font-weight: 700;
+    font-size: 17px;
 }

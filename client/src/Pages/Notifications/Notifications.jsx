@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import './index.css';
 import Navbar from '../../Components/Navbar/Navbar';
 import SingleNotification from '../../Components/SingleNotification/SingleNotification'
@@ -9,6 +9,8 @@ import UtilsAndNavigations from '../../Components/UtilsAndNavigations/UtilsAndNa
 import axios from "axios";
 import HttpRequestStatus from '../../Components/HttpRequestStatus/HttpRequestStatus';
 import { useSocket } from '../../Helpers/SocketContext';
+import useOutsideAlerter from '../../Helpers/HidePopUp';
+import { TheOneWhoHasBirthDay } from '../Home/TheOneWhoHasBirthDay';
 
 const Notifications = ({isFetchingUser, dataUserCurrent}) => {
 
@@ -19,6 +21,13 @@ const Notifications = ({isFetchingUser, dataUserCurrent}) => {
     const [AllNotifications,setAllNotifications] = useState(null);
     const [isFetchingAllNotifs,setIsFecthingAllNotif] = useState(true);
     
+
+    const [isBClicked,setisBClicked] = useState(false);
+    const [TheOnesWhoHaveBirthday,setTheOnesWhoHaveBirthday] = useState(null);
+    const refref = useRef(null); 
+    useOutsideAlerter(refref, setisBClicked);
+
+
     let ResponseRequest = {
       status : null,
       msg : null, 
@@ -100,6 +109,24 @@ const Notifications = ({isFetchingUser, dataUserCurrent}) => {
       
 
 
+          <div className={isBClicked ? "isBClicked showisBClicked" : "isBClicked"}>
+            <div ref={refref} className={isBClicked ? "isContainerB showisContainerB" : "isContainerB"}>
+            <div className="rowzodjq">
+              Wish a Happy Birthday!
+            </div>
+            {
+              TheOnesWhoHaveBirthday && 
+              TheOnesWhoHaveBirthday.length !== 0 && 
+              TheOnesWhoHaveBirthday.map((one, index)=>{
+                return(
+                  <TheOneWhoHasBirthDay  one={one} dataUserCurrent={dataUserCurrent} />
+                )
+              })
+            }
+            </div>
+          </div>
+
+
         {
           (!isFetchingUser && dataUserCurrent && !isFetchingAllNotifs) && 
           <HttpRequestStatus responseX={ResponseRequest} />
@@ -145,7 +172,7 @@ const Notifications = ({isFetchingUser, dataUserCurrent}) => {
             </div>
             <div className="h3">
               <Ads />
-              <BirthDays  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
+              <BirthDays setisBClicked={setisBClicked} setTheOnesWhoHaveBirthday={setTheOnesWhoHaveBirthday }  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
               <Contacts   isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} socket={socket}  />
             </div>
           </div>

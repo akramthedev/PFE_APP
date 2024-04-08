@@ -367,6 +367,10 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
           </div>
           <div className={isBClicked ? "isBClicked showisBClicked" : "isBClicked"}>
             <div  ref={refref} className={isBClicked ? "isContainerB showisContainerB" : "isContainerB"}>
+            
+            <div className="rowzodjq">
+              Wish a Happy Birthday!
+            </div>
             {
               TheOnesWhoHaveBirthday && 
               TheOnesWhoHaveBirthday.length !== 0 && 

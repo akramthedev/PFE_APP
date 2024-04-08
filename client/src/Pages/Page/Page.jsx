@@ -11,10 +11,10 @@ import Ads from '../../Components/Ads/Ads';
 import BirthDays from '../../Components/BirthDays/BirthDays';
 import Contacts from '../../Components/Contacts/Contacts';
 import Navbar from '../../Components/Navbar/Navbar';
-import HidePopUp from '../../Helpers/HidePopUp.js'
 import {useNavigate, useParams } from 'react-router-dom'
-
 import VerifiedPage from '../../Assets/VerifiedPage.jsx';
+import useOutsideAlerter from '../../Helpers/HidePopUp.js';
+import { TheOneWhoHasBirthDay } from '../Home/TheOneWhoHasBirthDay.jsx';
 
 
 
@@ -29,6 +29,11 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
   const [allPosts, setAllPosts] = useState([]);
   const [allPostsWithImages, setallPostsWithImages] = useState([]);
   const [postLoading, setpostLoading] = useState(true);
+
+  const [isBClicked,setisBClicked] = useState(false);
+  const [TheOnesWhoHaveBirthday,setTheOnesWhoHaveBirthday] = useState(null);
+  const refref = useRef(null); 
+  useOutsideAlerter(refref, setisBClicked);
 
   const [data, setData] = useState(null);
 
@@ -102,6 +107,26 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
     {
       data && 
       <div className='Home Page'>
+
+          <div className={isBClicked ? "isBClicked showisBClicked" : "isBClicked"}>
+            <div ref={refref} className={isBClicked ? "isContainerB showisContainerB" : "isContainerB"}>
+            <div className="rowzodjq">
+              Wish a Happy Birthday!
+            </div>
+            {
+              TheOnesWhoHaveBirthday && 
+              TheOnesWhoHaveBirthday.length !== 0 && 
+              TheOnesWhoHaveBirthday.map((one, index)=>{
+                return(
+                  <TheOneWhoHasBirthDay  one={one} dataUserCurrent={dataUserCurrent} />
+                )
+              })
+            }
+            </div>
+          </div>
+      
+
+
         <Navbar  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent}  />
           <div className="home2">
             <div className="h1">
@@ -192,7 +217,7 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
             </div>
             <div className="h3">
               <Ads />
-              <BirthDays  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
+              <BirthDays  setisBClicked={setisBClicked} setTheOnesWhoHaveBirthday={setTheOnesWhoHaveBirthday }   isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
               <Contacts    isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}   />
             </div>
           </div>
