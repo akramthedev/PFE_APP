@@ -34,6 +34,10 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
   const [isBClicked,setisBClicked] = useState(false);
   const [TheOnesWhoHaveBirthday,setTheOnesWhoHaveBirthday] = useState(null);
   const refref = useRef(null); 
+  const [LikesNumber, setLikesNumber] = useState(null);
+  const [FollowersNumber,setFollowersNumber] = useState(null);
+
+
   useOutsideAlerter(refref, setisBClicked);
 
   const [data, setData] = useState(null);
@@ -54,6 +58,8 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
           else{
             setISLiked(false);
           } 
+          setLikesNumber(resp.data.likes.length);
+          setFollowersNumber(resp.data.followers.length);
           if(resp.data.followers.includes(currentId)){
             setisFollowed(true);
           } 
@@ -63,13 +69,13 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
           setData(resp.data);
         }
         else{
-            navigate("/");
+            console.log("Error");
         }
       }
       catch(e){
           console.log(e.message);
-          navigate("/");
-      }
+          console.log("Error");
+        }
     }
 }
 
@@ -78,35 +84,36 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
   }, [id]);
 
     const renderParent = async ()=>{
-      try{
-        setpostLoading(true);
-        const resp = await axios.get(`http://localhost:3001/post/user/${id}`);
-        if(resp.status === 200){
-          setAllPosts(resp.data);
-          if(resp.data.length !== 0){
-            setTimeout(()=>{
-              setallPostsWithImages(null);
-              setallPostsWithImages([]);
-              resp.data.map((post, index)=>{
-                if(post.image !== ''){
-                  setallPostsWithImages(prevPosts=>[
-                    ...prevPosts, 
-                    post.image
-                  ])
-                }
-              })
-            }, 700 );
+        try{
+          setpostLoading(true);
+          const resp = await axios.get(`http://localhost:3001/post/user/${id}`);
+          if(resp.status === 200){
+            setAllPosts(resp.data);
+            if(resp.data.length !== 0){
+              setTimeout(()=>{
+                setallPostsWithImages(null);
+                setallPostsWithImages([]);
+                resp.data.map((post, index)=>{
+                  if(post.image !== ''){
+                    setallPostsWithImages(prevPosts=>[
+                      ...prevPosts, 
+                      post.image
+                    ])
+                  }
+                })
+              }, 700 );
+            }
+          }
+          else{
+            setAllPosts([]);
           }
         }
-        else{
-          setAllPosts([]);
+        catch(e){
+          console.log(e.message);
+        } finally{
+          setpostLoading(false);
         }
-      }
-      catch(e){
-        console.log(e.message);
-      } finally{
-        setpostLoading(false);
-      }
+      
     }
 
     useEffect(()=>{
@@ -116,9 +123,9 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
 
     const handleLike = async()=>{
       try{
-        await axios.post('http://localhost:3001/page/likeThePost', {
+        await axios.post('http://localhost:3001/page/likethepage', {
           idLiker : currentId, 
-          idPageLiked : page._id
+          idPageLiked : data._id
         }, {
           headers : {
             Authorization : `Bearer ${token}`
@@ -135,7 +142,7 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
       try{
         await axios.post('http://localhost:3001/page/followThePage', {
           idFollower : currentId, 
-          idPageLiked : page._id
+          idPageFollowed : data._id
         }, {
           headers : {
             Authorization : `Bearer ${token}`
@@ -151,8 +158,7 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
 
   return (
     <>
-    {
-      data && 
+        
       <div className='Home Page'>
 
           <div className={isBClicked ? "isBClicked showisBClicked" : "isBClicked"}>
@@ -178,15 +184,15 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
           <div className="home2">
             <div className="h1">
               <div className="rowImg878">
-                <img src={data.profilePic} alt="" />
+                <img src={data && data.profilePic} alt="" />
               </div>
               <div className="rowName878">
               {
-                data.name
+                data && data.name
               }
               </div>
               {
-                data.isVerified &&
+                data && data.isVerified &&
                
                 <div className="rowName879">
                 Verified By Xplorium
@@ -197,13 +203,13 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
                 
               }
               <div className="rowName8790">
-                <span>Likes</span><span>2478</span>                
+                <span>Likes</span><span>{data && LikesNumber && LikesNumber}</span>                
               </div>
               <div className="rowName8790">
-                <span>Followers</span><span>4278</span>               
+                <span>Followers</span><span>{data && FollowersNumber && FollowersNumber}</span>               
               </div>
               <div className="rowName8790">
-                <span>Posting</span><span>Every Day</span>               
+                <span>Posts</span><span>{allPosts && allPosts.length}</span>               
               </div>
               <div className="rowName899 rowName899activated">
                 <div className="bar barActivated"  /> 
@@ -224,61 +230,67 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
             </div>
             <div className="h2">
               <div className="coverPicture99">
-                <img src={data.coverPic} alt="" />
+                <img src={ data && data.coverPic} alt="" />
               </div>
               <div className="btnsbts">
               {
-                currentId === data.creator ? 
-                <>
-                  <button
-
-                  >
-                    Modify Your Page
-                  </button>
-                </>
-                :
+                data && 
                 <>
                 {
-                    isLiked !== null && 
+                    currentId === data.creator ? 
                     <>
                       <button
-                        onClick={()=>{
-                          setISLiked(!isLiked);
-                          handleLike();
-                        }}
-                        className={isLiked && "addColorActivatedL"}
+
                       >
-                      {
-                        isLiked ? 
-                        <>Liked&nbsp;&nbsp;<i className='fa-solid fa-check'></i> </>
-                        :
-                        <>Like&nbsp;&nbsp;<i className='fa-solid fa-thumbs-up'></i> </>
-                      }
+                        Modify Your Page
                       </button>
                     </>
-                  }
-                  {
-                    isFollowed !== null && 
-                    <button
-                      className={isFollowed && "addColorActivatedF"}
-                      onClick={()=>{
-                        setisFollowed(!isFollowed);
-                        handleFollow();
-                      }}
-                    >
+                    :
+                    <>
                     {
-                      isFollowed ? 
-                      <>Followed&nbsp;&nbsp;<i className='fa-solid fa-check'></i></>
-                      :
-                      <>Follow&nbsp;&nbsp;<i className='fa-solid fa-signal'></i></>
-                    } 
-                    </button> 
-                  } 
+                        isLiked !== null && 
+                        <>
+                          <button
+                            onClick={()=>{
+                              setISLiked(!isLiked);
+                              handleLike();
+                            }}
+                            className={isLiked && "addColorActivatedL"}
+                          >
+                          {
+                            isLiked ? 
+                            <>Liked&nbsp;&nbsp;<i className='fa-solid fa-check'></i> </>
+                            :
+                            <>Like&nbsp;&nbsp;<i className='fa-solid fa-thumbs-up'></i> </>
+                          }
+                          </button>
+                        </>
+                      }
+                      {
+                        isFollowed !== null && 
+                        <button
+                          className={isFollowed && "addColorActivatedF"}
+                          onClick={()=>{
+                            setisFollowed(!isFollowed);
+                            handleFollow();
+                          }}
+                        >
+                        {
+                          isFollowed ? 
+                          <>Followed&nbsp;&nbsp;<i className='fa-solid fa-check'></i></>
+                          :
+                          <>Follow&nbsp;&nbsp;<i className='fa-solid fa-signal'></i></>
+                        } 
+                        </button> 
+                      } 
+                    </>
+                  }
                 </>
               }
+              
               </div>
               {
-                data.creator === currentId && 
+                data && (data.creator === currentId) && 
                 <CreatePostForPages pageId={id} ajusting={"yes"} isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} renderParent={renderParent} />
               }
               {
@@ -312,7 +324,7 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
             </div>
           </div>
       </div>
-    }
+   
     </>
   )
 }

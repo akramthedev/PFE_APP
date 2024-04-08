@@ -8,7 +8,8 @@ const Connect = ()=>{
         console.log(clc.magenta.bold('Connected to MongoDB'));
     })
     .catch((error) => { 
-        console.log(clc.red.bold('Connected to MongoDB'));
+        console.log(clc.red.bold('DisConnected from MongoDB'));
+        console.log(clc.red.bold(error));        
     });
 }
 

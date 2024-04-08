@@ -59,9 +59,25 @@ router.post('/likethepage' ,verifyToken,async(req, res)=>{
     try{
         const {idLiker, idPageLiked} = req.body;
 
-        const isFound = await pages.findById(idPage);
+        const isFound = await pages.findById(idPageLiked);
         if(isFound){
-            res.status(200).send(isFound);
+            if(isFound.likes.includes(idLiker)){
+                await pages.findByIdAndUpdate(idPageLiked, {
+                    $pull : {
+                        likes : idLiker
+                    }
+                })
+                res.status(200).send("disliked");
+            }
+            else{
+                await pages.findByIdAndUpdate(idPageLiked, {
+                    $push : {
+                        likes : idLiker
+                    }
+                })
+                res.status(200).send("Liked");
+
+            }
         }
         else{
             res.status(202).send('Not found...');
@@ -72,13 +88,29 @@ router.post('/likethepage' ,verifyToken,async(req, res)=>{
     }
 });
 
-router.post('/followthepage' ,verifyToken,async(req, res)=>{
+router.post('/followThePage' ,verifyToken,async(req, res)=>{
     try{
-        const {idFollower, idPageLiked} = req.body;
+        const {idFollower, idPageFollowed} = req.body;
         
-        const isFound = await pages.findById(idPage);
+        const isFound = await pages.findById(idPageFollowed);
         if(isFound){
-            res.status(200).send(isFound);
+            if(isFound.followers.includes(idFollower)){
+                await pages.findByIdAndUpdate(idPageFollowed, {
+                    $pull : {
+                        followers : idFollower
+                    }
+                })
+                res.status(200).send("disFollowed");
+            }
+            else{
+                await pages.findByIdAndUpdate(idPageFollowed, {
+                    $push : {
+                        followers : idFollower
+                    }
+                })
+                res.status(200).send("Followed");
+
+            }
         }
         else{
             res.status(202).send('Not found...');
