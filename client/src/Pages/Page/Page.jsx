@@ -29,7 +29,8 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
   const [allPosts, setAllPosts] = useState([]);
   const [allPostsWithImages, setallPostsWithImages] = useState([]);
   const [postLoading, setpostLoading] = useState(true);
-
+  const [isFollowed, setisFollowed] = useState(null);
+  const [isLiked, setISLiked] = useState(null);
   const [isBClicked,setisBClicked] = useState(false);
   const [TheOnesWhoHaveBirthday,setTheOnesWhoHaveBirthday] = useState(null);
   const refref = useRef(null); 
@@ -47,7 +48,19 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
           }
         });
         if(resp.status === 200){
-            setData(resp.data);
+          if(resp.data.likes.includes(currentId)){
+            setISLiked(true);
+          } 
+          else{
+            setISLiked(false);
+          } 
+          if(resp.data.followers.includes(currentId)){
+            setisFollowed(true);
+          } 
+          else{
+            setisFollowed(false);
+          } 
+          setData(resp.data);
         }
         else{
             navigate("/");
@@ -180,12 +193,40 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
                 <img src={data.coverPic} alt="" />
               </div>
               <div className="btnsbts">
-                <button>
-                  Liked&nbsp;&nbsp;<i className='fa-solid fa-check'></i> 
-                </button>
-                <button>
-                  Followed&nbsp;&nbsp;<i className='fa-solid fa-check'></i> 
-                </button>  
+              {
+                isLiked !== null && 
+                <>
+                  <button
+                    onClick={()=>{
+                      setISLiked(!isLiked);
+                    }}
+                    className={isLiked && "addColorActivatedL"}
+                  >
+                  {
+                    isLiked ? 
+                    <>Liked&nbsp;&nbsp;<i className='fa-solid fa-check'></i> </>
+                    :
+                    <>Like&nbsp;&nbsp;<i className='fa-solid fa-thumbs-up'></i> </>
+                  }
+                  </button>
+                </>
+              }
+              {
+                isFollowed !== null && 
+                <button
+                  className={isFollowed && "addColorActivatedF"}
+                  onClick={()=>{
+                    setisFollowed(!isFollowed);
+                  }}
+                >
+                {
+                  isFollowed ? 
+                  <>Followed&nbsp;&nbsp;<i className='fa-solid fa-check'></i></>
+                  :
+                  <>Follow&nbsp;&nbsp;<i className='fa-solid fa-signal'></i></>
+                } 
+                </button> 
+              } 
               </div>
               {
                 data.creator === currentId && 

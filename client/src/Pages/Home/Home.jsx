@@ -90,6 +90,8 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
 
   }, []);
 
+  const [SuccessCreatingPage,setSuccessCreatingPage] = useState(false);
+  const [idPageCreated,setidPageCreated] = useState("");
 
   const handleCreateNewPage = async()=>{
     if(name.length> 5 && description.length> 10){
@@ -107,17 +109,19 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
           }
         });
         if(resp.status === 200){
-          setisCreatedPageCLicked(false);
           renderUser();
-          setTimeout(()=>{
-            navigate(`/page/${resp.data._id}`);
-          }, 500);
+          setidPageCreated(resp.data._id);
+          setSuccessCreatingPage(true);
         }
         else{
+          setSuccessCreatingPage(false);
+          setisCreatedPageCLicked(false);
           alert('Oops, something went wrong!');
         }
       }
       catch(er){
+        setisCreatedPageCLicked(false);
+        setSuccessCreatingPage(false)
         console.log(er.message);
       } finally{
         setLoader(false);
@@ -167,10 +171,16 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                     alt=""
                   />
                   :
-                  step === 4 &&
+                  step === 4 ?
                   <img 
                   className='zjhoqdc'
                     src={Step4}
+                    alt=""
+                  />
+                  :step === 5 &&
+                  <img 
+                  className='zjhoqdc'
+                    src={Step2}
                     alt=""
                   />
                 }
@@ -238,6 +248,15 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
 
                 </>
                 :
+                step === 5 ? 
+                <>
+                  {SuccessCreatingPage &&
+                  <div className="titleXXXX">
+                    Your page is now Alive! You'll find it listed in your left sidebar.
+                  </div>
+                  }
+                </>
+                :
                 step === 3 &&
                 <>
                   <div className="titleXXXX">
@@ -259,7 +278,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
               }
                 <div className="rowConYinp">
                     
-                    <button
+                      <button
                       className={step===4?"submitBtnbbb":"notSubmiutibtn"}
                       onClick={()=>{
                         if(step === 1){
@@ -277,8 +296,19 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                         }
                         else if(step === 4){
                           if(isForAdults !== null){
+                            setStep(step + 1);
                             handleCreateNewPage();
                           }
+                        }
+                        else{
+                          setisCreatedPageCLicked(false);
+                          setTimeout(()=>{
+                            setName('');
+                            setStep(1);
+                            setdescription('');
+                            setisForAdults(null)
+                            setwebsite('');
+                          }, 500 );
                         }
                       }}
                       type={step===4?"submit":"button"}
@@ -296,6 +326,10 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                           Lunch The Page!
                         </>
                       }
+                      </>
+                      : step === 5 ? 
+                      <>
+                        Close Window
                       </>
                       :
                       "Next Step"
