@@ -252,7 +252,14 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
                         <>
                           <button
                             onClick={()=>{
-                              setISLiked(!isLiked);
+                              if(isLiked){
+                                setISLiked(false);
+                                setLikesNumber(LikesNumber-1);
+                              }
+                              else{
+                                setISLiked(true);
+                                setLikesNumber(LikesNumber+1)
+                              }
                               handleLike();
                             }}
                             className={isLiked && "addColorActivatedL"}
@@ -271,7 +278,14 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
                         <button
                           className={isFollowed && "addColorActivatedF"}
                           onClick={()=>{
-                            setisFollowed(!isFollowed);
+                            if(isFollowed){
+                              setisFollowed(false);
+                              setFollowersNumber(FollowersNumber-1);
+                            }
+                            else{
+                              setisFollowed(true);
+                              setFollowersNumber(FollowersNumber+1)
+                            }
                             handleFollow();
                           }}
                         >
