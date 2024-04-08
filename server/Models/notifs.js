@@ -43,7 +43,8 @@ const notifSchema = new mongoose.Schema({
         enum : [
             "Normal",
             "Welcoming",
-            "Friend Request", 
+            "Friend Request",
+            "Wish Birthday", 
             "Friend Accepted", 
             "Friend Rejected", 
             "Comment on Post",
@@ -122,6 +123,12 @@ const notifSchema = new mongoose.Schema({
         type : Boolean, 
         required : false, 
         default : false,
+    }, 
+    wisher : {
+        type : String, 
+    }, 
+    wishTo : {
+        type : String
     }
     
 }, {

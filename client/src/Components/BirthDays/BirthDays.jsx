@@ -5,11 +5,10 @@ import {useNavigate, useLocation} from 'react-router-dom';
 import axios from 'axios';
 
 
-const BirthDays = ({isFetchingUser, dataUserCurrent}) => {
+const BirthDays = ({setTheOnesWhoHaveBirthday,isFetchingUser, dataUserCurrent, setisBClicked}) => {
 
     const [allUsersWhoHaveBirthDay, setAllContactsWhoHaveBirthday] = useState([]);
     const [loading, setloading] = useState(true);
-    const [isBClicked, setisBClicked] = useState(false);
     const currentuserId = localStorage.getItem('idUser');
     const token = localStorage.getItem('token');
     const location = useLocation();
@@ -68,6 +67,7 @@ const BirthDays = ({isFetchingUser, dataUserCurrent}) => {
             <div className='Birthdays'
                 onClick={()=>{
                     setisBClicked(true);
+                    setTheOnesWhoHaveBirthday(allUsersWhoHaveBirthDay);
                 }}
             >
                 <div className="sponsored">

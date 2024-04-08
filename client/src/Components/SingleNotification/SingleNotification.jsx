@@ -245,9 +245,42 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
               }
               </span>
             </div>
+          :notif.type === "Wish Birthday" ? 
+          <div 
+          onMouseEnter={()=>{
+            setIsHovered(true);
+          }}
+          key={index}
+          onMouseLeave={()=>{
+            setIsHovered(false);
+          }}
+          className=' SingleNotification3'
+          >
+            {
+                    isHovered && 
+                    <button
+                    onClick={()=>{
+                      handleDeleteNotif();
+                    }}
+                    className={isHovered ? "deleteSingleNotif showdeleteSingleNotif":  "deleteSingleNotif"}
+                  >
+                    <i className='fa-solid fa-trash'></i>
+                  </button>
+                  }
+                <div className="content">
+                  {
+                    notif.title
+                  }
+                </div>
+                <div className="content">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+                  notif.description1
+                }
+                </div>
+          </div>
           :
           <div key={index} className='SingleNotification'>
-            
+            Others ...
           </div>
         }
         </>

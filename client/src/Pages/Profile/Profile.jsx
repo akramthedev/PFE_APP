@@ -15,6 +15,7 @@ import CreatePost from '../../Components/CreatePost/CreatePost.jsx';
 import { useSocket } from '../../Helpers/SocketContext';
 import SkeltonPost2 from '../../Components/Post/SkeltonPost2.jsx';
 import SingleContact from '../../Components/SingleContact/SingleContact.jsx';
+import { TheOneWhoHasBirthDay } from '../Home/TheOneWhoHasBirthDay.jsx';
 
 
 
@@ -26,7 +27,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   const token = localStorage.getItem('token');
   const idVisited = id;
   const currentId = localStorage.getItem('idUser');
-  const popUpRef = useRef(null); 
+  const popUpRef = useRef(null);
   const popUpRef2 = useRef(null); 
   const popUpRef3 = useRef(null);
   const [loading, setLoading] = useState(true);
@@ -47,6 +48,12 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   const [IsModifyAboutClicked,setIsModifyAboutClicked] = useState(false);
   const [loaderUpdating,setloaderUpdating] = useState(false);
   const [loaderUpdating2,setloaderUpdating2] = useState(false);
+
+  
+  const [isBClicked,setisBClicked] = useState(false);
+  const [TheOnesWhoHaveBirthday,setTheOnesWhoHaveBirthday] = useState(null);
+  const refref = useRef(null); 
+  useOutsideAlerter(refref, setisBClicked);
 
 
   const [modFullname, setModFullname] = useState("");
@@ -441,6 +448,19 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
     <div className='Home Profile'>
       <Navbar isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
       
+      <div className={isBClicked ? "isBClicked showisBClicked" : "isBClicked"}>
+            <div ref={refref} className={isBClicked ? "isContainerB showisContainerB" : "isContainerB"}>
+            {
+              TheOnesWhoHaveBirthday && 
+              TheOnesWhoHaveBirthday.length !== 0 && 
+              TheOnesWhoHaveBirthday.map((one, index)=>{
+                return(
+                  <TheOneWhoHasBirthDay  one={one} dataUserCurrent={dataUserCurrent} />
+                )
+              })
+            }
+            </div>
+          </div>
       
       <div className={IsModifyProfileClicked ? "imageClickedFixedPosition showimageClickedFixedPosition" : "imageClickedFixedPosition"}>
         <form onSubmit={handleSubmitUpdatedDocuments} ref={popUpRef2} className={IsModifyProfileClicked ? "containerEditProfile showcontainerEditProfile" : "containerEditProfile"}>
@@ -1084,7 +1104,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
         </div>
         <div className="h3">
           <Ads />
-          <BirthDays isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
+          <BirthDays setisBClicked={setisBClicked} setTheOnesWhoHaveBirthday={setTheOnesWhoHaveBirthday } isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
           <Contacts isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
         </div>
       </div>
@@ -1104,6 +1124,8 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
               />
             }
           </div>
+
+
       </div>
   );
 };

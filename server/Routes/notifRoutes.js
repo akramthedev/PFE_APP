@@ -24,6 +24,29 @@ router.post('/create' ,async(req, res)=>{
     }
 });
 
+router.post('/wishBirthday' ,async(req, res)=>{
+    try{
+        const {wisher, wishTo} = req.body;
+        const isCreated = await notifs.create({
+            type : "Wish Birthday", 
+            wisher : wisher, 
+            wishTo:  wishTo, 
+            idNotifSentTo:  wishTo,
+            title : "🎉 Happy Birthday! 🎉", 
+            description1 : `${wisher} has wished you a very happy birthday!`
+        });
+        if(isCreated){
+            res.status(200).send(isCreated);
+        }
+        else{
+            res.status(202).send('Not Created...');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
 
 
 

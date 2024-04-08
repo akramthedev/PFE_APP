@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react'
+import '../../Components/BirthDays/BirthDays.css';
 import './Home.css';
 import Navbar from '../../Components/Navbar/Navbar';
 import CreatePost from '../../Components/CreatePost/CreatePost';
@@ -19,6 +20,8 @@ import Step2 from './step2.png';
 import Step3 from './step3.png';
 import Step4 from './step4.png';
 import {useNavigate} from 'react-router-dom'
+import { TheOneWhoHasBirthDay } from './TheOneWhoHasBirthDay';
+import useOutsideAlerter from '../../Helpers/HidePopUp';
 
 
 
@@ -39,10 +42,15 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
     const [website, setwebsite]=useState(""); //step = 4 ! not important can be skiped 
     const [step, setStep]=useState(1);
     const [loader, setLoader]=useState(false);
-
+    
+    const [isBClicked,setisBClicked] = useState(false);
+    const [TheOnesWhoHaveBirthday,setTheOnesWhoHaveBirthday] = useState(null);
 
 
     HidePopUp(popUpRef2,setisCreatedPageCLicked );
+
+    const refref = useRef(null); 
+  useOutsideAlerter(refref, setisBClicked);
 
     const fetchAllPosts = async ()=>{
       try{
@@ -351,13 +359,25 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
               &&
               <>
               <Ads />
-              <BirthDays  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
+              <BirthDays setTheOnesWhoHaveBirthday={setTheOnesWhoHaveBirthday} setisBClicked={setisBClicked}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
               <Contacts    isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}   />
               </>
             }
             </div>
           </div>
-       
+          <div className={isBClicked ? "isBClicked showisBClicked" : "isBClicked"}>
+            <div  ref={refref} className={isBClicked ? "isContainerB showisContainerB" : "isContainerB"}>
+            {
+              TheOnesWhoHaveBirthday && 
+              TheOnesWhoHaveBirthday.length !== 0 && 
+              TheOnesWhoHaveBirthday.map((one, index)=>{
+                return(
+                  <TheOneWhoHasBirthDay one={one} dataUserCurrent={dataUserCurrent} />
+                )
+              })
+            }
+            </div>
+          </div>
     </div>
   )
 }
