@@ -34,6 +34,12 @@ const postsSchema = new mongoose.Schema({
         default : false, 
         required : false
     }
+    ,
+    isPagePost : {
+        type : Boolean, 
+        default : false, 
+        required : false
+    }
     
 }, {
     timestamps : true

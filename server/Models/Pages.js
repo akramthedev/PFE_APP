@@ -30,11 +30,15 @@ const pagesSchema = new mongoose.Schema({
     },
     coverPic: {
         type: String,
-        default: 'https://t3.ftcdn.net/jpg/03/00/27/06/360_F_300270690_LBzP8uPqlImoYzvuaBvmV0X7NIyjLTuW.jpg' 
+        default: 'https://res.cloudinary.com/dqprleeyt/image/upload/v1712553459/Design_sans_titre_3_fblwgn.png' 
     },
-
+    isVerified : {
+        type : Boolean, 
+        default : false, 
+        required : false
+    },
     followers :  [String], 
-    
+    likes :  [String], 
 }, {
     timestamps : true
 });

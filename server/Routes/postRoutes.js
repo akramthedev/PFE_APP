@@ -15,7 +15,8 @@ router.post('/create', verifyToken ,async(req, res)=>{
             creator,
             image, 
             description, 
-            type 
+            type , 
+            
         } = req.body;
 
         const isCreated = await posts.create({
@@ -35,6 +36,39 @@ router.post('/create', verifyToken ,async(req, res)=>{
             }
             
             await notifs.create(dataNotification);
+            res.status(200).send("Post Created...");
+        }
+        else{
+            res.status(201).send('Post Not Created ... ');
+        }
+
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+
+router.post('/createPagePost', verifyToken ,async(req, res)=>{
+    try{
+        const {
+            creator,
+            image, 
+            description, 
+            type , 
+            isPagePost
+            
+        } = req.body;
+
+        const isCreated = await posts.create({
+            creator, 
+            image, 
+            description, 
+            type, 
+            isPagePost
+        });
+        if(isCreated){
             res.status(200).send("Post Created...");
         }
         else{
@@ -189,7 +223,9 @@ router.get('/likeProcess/:idPost',verifyToken,async(req, res)=>{
 router.get('/' ,async(req, res)=>{
     try{
 
-        const areFound = await posts.find().sort({ createdAt: -1 });
+        const areFound = await posts.find({
+            isPagePost : false
+        }).sort({ createdAt: -1 });
 
         if(areFound){
             res.status(200).send(areFound);

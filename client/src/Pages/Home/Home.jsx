@@ -103,7 +103,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
           renderUser();
           setTimeout(()=>{
             navigate(`/page/${resp.data._id}`);
-          }, 2000);
+          }, 500);
         }
         else{
           alert('Oops, something went wrong!');
@@ -324,8 +324,8 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                   allPosts && <>
                     {
                       allPosts.length === 0 ? 
-                      <span className='zsjdqoc'>
-                        No Post yet
+                      <span className='zsjdqoczsjdqoc'>
+                        Be the pioneer and make the first post on the platform!
                       </span>
                       :
                       <>

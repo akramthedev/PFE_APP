@@ -122,20 +122,20 @@ function App() {
           <Route  
             path='/page/:id' 
             element={
-              token ? <Page  /> : <Navigate to="/auth" />
+              token ? <Page  isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser} /> : <Navigate to="/auth" />
             } 
           />
           <Route  
             path='/group/:id' 
             element={
-              token ? <Group  /> : <Navigate to="/auth" />
+              token ? <Group isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
             } 
           />
           
           <Route  
             path='/ads/:id' 
             element={
-              token ? <ADS /> : <Navigate to="/auth" />
+              token ? <ADS isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser} /> : <Navigate to="/auth" />
             } 
           />
           
@@ -156,7 +156,7 @@ function App() {
           <Route  
             path='/discussions' 
             element={
-              token ? <Discussions  /> : <Navigate to="/auth" />
+              token ? <Discussions isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
             } 
           />
 
@@ -170,35 +170,35 @@ function App() {
           <Route  
             path='/settings' 
             element={
-              token ? <Settings /> : <Navigate to="/auth" />
+              token ? <Settings isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser} /> : <Navigate to="/auth" />
             } 
           />
           
           <Route  
             path='/help' 
             element={
-              token ? <Help /> : <Navigate to="/auth" />
+              token ? <Help isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser} /> : <Navigate to="/auth" />
             } 
           />
           
           <Route  
             path='/accessibility' 
             element={
-              token ? <Accessibility /> : <Navigate to="/auth" />
+              token ? <Accessibility isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser} /> : <Navigate to="/auth" />
             } 
           />
           
           <Route  
             path='/admin/panel' 
             element={
-              token ? <AdminPanel  /> : <Navigate to="/auth" />
+              token ? <AdminPanel isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
             } 
           />
           
           <Route  
             path='/adser/panel' 
             element={
-              token ? <AdserPanel  /> : <Navigate to="/auth" />
+              token ? <AdserPanel isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
             } 
           />
           

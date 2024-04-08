@@ -98,7 +98,9 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageC
             <>
             {
               dataUserCurrent.pages.length === 0 ? 
-              'Search for page you may like or even create your own one!'
+              <div className="rowXXrowXX">
+                Search for page you may like or even create your own one!
+              </div>
               :
               dataUserCurrent.pages.map((page)=>{
                 return(
