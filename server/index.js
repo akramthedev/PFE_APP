@@ -40,7 +40,7 @@ app.use('/user', userRoutes);
 app.use('/notif', notifsRoutes);
 app.use('/request', requestsRoutes);
 app.use('/post', postsRoutes);
-app.use('/pages', pagesRoutes);
+app.use('/page', pagesRoutes);
 
 //   WEBSOCKETS EVENTS
 

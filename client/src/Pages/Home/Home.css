@@ -83,6 +83,10 @@
 
 .rowConYinp{
     width: 270px;
+    display: flex;
+    align-items: center;
+    margin-bottom: .4rem;
+    justify-content: space-between;
 }
 .rowConYinp input{
     width: 100%;
@@ -110,7 +114,7 @@
     transition: 0.2s all ease-in-out;
 }
 .notSubmiutibtn{
-    background-color: rgb(255, 196, 0);
+    background-color: #ffc400;
 }
 .rowConYinp .submitBtnbbb{
     background-color: orangered;
@@ -119,4 +123,27 @@
 
 .closePopUpx3closePopUpx3{
     z-index: 10;
+}
+
+
+.suo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 31px;
+    background-color: #27282b;
+    color: gainsboro;
+    width: 130px;
+    cursor: pointer;
+    transition: .2s all ease-in-out;
+    border-radius: 0.3rem ;
+}
+.suo:hover{
+    background-color: #3a3c3f;
+
+}
+.yesyes, .nono{
+    border: 2px solid orangered;
+}
+.yesyes:hover, .nono:hover{
 }

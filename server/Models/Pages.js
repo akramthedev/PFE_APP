@@ -19,10 +19,10 @@ const pagesSchema = new mongoose.Schema({
         type : String,
         required : false
     },
-    topics : {
-        type : [String], 
-        required : false, 
-        default : ["all"], 
+    isForAdults : {
+        type : String, 
+        required : true, 
+        default : true
     },
     profilePic: {
         type: String,
@@ -40,3 +40,4 @@ const pagesSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('pages', pagesSchema);
+

@@ -18,12 +18,14 @@ import Step1 from './step1.png';
 import Step2 from './step2.png';
 import Step3 from './step3.png';
 import Step4 from './step4.png';
+import {useNavigate} from 'react-router-dom'
 
 
 
+const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) => {
 
-const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
 
+    const navigate = useNavigate();
     const token = localStorage.getItem('token');
     const idUser = localStorage.getItem('idUser');
     const [allPosts, setAllPosts] = useState([]);
@@ -33,9 +35,10 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
     //new page creating states
     const [name, setName]=useState(""); //step = 1
     const [description, setdescription]=useState(""); //step = 2
-    const [topics, settopics]=useState(""); //step = 3
+    const [isForAdults, setisForAdults]=useState(null); //step = 3
     const [website, setwebsite]=useState(""); //step = 4 ! not important can be skiped 
     const [step, setStep]=useState(1);
+    const [loader, setLoader]=useState(false);
 
 
 
@@ -80,13 +83,37 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
   }, []);
 
 
-  const handleCreateNewPage = async(e)=>{
-    e.preventDefault();
-    try{
-
-    }
-    catch(er){
-      console.log(er.message);
+  const handleCreateNewPage = async()=>{
+    if(name.length> 5 && description.length> 10){
+      setLoader(true);
+      try{
+        const resp = await axios.post("http://localhost:3001/page/create", {
+          name : name, 
+          description : description, 
+          isForAdults : isForAdults, 
+          website : website,
+          creator : idUser
+        }, {
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
+        if(resp.status === 200){
+          setisCreatedPageCLicked(false);
+          renderUser();
+          setTimeout(()=>{
+            navigate(`/page/${resp.data._id}`);
+          }, 2000);
+        }
+        else{
+          alert('Oops, something went wrong!');
+        }
+      }
+      catch(er){
+        console.log(er.message);
+      } finally{
+        setLoader(false);
+      }
     }
   }
 
@@ -95,7 +122,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
       
 
         <div className={isCreatedPageCLicked ? "imageClickedFixedPosition showimageClickedFixedPosition" : "imageClickedFixedPosition"}>
-          <form onSubmit={handleCreateNewPage}  ref={popUpRef2} className={isCreatedPageCLicked ? "containerEditProfile containerEditProfile2 showcontainerEditProfile" : "containerEditProfile containerEditProfile2"}>
+          <div   ref={popUpRef2} className={isCreatedPageCLicked ? "containerEditProfile containerEditProfile2 showcontainerEditProfile" : "containerEditProfile containerEditProfile2"}>
             <button
               type='button'
               onClick={()=>{
@@ -149,7 +176,11 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
                   </div>
                   <div className="rowConYinp">
                     <input 
+                      value={name}
                       type="text"
+                      onChange={(e)=>{
+                        setName(e.target.value)
+                      }}
                       spellCheck={false}
                       placeholder='Enter your page a name...'
                     />
@@ -163,35 +194,54 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
                   </div>
                   <div className="rowConYinp">
                     <input 
+                      value={description}
                       type="text"
+                      onChange={(e)=>{
+                        setdescription(e.target.value)
+                      }}
                       spellCheck={false}
                       placeholder='Enter your page description...'
                     />
                   </div>
                 </>
                 :
-                step === 3 ? 
+                step === 4 ? 
                 <>
                   <div className="titleXXXX">
-                  Please select the right categories...
-                  </div>
+                    Please select yes, if your content is intended for adults...
+                 </div>
                   <div className="rowConYinp">
-                    <input 
-                      type="text"
-                      spellCheck={false}
-                      placeholder='Enter your page a name...'
-                    />
+                    <span 
+                      onClick={()=>{
+                        setisForAdults(true)
+                      }}
+                    className={((isForAdults !== null) && isForAdults === true) ? "suo yesyes" : "suo"}>
+                      Yes
+                    </span>
+                    <span
+                      onClick={()=>{
+                        setisForAdults(false)
+                      }}
+                    className={((isForAdults !== null) && isForAdults === false) ? "suo nono" : "suo"}>
+                      No
+                    </span>
                   </div>
+                  <br />
+
                 </>
                 :
-                step === 4 &&
+                step === 3 &&
                 <>
                   <div className="titleXXXX">
                   If you have a website, please feel free to share the link for reference...
                   </div>
                   <div className="rowConYinp">
                     <input 
+                      value={website}
                       type="text"
+                      onChange={(e)=>{
+                        setwebsite(e.target.value)
+                      }}
                       spellCheck={false}
                       placeholder='Enter your page website...'
                     />
@@ -204,15 +254,41 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
                     <button
                       className={step===4?"submitBtnbbb":"notSubmiutibtn"}
                       onClick={()=>{
-                        if(step <= 3){
+                        if(step === 1){
+                          if(name.length >= 5){
+                            setStep(step + 1);
+                          }
+                        }
+                        else if(step === 2){
+                          if(description.length >= 10){
+                            setStep(step + 1);
+                          }
+                        }
+                        else if(step === 3){
                           setStep(step + 1);
+                        }
+                        else if(step === 4){
+                          if(isForAdults !== null){
+                            handleCreateNewPage();
+                          }
                         }
                       }}
                       type={step===4?"submit":"button"}
                     >
                     {
                       step === 4 ? 
-                      "Launch The Page"
+                      <>
+                      {
+                        loader ? 
+                        <>
+                          Creating
+                        </>
+                        :
+                        <>
+                          Lunch The Page!
+                        </>
+                      }
+                      </>
                       :
                       "Next Step"
                     }
@@ -225,7 +301,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
             </div>
             
 
-          </form>
+          </div>
         </div>
           
 

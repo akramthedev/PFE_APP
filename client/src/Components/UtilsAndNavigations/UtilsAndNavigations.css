@@ -138,3 +138,14 @@
 .UtilsAndNavigations .containerEditProfile2{
     background-color: #18191a !important;
 }
+
+.rowXXrowXX:hover{
+    background-color: #18191a;
+    cursor: default;
+}
+
+.rowXX .zoqdzoqd{
+    line-height: 1.3;
+    text-align: left;
+    font-size: 13px !important;
+}

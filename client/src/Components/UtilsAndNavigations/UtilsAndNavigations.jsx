@@ -3,10 +3,11 @@ import './UtilsAndNavigations.css';
 import {useNavigate, useLocation } from 'react-router-dom';
 import { useSocket } from '../../Helpers/SocketContext';
 import '../../Pages/Profile/index.css';
+import SinglePageCOmpo from '../SinglePageCompo/SinglePageCompo';
 
 
 const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageCLicked}) => {
-
+   
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -92,36 +93,25 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageC
         <div className="rowJaja">
           
           
-          <div className="rowX rowXX"
-            onClick={()=>{
-              navigate("/page/666");
-            }}
-          >
-            <div className="flesh" />
-            <div className=" xxx xxxxxx">
-              <img 
-                src="https://cdn-media.threadless.com/submissions_wm/699345-d68e20b52df6f84fb8b491aca2c30f54.jpg" 
-                alt=""
-              />
-            </div>
-            <span>Red Pill MGTOW</span>
-          </div>
+          {
+            dataUserCurrent && 
+            <>
+            {
+              dataUserCurrent.pages.length === 0 ? 
+              'Search for page you may like or even create your own one!'
+              :
+              dataUserCurrent.pages.map((page)=>{
+                return(
+                  <SinglePageCOmpo page={page} />
+                )
+              })
+            }
+            </>
+          }
 
-          <div className="rowX rowXX"
-            onClick={()=>{
-              navigate("/page/666");
-            }}
-          >
-            <div className="flesh" />
-            <div className=" xxx xxxxxx">
-              <img 
-                src="https://cdn-media.threadless.com/submissions_wm/699345-d68e20b52df6f84fb8b491aca2c30f54.jpg" 
-                alt=""
-              />
-            </div>
-            <span>Red Pill MGTOW</span>
-          </div>
-          <div className="rowX rowXX"/>
+         
+
+          <div className="rowX rowXX rowXXrowXX"/>
 
         </div>
         <div className="rowX rowXNoHover">

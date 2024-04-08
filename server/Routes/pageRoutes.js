@@ -5,18 +5,47 @@ const sendEmail = require('../Helpers/EmailSender');
 const verifyToken = require('../Middlewares/verifyToken');
 
 
+
 const router = express.Router();
 
 
-router.post('/create' ,async(req, res)=>{
+router.post('/create' ,verifyToken,async(req, res)=>{
     try{
         const data = req.body;
         const isCreated = await pages.create(data);
         if(isCreated){
-            res.status(200).send(isCreated);
+            const isUpdatedUser = await users.findByIdAndUpdate(data.creator, {
+                $push : {
+                    pages : isCreated._id
+                }
+            }, {new : true});
+           if(isUpdatedUser){
+            res.status(200).send(isUpdatedUser);
+           }
+           else{
+            res.status(202).send("");
+           }
         }
         else{
             res.status(202).send('Not Created...');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+
+router.get('/:idPage' ,verifyToken,async(req, res)=>{
+    try{
+        const {idPage} = req.params;
+        const isFound = await pages.findById(idPage);
+        if(isFound){
+            res.status(200).send(isFound);
+        }
+        else{
+            res.status(202).send('Not found...');
         }
     }
     catch(e){

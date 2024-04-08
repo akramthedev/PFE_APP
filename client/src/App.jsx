@@ -108,7 +108,7 @@ function App() {
           <Route  
             path='/' 
             element={
-              token ? <Home ResponseRequest={ResponseRequest}  isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} /> : <Navigate to="/auth" />
+              token ? <Home ResponseRequest={ResponseRequest}  isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} renderUser={fetchUser} /> : <Navigate to="/auth" />
             } 
           />
 
