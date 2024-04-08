@@ -27,7 +27,7 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
         setTimeout(async ()=>{
           setisseen(true);
           await axios.get(`http://localhost:3001/notif/updateSeen/${notif._id}`)
-        }, 1000);
+        }, 1966);
       }
       x()
     }, []);
@@ -51,7 +51,7 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
       } finally{
         setTimeout(()=>{
           reRenderParentComponent();
-        }, 1000);
+        }, 400);
       }
     }
 

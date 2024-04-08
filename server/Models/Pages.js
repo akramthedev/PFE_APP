@@ -38,6 +38,11 @@ const pagesSchema = new mongoose.Schema({
         required : false
     },
     followers :  [String], 
+    PostingStatus : {
+        type : String, 
+        required : false, 
+        enum : ["Every Day", "Every Week", "Every Month"]
+    },
     likes :  [String], 
 }, {
     timestamps : true

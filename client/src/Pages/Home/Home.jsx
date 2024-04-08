@@ -346,9 +346,15 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
               } 
             </div>
             <div className="h3">
+            {
+              !isFetchingUser && dataUserCurrent
+              &&
+              <>
               <Ads />
               <BirthDays  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
               <Contacts    isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}   />
+              </>
+            }
             </div>
           </div>
        
