@@ -113,6 +113,40 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
       renderParent();
     }, [id]);
   
+
+    const handleLike = async()=>{
+      try{
+        await axios.post('http://localhost:3001/page/likeThePost', {
+          idLiker : currentId, 
+          idPageLiked : page._id
+        }, {
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
+      }
+      catch(e){
+        console.log(e.message);
+      }
+    }
+
+    
+    const handleFollow = async()=>{
+      try{
+        await axios.post('http://localhost:3001/page/followThePage', {
+          idFollower : currentId, 
+          idPageLiked : page._id
+        }, {
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
+      }
+      catch(e){
+        console.log(e.message);
+      }
+    }
+    
   
 
   return (
@@ -194,39 +228,54 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
               </div>
               <div className="btnsbts">
               {
-                isLiked !== null && 
+                currentId === data.creator ? 
                 <>
                   <button
-                    onClick={()=>{
-                      setISLiked(!isLiked);
-                    }}
-                    className={isLiked && "addColorActivatedL"}
+
                   >
-                  {
-                    isLiked ? 
-                    <>Liked&nbsp;&nbsp;<i className='fa-solid fa-check'></i> </>
-                    :
-                    <>Like&nbsp;&nbsp;<i className='fa-solid fa-thumbs-up'></i> </>
-                  }
+                    Modify Your Page
                   </button>
                 </>
-              }
-              {
-                isFollowed !== null && 
-                <button
-                  className={isFollowed && "addColorActivatedF"}
-                  onClick={()=>{
-                    setisFollowed(!isFollowed);
-                  }}
-                >
+                :
+                <>
                 {
-                  isFollowed ? 
-                  <>Followed&nbsp;&nbsp;<i className='fa-solid fa-check'></i></>
-                  :
-                  <>Follow&nbsp;&nbsp;<i className='fa-solid fa-signal'></i></>
-                } 
-                </button> 
-              } 
+                    isLiked !== null && 
+                    <>
+                      <button
+                        onClick={()=>{
+                          setISLiked(!isLiked);
+                          handleLike();
+                        }}
+                        className={isLiked && "addColorActivatedL"}
+                      >
+                      {
+                        isLiked ? 
+                        <>Liked&nbsp;&nbsp;<i className='fa-solid fa-check'></i> </>
+                        :
+                        <>Like&nbsp;&nbsp;<i className='fa-solid fa-thumbs-up'></i> </>
+                      }
+                      </button>
+                    </>
+                  }
+                  {
+                    isFollowed !== null && 
+                    <button
+                      className={isFollowed && "addColorActivatedF"}
+                      onClick={()=>{
+                        setisFollowed(!isFollowed);
+                        handleFollow();
+                      }}
+                    >
+                    {
+                      isFollowed ? 
+                      <>Followed&nbsp;&nbsp;<i className='fa-solid fa-check'></i></>
+                      :
+                      <>Follow&nbsp;&nbsp;<i className='fa-solid fa-signal'></i></>
+                    } 
+                    </button> 
+                  } 
+                </>
+              }
               </div>
               {
                 data.creator === currentId && 

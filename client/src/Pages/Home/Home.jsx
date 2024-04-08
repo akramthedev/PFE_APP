@@ -113,7 +113,6 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
           renderUser();
           setidPageCreated(resp.data._id);
           setSuccessCreatingPage(true);
- 
         }
         else{
           setSuccessCreatingPage(false);
@@ -285,7 +284,6 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                         }
                         else if(step === 4){
                           if(isForAdults !== null){
-                            setStep(step + 1);
                             handleCreateNewPage();
                           }
                         }

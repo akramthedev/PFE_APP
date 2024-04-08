@@ -55,6 +55,42 @@ router.get('/:idPage' ,verifyToken,async(req, res)=>{
 
 
 
+router.post('/likethepage' ,verifyToken,async(req, res)=>{
+    try{
+        const {idLiker, idPageLiked} = req.body;
+
+        const isFound = await pages.findById(idPage);
+        if(isFound){
+            res.status(200).send(isFound);
+        }
+        else{
+            res.status(202).send('Not found...');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+router.post('/followthepage' ,verifyToken,async(req, res)=>{
+    try{
+        const {idFollower, idPageLiked} = req.body;
+        
+        const isFound = await pages.findById(idPage);
+        if(isFound){
+            res.status(200).send(isFound);
+        }
+        else{
+            res.status(202).send('Not found...');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+
 
 
 module.exports = router;
