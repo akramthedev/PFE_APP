@@ -99,7 +99,12 @@ router.post('/followThePage' ,verifyToken,async(req, res)=>{
                     $pull : {
                         followers : idFollower
                     }
-                })
+                });
+                await users.findByIdAndUpdate(idFollower, {
+                    $pull : {
+                        pages : idPageFollowed
+                    }
+                });
                 res.status(200).send("disFollowed");
             }
             else{
@@ -108,8 +113,12 @@ router.post('/followThePage' ,verifyToken,async(req, res)=>{
                         followers : idFollower
                     }
                 })
+                await users.findByIdAndUpdate(idFollower, {
+                    $push : {
+                        pages : idPageFollowed
+                    }
+                });
                 res.status(200).send("Followed");
-
             }
         }
         else{

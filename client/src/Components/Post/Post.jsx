@@ -233,7 +233,7 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
                     </div>
                     <div className="c12">
                         <span>{dataAuthorPost.fullName}</span>
-                        <span>{dataAuthorPost.email}</span>
+                        <span>{dataAuthorPost.email}&nbsp;{dataAuthorPost._id === idUser && <>(you)</>}</span>
                     </div>
                 </div>
                 {

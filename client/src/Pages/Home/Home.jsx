@@ -4,6 +4,7 @@ import './Home.css';
 import Navbar from '../../Components/Navbar/Navbar';
 import CreatePost from '../../Components/CreatePost/CreatePost';
 import Post from '../../Components/Post/Post';
+import PagePost from '../../Components/Post/PagePost';
 import PostAds from '../../Components/Post/PostAds';
 import Ads from '../../Components/Ads/Ads';
 import Contacts from '../../Components/Contacts/Contacts';
@@ -55,7 +56,11 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
     const fetchAllPosts = async ()=>{
       try{
         setpostLoading(true);
-        const resp = await axios.get('http://localhost:3001/post/');
+        const resp = await axios.get('http://localhost:3001/post/', {
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
         if(resp.status === 200){
           setAllPosts(resp.data);
         }
@@ -358,9 +363,16 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                       <>
                         {
                           allPosts.map((post, index)=>{
+                           if(post.isPagePost){
+                            return(
+                              <PagePost reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                            )
+                           }
+                           else{
                             return(
                               <Post reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
                             )
+                           }
                           })
                         }
                         <PostAds />

@@ -6,6 +6,7 @@ const sendEmail = require('../Helpers/EmailSender');
 const verifyToken = require('../Middlewares/verifyToken');
 
 
+
 const router = express.Router();
 
 
@@ -220,25 +221,52 @@ router.get('/likeProcess/:idPost',verifyToken,async(req, res)=>{
 
 
 
-router.get('/' ,async(req, res)=>{
-    try{
 
+
+
+
+router.get('/', verifyToken, async (req, res) => {
+    try {
         const areFound = await posts.find({
-            isPagePost : false
+            isPagePost: false
         }).sort({ createdAt: -1 });
 
-        if(areFound){
-            res.status(200).send(areFound);
-        }
-        else{
-            res.status(201).send('Post Not Found ... ');
+        const idUser = req.user._id;
+        const allPosts = [];
+
+        const isFoundUser = await users.findById(idUser);
+
+        if (areFound && isFoundUser) {
+
+            allPosts.push(...areFound);
+            
+            if (isFoundUser.pages.length !== 0) {
+                // Fetch all posts of the pages followed by the user
+                for (let i = 0; i < isFoundUser.pages.length; i++) {
+                    const postsOfThisPage = await posts.find({
+                        isPagePost: true,
+                        creator: isFoundUser.pages[i]
+                    }).sort({ createdAt: -1 });
+                    if (postsOfThisPage.length > 0) {
+                        allPosts.push(...postsOfThisPage);
+                    }
+                }
+            }
+            
+            // Sort allPosts array based on createdAt field in descending order
+            allPosts.sort((a, b) => b.createdAt - a.createdAt);
+            
+            res.status(200).send(allPosts);
+        } else {
+            res.status(404).send('Posts not found...');
         }
 
-    }
-    catch(e){
+    } catch (e) {
         res.status(500).send(e.message);
     }
 });
+
+
 
 
 
