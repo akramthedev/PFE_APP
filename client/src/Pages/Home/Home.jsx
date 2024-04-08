@@ -109,9 +109,11 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
           }
         });
         if(resp.status === 200){
+          setisCreatedPageCLicked(false);
           renderUser();
           setidPageCreated(resp.data._id);
           setSuccessCreatingPage(true);
+ 
         }
         else{
           setSuccessCreatingPage(false);
@@ -171,18 +173,13 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                     alt=""
                   />
                   :
-                  step === 4 ?
+                  step === 4 &&
                   <img 
                   className='zjhoqdc'
                     src={Step4}
                     alt=""
                   />
-                  :step === 5 &&
-                  <img 
-                  className='zjhoqdc'
-                    src={Step2}
-                    alt=""
-                  />
+                   
                 }
               </div>
               <div className="jqfd">
@@ -248,15 +245,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
 
                 </>
                 :
-                step === 5 ? 
-                <>
-                  {SuccessCreatingPage &&
-                  <div className="titleXXXX">
-                    Your page is now Alive! You'll find it listed in your left sidebar.
-                  </div>
-                  }
-                </>
-                :
+                 
                 step === 3 &&
                 <>
                   <div className="titleXXXX">
@@ -327,10 +316,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                         </>
                       }
                       </>
-                      : step === 5 ? 
-                      <>
-                        Close Window
-                      </>
+                       
                       :
                       "Next Step"
                     }
@@ -358,6 +344,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                 postLoading ? 
                 <>
                   <SkeltonPost />
+                  <SkeltonPost /><SkeltonPost />
                   <SkeltonPost />
                 </>
                 :
