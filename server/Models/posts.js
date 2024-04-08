@@ -29,6 +29,11 @@ const postsSchema = new mongoose.Schema({
         type : Number, 
         default : 0
     }, 
+    isPrivate : {
+        type : Boolean, 
+        default : false, 
+        required : false
+    }
     
 }, {
     timestamps : true

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import './Home.css';
 import Navbar from '../../Components/Navbar/Navbar';
 import CreatePost from '../../Components/CreatePost/CreatePost';
@@ -12,8 +12,8 @@ import axios from "axios";
 import PostSuggestedUsers from '../../Components/Post/PostSuggestedUsers';
 import OpenerMp3 from '../../MP3Sounds/openingAuth.wav';
 import SkeltonPost from '../../Components/Post/SkeltonPost';
-
-
+import '../Profile/index.css'
+import HidePopUp from '../../Helpers/HidePopUp';
 
 const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
 
@@ -21,6 +21,10 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
     const idUser = localStorage.getItem('idUser');
     const [allPosts, setAllPosts] = useState([]);
     const [postLoading, setpostLoading] = useState(true);
+    const popUpRef2 = useRef(null);
+    const [isCreatedPageCLicked, setisCreatedPageCLicked] = useState(false);
+
+    HidePopUp(popUpRef2,setisCreatedPageCLicked );
 
     const fetchAllPosts = async ()=>{
       try{
@@ -63,12 +67,29 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
   return (
     <div className='Home'>
       
-        
+
+        <div className={isCreatedPageCLicked ? "imageClickedFixedPosition showimageClickedFixedPosition" : "imageClickedFixedPosition"}>
+          <form  ref={popUpRef2} className={isCreatedPageCLicked ? "containerEditProfile containerEditProfile2 showcontainerEditProfile" : "containerEditProfile containerEditProfile2"}>
+            <button
+              type='button'
+              onClick={()=>{
+                setisCreatedPageCLicked(!isCreatedPageCLicked);
+              }}
+              className=" closePopUpx2 closePopUpx3"
+            >
+              <i className='fa-solid fa-xmark'></i>
+            </button>
+
+            
+
+          </form>
+        </div>
+          
 
           <Navbar  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent}  />
           <div className="home2">
             <div className="h1">
-              <UtilsAndNavigations  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
+              <UtilsAndNavigations setisCreatedPageCLicked={setisCreatedPageCLicked}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
             </div>
             <div className="h2">
               <CreatePost reRenderParentCompo={fetchAllPosts}  ajusting="home" isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />

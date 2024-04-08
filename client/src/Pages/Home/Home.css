@@ -41,3 +41,9 @@
     width: 100%;
     margin-top: 3rem;
 }
+
+.Home .containerEditProfile2{
+    width: 90% !important;
+    height: 90vh !important;
+    background-color: #18191a;
+}

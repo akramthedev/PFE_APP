@@ -120,3 +120,21 @@
     color: #b6b1ba;
     justify-content: center;
 }
+.rowXNoHover .CreatePage{
+    margin-left: 2.5rem;
+    width: 200px;
+    height: 30px;
+    outline: none;
+    border: none;
+    color: rgb(227, 227, 227);
+    font-weight: 500;
+    background-color: #616467;
+    transition: 0.2s all ease-in-out;
+    cursor: pointer;
+}
+.rowXNoHover .CreatePage:hover{
+    background-color: #444749;
+}
+.UtilsAndNavigations .containerEditProfile2{
+    background-color: #18191a !important;
+}

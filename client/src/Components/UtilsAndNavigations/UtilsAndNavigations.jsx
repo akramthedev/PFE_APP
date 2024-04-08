@@ -1,19 +1,26 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import './UtilsAndNavigations.css';
 import {useNavigate, useLocation } from 'react-router-dom';
 import { useSocket } from '../../Helpers/SocketContext';
+import '../../Pages/Profile/index.css';
 
-const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent}) => {
+
+const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageCLicked}) => {
 
 
     const location = useLocation();
     const navigate = useNavigate();
     const { pathname } = location;
-    const { socket, onlineUsers } = useSocket();
+    const { socket, onlineUsers } = useSocket();  
+
 
     
 
   return (
+    <>
+
+      
+    
     <div className='UtilsAndNavigations' >
       
       <div className="rowX"
@@ -114,9 +121,19 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent}) => {
             </div>
             <span>Red Pill MGTOW</span>
           </div>
- 
+          <div className="rowX rowXX"/>
+
         </div>
-      
+        <div className="rowX rowXNoHover">
+          <button className='CreatePage'
+            onClick={()=>{
+              setisCreatedPageCLicked(true);
+            }}
+          >
+            Create Page
+          </button>
+        </div>
+
       <br />
       
       <div className="rowX rowXNoHover">
@@ -172,7 +189,14 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent}) => {
             </div>
             <span>Red Pill MGTOW</span>
           </div>
-        </div>
+          <div className="rowX rowXX"/>
+
+          </div>
+          <div className="rowX rowXNoHover">
+            <button className='CreatePage'>
+              Create Group
+            </button>
+          </div>
 
         <br />
 
@@ -220,6 +244,7 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent}) => {
 
 
     </div>
+    </>
   )
 }
 
