@@ -4,7 +4,11 @@ import './index.css';
 
 const Discussions = () => {
   return (
-    <div>Discussions</div>
+    <div
+      className='Discussions'
+    >
+      All Conversations Here...
+    </div>
   )
 }
 

@@ -12,7 +12,7 @@ import BirthDays from '../../Components/BirthDays/BirthDays';
 import UtilsAndNavigations from '../../Components/UtilsAndNavigations/UtilsAndNavigations';
 import axios from "axios";
 import PostSuggestedUsers from '../../Components/Post/PostSuggestedUsers';
-import OpenerMp3 from '../../MP3Sounds/openingAuth.wav';
+import OpenerMp3 from '../../MP3Sounds/openingAuth.wav';   
 import SkeltonPost from '../../Components/Post/SkeltonPost';
 import '../Profile/index.css'
 import HidePopUp from '../../Helpers/HidePopUp';
