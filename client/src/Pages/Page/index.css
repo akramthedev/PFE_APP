@@ -127,3 +127,16 @@
     outline: none;
     margin-right: .88rem;
 }
+
+.rowName899rowName899rowName899{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 6rem;
+    cursor: default;
+    color: gray;
+    font-size: 14px;
+}
+.rowName899rowName899rowName899:hover{
+    background-color: transparent;
+}

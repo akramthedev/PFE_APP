@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import './index.css';
 import '../Home/Home.css'
+import PagePost from '../../Components/Post/PagePost.jsx';
 import axios from 'axios';
 import CreatePostForPages from '../../Components/CreatePost/CreatePostForPages.jsx'
 import { useSocket } from '../../Helpers/SocketContext';
@@ -32,30 +33,31 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
   const [data, setData] = useState(null);
 
 
-  useEffect(()=>{
-      const fetch = async()=>{
-          if(id){
-            try{
-              const resp = await axios.get(`http://localhost:3001/page/${id}`, {
-                headers : {
-                  Authorization : `Bearer ${token}`
-                }
-              });
-              if(resp.status === 200){
-                  setData(resp.data);
-              }
-              else{
-                  navigate("/");
-              }
-            }
-            catch(e){
-                console.log(e.message);
-                navigate("/");
-            }
+  const fetch = async()=>{
+    if(id){
+      try{
+        const resp = await axios.get(`http://localhost:3001/page/${id}`, {
+          headers : {
+            Authorization : `Bearer ${token}`
           }
+        });
+        if(resp.status === 200){
+            setData(resp.data);
+        }
+        else{
+            navigate("/");
+        }
       }
+      catch(e){
+          console.log(e.message);
+          navigate("/");
+      }
+    }
+}
+
+  useEffect(()=>{
       fetch();
-  }, []);
+  }, [id]);
 
     const renderParent = async ()=>{
       try{
@@ -91,7 +93,7 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
 
     useEffect(()=>{
       renderParent();
-    }, []);
+    }, [id]);
   
   
 
@@ -172,14 +174,14 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
                   allPosts && 
                   <>
                   {
-                    allPosts.length === 0 ? "No Post Yet..."
+                    allPosts.length === 0 ?
+                    <div className="rowName899 rowName899rowName899rowName899">
+                      No Post Yet
+                    </div>
                     :
                     allPosts.map((post, index)=>{
                       return(
-                        <>
-                          <span>{post._id}</span>
-                          <br />
-                        </>
+                        <PagePost ajusting={"yes"} post={post}  reRenderParentCompo={renderParent}  />
                       )
                     })
                   }
