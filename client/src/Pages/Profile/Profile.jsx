@@ -28,6 +28,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   const currentId = localStorage.getItem('idUser');
   const popUpRef = useRef(null); 
   const popUpRef2 = useRef(null); 
+  const popUpRef3 = useRef(null);
   const [loading, setLoading] = useState(true);
   const [visitedUser, setVisitedUser] = useState(null);
   const [isPostsClicked, setisPostsClicked] = useState(true);
@@ -43,6 +44,10 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   const [isImgClicked, setisImgClicked] = useState(false);
   const [imgSrcClicked,setImgSrcClicked] = useState("");
   const [IsModifyProfileClicked,setIsModifyProfileClicked] = useState(false);
+  const [IsModifyAboutClicked,setIsModifyAboutClicked] = useState(false);
+  const [loaderUpdating,setloaderUpdating] = useState(false);
+  const [loaderUpdating2,setloaderUpdating2] = useState(false);
+
 
   const [modFullname, setModFullname] = useState("");
   const [modPictureProfile, setModPictureProfile] = useState("");
@@ -54,12 +59,15 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   const [modphoneNumber, setmodphoneNumber] = useState("");
   const [modWebsite, setmodWebsite] = useState("");
 
-
    
 
   useOutsideAlerter(popUpRef, setpopUp);
   useOutsideAlerter(popUpRef2, setIsModifyProfileClicked);
+  useOutsideAlerter(popUpRef3, setIsModifyAboutClicked);
 
+
+
+  
   const fetchAllPosts = async ()=>{
     try{
       setpostLoading(true);
@@ -319,7 +327,6 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
     x();
   }, [isAboutClicked, isContactsClicked, isGroupsClicked, isMediaClicked, isPostsClicked]);
 
-  const [loaderUpdating,setloaderUpdating] = useState(false);
 
   const handleSubmitUpdatedDocuments = async (e)=>{
     e.preventDefault();
@@ -362,6 +369,21 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
           //he sends new data
           setVisitedUser(resp.data);
           setIsModifyProfileClicked(false);
+
+          setModFullname(resp.data.fullName);
+          setModPictureProfile(resp.data.profilePic);
+          setModCoverPicture(resp.data.coverPic);
+          setModBio(resp.data.bio);
+          setModAbout(resp.data.BigAbout);
+          setmodAdress(resp.data.address);
+          if(resp.data.dateOfBirth !== "" && resp.data.dateOfBirth){
+            setmoddateOfBirth(convertToYYYYMMDD(resp.data.dateOfBirth));
+          }
+          else{
+            setmoddateOfBirth('');
+          }
+          setmodphoneNumber(resp.data.phoneNumber);
+          setmodWebsite(resp.data.portfolio);
         }
         else{
           setIsModifyProfileClicked(false);
@@ -381,9 +403,45 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
     }
   }
 
+
+
+  const updateBigAbout = async(e)=>{
+    setloaderUpdating2(true);
+    e.preventDefault();
+    if( modAbout !== "" ){
+      try{
+        const resp = await axios.post('http://localhost:3001/user/updateBigAbout',{
+          idUser : currentId, 
+          BigAbout : modAbout   
+        }, {
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
+        if(resp.status === 200){
+          setVisitedUser(resp.data);
+          setIsModifyAboutClicked(false);
+        }
+        else{
+          alert('Something went wrong...');
+        }
+      }
+      catch(er){
+        alert('Something went wrong...');
+        console.log(er.message);
+      } finally{
+        setloaderUpdating2(false);
+      }
+    }
+  }
+
+
+
   return (
     <div className='Home Profile'>
       <Navbar isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
+      
+      
       <div className={IsModifyProfileClicked ? "imageClickedFixedPosition showimageClickedFixedPosition" : "imageClickedFixedPosition"}>
         <form onSubmit={handleSubmitUpdatedDocuments} ref={popUpRef2} className={IsModifyProfileClicked ? "containerEditProfile showcontainerEditProfile" : "containerEditProfile"}>
           <button
@@ -508,13 +566,72 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
           */}
 
           <div className="About About66 About777">
-            <button>
-              Save Changes
+            <button
+              type='submit'
+              disabled={loaderUpdating}  
+            >
+              {
+                loaderUpdating ? "Updating your profile..."
+                :
+                "Saves Changes"
+              }
             </button>
           </div>
 
         </form>
       </div>
+
+
+
+      <div className={IsModifyAboutClicked ? "imageClickedFixedPosition  showimageClickedFixedPosition" : "imageClickedFixedPosition"}>
+        <form onSubmit={updateBigAbout} ref={popUpRef3} className={IsModifyAboutClicked ? "containerEditProfile containerEditProfile2 showcontainerEditProfile" : "containerEditProfile containerEditProfile2"}>
+          <button
+            onClick={()=>{
+              setIsModifyAboutClicked(!IsModifyAboutClicked);
+            }}
+            className=" closePopUpx2 closePopUpx3"
+          >
+            <i className='fa-solid fa-xmark'></i>
+          </button>
+          <div className="About About66 About6688">  
+            Edit your About section
+          </div>
+           
+            
+
+          <div className="About About66 About68">
+            <textarea 
+              className='textAreaOfAbout'
+              type="text"
+              placeholder='Modify your about section...'
+              spellCheck={false}
+              value={modAbout}
+              onChange={(e)=>{
+                setModAbout(e.target.value);
+              }}  
+            ></textarea>
+          </div>
+
+          <div className="About About66 About777">
+            <button
+              type='submit'
+              disabled={loaderUpdating}  
+            >
+              {
+                loaderUpdating ? "Updating your profile..."
+                :
+                "Saves Changes"
+              }
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+
+
+
+
       <div className="home2">
         <div className="h0">
                     <div ref={popUpRef} className={popUp ? "popUpx showpopUpx" : "popUpx"}>
@@ -675,6 +792,19 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                           </div>
                           <div className="caseOnA2">
                             {visitedUser.address}
+                          </div>
+                        </div>
+                      }
+                      {
+                        visitedUser.dateOfBirth && visitedUser.dateOfBirth !== "" && 
+                        <div className="About About2">
+                          <div className="caseOnA1">
+                            <i className='fa-solid fa-cake-candles'></i>
+                          </div>
+                          <div className="caseOnA2">
+                            {
+                              convertToYYYYMMDD(visitedUser.dateOfBirth)
+                            }
                           </div>
                         </div>
                       }
@@ -840,33 +970,47 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                       </> : 
                       isAboutClicked ? 
                       <div className='AboutClickedContainer'>
-                        <div className="Aboutx88">
-                          <h1>About</h1>
-                        </div>
-                        <div className="Aboutx88">
-                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
-                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
-                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
-                        </div>
-                        <div className="Aboutx88">
-                          <img
-                            src='https://wienerholocaustlibrary.org/wp-content/uploads/2021/01/IMG_1897-scaled.jpg'
-                            alt=''
-                          />
-                        </div>
-                        <div className="Aboutx88">
-                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
-                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
-                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
-                          <br /><br />
-                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
-                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
-                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
-                          <br /><br />
-                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
-                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
-                          Step into Akram's enchanting world of digital mastery, where challenges become opportunities and innovation meets imagination.
-                        </div>
+                        {
+                          id === currentId && 
+                          <div 
+                            onClick={
+                              ()=>{
+                                setIsModifyAboutClicked(true);
+                              }
+                            }
+                            className="createAboutSection">
+                          {
+                            visitedUser && (visitedUser.BigAbout && visitedUser.BigAbout !== "") ?
+                            "Edit your about section"
+                            :
+                            "Create an about section" 
+                          }
+                          </div>
+                        }
+                        {
+                          (visitedUser && (!visitedUser.BigAbout || visitedUser.BigAbout === '' || visitedUser.BigAbout === " " )) ?
+                          <span className='zsjdqoczsjdqoc'>
+                            No About section was written yet
+                          </span>
+                          :
+                          <>                          
+                            <div className="Aboutx88">
+                              <h1>About</h1>
+                            </div>
+                            <div className="Aboutx88 Aboutx88Aboutx88">
+                            {
+                              (visitedUser && visitedUser.BigAbout )&&
+                              visitedUser.BigAbout.split('\n').map((line, index) => (
+                                <>
+                                {line}
+                                <br />
+                                </>
+                              ))
+                            }
+                            </div>
+                          </>
+
+                        }
                       </div> : 
                       isMediaClicked ?
                         <div className='mediaContainer'>

@@ -69,6 +69,36 @@ router.post('/updateinfos', verifyToken ,async(req, res)=>{
     }
 });
 
+router.post('/updateBigAbout', verifyToken ,async(req, res)=>{
+    try{
+        const {
+            idUser,
+            BigAbout, 
+        } = req.body;
+        
+        const idToken = req.user._id
+
+        if(idToken === idUser){
+            const isUpdated = await users.findByIdAndUpdate(idUser, {
+                BigAbout
+            }, {new : true});
+            if(isUpdated){
+                res.status(200).send(isUpdated);
+            }
+            else{
+                res.status(202).send('Not Found...');
+            }
+        }
+        else{
+            res.status(401).send("Not Authentified...")
+        }
+        
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
 
 
 module.exports = router;
