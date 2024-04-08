@@ -43,7 +43,80 @@
 }
 
 .Home .containerEditProfile2{
-    width: 90% !important;
-    height: 90vh !important;
+    width: 700px !important;
+    height: 400px !important;
     background-color: #18191a;
+}
+
+.containerXZE{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+.jqfd{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.zjhoqdc {
+    object-fit: cover !important;
+    height: 280px !important;
+    width: 280px  !important;
+}
+
+.titleXXXX{
+    margin-bottom: 3rem;
+    color: gainsboro;
+    width: 270px;
+    font-weight: 700;
+    line-height: 1.7;
+    font-size: 1.1rem;
+    font-family: "Libre Caslon Text", serif;       
+}
+
+.rowConYinp{
+    width: 270px;
+}
+.rowConYinp input{
+    width: 100%;
+    margin-bottom: 1.4rem;
+    font-size: 15px;
+    outline: none;
+    height: 33px;
+    border: none;
+    padding: 0 0.5rem;
+    border-radius: 0.3rem;
+    transition: 0.2s all ease-in-out;
+}
+
+.rowConYinp button{
+    margin: 0;
+    width: 100%;
+    color: black;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    height: 31px;
+    border: none;
+    border-radius: 0.3rem;
+    transition: 0.2s all ease-in-out;
+}
+.notSubmiutibtn{
+    background-color: rgb(255, 196, 0);
+}
+.rowConYinp .submitBtnbbb{
+    background-color: orangered;
+    color: white;
+}
+
+.closePopUpx3closePopUpx3{
+    z-index: 10;
 }

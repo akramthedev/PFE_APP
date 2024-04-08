@@ -1,14 +1,15 @@
-const express           =  require('express');
-const mongoose          =  require('mongoose');
-const cors              =  require('cors');
-const clc               =  require("cli-color");
-const Connect           =  require('./Helpers/Database');
 const authRoutes        =  require('./Routes/authRoutes');
 const userRoutes        =  require('./Routes/userRoutes');
 const notifsRoutes      =  require('./Routes/notifRoutes');
 const postsRoutes       =  require('./Routes/postRoutes');
 const requestsRoutes    =  require('./Routes/requestRoutes');
+const pagesRoutes       =  require('./Routes/pageRoutes');
+const mongoose          =  require('mongoose');
+const express           =  require('express');
+const Connect           =  require('./Helpers/Database');
 const http              =  require('http');
+const cors              =  require('cors');
+const clc               =  require("cli-color");
 const { Server }        =  require('socket.io');
  
 
@@ -39,7 +40,7 @@ app.use('/user', userRoutes);
 app.use('/notif', notifsRoutes);
 app.use('/request', requestsRoutes);
 app.use('/post', postsRoutes);
-app.use('/pages', postsRoutes);
+app.use('/pages', pagesRoutes);
 
 //   WEBSOCKETS EVENTS
 

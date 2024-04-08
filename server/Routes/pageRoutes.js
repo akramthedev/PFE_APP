@@ -11,7 +11,7 @@ const router = express.Router();
 router.post('/create' ,async(req, res)=>{
     try{
         const data = req.body;
-        const isCreated = await notifs.create(data);
+        const isCreated = await pages.create(data);
         if(isCreated){
             res.status(200).send(isCreated);
         }

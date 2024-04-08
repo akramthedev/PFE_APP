@@ -7,15 +7,10 @@ const pagesSchema = new mongoose.Schema({
         type : String, 
         required : true
     },
-    profilePic: {
-        type: String,
-        default: 'https://oasys.ch/wp-content/uploads/2019/03/photo-avatar-profil.png' 
+    name : {
+        type : String, 
+        required : true
     },
-    coverPic: {
-        type: String,
-        default: 'https://live.staticflickr.com/3745/10353673376_ec7a400972_b.jpg' 
-    },
-
     description : {
         type : String, 
         required : false
@@ -24,6 +19,20 @@ const pagesSchema = new mongoose.Schema({
         type : String,
         required : false
     },
+    topics : {
+        type : [String], 
+        required : false, 
+        default : ["all"], 
+    },
+    profilePic: {
+        type: String,
+        default: 'https://res.cloudinary.com/dqprleeyt/image/upload/v1712275985/logo_d0yjmq.png' 
+    },
+    coverPic: {
+        type: String,
+        default: 'https://t3.ftcdn.net/jpg/03/00/27/06/360_F_300270690_LBzP8uPqlImoYzvuaBvmV0X7NIyjLTuW.jpg' 
+    },
+
     followers :  [String], 
     
 }, {

@@ -14,6 +14,13 @@ import OpenerMp3 from '../../MP3Sounds/openingAuth.wav';
 import SkeltonPost from '../../Components/Post/SkeltonPost';
 import '../Profile/index.css'
 import HidePopUp from '../../Helpers/HidePopUp';
+import Step1 from './step1.png';
+import Step2 from './step2.png';
+import Step3 from './step3.png';
+import Step4 from './step4.png';
+
+
+
 
 const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
 
@@ -23,6 +30,14 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
     const [postLoading, setpostLoading] = useState(true);
     const popUpRef2 = useRef(null);
     const [isCreatedPageCLicked, setisCreatedPageCLicked] = useState(false);
+    //new page creating states
+    const [name, setName]=useState(""); //step = 1
+    const [description, setdescription]=useState(""); //step = 2
+    const [topics, settopics]=useState(""); //step = 3
+    const [website, setwebsite]=useState(""); //step = 4 ! not important can be skiped 
+    const [step, setStep]=useState(1);
+
+
 
     HidePopUp(popUpRef2,setisCreatedPageCLicked );
 
@@ -64,22 +79,150 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest}) => {
 
   }, []);
 
+
+  const handleCreateNewPage = async(e)=>{
+    e.preventDefault();
+    try{
+
+    }
+    catch(er){
+      console.log(er.message);
+    }
+  }
+
   return (
     <div className='Home'>
       
 
         <div className={isCreatedPageCLicked ? "imageClickedFixedPosition showimageClickedFixedPosition" : "imageClickedFixedPosition"}>
-          <form  ref={popUpRef2} className={isCreatedPageCLicked ? "containerEditProfile containerEditProfile2 showcontainerEditProfile" : "containerEditProfile containerEditProfile2"}>
+          <form onSubmit={handleCreateNewPage}  ref={popUpRef2} className={isCreatedPageCLicked ? "containerEditProfile containerEditProfile2 showcontainerEditProfile" : "containerEditProfile containerEditProfile2"}>
             <button
               type='button'
               onClick={()=>{
                 setisCreatedPageCLicked(!isCreatedPageCLicked);
               }}
-              className=" closePopUpx2 closePopUpx3"
+              className=" closePopUpx2 closePopUpx3 closePopUpx3closePopUpx3"
             >
               <i className='fa-solid fa-xmark'></i>
             </button>
 
+
+            <div className="containerXZE">
+              <div className="jqfd">
+                
+                {
+                  step === 1 ? 
+                  <img 
+                  className='zjhoqdc'
+                    src={Step1} 
+                    alt=""
+                  />
+                  :
+                  step === 2 ? 
+                  <img 
+                  className='zjhoqdc'
+                    src={Step2}
+                    alt=""
+                  />
+                  :
+                  step === 3 ? 
+                  <img 
+                  className='zjhoqdc'
+                    src={Step3}
+                    alt=""
+                  />
+                  :
+                  step === 4 &&
+                  <img 
+                  className='zjhoqdc'
+                    src={Step4}
+                    alt=""
+                  />
+                }
+              </div>
+              <div className="jqfd">
+              {
+                step === 1 ? 
+                <>
+                  <div className="titleXXXX">
+                  Let's Baptize Your Blank Page with a Fitting Title!
+                  </div>
+                  <div className="rowConYinp">
+                    <input 
+                      type="text"
+                      spellCheck={false}
+                      placeholder='Enter your page a name...'
+                    />
+                  </div>
+                </>
+                :
+                step === 2 ? 
+                <>
+                  <div className="titleXXXX">
+                  Now, let's craft a descriptive label for your pristine page!
+                  </div>
+                  <div className="rowConYinp">
+                    <input 
+                      type="text"
+                      spellCheck={false}
+                      placeholder='Enter your page description...'
+                    />
+                  </div>
+                </>
+                :
+                step === 3 ? 
+                <>
+                  <div className="titleXXXX">
+                  Please select the right categories...
+                  </div>
+                  <div className="rowConYinp">
+                    <input 
+                      type="text"
+                      spellCheck={false}
+                      placeholder='Enter your page a name...'
+                    />
+                  </div>
+                </>
+                :
+                step === 4 &&
+                <>
+                  <div className="titleXXXX">
+                  If you have a website, please feel free to share the link for reference...
+                  </div>
+                  <div className="rowConYinp">
+                    <input 
+                      type="text"
+                      spellCheck={false}
+                      placeholder='Enter your page website...'
+                    />
+                  </div>
+                </>
+
+              }
+                <div className="rowConYinp">
+                    
+                    <button
+                      className={step===4?"submitBtnbbb":"notSubmiutibtn"}
+                      onClick={()=>{
+                        if(step <= 3){
+                          setStep(step + 1);
+                        }
+                      }}
+                      type={step===4?"submit":"button"}
+                    >
+                    {
+                      step === 4 ? 
+                      "Launch The Page"
+                      :
+                      "Next Step"
+                    }
+                    </button>
+
+                </div>
+
+              
+              </div>
+            </div>
             
 
           </form>
