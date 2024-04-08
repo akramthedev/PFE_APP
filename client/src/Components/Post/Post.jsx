@@ -12,7 +12,7 @@ import SingleComment from '../SingleComment/SingleComment';
 const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
 
 
-    const naviagte = useNavigate();
+    const navigate = useNavigate();
     const postRef = useRef(null);
     
     const [isImgClicked, setisImgClicked] = useState(false);
@@ -225,7 +225,7 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
             <div  ref={postRef} className=" rowP0 rowP1">
                 <div className="c1"
                     onClick={()=>{
-                        naviagte(`/profile/${post.creator}`);
+                        navigate(`/profile/${post.creator}`);
                     }}
                 >
                     <div className="c11">

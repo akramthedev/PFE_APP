@@ -25,12 +25,10 @@ const SinglePageCompo = ({page}) => {
                     setData(resp.data);
                 }
                 else{
-                    navigate("/");
                 }
               }
               catch(e){
                   console.log(e.message);
-                  navigate("/");
               }
             }
         }

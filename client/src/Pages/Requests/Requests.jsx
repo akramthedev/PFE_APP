@@ -8,13 +8,15 @@ import BirthDays from '../../Components/BirthDays/BirthDays';
 import UtilsAndNavigations from '../../Components/UtilsAndNavigations/UtilsAndNavigations';
 import axios from "axios";
 import HttpRequestStatus from '../../Components/HttpRequestStatus/HttpRequestStatus';
+import { useSocket } from '../../Helpers/SocketContext';
 
 
-const Requests = ({socket ,isFetchingUser, dataUserCurrent, renderUserInfos}) => {
+const Requests = ({isFetchingUser, dataUserCurrent, renderUserInfos}) => {
 
     const token = localStorage.getItem('token');
     const idUser = localStorage.getItem('idUser');
-    
+    const { socket } = useSocket();
+
     const [AllRequests,setAllRequests] = useState(null);
     const [isFetchingAllRequests,setIsFecthingAllRequests] = useState(true);
 

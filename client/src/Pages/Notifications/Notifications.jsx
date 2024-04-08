@@ -8,13 +8,14 @@ import BirthDays from '../../Components/BirthDays/BirthDays';
 import UtilsAndNavigations from '../../Components/UtilsAndNavigations/UtilsAndNavigations';
 import axios from "axios";
 import HttpRequestStatus from '../../Components/HttpRequestStatus/HttpRequestStatus';
+import { useSocket } from '../../Helpers/SocketContext';
 
-
-const Notifications = ({socket ,isFetchingUser, dataUserCurrent}) => {
+const Notifications = ({isFetchingUser, dataUserCurrent}) => {
 
     const token = localStorage.getItem('token');
     const idUser = localStorage.getItem('idUser');
-    
+    const { socket } = useSocket();
+
     const [AllNotifications,setAllNotifications] = useState(null);
     const [isFetchingAllNotifs,setIsFecthingAllNotif] = useState(true);
     
