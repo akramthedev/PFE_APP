@@ -48,8 +48,12 @@
     justify-content: center;
     margin-left: .4rem;
     height: 30px;
+    position: relative;
 }
 .c12 .sdqv{
+    right:  -21px;
+    top: 0px;
+    position: absolute;
 }
 .c12 span:first-child{
     height: 20px;
