@@ -1,16 +1,18 @@
-import React, {useState, useEffect} from 'react'
+
+import React, {useState, useEffect, useRef} from 'react'
 import "./index.css";
 import axios from 'axios';
-import io from 'socket.io-client';
 import {useNavigate } from "react-router-dom";
+import { useSocket } from '../../Helpers/SocketContext';
+import DiscordNotificationSound from '../../MP3Sounds/discord-notification.mp3';
 
-const socket = io.connect('http://localhost:3001/');
 
-const Chat = ({dataUserEntered, ChatEntered, fetchUser, dataUserCurrent, isFetchingUser}) => {
+
+const Chat = ({socket, ChatEntered}) => {
 
 
   const [loading, setloading] = useState(true);
-  const [entered, setentered] = useState(null);
+  const [entered, setentered] = useState(true);
   const [allMessages, setallMessages] = useState(null);
   const [User, setUser] = useState(null);
   const [RoomInformations, setRoomInformations] = useState(null);
@@ -18,36 +20,33 @@ const Chat = ({dataUserEntered, ChatEntered, fetchUser, dataUserCurrent, isFetch
   const token = localStorage.getItem('token');
   const idUser = localStorage.getItem('idUser');
   const [message, setmessage] = useState('');
+  const divRef =  useRef(null);
+  const {receivedMsg} = useSocket();
 
+  const audioNotification = new Audio(DiscordNotificationSound);
+
+  const playAudioNotificationDISCORD = ()=>{
+    audioNotification.play();
+  }
 
 
   const nav = useNavigate();
 
   
   const EnterConversation = ()=>{
-      let data = {
-        idRoom : ChatEntered, 
-        idWhoEnter : idUser
+      if(ChatEntered){
+        let data = {
+          idRoom : ChatEntered, 
+          idWhoEnter : idUser
+        }
+        socket.emit("EnterConvWithFriend", data);
       }
-      socket.emit("EnterConvWithFriend", data);
   }
 
 
   useEffect(()=>{
     EnterConversation();
-  }, []);
-
-
-  useEffect(() => {
-    socket.on('Entered-Successfully', () => {
-      setentered(true);
-    });
-    return () => {
-      socket.off('Entered-Successfully');  
-    };  
-  }, [socket]);
-
-
+  }, [ChatEntered]);
 
 
   useEffect(()=>{
@@ -68,7 +67,7 @@ const Chat = ({dataUserEntered, ChatEntered, fetchUser, dataUserCurrent, isFetch
           setallMessages(resp.data);
         }
         else{
-          setallMessages(null);
+          setallMessages([]);
         }
 
         const resp2 = await axios.get(`http://localhost:3001/room/${ChatEntered}`, {
@@ -97,6 +96,7 @@ const Chat = ({dataUserEntered, ChatEntered, fetchUser, dataUserCurrent, isFetch
           });
           if(resp3.status ===200){
             setUser(resp3.data);
+            
           }
           else{
             setUser(null)
@@ -125,18 +125,33 @@ const Chat = ({dataUserEntered, ChatEntered, fetchUser, dataUserCurrent, isFetch
 
   
 
+  useEffect(()=>{
+    const x = ()=>{
+      if(receivedMsg){
+        if(receivedMsg.sentTo === idUser && ChatEntered === receivedMsg.roomId){
+          setallMessages(prev=>[
+            ...prev, 
+            receivedMsg
+          ]);
+          playAudioNotificationDISCORD();
+        }
+      }
+    }
+    x();
+  }, [receivedMsg]);
 
 
 
   const SendMsg = async (event)=>{
     event.preventDefault();
     try{
-      if(message !== "" && message !== " " && message !== "  "){
+      if(message !== "" && message !== " " && message !== "  " && User){
         //socket request 
         let data = {
           senderId : idUser, 
           roomId : ChatEntered,
           message : message, 
+          sentTo : User._id
         }
         socket.emit("sendMessage", data);
 
@@ -163,32 +178,40 @@ const Chat = ({dataUserEntered, ChatEntered, fetchUser, dataUserCurrent, isFetch
 
   useEffect(() => {
     socket.on('receiveMessage', (data) => {
-         
-        if (data.roomId === ChatEntered) {
-          setallMessages(prev => [...prev, data]);
-        }
-    
+        alert("Received a message...");
     });
     return () => {
       socket.off('receiveMessage');  
     };
-  }, [socket, ChatEntered]);
+  }, [socket]);
+
+
+  
 
  
+
+
+
+  
+  useEffect(()=>{
+    divRef.current?.scrollToBottom();
+  },[allMessages])
+
 
 
   return (
     <>
     { 
-      (!isFetchingUser && dataUserCurrent && ChatEntered )&&
+      (ChatEntered ) ? 
       <div className='chatEntered'>
       {
-        (entered === true && ChatEntered) ?
+        (entered  && ChatEntered) ?
         <div className='singleChat'>
           {
-            loading ? <span className="loadingxxx">
+            loading ?  
+            <div className="noDataYet">
               Loading...
-            </span>
+            </div>
             :
             <>
             <div className="parti1k">
@@ -245,6 +268,7 @@ const Chat = ({dataUserEntered, ChatEntered, fetchUser, dataUserCurrent, isFetch
                 }
                 </>
               }
+              
               </div>
               <form onSubmit={SendMsg} className="parti3k">
                 <input 
@@ -280,7 +304,11 @@ const Chat = ({dataUserEntered, ChatEntered, fetchUser, dataUserCurrent, isFetch
         </div>
       }
       </div>
-    }
+      :
+      <>
+        No Room Was Joined ...
+      </>  
+  }
     </>
   )
 }

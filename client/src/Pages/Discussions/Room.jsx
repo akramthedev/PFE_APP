@@ -1,18 +1,16 @@
 import React, {useState, useEffect} from 'react'
 import "./index.css";
 import axios from 'axios';
-import {useSocket} from '../../Helpers/SocketContext';
 import {useNavigate } from "react-router-dom";
 
 
-const Room = ({setdataUserEntered, ChatEntered, num, room, enterChat}) => {
+const Room = ({socket,setdataUserEntered, ChatEntered, num, room, enterChat}) => {
 
 
     const [user, setUser] = useState(null);
     const [loading, setloading] = useState(true);
     const token = localStorage.getItem('token')
     const idUser = localStorage.getItem('idUser')
-    const socket = useSocket();
     const nav = useNavigate();
 
   useEffect(()=>{

@@ -5,16 +5,18 @@ import Room from './Room';
 import SideBar from './SideBar';
 import {useNavigate} from 'react-router-dom'
 import Chat from '../Chat/Chat';
-
-
-
+import io from 'socket.io-client';
+ 
 
 const Discussions = ({isFetchingUser, dataUserCurrent, fetchUser}) => {
+  
+  const socket = io.connect('http://localhost:3001/');
 
   const nav = useNavigate();
   const [ChatEntered,setChatEntered] = useState(null);
   const [dataUserEntered,setdataUserEntered] = useState(null);
 
+ 
 
   const enterChat = (roomId)=>{
     setChatEntered(roomId);
@@ -26,13 +28,23 @@ const Discussions = ({isFetchingUser, dataUserCurrent, fetchUser}) => {
     }
     x();
   }, [dataUserEntered, setdataUserEntered]);
+ 
+    useEffect(() => {
+      socket.on('receiveMessage', (data) => {
+          alert("Received a message...");
+      });
+      return () => {
+        socket.off('receiveMessage');  
+      };
+    }, [socket]);
+  
 
   return (
     <div className='Discussions'> 
-      <SideBar ChatEntered={ChatEntered && ChatEntered} enterChat={enterChat} setdataUserEntered={setdataUserEntered} />
+      <SideBar socket={socket} ChatEntered={ChatEntered && ChatEntered} enterChat={enterChat} setdataUserEntered={setdataUserEntered} />
       {
         ChatEntered ? 
-        <Chat dataUserEntered={dataUserEntered} dataUserCurrent={dataUserCurrent} ChatEntered={ChatEntered} isFetchingUser={isFetchingUser}  fetchUser={fetchUser}  />
+        <Chat socket={socket}  ChatEntered={ChatEntered}  />
         :
         <div className="ChatProvisoire">
           <img src="https://res.cloudinary.com/dqprleeyt/image/upload/v1712318887/and_parkle___3_-removebg-preview_lyfila.png" alt="" />

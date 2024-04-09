@@ -67,7 +67,8 @@ router.post('/sendMsg', verifyToken,async(req, res)=>{
         const isCreatedMsg = await messages.create({
             senderId : data.senderId, 
             roomId : data.roomId, 
-            message : data.message
+            message : data.message, 
+            sentTo : data.sentTo
         });
 
         if(isCreatedMsg){

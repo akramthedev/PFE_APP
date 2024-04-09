@@ -80,14 +80,13 @@ io.on('connect', (socket)=>{
     });
 
     socket.on('EnterConvWithFriend', (data)=>{
-        console.log(data.idWhoEnter+" has entered the room : "+data.idRoom);
-        socket.join(data.idRoom);
+        console.log("⚡ "+data.idWhoEnter+" successfully joined a room.");
         io.to(data.idRoom).emit("Entered-Successfully");
     });
 
     socket.on('sendMessage', (data)=>{
         console.log(data);
-        socket.to(data.roomId).emit("receiveMessage", data);
+        io.to(GRI).emit("receiveMessage",data);
     });
     
 

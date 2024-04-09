@@ -7,7 +7,7 @@ import Room from './Room';
 
 
 
-const SideBar = ({setdataUserEntered, enterChat, ChatEntered}) => {
+const SideBar = ({socket,setdataUserEntered, enterChat, ChatEntered}) => {
 
     
   const idUser = localStorage.getItem('idUser')
@@ -39,7 +39,7 @@ const SideBar = ({setdataUserEntered, enterChat, ChatEntered}) => {
       } finally{
         setTimeout(()=>{
           setloading(false)
-        }, 1000);
+        }, 50);
       }
     }
     x();
@@ -77,7 +77,7 @@ const SideBar = ({setdataUserEntered, enterChat, ChatEntered}) => {
                   {
                   allRooms.map((room, id)=>{
                       return(
-                      <Room setdataUserEntered={setdataUserEntered} ChatEntered={ChatEntered} num={id} enterChat={enterChat}  room={room} />
+                      <Room socket={socket} setdataUserEntered={setdataUserEntered} ChatEntered={ChatEntered} num={id} enterChat={enterChat}  room={room} />
                       )
                   })
                   }

@@ -8,6 +8,7 @@ export const useSocket = () => useContext(SocketContext);
 export const SocketProvider = ({ children }) => {
   
   const [onlineUsers, setOnlineUsers] = useState(0);
+  const [receivedMsg, setreceivedMsg] = useState(null);
 
   const socket = io.connect('http://localhost:3001/');
 
@@ -17,11 +18,16 @@ export const SocketProvider = ({ children }) => {
       socket.on('getNumOnlineUsers', (data) => {
         setOnlineUsers(data);
       });
+
+      socket.on('receiveMessage', (data) => {
+         setreceivedMsg(data);
+      });
+      
     }
   }, [socket]);
 
   return (
-    <SocketContext.Provider value={{ socket, onlineUsers }}>
+    <SocketContext.Provider value={{ socket, onlineUsers, receivedMsg }}>
       {children}
     </SocketContext.Provider>
   );

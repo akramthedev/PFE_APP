@@ -15,6 +15,10 @@ const Schemax = new mongoose.Schema({
         type : String, 
         required : true
     },
+    sentTo : {
+        type : String, 
+        required : true
+    }
 
     
 }, {
