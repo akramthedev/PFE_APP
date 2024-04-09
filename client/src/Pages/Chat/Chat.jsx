@@ -190,22 +190,6 @@ const Chat = ({socket, ChatEntered}) => {
     };
   }, [socket]);
 
-  
-
- 
-  const scrollToBottom = () => {
-    const scrollHeight = messagesEndRef.current.scrollHeight;
-    const height = messagesEndRef.current.clientHeight;
-    const maxScrollTop = scrollHeight - height;
-    messagesEndRef.current.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
-  };
-
-  useEffect(() => {
-    if(allMessages && !loading){
-      scrollToBottom();
-    }
-  }, [allMessages]);
-
 
   return (
     <>

@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import "./index.css";
 import axios from 'axios';
 import {useNavigate } from "react-router-dom";
+import GetTimeAndDate from '../../Helpers/GetTimeAndDate2'
+
 
 
 const Room = ({socket,setdataUserEntered, ChatEntered, num, room, enterChat}) => {
@@ -9,6 +11,19 @@ const Room = ({socket,setdataUserEntered, ChatEntered, num, room, enterChat}) =>
 
     const [user, setUser] = useState(null);
     const [loading, setloading] = useState(true);
+    const [lasMessageSentIntoThisRoom, setlasMessageSentIntoThisRoom] = useState({
+      
+      _id : "",
+      senderId : "",
+      roomId : "",
+      message : "",
+      sentTo : "",
+      isSeen : false,
+      createdAt : "",
+      updatedAt : "",
+       
+    
+    });
     const token = localStorage.getItem('token')
     const idUser = localStorage.getItem('idUser')
     const nav = useNavigate();
@@ -30,12 +45,40 @@ const Room = ({socket,setdataUserEntered, ChatEntered, num, room, enterChat}) =>
           }
         });
         if(resp.status ===200){
-          setUser(resp.data);
-          setdataUserEntered(resp.data);
+                    
+            const resp2 = await axios.get(`http://localhost:3001/room/getLastMessage/${room._id}`, {
+              headers : {
+                Authorization : `Bearer ${token}`
+              }
+            });
+            console.log(resp2.data);
+            if(resp2.status ===200){
+              setlasMessageSentIntoThisRoom(resp2.data);
+            }
+            else{
+              setlasMessageSentIntoThisRoom({
+                
+                  _id : "",
+                  senderId : "",
+                  roomId : "",
+                  message : "",
+                  sentTo : "",
+                  isSeen : false,
+                  createdAt : "",
+                  updatedAt : "",
+                   
+                
+              })
+            }
+
+            setUser(resp.data);
+            setdataUserEntered(resp.data);
         }
         else{
           setUser(null)
         }
+
+        
       }
       catch(e){
         setUser(null)
@@ -64,9 +107,33 @@ const Room = ({socket,setdataUserEntered, ChatEntered, num, room, enterChat}) =>
               }
             }
         >
-        {
-          user && user.fullName
-        }
+        
+        <div className="caseImgDKDK">
+          <img 
+            src={
+              user ? user.profilePic : "https://oasys.ch/wp-content/uploads/2019/03/photo-avatar-profil.png"
+            } 
+            alt="" 
+          />
+        </div>
+        <div className="caseOthersjqdsc">
+          <span className="fullNamjqed">
+          {
+            user && user.fullName
+          }
+          </span>
+          <span className="jozdqcs">
+          {
+            lasMessageSentIntoThisRoom.message  
+          }
+          </span>
+          <span className="timytim">
+          {
+            lasMessageSentIntoThisRoom.createdAt !== "" &&  GetTimeAndDate(lasMessageSentIntoThisRoom.createdAt) 
+          }
+          </span>
+        </div>
+        
         </button>
     }
     </>

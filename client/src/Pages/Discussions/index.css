@@ -58,7 +58,16 @@
     margin-top: .555rem;
     color: #e9ebf1;
     cursor: pointer;
+    display: flex;
+    align-items: center;
     transition: .1s all ease-in-out;
+}
+.SingleChatX img{
+    height: 46px;
+    width: 46px;
+    object-fit: cover;
+    border-radius: 50%;
+
 }
 .SingleChatX:hover{
     background-color: #383a3b;
@@ -112,7 +121,7 @@
 }
 
 .actiavtedSingleChatX{
-    background-color: #525456;
+    background-color: #57595c;
     color: white;
     font-weight: 500;
 }
@@ -131,4 +140,60 @@
     font-weight: 700;
     font-size: 1.5rem;
     padding-top: .5rem;
+}
+
+
+.caseImgDKDK{
+    height: 66px;
+    width: 66px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.caseOthersjqdsc{
+    width: calc(100% - 66px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-left: .6rem;
+    position: relative;
+}
+.fullNamjqed{
+    color: gainsboro;
+    font-weight: 700;
+    font-size: 15px;
+    display: flex;
+    height: 20px;
+    width: 100%;
+    align-items: center;
+    justify-content: left;
+}
+.jozdqcs{
+    color: rgb(213, 212, 212);
+    font-size: 14px;
+    font-weight: 400;
+    height:16px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+.actiavtedSingleChatX .fullNamjqed{
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    width: 100%;
+}
+.actiavtedSingleChatX .jozdqcs{
+    color: white;
+}
+.timytim{
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    position: absolute;
+    top: 10px;
+    right: 3px;
 }

@@ -87,6 +87,39 @@ router.post('/sendMsg', verifyToken,async(req, res)=>{
 
 
 
+router.get('/getLastMessage/:ChatEntered' ,verifyToken,async(req, res)=>{
+    try{
+        
+        const {ChatEntered} = req.params;
+  
+        const isFound = await messages.find({
+            roomId : ChatEntered
+        }).sort({createdAt : -1});
+
+        let LastMessage = {} ;
+
+        if(isFound){
+            if(isFound.length !== 0){
+                LastMessage = isFound[0];
+                res.status(200).send(LastMessage);
+            }
+            else{
+                res.status(202).send("None")
+            }
+        }
+        else{
+            res.status(202).send("Not found");
+        }
+
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+
+
 router.get('/getmessages/:idRoom', verifyToken,async(req, res)=>{
     try{
         
