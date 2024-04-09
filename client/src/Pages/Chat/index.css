@@ -1,7 +1,7 @@
 .chatEntered{
     background-color: transparent;
     color: white;
-    width: 70%;
+    width: 75%;
     height: 100vh;
     overflow: hidden;
     display: flex;
@@ -9,3 +9,52 @@
     align-items: center;
     justify-content: center;
 } 
+
+.refreshPage{
+    width: 100%;
+    margin-top: 1rem;
+    outline: none;
+    border: none;
+    border-radius: 0.2rem;
+    height: 30px;
+    cursor: pointer;
+    transition: .2s all ease-in-out;
+}
+.refreshPage:hover{
+    background-color: rgb(201, 200, 200);
+}
+.singleChatsingleChat{
+    color: red;
+}
+.parti1k{
+    display: flex;
+    height: 60px;
+    width: 100%;
+    background-color: red;
+}
+.casek1{
+    height: 60px;
+    width: 60px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;   
+}
+.casek1 img{
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.case2k{
+    display: flex;
+    flex-direction: column;
+}
+
+.InnerChat{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}

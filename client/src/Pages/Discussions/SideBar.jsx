@@ -7,7 +7,7 @@ import Room from './Room';
 
 
 
-const SideBar = ({enterChat}) => {
+const SideBar = ({setdataUserEntered, enterChat, ChatEntered}) => {
 
     
   const idUser = localStorage.getItem('idUser')
@@ -37,7 +37,9 @@ const SideBar = ({enterChat}) => {
         setallRooms([])
         console.log(e.message);
       } finally{
-        setloading(false);
+        setTimeout(()=>{
+          setloading(false)
+        }, 1000);
       }
     }
     x();
@@ -47,21 +49,35 @@ const SideBar = ({enterChat}) => {
   return (
     <div className='SideBar'>
         {
-            !allRooms && loading ? "Loading all conversations..."
+            loading ? 
+            <>
+              <div className="SingleChatXSkelton" />
+              <div className="SingleChatXSkelton SingleChatXSkelton11" />
+              <div className="SingleChatXSkelton SingleChatXSkelton0" />   
+              <div className="SingleChatXSkelton SingleChatXSkelton1" />
+              <div className="SingleChatXSkelton SingleChatXSkelton2" />  
+              <div className="SingleChatXSkelton SingleChatXSkelton3" />
+              <div className="SingleChatXSkelton SingleChatXSkelton4" />            
+            </>
             :
             <>
             {
-                allRooms.length === 0 ? "No Conversation yet"
-                :
-                <>
-                {
-                allRooms.map((room, id)=>{
-                    return(
-                    <Room enterChat={enterChat}  room={room} />
-                    )
-                })
-                }
-                </>
+              allRooms &&
+              <>
+              {
+                  allRooms.length === 0 ? "No Conversation yet"
+                  :
+                  <>
+                  {
+                  allRooms.map((room, id)=>{
+                      return(
+                      <Room setdataUserEntered={setdataUserEntered} ChatEntered={ChatEntered} num={id} enterChat={enterChat}  room={room} />
+                      )
+                  })
+                  }
+                  </>
+              }
+              </>
             }
             </>
             }

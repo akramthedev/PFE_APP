@@ -9,13 +9,112 @@
     justify-content: center;
 }
 .SideBar{
-    width: 30%;
-    background-color: red;
+    width: 25%;
+    background-color:#242526;
     height: 100vh;
     overflow-x: hidden;
     overflow-y: scroll;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 .ChatProvisoire{
-    width: 70%;
+    width: 75%;
     height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+}
+.ChatProvisoire img{
+    height: 60px;
+    width: auto;
+    object-fit: cover;
+}
+.ChatProvisoire span{
+    width: 450px;
+    color: #bababa;
+    line-height: 1.3;
+    text-align: center;
+    object-fit: cover;
+}
+.chifré{
+    position: absolute;
+    bottom: 3rem;
+    color: #9d9d9d;
+    font-size: 14px;
+}
+
+.SingleChatX{
+    width: 95%;
+    height: 66px;
+    border-radius: 0.4rem;
+    background-color: #2f3132;
+    border: none;
+    outline: none;
+    margin: 0 auto;
+    margin-top: .555rem;
+    color: #e9ebf1;
+    cursor: pointer;
+    transition: .1s all ease-in-out;
+}
+.SingleChatX:hover{
+    background-color: #383a3b;
+}
+
+.SingleChatXSkelton{
+    width: 95%;
+    height: 66px;
+    margin-top: .555rem;
+    border-radius: 0.4rem;
+    animation: skeleton-loading 0.2s linear infinite alternate;
+}
+
+.SingleChatXSkelton:hover{
+    background-color: transparent;
+}
+
+
+.SingleChatXSkelton11{
+    animation: skeleton-loading 0.4s linear infinite alternate;
+
+}
+.SingleChatXSkelton1{
+    animation: skeleton-loading 0.3s linear infinite alternate;
+
+}
+.SingleChatXSkelton0{
+    animation: skeleton-loading 0.2s linear infinite alternate;
+
+}
+.SingleChatXSkelton2{
+    animation: skeleton-loading 0.44s linear infinite alternate;
+
+}
+.SingleChatXSkelton3{
+    animation: skeleton-loading 0.37s linear infinite alternate;
+
+}
+.SingleChatXSkelton4{
+    animation: skeleton-loading 0.3s linear infinite alternate;
+
+}
+
+@keyframes skeleton-loading {
+    0% {
+      background-color: hsl(0, 3%, 29%);
+    }
+    100% {
+      background-color: hsl(0, 3%, 14%);
+    }
+}
+
+.actiavtedSingleChatX{
+    background-color: #525456;
+    color: white;
+    font-weight: 500;
+}
+.actiavtedSingleChatX:hover{
+    background-color: #525456;
 }

@@ -5,7 +5,7 @@ import {useSocket} from '../../Helpers/SocketContext';
 import {useNavigate } from "react-router-dom";
 
 
-const Room = ({room, enterChat}) => {
+const Room = ({setdataUserEntered, ChatEntered, num, room, enterChat}) => {
 
 
     const [user, setUser] = useState(null);
@@ -33,6 +33,7 @@ const Room = ({room, enterChat}) => {
         });
         if(resp.status ===200){
           setUser(resp.data);
+          setdataUserEntered(resp.data);
         }
         else{
           setUser(null)
@@ -50,11 +51,15 @@ const Room = ({room, enterChat}) => {
 
 
   return (
-    <div>
+    <>
     {
-        !user && loading ? "Loading ..."
+        !user && loading ? 
+        <button className={`SingleChatX SingleChatXSkelton SingleChatXSkelton${num%2 ? "2" : "1"}`}>
+
+        </button>
         :
         <button
+            className={(ChatEntered && (ChatEntered === room._id ))? "SingleChatX actiavtedSingleChatX" : "SingleChatX"}
             onClick={
               ()=>{
                 enterChat(room._id);
@@ -66,7 +71,7 @@ const Room = ({room, enterChat}) => {
         }
         </button>
     }
-    </div>
+    </>
   )
 }
 

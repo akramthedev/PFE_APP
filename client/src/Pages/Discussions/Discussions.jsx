@@ -13,24 +13,37 @@ const Discussions = ({isFetchingUser, dataUserCurrent, fetchUser}) => {
 
   const nav = useNavigate();
   const [ChatEntered,setChatEntered] = useState(null);
+  const [dataUserEntered,setdataUserEntered] = useState(null);
 
 
   const enterChat = (roomId)=>{
     setChatEntered(roomId);
   }
 
+  useEffect(()=>{
+    const x = ()=>{
+      console.log("Rendering...");
+    }
+    x();
+  }, [dataUserEntered, setdataUserEntered]);
 
   return (
     <div className='Discussions'> 
-      <SideBar enterChat={enterChat} />
-    {
-      ChatEntered ? 
-      <Chat ChatEntered={ChatEntered} isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchUser={fetchUser}  />
-      :
-      <div className="ChatProvisoire">
-        <img src="" alt="" />
-      </div>
-    }
+      <SideBar ChatEntered={ChatEntered && ChatEntered} enterChat={enterChat} setdataUserEntered={setdataUserEntered} />
+      {
+        ChatEntered ? 
+        <Chat dataUserEntered={dataUserEntered} dataUserCurrent={dataUserCurrent} ChatEntered={ChatEntered} isFetchingUser={isFetchingUser}  fetchUser={fetchUser}  />
+        :
+        <div className="ChatProvisoire">
+          <img src="https://res.cloudinary.com/dqprleeyt/image/upload/v1712318887/and_parkle___3_-removebg-preview_lyfila.png" alt="" />
+          <span>
+          Embark on a Journey of Connection, Sharing, and Networking: Where Boundless Opportunities Converge at Your Command!
+          </span>
+          <span className="chifré">
+          <i className='fa-solid fa-lock'></i>&nbsp;&nbsp;End-to-end encrypted
+          </span>
+        </div>
+      }
     </div>
   )
 }
