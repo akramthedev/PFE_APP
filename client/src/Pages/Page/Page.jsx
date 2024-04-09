@@ -19,7 +19,7 @@ import { TheOneWhoHasBirthDay } from '../Home/TheOneWhoHasBirthDay.jsx';
 
 
 
-const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
+const Page = ({fetchUser,isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
 
   const { id } = useParams();
   const { socket } = useSocket();
@@ -148,6 +148,7 @@ const Page = ({isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
             Authorization : `Bearer ${token}`
           }
         });
+        fetchUser();
       }
       catch(e){
         console.log(e.message);

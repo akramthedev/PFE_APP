@@ -128,7 +128,7 @@ function App() {
           <Route  
             path='/page/:id' 
             element={
-              token ? <Page  isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser} /> : <Navigate to="/auth" />
+              token ? <Page fetchUser={fetchUser}  isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser} /> : <Navigate to="/auth" />
             } 
           />
           <Route  
