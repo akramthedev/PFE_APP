@@ -5,6 +5,9 @@ import axios from 'axios';
 import {useNavigate } from "react-router-dom";
 import { useSocket } from '../../Helpers/SocketContext';
 import DiscordNotificationSound from '../../MP3Sounds/discord-notification.mp3';
+import MyMessage from './MyMessage';
+import HisMessage from './HisMessage';
+import ScrollToBottom from 'react-scroll-to-bottom';
 
 
 
@@ -20,7 +23,7 @@ const Chat = ({socket, ChatEntered}) => {
   const token = localStorage.getItem('token');
   const idUser = localStorage.getItem('idUser');
   const [message, setmessage] = useState('');
-  const divRef =  useRef(null);
+  const messagesEndRef =  useRef(null);
   const {receivedMsg} = useSocket();
 
   const audioNotification = new Audio(DiscordNotificationSound);
@@ -129,10 +132,12 @@ const Chat = ({socket, ChatEntered}) => {
     const x = ()=>{
       if(receivedMsg){
         if(receivedMsg.sentTo === idUser && ChatEntered === receivedMsg.roomId){
-          setallMessages(prev=>[
-            ...prev, 
-            receivedMsg
-          ]);
+          if(allMessages!== null){
+            setallMessages(prev=>[
+              ...prev, 
+              receivedMsg
+            ]);
+          }
           playAudioNotificationDISCORD();
         }
       }
@@ -185,18 +190,21 @@ const Chat = ({socket, ChatEntered}) => {
     };
   }, [socket]);
 
-
   
 
  
+  const scrollToBottom = () => {
+    const scrollHeight = messagesEndRef.current.scrollHeight;
+    const height = messagesEndRef.current.clientHeight;
+    const maxScrollTop = scrollHeight - height;
+    messagesEndRef.current.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+  };
 
-
-
-  
-  useEffect(()=>{
-    divRef.current?.scrollToBottom();
-  },[allMessages])
-
+  useEffect(() => {
+    if(allMessages && !loading){
+      scrollToBottom();
+    }
+  }, [allMessages]);
 
 
   return (
@@ -241,35 +249,36 @@ const Chat = ({socket, ChatEntered}) => {
                       <span>{User &&  User.email}</span>
                   </div>
               </div>
-              <div className="parti2k">
-              {
-                allMessages && 
-                <>
-                {
-                  allMessages.length === 0 ? 
-                  <div className="noDataYet">
-                    No message yet
-                  </div>
-                  :
-                  <>
+              <ScrollToBottom className='parti2k'>
                   {
-                    allMessages.map((message, index)=>{
-                      return(
-                        <>
-                        {
-                          message.message
-                        }
-                        <br />
-                        </>
-                      )
-                    })
+                    allMessages && 
+                    <>
+                    {
+                      allMessages.length === 0 ? 
+                      <div className="noDataYet">
+                        No message yet
+                      </div>
+                      :
+                      <>
+                      {
+                        allMessages.map((message, index)=>{
+                          return(
+                            <>
+                            {
+                              message.senderId === idUser ? 
+                              <MyMessage message={message}/>
+                              :
+                              <HisMessage message={message}/>
+                            }
+                            </>
+                          )
+                        })
+                      }
+                      </>
+                    }
+                    </>
                   }
-                  </>
-                }
-                </>
-              }
-              
-              </div>
+              </ScrollToBottom>
               <form onSubmit={SendMsg} className="parti3k">
                 <input 
                   spellCheck={false}

@@ -85,6 +85,7 @@
     background-color: #18191a ;
     color: gainsboro;
     overflow-y: scroll;
+    padding: 2rem 1rem;
     scroll-behavior: smooth;
 }
 .parti3k{
@@ -133,4 +134,38 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+
+.rowMessageHis{
+    height: auto;
+    min-height: 40px;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+
+.hisMsg{
+    min-height: 40px;
+    width: auto;
+    padding:  0.5rem .7rem;
+    padding-bottom: 1.1rem;
+    background-color: #1f2021;
+    min-width: 100px;
+    border: 1px solid #2d2e30;
+    max-width: 500px;
+    position: relative;
+    font-size: 15px;
+    border-radius: 0.4rem;
+}
+.dateOfMsg{
+    position: absolute;
+    right: 4px;
+    bottom: -1px;
+    color: rgb(130, 130, 130);
+    font-size: 12px;
+}
+.rowMessageMine{
+    justify-content: right;
 }
