@@ -7,7 +7,7 @@ import Room from './Room';
 
 
 
-const SideBar = ({socket,setdataUserEntered,dataUserCurrent,isFetchingUser, enterChat, ChatEntered}) => {
+const SideBar = ({render,socket,setdataUserEntered,dataUserCurrent,isFetchingUser, enterChat, ChatEntered}) => {
 
     
   const idUser = localStorage.getItem('idUser')
@@ -16,34 +16,49 @@ const SideBar = ({socket,setdataUserEntered,dataUserCurrent,isFetchingUser, ente
   const [allRooms, setallRooms] = useState(null);
   const [loading, setloading] = useState(true);
 
+ 
+
     
   useEffect(()=>{
     const x = async()=>{
       try{
-        setloading(true);
-        const resp = await axios.get(`http://localhost:3001/room/allRoomsPerUser/${idUser}`, {
-          headers : {
-            Authorization : `Bearer ${token}`
+        if(loading === false){
+          const resp = await axios.get(`http://localhost:3001/room/allRoomsPerUser/${idUser}`, {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+          if(resp.status ===200){
+            setallRooms(resp.data);
           }
-        });
-        if(resp.status ===200){
-          setallRooms(resp.data);
+          else{
+            setallRooms([])
+          }
         }
         else{
-          setallRooms([])
+          setloading(true);
+          const resp = await axios.get(`http://localhost:3001/room/allRoomsPerUser/${idUser}`, {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+          if(resp.status ===200){
+            setallRooms(resp.data);
+          }
+          else{
+            setallRooms([])
+          }
         }
       }
       catch(e){
         setallRooms([])
         console.log(e.message);
       } finally{
-        setTimeout(()=>{
-          setloading(false)
-        }, 50);
+        setloading(false)
       }
     }
     x();
-  }, []);
+  }, [render]);
 
 
   return (
@@ -52,7 +67,7 @@ const SideBar = ({socket,setdataUserEntered,dataUserCurrent,isFetchingUser, ente
             loading ? 
             <>
               <div className="Discuscucucuc">
-              Chatbox
+              Discussions
               </div>
               <div className="SingleChatXSkelton" />
               <div className="SingleChatXSkelton SingleChatXSkelton11" />
@@ -65,7 +80,7 @@ const SideBar = ({socket,setdataUserEntered,dataUserCurrent,isFetchingUser, ente
             :
             <>
             <div className="Discuscucucuc">
-                Chatbox
+                Discussions
               </div>
             {
               allRooms &&
@@ -77,7 +92,7 @@ const SideBar = ({socket,setdataUserEntered,dataUserCurrent,isFetchingUser, ente
                   {
                   allRooms.map((room, id)=>{
                       return(
-                      <Room socket={socket} setdataUserEntered={setdataUserEntered} ChatEntered={ChatEntered} num={id} enterChat={enterChat}  room={room} />
+                      <Room allRooms={allRooms} socket={socket} setdataUserEntered={setdataUserEntered} ChatEntered={ChatEntered} num={id} enterChat={enterChat}  room={room} />
                       )
                   })
                   }

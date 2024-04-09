@@ -11,7 +11,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 
 
 
-const Chat = ({socket, ChatEntered}) => {
+const Chat = ({render, setrender,socket, ChatEntered}) => {
 
 
   const [loading, setloading] = useState(true);
@@ -133,10 +133,13 @@ const Chat = ({socket, ChatEntered}) => {
       if(receivedMsg){
         if(receivedMsg.sentTo === idUser && ChatEntered === receivedMsg.roomId){
           if(allMessages!== null){
+            
+            setrender(!render);
             setallMessages(prev=>[
               ...prev, 
               receivedMsg
             ]);
+            
           }
           playAudioNotificationDISCORD();
         }
@@ -167,6 +170,8 @@ const Chat = ({socket, ChatEntered}) => {
           data
         ]);
 
+        setrender(!render);
+
         setmessage("");
 
         //axios request 
@@ -185,7 +190,7 @@ const Chat = ({socket, ChatEntered}) => {
 
   useEffect(() => {
     socket.on('receiveMessage', (data) => {
-        alert("Received a message...");
+      setrender(!render);
     });
     return () => {
       socket.off('receiveMessage');  

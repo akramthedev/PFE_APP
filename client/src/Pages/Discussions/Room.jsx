@@ -7,13 +7,13 @@ import GetTimeAndDate from '../../Helpers/GetTimeAndDate2'
 
 
 
-const Room = ({socket,setdataUserEntered,isFetchingUser,dataUserCurrent, ChatEntered, num, room, enterChat}) => {
+const Room = ({allRooms, socket,setdataUserEntered,isFetchingUser,dataUserCurrent, ChatEntered, num, room, enterChat}) => {
 
 
     const [user, setUser] = useState(null);
     const [loading, setloading] = useState(true);
     const [lasMessageSentIntoThisRoom, setlasMessageSentIntoThisRoom] = useState({
-      
+                
       _id : "",
       senderId : "",
       roomId : "",
@@ -22,8 +22,6 @@ const Room = ({socket,setdataUserEntered,isFetchingUser,dataUserCurrent, ChatEnt
       isSeen : false,
       createdAt : "",
       updatedAt : "",
-       
-    
     });
     const token = localStorage.getItem('token')
     const idUser = localStorage.getItem('idUser')
@@ -89,7 +87,9 @@ const Room = ({socket,setdataUserEntered,isFetchingUser,dataUserCurrent, ChatEnt
       }
     }
     x();
-  }, []);
+  }, [allRooms]);
+
+  
 
 
   return (
@@ -124,17 +124,6 @@ const Room = ({socket,setdataUserEntered,isFetchingUser,dataUserCurrent, ChatEnt
           }
           </span>
           <span className="jozdqcs">
-          {
-            ((lasMessageSentIntoThisRoom.senderId !== idUser) && (lasMessageSentIntoThisRoom.createdAt !== "")) && 
-            <>
-            {
-              lasMessageSentIntoThisRoom.isSeen  ? 
-              <i className='fa-solid fa-check-double facheckdoublecolorized'></i>
-              :
-              <i className='fa-solid fa-check-double'></i>
-            }
-            </> 
-          }
           {
             lasMessageSentIntoThisRoom.message.length > 30  ? 
             lasMessageSentIntoThisRoom.message.slice(0,35)+'...'

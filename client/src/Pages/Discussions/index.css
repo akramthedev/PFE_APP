@@ -1,13 +1,16 @@
 .Discussions{
     background-color: #18191a;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 100px);
     width: 100%;
     overflow: hidden;
     color: #e4e6eb;
     display: flex;
+    margin-bottom: 20px;
+    border-radius: 0.4rem;
+    overflow: hidden;
     align-items: center;
     justify-content: center;
-    border-top: 1px solid #3f4145;
+    border: 1px solid #3f4145;
 }
 .SideBar{
     width: 25%;
@@ -27,6 +30,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    padding-bottom: 3rem;
     position: relative;
 }
 .ChatProvisoire img{
@@ -132,6 +136,7 @@
 
 .Discuscucucuc{
     height: 80px;
+    cursor: default;
     width: 100%;
     display: flex;
     align-items: center;
@@ -193,8 +198,8 @@
     font-size: 12px;
     font-weight: 500;
     position: absolute;
-    top: -12px;
-    right: 10px;
+    top: -9px;
+    right:10px;
 }
 
 .actiavtedSingleChatX .timytim{

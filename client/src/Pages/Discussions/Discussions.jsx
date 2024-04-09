@@ -16,8 +16,19 @@ const Discussions = ({isFetchingUser, dataUserCurrent, fetchUser}) => {
   const nav = useNavigate();
   const [ChatEntered,setChatEntered] = useState(null);
   const [dataUserEntered,setdataUserEntered] = useState(null);
+  const [render,setrender] = useState(false);
 
- 
+  const [lasMessageSentIntoThisRoom, setlasMessageSentIntoThisRoom] = useState({
+    _id : "",
+    senderId : "",
+    roomId : "",
+    message : "",
+    sentTo : "",
+    isSeen : false,
+    createdAt : "",
+    updatedAt : "",
+  });
+   
 
   const enterChat = (roomId)=>{
     setChatEntered(roomId);
@@ -32,7 +43,7 @@ const Discussions = ({isFetchingUser, dataUserCurrent, fetchUser}) => {
  
     useEffect(() => {
       socket.on('receiveMessage', (data) => {
-          alert("Received a message...");
+      
       });
       return () => {
         socket.off('receiveMessage');  
@@ -46,10 +57,10 @@ const Discussions = ({isFetchingUser, dataUserCurrent, fetchUser}) => {
         <Navbar isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
         <div className='Discussions'> 
 
-          <SideBar socket={socket} ChatEntered={ChatEntered && ChatEntered} enterChat={enterChat} setdataUserEntered={setdataUserEntered} isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
+          <SideBar render={render} socket={socket} ChatEntered={ChatEntered && ChatEntered} enterChat={enterChat} setdataUserEntered={setdataUserEntered} isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
           {
             ChatEntered ? 
-            <Chat socket={socket}  ChatEntered={ChatEntered}  />
+            <Chat render={render} setrender={setrender} socket={socket}  ChatEntered={ChatEntered}  />
             :
             <div className="ChatProvisoire">
               <img src="https://res.cloudinary.com/dqprleeyt/image/upload/v1712318887/and_parkle___3_-removebg-preview_lyfila.png" alt="" />
