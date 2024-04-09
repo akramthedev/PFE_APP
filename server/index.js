@@ -79,6 +79,18 @@ io.on('connect', (socket)=>{
         clearInterval(interval);
     });
 
+    socket.on('EnterConvWithFriend', (data)=>{
+        console.log(data.idWhoEnter+" has entered the room : "+data.idRoom);
+        socket.join(data.idRoom);
+        io.to(data.idRoom).emit("Entered-Successfully");
+    });
+
+    socket.on('sendMsg', (data)=>{
+        console.log(data);
+        socket.to(data.roomId).emit("receiveMsg",data);
+    });
+    
+
     socket.on('disconnect', () => {
         const idUser = getUserBySocketID(socket.id);
         removeUser(idUser);
@@ -112,13 +124,6 @@ io.on('connect', (socket)=>{
         return user ? user.idUser : null;
     }
 
-    /*----------------*/
-
-
-    socket.on('EnterConvWithFriend', (data)=>{
-        console.log(data.idWhoEnter+" has entered the room : "+data.idRoom);
-        socket.join(data.idRoom);
-        io.to(data.idRoom).emit("Entered-Successfully");
-    });
+    
     
 });

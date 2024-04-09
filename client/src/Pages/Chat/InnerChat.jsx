@@ -2,17 +2,20 @@ import React, { useEffect, useState } from 'react'
 import './index.css';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
+import io from 'socket.io-client';
 
 
-const InnerChat = ({ ChatEntered, fetchUser, dataUserCurrent, isFetchingUser}) => {
+const InnerChat = ({ChatEntered, fetchUser, dataUserCurrent, isFetchingUser}) => {
 
 
+  const socket = io.connect('http://localhost:3001/');
 
   const [User, setUser] = useState(null);
   const [loading, setloading] = useState(null);
   const [allMessages, setallMessages] = useState(null);
   const [RoomInformations, setRoomInformations] = useState(null);
   const [idUserVisited, setIDUserVisited] = useState(null);
+  const [message, setmessage] = useState('');
   const token = localStorage.getItem('token');
   const idUser = localStorage.getItem('idUser');
   const nav = useNavigate();
@@ -97,12 +100,51 @@ const InnerChat = ({ ChatEntered, fetchUser, dataUserCurrent, isFetchingUser}) =
   const SendMsg = async (event)=>{
     event.preventDefault();
     try{
+      if(message !== "" && message !== " " && message !== "  "){
+        //socket request 
+        let data = {
+          senderId : idUser, 
+          roomId : ChatEntered,
+          message : message, 
+        }
+        socket.emit("sendMsg", data);
 
+        setallMessages(prev=>[
+          ...prev, 
+          data
+        ]);
+
+        setmessage("");
+
+        //axios request 
+        await axios.post(`http://localhost:3001/room/sendMsg`,data,{
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
+      }
     }
     catch(e){
       console.log(e.message);
     }
   }
+
+
+
+  useEffect(() => {
+    socket.on('receiveMsg', (data) => {
+      alert('Received Message')
+      setallMessages(prev=>[
+        ...prev, 
+        data
+      ]);
+    });
+
+    return () => {
+      socket.off('receiveMsg');  
+    }; 
+  }, [socket]);
+
 
 
 
@@ -157,8 +199,9 @@ const InnerChat = ({ ChatEntered, fetchUser, dataUserCurrent, isFetchingUser}) =
                 return(
                   <>
                   {
-                    message
+                    message.message
                   }
+                  <br />
                   </>
                 )
               })
@@ -169,7 +212,15 @@ const InnerChat = ({ ChatEntered, fetchUser, dataUserCurrent, isFetchingUser}) =
         }
         </div>
         <form onSubmit={SendMsg} className="parti3k">
-          <input type="text" placeholder='Type your message...' />
+          <input 
+            spellCheck={false}
+            value={message}
+            onChange={(e)=>{
+              setmessage(e.target.value)
+            }}
+            type="text" 
+            placeholder='Type your message...' 
+          />
           <button
             type='submit'
           >

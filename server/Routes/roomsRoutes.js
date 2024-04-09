@@ -59,6 +59,31 @@ router.get('/:idRoom', verifyToken,async(req, res)=>{
 });
 
 
+router.post('/sendMsg', verifyToken,async(req, res)=>{
+    try{
+        
+        const data = req.body;
+
+        const isCreatedMsg = await messages.create({
+            senderId : data.senderId, 
+            roomId : data.roomId, 
+            message : data.message
+        });
+
+        if(isCreatedMsg){
+            res.status(200).send(isCreatedMsg);
+        }
+        else{
+            res.status(202).send("Not found");
+        }
+
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
 
 
 router.get('/getmessages/:idRoom', verifyToken,async(req, res)=>{
