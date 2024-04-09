@@ -51,6 +51,9 @@ const SideBar = ({setdataUserEntered, enterChat, ChatEntered}) => {
         {
             loading ? 
             <>
+              <div className="Discuscucucuc">
+              Chatbox
+              </div>
               <div className="SingleChatXSkelton" />
               <div className="SingleChatXSkelton SingleChatXSkelton11" />
               <div className="SingleChatXSkelton SingleChatXSkelton0" />   
@@ -61,6 +64,9 @@ const SideBar = ({setdataUserEntered, enterChat, ChatEntered}) => {
             </>
             :
             <>
+            <div className="Discuscucucuc">
+                Chatbox
+              </div>
             {
               allRooms &&
               <>

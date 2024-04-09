@@ -81,10 +81,45 @@
     width: 100%;
     height: 100%;
     background-color: #18191a ;
+
 }
 .parti3k{
-    background-color: blue;
-    height: 80px;
+    height: 50px;
     display: flex;
     align-items: center;
+    border-top: 1px solid #3f4145;
+}
+.parti3k input{
+    height: 100%;
+    padding: 0 2rem ;
+    outline: none;
+    border: none;
+    width: 100%;
+    color: rgb(197, 197, 197);
+    background-color: #18191a;
+}
+.parti3k input::placeholder{
+    color: rgb(165, 165, 165);
+    font-style: italic;
+}
+.parti3k button{
+    height: 50px;
+    width:50px;
+    outline: none;
+    border: none;
+    transition: .13s all ease-in-out;
+    background-color: #27282a;
+    color: gainsboro;
+    cursor: pointer;
+}
+
+.noDataYet{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6e6e6e;
+    font-size: 13px;
+    font-weight: 400;
 }

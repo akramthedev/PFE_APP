@@ -1,5 +1,5 @@
 import React, { useState,useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate} from 'react-router-dom';
 import './index.css';
 import '../Home/Home.css';
 import Post from '../../Components/Post/Post.jsx';
@@ -55,6 +55,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   const refref = useRef(null); 
   useOutsideAlerter(refref, setisBClicked);
 
+  const navigate = useNavigate();
 
   const [modFullname, setModFullname] = useState("");
   const [modPictureProfile, setModPictureProfile] = useState("");
@@ -754,14 +755,17 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                         </>
                       }
                       </button>
-                      <button 
-                        onClick={()=>{
-                          
-                        }}
-                        className="messageFriendShip"
-                      >
-                        <i className='fa-solid fa-message'></i>&nbsp;Message
-                      </button>
+                      {
+                        requestMade === "contact" &&
+                        <button 
+                          onClick={()=>{
+                            navigate(`/discussions`)
+                          }}
+                          className="messageFriendShip"
+                        >
+                          <i className='fa-solid fa-message'></i>&nbsp;Message
+                        </button>
+                      }
                   </>
                   }
 

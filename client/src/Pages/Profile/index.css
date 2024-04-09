@@ -178,7 +178,7 @@
 
 .sendrequestFriendShip{
     position: absolute;
-    right: 130px;
+    right: 0;
     width: auto;
     padding: 0.333rem 0.999rem;
     border-radius: 0.25rem;
@@ -197,7 +197,7 @@
 }
 .messageFriendShip{
     position: absolute;
-    right: 0px;
+    right: 170px;
     width: auto;
     padding: 0.333rem 0.999rem;
     border-radius: 0.25rem;

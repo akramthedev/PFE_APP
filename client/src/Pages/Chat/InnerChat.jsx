@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './index.css';
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom'
+
 
 const InnerChat = ({ ChatEntered, fetchUser, dataUserCurrent, isFetchingUser}) => {
 
@@ -13,6 +15,10 @@ const InnerChat = ({ ChatEntered, fetchUser, dataUserCurrent, isFetchingUser}) =
   const [idUserVisited, setIDUserVisited] = useState(null);
   const token = localStorage.getItem('token');
   const idUser = localStorage.getItem('idUser');
+  const nav = useNavigate();
+
+  
+
 
 
   useEffect(()=>{
@@ -86,6 +92,20 @@ const InnerChat = ({ ChatEntered, fetchUser, dataUserCurrent, isFetchingUser}) =
   }, [ChatEntered]);
 
 
+
+
+  const SendMsg = async (event)=>{
+    event.preventDefault();
+    try{
+
+    }
+    catch(e){
+      console.log(e.message);
+    }
+  }
+
+
+
   return (
     <div className='InnerChat'>
     {
@@ -95,7 +115,13 @@ const InnerChat = ({ ChatEntered, fetchUser, dataUserCurrent, isFetchingUser}) =
       :
       <>
       <div className="parti1k">
-            <div className="casek1">
+            <div
+              onClick={()=>{
+                if(User){
+                  nav(`/profile/${User._id}`)
+                }
+              }}
+              className="casek1">
             {
               loading ? 
               <img src="https://oasys.ch/wp-content/uploads/2019/03/photo-avatar-profil.png" alt="" />
@@ -103,17 +129,53 @@ const InnerChat = ({ ChatEntered, fetchUser, dataUserCurrent, isFetchingUser}) =
               <img src={User ? User.profilePic : "https://oasys.ch/wp-content/uploads/2019/03/photo-avatar-profil.png"} alt="" />
             }
             </div>
-            <div className="case2k">
+            <div 
+               onClick={()=>{
+                if(User){
+                  nav(`/profile/${User._id}`)
+                }
+              }}
+              className="case2k"
+            >
                 <span>{User && User.fullName}</span>
                 <span>{User &&  User.email}</span>
             </div>
         </div>
         <div className="parti2k">
-
+        {
+          allMessages && 
+          <>
+          {
+            allMessages.length === 0 ? 
+            <div className="noDataYet">
+              No message yet
+            </div>
+            :
+            <>
+            {
+              allMessages.map((message, index)=>{
+                return(
+                  <>
+                  {
+                    message
+                  }
+                  </>
+                )
+              })
+            }
+            </>
+          }
+          </>
+        }
         </div>
-        <div className="parti3k">
-            
-        </div>
+        <form onSubmit={SendMsg} className="parti3k">
+          <input type="text" placeholder='Type your message...' />
+          <button
+            type='submit'
+          >
+            <i className='fa-solid fa-paper-plane'></i>
+          </button>
+        </form>
       </>
     } 
     </div>
