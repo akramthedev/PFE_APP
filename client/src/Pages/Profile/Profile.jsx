@@ -746,7 +746,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                               : requestMade === "heIsTheSender" ?
                               <><i className='fa-solid fa-eye'></i>&nbsp;Request Received</>
                               : requestMade === "contact" &&
-                              <><i className='fa-solid fa-user-minus'></i>&nbsp;Remove User</>
+                              <><i className='fa-solid fa-user-minus'></i>&nbsp;Remove Contact</>
 
                             }                         
                           </>

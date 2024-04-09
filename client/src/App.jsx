@@ -44,8 +44,11 @@ function App() {
           }
         });
         if(resp.status === 200){
+          setdataUserCurrent(null);
           console.log(resp.data);
-          setdataUserCurrent(resp.data);
+          setTimeout(()=>{
+            setdataUserCurrent(resp.data);
+          }, 170);
           setResponseRequest({
             status : 200, 
             msg : "User Fetched"

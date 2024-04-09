@@ -4,6 +4,9 @@ const requests = require('../Models/requests');
 const notifs = require('../Models/notifs');
 const sendEmail = require('../Helpers/EmailSender');
 const verifyToken = require('../Middlewares/verifyToken');
+const rooms = require('../Models/rooms');
+
+
 
 
 const router = express.Router();
@@ -102,6 +105,19 @@ router.post('/accept', async (req, res) => {
                 await notifs.create(data1);
                 await notifs.create(data2);
 
+                //creating of a room for them 
+                const isFound = await rooms.find({
+                    $or: [
+                        { member1: sender, member2: sentTo },
+                        { member1: sentTo, member2: sender }
+                    ]
+                });
+                if(isFound.length === 0){
+                    await rooms.create({
+                        member1 : sender, 
+                        member2 : sentTo
+                    });
+                }
                 res.status(200).send("GOOD");
             } else {
                 res.status(202).send("OOpsy");

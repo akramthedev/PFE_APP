@@ -4,4 +4,8 @@
     width: 100%;
     overflow: hidden;
     color: #e4e6eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }

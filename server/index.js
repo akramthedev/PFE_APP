@@ -4,6 +4,8 @@ const notifsRoutes      =  require('./Routes/notifRoutes');
 const postsRoutes       =  require('./Routes/postRoutes');
 const requestsRoutes    =  require('./Routes/requestRoutes');
 const pagesRoutes       =  require('./Routes/pageRoutes');
+const roomsRoutes       =  require('./Routes/roomsRoutes');
+const messagesRoutes    =  require('./Routes/messageRoutes');
 const mongoose          =  require('mongoose');
 const express           =  require('express');
 const Connect           =  require('./Helpers/Database');
@@ -41,12 +43,16 @@ app.use('/notif', notifsRoutes);
 app.use('/request', requestsRoutes);
 app.use('/post', postsRoutes);
 app.use('/page', pagesRoutes);
+app.use('/room', roomsRoutes);
+app.use('/message', messagesRoutes);
 
 //   WEBSOCKETS EVENTS
 
 
 let usersOnline =  new Array();
-const GRI = 1;                                 //   GRI stands for Global Room Id
+const GRI = "XPLORIUM";                                 //   GRI stands for Global Room Id
+
+
 
 io.on('connect', (socket)=>{
 
@@ -54,7 +60,6 @@ io.on('connect', (socket)=>{
         sendNumOnline();
     }, 250); 
 
-    
 
     socket.on('enterGlobalRoom',(idUser)=>{
         socket.join(GRI);
