@@ -85,9 +85,9 @@ io.on('connect', (socket)=>{
         io.to(data.idRoom).emit("Entered-Successfully");
     });
 
-    socket.on('sendMsg', (data)=>{
+    socket.on('sendMessage', (data)=>{
         console.log(data);
-        socket.to(data.roomId).emit("receiveMsg",data);
+        socket.to(data.roomId).emit("receiveMessage", data);
     });
     
 
