@@ -163,19 +163,16 @@ const Chat = ({dataUserEntered, ChatEntered, fetchUser, dataUserCurrent, isFetch
 
   useEffect(() => {
     socket.on('receiveMessage', (data) => {
-        console.log("dataUserEntered._id : "+dataUserEntered._id);
-        console.log("data.senderId : "+data.senderId);
-        console.log("data.roomId : "+data.roomId);
-        console.log("chatEntered : "+ChatEntered);
-        setallMessages(prev=>[
-          ...prev, 
-          data
-        ]);
-      });
+         
+        if (data.roomId === ChatEntered) {
+          setallMessages(prev => [...prev, data]);
+        }
+    
+    });
     return () => {
       socket.off('receiveMessage');  
     };
-  }, [socket]);
+  }, [socket, ChatEntered]);
 
  
 
