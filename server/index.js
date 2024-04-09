@@ -111,5 +111,14 @@ io.on('connect', (socket)=>{
         const user = usersOnline.find(user => user.idSocket === idSocket);
         return user ? user.idUser : null;
     }
+
+    /*----------------*/
+
+
+    socket.on('EnterConvWithFriend', (data)=>{
+        console.log(data.idWhoEnter+" has entered the room : "+data.idRoom);
+        socket.join(data.idRoom);
+        io.to(data.idRoom).emit("Entered-Successfully");
+    });
     
 });

@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import "./index.css";
 import axios from 'axios';
-import {socket} from '../../Helpers/SocketContext';
+import {useSocket} from '../../Helpers/SocketContext';
+import {useNavigate } from "react-router-dom";
 
 
 const Room = ({room}) => {
@@ -11,7 +12,8 @@ const Room = ({room}) => {
     const [loading, setloading] = useState(true);
     const token = localStorage.getItem('token')
     const idUser = localStorage.getItem('idUser')
-
+    const socket = useSocket();
+    const nav = useNavigate();
 
   useEffect(()=>{
     const x = async()=>{
@@ -47,8 +49,8 @@ const Room = ({room}) => {
   }, []);
 
 
-  const handleEnterRoom = ()=>{
-
+  const handleEnterRoom = (roomId)=>{
+    nav(`/discussions/${roomId}`);
   }
 
 
@@ -58,7 +60,11 @@ const Room = ({room}) => {
         !user && loading ? "Loading ..."
         :
         <button
-            onClick={handleEnterRoom}
+            onClick={
+              ()=>{
+                handleEnterRoom(room._id);
+              }
+            }
         >
         {
             user && user.fullName

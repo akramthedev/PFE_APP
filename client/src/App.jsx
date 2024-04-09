@@ -164,9 +164,9 @@ function App() {
           />
 
           <Route  
-            path='/discussions/chat/:id' 
+            path='/discussions/:id' 
             element={
-              token ? <Chat /> : <Navigate to="/auth" />
+              token ? <Chat isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser} /> : <Navigate to="/auth" />
             } 
           />
 
