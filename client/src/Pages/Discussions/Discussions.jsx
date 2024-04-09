@@ -2,66 +2,34 @@ import React, {useState, useEffect} from 'react'
 import './index.css';
 import axios from 'axios';
 import Room from './Room';
+import SideBar from './SideBar';
+import {useNavigate} from 'react-router-dom'
+import Chat from '../Chat/Chat';
 
 
-const Discussions = () => {
-
-  const idUser = localStorage.getItem('idUser')
-  const token = localStorage.getItem('token')
-
-  const [allRooms, setallRooms] = useState(null);
-  const [loading, setloading] = useState(true);
 
 
-  useEffect(()=>{
-    const x = async()=>{
-      try{
-        setloading(true);
-        const resp = await axios.get(`http://localhost:3001/room/allRoomsPerUser/${idUser}`, {
-          headers : {
-            Authorization : `Bearer ${token}`
-          }
-        });
-        if(resp.status ===200){
-          setallRooms(resp.data);
-        }
-        else{
-          setallRooms([])
-        }
-      }
-      catch(e){
-        setallRooms([])
-        console.log(e.message);
-      } finally{
-        setloading(false);
-      }
-    }
-    x();
-  }, []);
+const Discussions = ({isFetchingUser, dataUserCurrent, fetchUser}) => {
+
+  const nav = useNavigate();
+  const [ChatEntered,setChatEntered] = useState(null);
+
+
+  const enterChat = (roomId)=>{
+    setChatEntered(roomId);
+  }
 
 
   return (
-    <div
-      className='Discussions'
-    >
+    <div className='Discussions'> 
+      <SideBar enterChat={enterChat} />
     {
-      !allRooms && loading ? "Loading all conversations..."
+      ChatEntered ? 
+      <Chat ChatEntered={ChatEntered} isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchUser={fetchUser}  />
       :
-      <>
-      {
-        allRooms.length === 0 ? "No Conversation yet"
-        :
-        <>
-        {
-          allRooms.map((room, id)=>{
-            return(
-              <Room room={room} />
-            )
-          })
-        }
-        </>
-      }
-      </>
+      <div className="ChatProvisoire">
+        <img src="" alt="" />
+      </div>
     }
     </div>
   )

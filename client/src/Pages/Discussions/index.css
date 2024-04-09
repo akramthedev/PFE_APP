@@ -7,5 +7,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+}
+.SideBar{
+    width: 30%;
+    background-color: red;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.ChatProvisoire{
+    width: 70%;
+    height: 100vh;
 }

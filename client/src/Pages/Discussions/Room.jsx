@@ -5,7 +5,7 @@ import {useSocket} from '../../Helpers/SocketContext';
 import {useNavigate } from "react-router-dom";
 
 
-const Room = ({room}) => {
+const Room = ({room, enterChat}) => {
 
 
     const [user, setUser] = useState(null);
@@ -49,11 +49,6 @@ const Room = ({room}) => {
   }, []);
 
 
-  const handleEnterRoom = (roomId)=>{
-    nav(`/discussions/${roomId}`);
-  }
-
-
   return (
     <div>
     {
@@ -62,12 +57,12 @@ const Room = ({room}) => {
         <button
             onClick={
               ()=>{
-                handleEnterRoom(room._id);
+                enterChat(room._id);
               }
             }
         >
         {
-            user && user.fullName
+          user && user.fullName
         }
         </button>
     }

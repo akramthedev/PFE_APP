@@ -2,9 +2,9 @@ import React, {useState, useEffect} from 'react'
 import "./index.css";
 import axios from 'axios';
 import io from 'socket.io-client';
-import {useNavigate, useParams } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
-const Chat = ({dataUserCurrent, isFetchingUser}) => {
+const Chat = ({ChatEntered, fetchUser, dataUserCurrent, isFetchingUser}) => {
 
   const socket = io.connect('http://localhost:3001/');
 
@@ -13,17 +13,14 @@ const Chat = ({dataUserCurrent, isFetchingUser}) => {
   const token = localStorage.getItem('token')
   const idUser = localStorage.getItem('idUser');
   const nav = useNavigate();
-  const {id} = useParams();
 
   
   const EnterConversation = ()=>{
-    if(id){
       let data = {
-        idRoom : id, 
+        idRoom : ChatEntered, 
         idWhoEnter : idUser
       }
       socket.emit("EnterConvWithFriend", data);
-    }
   }
 
 
@@ -43,16 +40,16 @@ const Chat = ({dataUserCurrent, isFetchingUser}) => {
 
   return (
     <>
-    {
-      !isFetchingUser && dataUserCurrent && 
-      <>
+    { 
+      (!isFetchingUser && dataUserCurrent && ChatEntered )&&
+      <div className='chatEntered'>
       {
         entered && 
         <div className='singleChat'>
-          Welcome to Room : {id}
+          Welcome to Room : {ChatEntered}
         </div>
       }
-      </>
+      </div>
     }
     </>
   )

@@ -164,13 +164,6 @@ function App() {
           />
 
           <Route  
-            path='/discussions/:id' 
-            element={
-              token ? <Chat isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser} /> : <Navigate to="/auth" />
-            } 
-          />
-
-          <Route  
             path='/settings' 
             element={
               token ? <Settings isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser} /> : <Navigate to="/auth" />
