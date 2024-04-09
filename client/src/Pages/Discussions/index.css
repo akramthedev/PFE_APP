@@ -17,6 +17,7 @@
     align-items: center;
     display: flex;
     flex-direction: column;
+    border-right: 1px solid #3f4145;
 }
 .ChatProvisoire{
     width: 75%;

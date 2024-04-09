@@ -7,7 +7,7 @@ const Schemax = new mongoose.Schema({
         type : String, 
         required : true
     },
-    sentToId : {
+    roomId : {
         type : String, 
         required : true
     },

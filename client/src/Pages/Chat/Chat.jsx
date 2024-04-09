@@ -46,7 +46,7 @@ const Chat = ({dataUserEntered, ChatEntered, fetchUser, dataUserCurrent, isFetch
       (!isFetchingUser && dataUserCurrent && ChatEntered )&&
       <div className='chatEntered'>
       {
-        entered === true?
+        (entered === true && ChatEntered) ?
         <div className='singleChat'>
           <InnerChat dataUserEntered={dataUserEntered} ChatEntered={ChatEntered}   fetchUser={fetchUser} dataUserCurrent={dataUserCurrent} isFetchingUser={isFetchingUser}   />
         </div>
