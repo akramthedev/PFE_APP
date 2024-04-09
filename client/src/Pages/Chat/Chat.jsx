@@ -153,10 +153,12 @@ const Chat = ({socket, ChatEntered}) => {
       if(message !== "" && message !== " " && message !== "  " && User){
         //socket request 
         let data = {
+          isSeen : false,
           senderId : idUser, 
           roomId : ChatEntered,
           message : message, 
-          sentTo : User._id
+          sentTo : User._id, 
+          createdAt : new Date()
         }
         socket.emit("sendMessage", data);
 

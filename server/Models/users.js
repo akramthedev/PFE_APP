@@ -21,7 +21,7 @@ const schemaUsers = new mongoose.Schema({
     },
     coverPic: {
         type: String,
-        default: 'https://live.staticflickr.com/3745/10353673376_ec7a400972_b.jpg' 
+        default: 'https://wallpaperswide.com/download/stars_galaxies-wallpaper-2560x1440.jpg' 
     },
     bio: {
         type: String,

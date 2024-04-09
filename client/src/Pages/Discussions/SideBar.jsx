@@ -7,7 +7,7 @@ import Room from './Room';
 
 
 
-const SideBar = ({socket,setdataUserEntered, enterChat, ChatEntered}) => {
+const SideBar = ({socket,setdataUserEntered,dataUserCurrent,isFetchingUser, enterChat, ChatEntered}) => {
 
     
   const idUser = localStorage.getItem('idUser')

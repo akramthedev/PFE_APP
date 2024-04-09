@@ -1,17 +1,18 @@
 .Discussions{
     background-color: #18191a;
-    height: 100vh;
+    height: calc(100vh - 80px);
     width: 100%;
     overflow: hidden;
     color: #e4e6eb;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-top: 1px solid #3f4145;
 }
 .SideBar{
     width: 25%;
     background-color:#242526;
-    height: 100vh;
+    height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
     align-items: center;
@@ -21,7 +22,7 @@
 }
 .ChatProvisoire{
     width: 75%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -162,38 +163,55 @@
 .fullNamjqed{
     color: gainsboro;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 16px;
     display: flex;
     height: 20px;
     width: 100%;
-    align-items: center;
+    margin-bottom: .14rem;
+    align-items: baseline;
     justify-content: left;
 }
 .jozdqcs{
     color: rgb(213, 212, 212);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 400;
     height:16px;
     width: 100%;
+    margin-top: 0.2rem;
     display: flex;
     align-items: center;
     justify-content: left;
 }
 .actiavtedSingleChatX .fullNamjqed{
     color: white;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    width: 100%;
 }
 .actiavtedSingleChatX .jozdqcs{
     color: white;
 }
 .timytim{
-    color: white;
+    color: gainsboro;
     font-size: 12px;
     font-weight: 500;
     position: absolute;
-    top: 10px;
-    right: 3px;
+    top: -12px;
+    right: 10px;
+}
+
+.actiavtedSingleChatX .timytim{
+    color: white;
+}
+
+.jozdqcs .facheckdoublecolorized{
+    color: blueviolet;
+}
+.jozdqcs i{
+    font-size: 11px;
+    margin-right: 0.3rem;
+}
+
+.ojqdscueqofs{
+    display: flex;
+    flex-direction: column;
+    padding: 0 2rem;
+    background-color: #18191a;
 }

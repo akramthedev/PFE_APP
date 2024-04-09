@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import Navbar from '../../Components/Navbar/Navbar';
 import "./index.css";
 import axios from 'axios';
 import {useNavigate } from "react-router-dom";
@@ -6,7 +7,7 @@ import GetTimeAndDate from '../../Helpers/GetTimeAndDate2'
 
 
 
-const Room = ({socket,setdataUserEntered, ChatEntered, num, room, enterChat}) => {
+const Room = ({socket,setdataUserEntered,isFetchingUser,dataUserCurrent, ChatEntered, num, room, enterChat}) => {
 
 
     const [user, setUser] = useState(null);
@@ -124,7 +125,21 @@ const Room = ({socket,setdataUserEntered, ChatEntered, num, room, enterChat}) =>
           </span>
           <span className="jozdqcs">
           {
-            lasMessageSentIntoThisRoom.message  
+            ((lasMessageSentIntoThisRoom.senderId !== idUser) && (lasMessageSentIntoThisRoom.createdAt !== "")) && 
+            <>
+            {
+              lasMessageSentIntoThisRoom.isSeen  ? 
+              <i className='fa-solid fa-check-double facheckdoublecolorized'></i>
+              :
+              <i className='fa-solid fa-check-double'></i>
+            }
+            </> 
+          }
+          {
+            lasMessageSentIntoThisRoom.message.length > 30  ? 
+            lasMessageSentIntoThisRoom.message.slice(0,35)+'...'
+            :
+            lasMessageSentIntoThisRoom.message 
           }
           </span>
           <span className="timytim">

@@ -392,6 +392,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
           }
           setmodphoneNumber(resp.data.phoneNumber);
           setmodWebsite(resp.data.portfolio);
+          fetchCurrentUser();
         }
         else{
           setIsModifyProfileClicked(false);
@@ -716,7 +717,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                         onClick={()=>{
                           setIsModifyProfileClicked(true);
                         }}
-                        className="messageFriendShip"
+                        className="sendrequestFriendShip"
                       >
                         <i className='fa-solid fa-pen'></i>&nbsp;Edit Profile
                       </button>
