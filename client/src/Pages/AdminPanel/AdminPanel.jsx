@@ -1,10 +1,21 @@
-import React from 'react'
-import './index.css';
+import React, {useState, useEffect} from 'react'
+import "./index.css";
+import Navbar from '../../Components/Navbar/Navbar';
 
 
-const AdminPanel = () => {
+
+
+const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
+
+
+
   return (
-    <div>AdminPanel</div>
+    <>
+      <div className='AdminPanel'>  
+        <Navbar isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
+        AdminPanel      
+      </div>
+    </>
   )
 }
 
