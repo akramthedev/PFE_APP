@@ -126,13 +126,32 @@ router.get('/getLastMessage/:ChatEntered' ,verifyToken,async(req, res)=>{
 
 
 
-router.post('/markSeenMsg' ,verifyToken,async(req, res)=>{
+router.post('/markSeenMsg' ,async(req, res)=>{
     try{
         
         const data = req.body;
 
+        const isUpdated = await messages.findOneAndUpdate({
+            senderId : data.senderId, 
+            roomId : data.roomId, 
+            message : data.message
+        }, {
+            isSeen : true
+        }, {new : true});
+        console.log("Before ")
+        console.log()
         console.log(data);
-        
+        console.log()
+
+        console.log("After")
+        console.log()
+
+        if(isUpdated){
+            console.log(isUpdated)
+        }
+        else{
+            console.log("Not Updated Seen")
+        }
         res.status(200).send("Goody");
     }
     catch(e){
@@ -247,11 +266,9 @@ router.get('/numberMsgUnseen/:idUser',async(req, res)=>{
 
 
         if(areFound){
-            console.log(areFound)
             res.status(200).send(areFound);
         }
         else{
-            console.log(areFound)
             res.status(202).send("Not found");
         }
 

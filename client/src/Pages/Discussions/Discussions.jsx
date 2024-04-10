@@ -13,6 +13,10 @@ const Discussions = ({isFetchingUser, dataUserCurrent, fetchUser}) => {
   
   const socket = io.connect('http://localhost:3001/');
 
+
+  const [renderX, setrenderX] = useState(false);
+
+
   const nav = useNavigate();
   const [ChatEntered,setChatEntered] = useState(null);
   const [dataUserEntered,setdataUserEntered] = useState(null);
@@ -57,10 +61,10 @@ const Discussions = ({isFetchingUser, dataUserCurrent, fetchUser}) => {
         <Navbar isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
         <div className='Discussions'> 
 
-          <SideBar render={render} socket={socket} ChatEntered={ChatEntered && ChatEntered} enterChat={enterChat} setdataUserEntered={setdataUserEntered} isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
+          <SideBar renderX={renderX} render={render} socket={socket} ChatEntered={ChatEntered && ChatEntered} enterChat={enterChat} setdataUserEntered={setdataUserEntered} isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
           {
             ChatEntered ? 
-            <Chat render={render} setrender={setrender} socket={socket}  ChatEntered={ChatEntered}  />
+            <Chat setrenderX={setrenderX} renderX={renderX} render={render} setrender={setrender} socket={socket}  ChatEntered={ChatEntered}  />
             :
             <div className="ChatProvisoire">
               <img src="https://res.cloudinary.com/dqprleeyt/image/upload/v1712318887/and_parkle___3_-removebg-preview_lyfila.png" alt="" />

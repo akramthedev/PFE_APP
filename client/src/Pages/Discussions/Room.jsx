@@ -1,18 +1,20 @@
 import React, {useState, useEffect} from 'react'
 import Navbar from '../../Components/Navbar/Navbar';
 import "./index.css";
+import Moderator from '../../Assets/AdminSymbol';
+import Adser from '../../Assets/AdserSymbol';
 import axios from 'axios';
 import {useNavigate } from "react-router-dom";
 import GetTimeAndDate from '../../Helpers/GetTimeAndDate2'
 
 
 
-const Room = ({allRooms, socket,setdataUserEntered,isFetchingUser,dataUserCurrent, ChatEntered, num, room, enterChat}) => {
+const Room = ({renderX, allRooms, socket,setdataUserEntered,isFetchingUser,dataUserCurrent, ChatEntered, num, room, enterChat}) => {
 
 
     const [user, setUser] = useState(null);
     const [loading, setloading] = useState(true);
-    const [unSeenMessages, setunSeenMessages] = useState(null);
+    const [unSeenMessages, setunSeenMessages] = useState(0);
     const [lasMessageSentIntoThisRoom, setlasMessageSentIntoThisRoom] = useState({
       _id : "",
       senderId : "",
@@ -27,7 +29,7 @@ const Room = ({allRooms, socket,setdataUserEntered,isFetchingUser,dataUserCurren
     const idUser = localStorage.getItem('idUser')
     const nav = useNavigate();
 
-  useEffect(()=>{
+ 
     const x = async()=>{
       try{
         setloading(true);
@@ -64,11 +66,11 @@ const Room = ({allRooms, socket,setdataUserEntered,isFetchingUser,dataUserCurren
                 setunSeenMessages(c);
               }
               else{
-                setunSeenMessages(null);
+                setunSeenMessages(0);
               }
             }
             else{
-              setunSeenMessages(null);
+              setunSeenMessages(0);
               setlasMessageSentIntoThisRoom({
                 
                   _id : "",
@@ -100,8 +102,12 @@ const Room = ({allRooms, socket,setdataUserEntered,isFetchingUser,dataUserCurren
         setloading(false);
       }
     }
-    x();
-  }, [allRooms]);
+
+
+
+    useEffect(()=>{
+      x();
+    }, [allRooms, renderX]);
 
   
 
@@ -130,12 +136,36 @@ const Room = ({allRooms, socket,setdataUserEntered,isFetchingUser,dataUserCurren
             } 
             alt="" 
           />
+          {
+            <>
+            {
+              <>
+              {
+                  unSeenMessages === 0  ? null :  
+                  <>
+                  {
+                    
+                    <span className="numberUnseen">
+                    {
+                      unSeenMessages && unSeenMessages
+                    }
+                    </span>
+                    
+                  }
+                  </>
+              }
+              </>
+            }
+            
+            </>
+          }
         </div>
         <div className="caseOthersjqdsc">
           <span className="fullNamjqed">
           {
             user && user.fullName
           }
+          &nbsp;&nbsp;{user && <>{user.role === "admin" ? <Moderator /> : user.role === "adser" ? <Adser/> : null}</>}
           </span>
           <span className="jozdqcs">
           {
@@ -164,38 +194,13 @@ const Room = ({allRooms, socket,setdataUserEntered,isFetchingUser,dataUserCurren
           }
           
           </span>
-          {
-            ChatEntered && 
-            <>
-            {
-              ChatEntered !== room._id &&  
-              <>
-              {
-                  unSeenMessages && 
-                  <>
-                  {
-                    unSeenMessages  &&
-                    <span className="numberUnseen">
-                    {
-                      unSeenMessages && unSeenMessages
-                    }
-                    </span>
-                    
-                  }
-                  </>
-              }
-              </>
-            }
-            
-            </>
-          }
-          <span className="timytim">
+          
+        </div>
+        <span className="timytim">
           {
             lasMessageSentIntoThisRoom.createdAt !== "" &&  GetTimeAndDate(lasMessageSentIntoThisRoom.createdAt) 
           }
           </span>
-        </div>
-        
         </button>
     }
     </>

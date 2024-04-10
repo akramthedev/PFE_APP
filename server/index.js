@@ -86,7 +86,6 @@ io.on('connect', (socket)=>{
     
 
     socket.on('sendMessage', (data)=>{
-        console.log(data);
         io.to(GRI).emit("receiveMessage",data);
     });
     

@@ -58,6 +58,7 @@
     border-radius: 0.4rem;
     background-color: #2f3132;
     border: none;
+    position: relative;
     outline: none;
     margin: 0 auto;
     margin-top: .555rem;
@@ -152,6 +153,7 @@
 .caseImgDKDK{
     height: 66px;
     width: 66px;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -172,19 +174,17 @@
     display: flex;
     height: 20px;
     width: 100%;
-    margin-bottom: .14rem;
-    align-items: baseline;
     justify-content: left;
 }
 .jozdqcs{
     color: rgb(213, 212, 212);
     font-size: 13px;
     font-weight: 400;
-    height:16px;
+    height:20px;
     width: 100%;
-    margin-top: 0.2rem;
     display: flex;
-    align-items: center;
+    align-items: baseline;
+    margin-top: 0.3rem;    
     justify-content: left;
 }
 .actiavtedSingleChatX .fullNamjqed{
@@ -198,7 +198,7 @@
     font-size: 12px;
     font-weight: 500;
     position: absolute;
-    top: -9px;
+    top: 5px;
     right:10px;
 }
 
@@ -221,8 +221,18 @@
     background-color: #18191a;
 }
 .numberUnseen{
-    height: 20px;
-    width: 20px;
+    height: 18px;
+    width: 18px;
     border-radius: 50%;
     background-color: red;
+    position: absolute;
+    top:8px;
+    font-weight: 600;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 5px;
+    font-size: 14px;
 }
+

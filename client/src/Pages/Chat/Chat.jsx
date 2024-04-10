@@ -3,6 +3,8 @@ import React, {useState, useEffect, useRef} from 'react'
 import "./index.css";
 import axios from 'axios';
 import {useNavigate } from "react-router-dom";
+import Adser from '../../Assets/AdserSymbol';
+import Moderator from '../../Assets/AdminSymbol';
 import { useSocket } from '../../Helpers/SocketContext';
 import DiscordNotificationSound from '../../MP3Sounds/discord-notification.mp3';
 import MyMessage from './MyMessage';
@@ -11,7 +13,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 
 
 
-const Chat = ({render, setrender,socket, ChatEntered}) => {
+const Chat = ({render,renderX, setrenderX , setrender,socket, ChatEntered}) => {
 
 
   const [loading, setloading] = useState(true);
@@ -150,15 +152,15 @@ const Chat = ({render, setrender,socket, ChatEntered}) => {
                 ...prev, 
                 receivedMsg
               ]);
-              await axios.post(`http://localhost:3001/room/markSeenMsg/`, receivedMsg, {
-                headers : {
-                  Authorization : `Bearer ${token}`
-                }
-              });
+              await axios.post(`http://localhost:3001/room/markSeenMsg/`, receivedMsg);
+              setrenderX(!renderX);
             }
             playAudioNotificationDISCORD();
           }
+          // on render 
+          setrenderX(!renderX);
         }
+        setrenderX(!renderX);
       }
       catch(e){
         console.log(e.message);
@@ -255,7 +257,7 @@ const Chat = ({render, setrender,socket, ChatEntered}) => {
                     }}
                     className="case2k"
                   >
-                      <span>{User && User.fullName}</span>
+                      <span>{User && User.fullName}&nbsp;&nbsp;{User && <>{User.role === "admin" ? <Moderator /> : User.role === "adser" ? <Adser/> : null}</>}</span>
                       <span>{User &&  User.email}</span>
                   </div>
               </div>
