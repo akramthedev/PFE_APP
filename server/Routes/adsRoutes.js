@@ -101,9 +101,11 @@ router.get('/accept-request/:id' ,async(req, res)=>{
             _id : id
         });
         if(isFound){
+            
             await reqAdsers.deleteOne({
                 _id : id
             });
+
             let dataNotification = {
                 title: `🔥 Your application for adsers has been accepeted by Admins!`,
                 description1: "We're happy to inform you this. Enjoy your new role SIR!",
@@ -112,16 +114,20 @@ router.get('/accept-request/:id' ,async(req, res)=>{
                 idPost : isFound.applicant, 
                 isPostClicked : true
             }
+            
             await notifs.create(dataNotification); 
+            
             const isUpdated = await users.findByIdAndUpdate(isFound.applicant, {
                 role : "adser"
             });
+
             if(isUpdated){
                 res.status(200).send('Is updated')
             }
             else{
                 res.status(202).send("Not updated");
             }
+            
         }
         else{
             res.status(202).send('qs<')

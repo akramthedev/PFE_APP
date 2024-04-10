@@ -48,7 +48,9 @@
     font-size: 1rem;
     margin-left: .5rem;
 }
-
+.xxx .fa-earth-americas{
+    color: limegreen;
+}
 .ruler{
     height: 1.5px;
     width: 100%;

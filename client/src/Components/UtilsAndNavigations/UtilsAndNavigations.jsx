@@ -15,7 +15,6 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageC
     const { socket, onlineUsers } = useSocket();  
 
 
-    
 
   return (
     <>
@@ -59,14 +58,15 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageC
         </span>
       </div>
 
-      <div className="ruler"/>
 
       <div className="rowX rowXNoHover">
         <div className="xxx">
-          <i className='fa-solid fa-signal'></i>
+            <i className="fa-solid fa-earth-americas"></i>
         </div>
-        <span><div className="connectedBull"></div>Online members&nbsp;&nbsp;:&nbsp;&nbsp;{onlineUsers && socket  && `${onlineUsers }`}</span>
+        <span style={{ color : "limegreen", fontWeight : "bold"}} >Online members&nbsp;&nbsp;:&nbsp;&nbsp;{onlineUsers && socket  && `${onlineUsers }`}</span>
       </div>
+
+      <div className="ruler"/>
 
       <div className="rowX"
         onClick={()=>{
@@ -79,10 +79,33 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageC
         <div className="xxx">
           <i className='fa-solid fa-bookmark'></i>
         </div>
-        <span>Saved</span>
+        <span>Saved Posts</span>
       </div>
 
 
+
+     
+        {
+          (dataUserCurrent && (dataUserCurrent.role=== "adser" || dataUserCurrent.role === "admin")) && 
+          <div className="rowX"
+            onClick={()=>{
+              if(dataUserCurrent && !isFetchingUser){
+                if(dataUserCurrent.role === "admin"){
+                  navigate(`/admin/panel`);
+                }
+                else if (dataUserCurrent.role === "adser"){
+                  navigate(`/adser/panel`);
+                }
+              }
+            }}  
+          >
+            <div className="xxx">
+              <i className='fa-solid fa-chart-line'></i>
+            </div>
+            <span>Dashboard</span>
+          </div>
+        }
+       
       <div className="rowX rowXNoHover">
         <div className="xxx">
           <i className='fa-solid fa-scroll'></i>

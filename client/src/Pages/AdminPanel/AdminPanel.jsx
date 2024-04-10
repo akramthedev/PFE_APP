@@ -154,11 +154,17 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
             isReqAdsClick &&
             <>
             {
-              loader ? "Loading..."
+              loader ? <div className="nodata">
+                <span>Loading...</span>
+              </div>
               :
               <>
               {
-                allRequestsAds.length === 0 ? "No request yet"
+                allRequestsAds.length === 0 ? <div className="nodata nodatanodata">
+                  <span>
+                  No request yet
+                  </span>
+                </div>
                 :
                 <>
                 {
