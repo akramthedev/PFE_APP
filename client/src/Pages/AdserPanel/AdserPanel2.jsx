@@ -93,32 +93,34 @@ const AdserPanel2 = () => {
     const handlCreate = async(e)=>{
       e.preventDefault();
       setloader(true);
-      try {
-        const resp = await axios.post('http://localhost:3001/ads/createSingleAds/', {
-          idUser : idUser, 
-          title : title, 
-          description : description, 
-          image : image,
-        }, {
-          headers : {
-            Authorization : `Bearer ${token}`
+      if(token &&  title.length >= 10 && description.length >= 20 && image.length >= 14){
+        try {
+          const resp = await axios.post('http://localhost:3001/ads/createSingleAds/', {
+            idUser : idUser, 
+            title : title, 
+            description : description, 
+            image : image,
+          }, {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+          if(resp.status === 200){
+            settitle("");
+            setdescription("");
+            setimage("");
+            handlFetchAllAds();
           }
-        });
-        if(resp.status === 200){
-          settitle("");
-          setdescription("");
-          setimage("");
-          handlFetchAllAds();
+          else{
+            setImpossible(true);
+          }
         }
-        else{
-          setImpossible(true);
+        catch(er){
+          alert('Internal Server Error.')
+          console.log(er.message);
+        } finally{
+          setloader(false);
         }
-      }
-      catch(er){
-        alert('Internal Server Error.')
-        console.log(er.message);
-      } finally{
-        setloader(false);
       }
     }
 
@@ -162,7 +164,7 @@ const AdserPanel2 = () => {
     return (
     <div>
       <h1>
-        Create your add (<>Plan : {planOfUser && planOfUser}</>)
+        Create your add (<>Plan : {planOfUser && <>{planOfUser === 1 ? "Basic" : planOfUser === 2 ? "Standard" : planOfUser === 3 && "Premium" }</>}</>)
       </h1>
       <hr />
       <span>
