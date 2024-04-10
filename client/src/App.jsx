@@ -5,6 +5,7 @@ import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import Auth from './Pages/Auth/Auth';
 import OTPverify from './Pages/OTPverify/OTPverify';
+import AdserPanel2 from './Pages/AdserPanel/AdserPanel2'
 import Contact from './Pages/Contact/Contact';
 import Profile from "./Pages/Profile/Profile";
 import  Page from "./Pages/Page/Page";
@@ -13,14 +14,12 @@ import ADS from "./Pages/ADS/ADS";
 import Notifications from "./Pages/Notifications/Notifications";
 import Requests from "./Pages/Requests/Requests";
 import Discussions from "./Pages/Discussions/Discussions";
-import Chat from "./Pages/Chat/Chat";
 import Settings from "./Pages/Settings/Settings";
 import Help from "./Pages/Help/Help";
 import Accessibility from "./Pages/Accessibility/Accessibility";
 import AdminPanel from "./Pages/AdminPanel/AdminPanel";
 import AdserPanel from "./Pages/AdserPanel/AdserPanel";
 import { useSocket } from './Helpers/SocketContext';
-import HttpRequestStatus from './Components/HttpRequestStatus/HttpRequestStatus';
 
 
 
@@ -152,6 +151,7 @@ function App() {
             } 
           />
           
+          
           <Route  
             path='/requests' 
             element={
@@ -198,6 +198,13 @@ function App() {
             path='/adser/panel' 
             element={
               token ? <AdserPanel isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
+            } 
+          />
+
+          <Route  
+            path='/adser/panel/plan/:token'
+            element={
+              token ? <AdserPanel2 isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
             } 
           />
           

@@ -1,8 +1,12 @@
 import React, {useRef, useState} from 'react'
 import './index.css';
-import Camera from '../../Assets/v.png';
-import Picture from '../../Assets/image.png';
-import Feeling from '../../Assets/jack.png';
+
+
+import Camera from './c.png';
+import Picture from './i.png';
+import Feeling from './f.png';
+
+
 import ClickOutsider from '../../Helpers/HidePopUp';
 import axios from 'axios';
 

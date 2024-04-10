@@ -274,3 +274,9 @@
 .emojiShow span:hover{
     background-color: #8b39ff;
 }
+
+.cp2 button img {
+    filter: invert(77%) !important;
+    height: 22px !important;
+    width: 22px !important;
+}

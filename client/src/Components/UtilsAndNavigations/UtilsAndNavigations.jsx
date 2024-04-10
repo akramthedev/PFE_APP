@@ -87,18 +87,18 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageC
      
         {
           (dataUserCurrent && (dataUserCurrent.role=== "adser" || dataUserCurrent.role === "admin")) && 
-          <div className="rowX"
-            onClick={()=>{
-              if(dataUserCurrent && !isFetchingUser){
-                if(dataUserCurrent.role === "admin"){
-                  navigate(`/admin/panel`);
+            <div className="rowX"
+              onClick={()=>{
+                if(dataUserCurrent && !isFetchingUser){
+                  if(dataUserCurrent.role === "admin"){
+                    navigate(`/admin/panel`);
+                  }
+                  else if (dataUserCurrent.role === "adser"){
+                    navigate(`/adser/panel`);
+                  }
                 }
-                else if (dataUserCurrent.role === "adser"){
-                  navigate(`/adser/panel`);
-                }
-              }
-            }}  
-          >
+              }}  
+            >
             <div className="xxx">
               <i className='fa-solid fa-chart-line'></i>
             </div>

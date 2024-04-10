@@ -86,7 +86,9 @@ const SideBar = ({renderX, render,socket,setdataUserEntered,dataUserCurrent,isFe
               allRooms &&
               <>
               {
-                  allRooms.length === 0 ? "No Conversation yet"
+                  allRooms.length === 0 ? <span className="hiezfc">
+                    No Conversation yet, add new contacts so that you can chat with them!
+                  </span>
                   :
                   <>
                   {

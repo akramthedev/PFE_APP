@@ -6,7 +6,8 @@ import axios from 'axios';
 import SkeltonPost from './SkeltonPost';
 import SkeltonPost2 from './SkeltonPost2';
 import SingleComment from '../SingleComment/SingleComment';
-
+import Adser from "../../Assets/AdserSymbol";
+import Admin from '../../Assets/AdminSymbol';
 
 
 const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
@@ -232,7 +233,7 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
                         <img src={dataAuthorPost.profilePic} alt="" />
                     </div>
                     <div className="c12">
-                        <span>{dataAuthorPost.fullName}</span>
+                        <span>{dataAuthorPost.fullName}&nbsp;&nbsp;{dataAuthorPost.role === "admin" ? <Admin /> : dataAuthorPost.role === "adser" ? <Adser /> : null}</span>
                         <span>{dataAuthorPost.email}&nbsp;{dataAuthorPost._id === idUser && <>(you)</>}</span>
                     </div>
                 </div>

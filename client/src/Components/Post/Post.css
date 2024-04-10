@@ -60,6 +60,8 @@
     font-size: 15px;
     font-weight: 600;
     color: #e4e6eb;
+    display: flex;
+    align-items: center;
 }
 .c12 span:last-child{
     color: #b0b3b8;

@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const sendEmail = require('../Helpers/EmailSender');
 const notifs = require('../Models/notifs');
+const ads = require('../Models/ads');
 const nodemailer = require('nodemailer');
 const generateRandomNumber = require("../Helpers/generateOTP");
 const reqAdsers = require('../Models/reqAdsers');
@@ -177,6 +178,151 @@ router.get('/reject-request/:id' ,async(req, res)=>{
         res.status(500).send(e.message);
     }
 });
+
+
+
+
+router.get('/choose-plan/:numPlan', verifyToken, async(req, res)=>{
+    try{
+        
+        const {numPlan} = req.params;
+        const idUser = req.user._id;
+        const isUpdated = await users.findByIdAndUpdate(idUser, {
+            plan : numPlan
+        }, {new : true});
+        if(isUpdated){
+            res.status(200).send(isUpdated);
+        }
+        else{
+            res.status(202).send("N");
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+})
+
+
+router.get('/getPlanOfUserWithToken/:idUser', verifyToken, async (req, res) => {
+    try {
+        const { idUser } = req.params;
+
+        const isFound = await users.findOne({
+            _id: idUser
+        });
+
+        if (isFound) {
+            res.status(200).send(isFound);
+        } else {
+            res.status(202).send("N");
+        }
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+
+
+router.get('/getAllAdsCreatedByUser/:idUser', verifyToken, async (req, res) => {
+    try {
+        const { idUser } = req.params;
+
+        const areFounds = await ads.find({
+            adser: idUser
+        });
+
+        if (areFounds) {
+            res.status(200).send(areFounds);
+        } else {
+            res.status(202).send("N");
+        }
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+
+router.get('/delete/:idAds', verifyToken, async (req, res) => {
+    try {
+        const { idAds } = req.params;
+
+        const isDeleted = await ads.findByIdAndDelete(idAds);
+
+        if (isDeleted) {
+            res.status(200).send("Yes");
+        } else {
+            res.status(202).send("No");
+        }
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+
+
+
+router.post('/createSingleAds', verifyToken, async (req, res) => {
+    try {
+        const {
+            idUser, 
+            title, 
+            description, 
+            image, 
+        } = req.body
+
+        const isFound = await users.findOne({
+            _id: idUser
+        });
+
+        const areFounds = await ads.find({
+            adser : idUser
+        });
+
+        if (isFound && areFounds) {
+            const plan = isFound.plan;
+            let max  = 0;
+            if(plan === 1){
+                max = 3
+            }    
+            else if (plan === 2){
+                max = 5
+            }
+            else if (plan === 3){
+                max = 7
+            }
+            if(max !== 0){
+                if(areFounds.length < max){
+                    const isCreated2 = await ads.create({
+                        adser : idUser, 
+                        title : title, 
+                        description : description, 
+                        image : image
+                    });
+                    if(isCreated2){
+                        res.status(200).send(isCreated2);
+                    }
+                    else{
+                        res.status(202).send("Not Created...");
+                    }
+                }
+                else{
+                    res.status(202).send("Not Created...");
+                }
+            }
+            else{
+                res.status(202).send("Not Created...");
+            }
+        } 
+        else {
+            res.status(202).send("N");
+        }
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+
+
 
 
 

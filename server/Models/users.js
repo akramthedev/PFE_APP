@@ -58,6 +58,11 @@ const schemaUsers = new mongoose.Schema({
         default: 'user',  
         enum: ['user', 'admin', 'adser']  
     },
+    plan: {
+        type: Number,
+        required : false, 
+        enum : [1, 2, 3]
+    },
     isVerified : {
         type : Boolean, 
         default : false
