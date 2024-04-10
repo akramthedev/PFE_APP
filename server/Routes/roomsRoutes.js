@@ -101,7 +101,10 @@ router.get('/getLastMessage/:ChatEntered' ,verifyToken,async(req, res)=>{
         if(isFound){
             if(isFound.length !== 0){
                 LastMessage = isFound[0];
-                res.status(200).send(LastMessage);
+                res.status(200).send({
+                    LastMessage : LastMessage, 
+                    OtherMessages : isFound
+                });
             }
             else{
                 res.status(202).send("None")
@@ -111,6 +114,26 @@ router.get('/getLastMessage/:ChatEntered' ,verifyToken,async(req, res)=>{
             res.status(202).send("Not found");
         }
 
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+
+
+
+
+
+router.post('/markSeenMsg' ,verifyToken,async(req, res)=>{
+    try{
+        
+        const data = req.body;
+
+        console.log(data);
+        
+        res.status(200).send("Goody");
     }
     catch(e){
         res.status(500).send(e.message);
@@ -133,6 +156,102 @@ router.get('/getmessages/:idRoom', verifyToken,async(req, res)=>{
             res.status(200).send(areFound);
         }
         else{
+            res.status(202).send("Not found");
+        }
+
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+
+router.get('/seenAllMessages/:idRoom', verifyToken,async(req, res)=>{
+    try{
+        
+        const {idRoom} = req.params;
+        const idUser = req.user._id;
+
+        const areupdate = await messages.updateMany(
+            {
+                roomId : idRoom, 
+                $nor : [
+                    { senderId : idUser }
+                ]
+            }, 
+            {
+                $set : {
+                    isSeen : true
+                }
+            }
+        );
+
+
+        if(areupdate){
+            res.status(200).send(areupdate);
+        }
+        else{
+            res.status(202).send("Not found");
+        }
+
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+
+
+router.get('/getUnseenMessages/:idRoom', verifyToken, async(req, res)=>{
+    try{
+        
+        const {idRoom} = req.params;
+        const idUser = req.user._id;
+
+        const areFound = await messages.find({
+            isSeen : false, 
+            roomId : idRoom, 
+            sentTo : idUser
+        });
+
+        if(areFound){
+            res.status(200).send(areFound);
+        }
+        else{
+            res.status(202).send("Not found");
+        }
+
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+
+
+
+router.get('/numberMsgUnseen/:idUser',async(req, res)=>{
+    try{
+        
+        const {idUser} = req.params;
+
+        const areFound = await messages.find(
+            {
+                sentTo : idUser, 
+                isSeen : false
+            }
+        );
+
+
+        if(areFound){
+            console.log(areFound)
+            res.status(200).send(areFound);
+        }
+        else{
+            console.log(areFound)
             res.status(202).send("Not found");
         }
 

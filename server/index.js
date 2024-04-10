@@ -83,6 +83,7 @@ io.on('connect', (socket)=>{
         console.log("⚡ "+data.idWhoEnter+" successfully joined a room.");
         io.to(data.idRoom).emit("Entered-Successfully");
     });
+    
 
     socket.on('sendMessage', (data)=>{
         console.log(data);

@@ -11,6 +11,21 @@ const SingleRequest = ({request, index, reRenderParentComponent, renderUserInfos
     const idUser = localStorage.getItem('idUser');
     const navigate = useNavigate();
 
+
+    useEffect(()=>{
+      const x =  async ()=>{
+         
+        try{
+          await axios.get(`http://localhost:3001/request/updateSeen/${request._id}`)
+        }
+        catch(e){
+          console.log(e.message);
+        }
+        
+      }
+      x()
+    }, []);
+
     const handleDeleteRequest = async()=>{
       try{
         await axios.delete(`http://localhost:3001/request/${request._id}`);

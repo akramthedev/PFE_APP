@@ -36,13 +36,24 @@ const Chat = ({render, setrender,socket, ChatEntered}) => {
   const nav = useNavigate();
 
   
-  const EnterConversation = ()=>{
-      if(ChatEntered){
-        let data = {
-          idRoom : ChatEntered, 
-          idWhoEnter : idUser
+  const EnterConversation = async()=>{
+      try{
+        if(ChatEntered){
+          let data = {
+            idRoom : ChatEntered, 
+            idWhoEnter : idUser
+          }
+          socket.emit("EnterConvWithFriend", data);
+          await axios.get(`http://localhost:3001/room/seenAllMessages/${ChatEntered}`,  {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+          setrender(!render);
         }
-        socket.emit("EnterConvWithFriend", data);
+      } 
+      catch(e){
+        console.log(e.message);
       }
   }
 
@@ -129,20 +140,29 @@ const Chat = ({render, setrender,socket, ChatEntered}) => {
   
 
   useEffect(()=>{
-    const x = ()=>{
-      if(receivedMsg){
-        if(receivedMsg.sentTo === idUser && ChatEntered === receivedMsg.roomId){
-          if(allMessages!== null){
-            
-            setrender(!render);
-            setallMessages(prev=>[
-              ...prev, 
-              receivedMsg
-            ]);
-            
+    const x = async ()=>{
+      try{
+        if(receivedMsg){
+          if(receivedMsg.sentTo === idUser && ChatEntered === receivedMsg.roomId){
+            if(allMessages!== null){
+              
+              setallMessages(prev=>[
+                ...prev, 
+                receivedMsg
+              ]);
+              await axios.post(`http://localhost:3001/room/markSeenMsg/`, receivedMsg, {
+                headers : {
+                  Authorization : `Bearer ${token}`
+                }
+              });
+              setrender(!render);
+            }
+            playAudioNotificationDISCORD();
           }
-          playAudioNotificationDISCORD();
         }
+      }
+      catch(e){
+        console.log(e.message);
       }
     }
     x();

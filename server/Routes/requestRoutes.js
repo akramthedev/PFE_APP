@@ -134,6 +134,26 @@ router.post('/accept', async (req, res) => {
 
 
 
+
+router.get('/updateSeen/:idrequest' ,async(req, res)=>{
+    try{
+        const {idrequest} = req.params;
+        const isUpdated = await requests.findByIdAndUpdate(idrequest, {
+            seen : true
+        });
+        if(isUpdated){
+            res.status(200).send(isUpdated);
+        }
+        else{
+            res.status(202).send('Not Founds...');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
 router.post('/reject', async (req, res) => {
     try {
         const { sender, sentTo } = req.body;
@@ -193,8 +213,47 @@ router.get('/user/:idUser' ,async(req, res)=>{
     try{
         const {idUser} = req.params;
         const areFound = await requests.find({
-            sentTo : idUser
+            sentTo : idUser, 
         }).sort({ createdAt: -1 }); 
+        if(areFound){
+            res.status(200).send(areFound);
+        }
+        else{
+            res.status(202).send([]);
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+router.get('/user/:idUser' ,async(req, res)=>{
+    try{
+        const {idUser} = req.params;
+        const areFound = await requests.find({
+            sentTo : idUser, 
+        }).sort({ createdAt: -1 }); 
+        if(areFound){
+            res.status(200).send(areFound);
+        }
+        else{
+            res.status(202).send([]);
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+router.get('/getNumberUnseen/user/:idUser' ,async(req, res)=>{
+    try{
+        const {idUser} = req.params;
+        const areFound = await requests.find({
+            sentTo : idUser, 
+            seen : false
+        }); 
         if(areFound){
             res.status(200).send(areFound);
         }

@@ -12,8 +12,8 @@ const Room = ({allRooms, socket,setdataUserEntered,isFetchingUser,dataUserCurren
 
     const [user, setUser] = useState(null);
     const [loading, setloading] = useState(true);
+    const [unSeenMessages, setunSeenMessages] = useState(null);
     const [lasMessageSentIntoThisRoom, setlasMessageSentIntoThisRoom] = useState({
-                
       _id : "",
       senderId : "",
       roomId : "",
@@ -49,12 +49,26 @@ const Room = ({allRooms, socket,setdataUserEntered,isFetchingUser,dataUserCurren
               headers : {
                 Authorization : `Bearer ${token}`
               }
-            });
-            console.log(resp2.data);
+            });  
+            console.log(resp2.data.LastMessage);
             if(resp2.status ===200){
-              setlasMessageSentIntoThisRoom(resp2.data);
+              setlasMessageSentIntoThisRoom(resp2.data.LastMessage);
+              let c = 0;
+              if(resp2.data.OtherMessages.length >= 1){
+                
+                for(let i = 0;i<resp2.data.OtherMessages.length;i++){
+                  if(!resp2.data.OtherMessages[i].isSeen && resp2.data.OtherMessages[i].sentTo === idUser){
+                    c++;
+                  }
+                }
+                setunSeenMessages(c);
+              }
+              else{
+                setunSeenMessages(null);
+              }
             }
             else{
+              setunSeenMessages(null);
               setlasMessageSentIntoThisRoom({
                 
                   _id : "",
@@ -131,6 +145,19 @@ const Room = ({allRooms, socket,setdataUserEntered,isFetchingUser,dataUserCurren
             lasMessageSentIntoThisRoom.message 
           }
           </span>
+          {unSeenMessages && 
+            <>
+            {
+              unSeenMessages  &&
+              <span className="numberUnseen">
+              {
+                unSeenMessages && unSeenMessages
+              }
+              </span>
+              
+            }
+            </>
+          }
           <span className="timytim">
           {
             lasMessageSentIntoThisRoom.createdAt !== "" &&  GetTimeAndDate(lasMessageSentIntoThisRoom.createdAt) 

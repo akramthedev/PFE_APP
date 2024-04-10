@@ -18,7 +18,7 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
     const [isProfileClicked, setIsProfileClicked] = useState(false);
     const [unSeenNotifs, setunSeenNotifs] = useState(0);
     const [requestNumber, setrequestNumber] = useState(0);
-
+    const [MessagesUnseenNumber, setMessagesUnseenNumber] = useState(0);
 
     useOutsideAlerter(popupRef, setIsProfileClicked);
 
@@ -36,10 +36,28 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
         }
     }
 
+    const fetchUnseenMessages = async()=>{
+        if(idUser){
+            try{
+            
+                const resp = await axios.get(`http://localhost:3001/room/numberMsgUnseen/${idUser}`);
+                if(resp.status === 200){
+                    setMessagesUnseenNumber(resp.data.length);
+                }
+                else{
+                    setMessagesUnseenNumber(0);
+                }            
+        }
+        catch(e){
+            console.log(e.message);
+        }
+        }
+    }
+
     const fetchReqNumber = async()=>{
         try{
             if(idUser){
-                const resp = await axios.get(`http://localhost:3001/request/user/${idUser}`);
+                const resp = await axios.get(`http://localhost:3001/request/getNumberUnseen/user/${idUser}`);
                 if(resp){
                     setrequestNumber(resp.data.length);
                 }
@@ -57,14 +75,19 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
             if(pathname === "/notifications"){
                 setunSeenNotifs(0);
             }
+            else if(pathname === "/requests"){
+                setrequestNumber(0);
+            }
             else{
                 fetchUnseenNotifNumber();
             }
             fetchReqNumber();
-        }, 1000); 
+            fetchUnseenMessages();
+        }, 1400); 
 
         return () => clearInterval(intervalId);
       }, []); 
+ 
       
 
     const handleLogout = ()=>{
@@ -133,9 +156,12 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
                     onClick={()=>{navigate('/discussions');}}
                     className='linkNav'
                 >
-                    <div className="bulle">
-                        6
-                    </div>
+                    {
+                        MessagesUnseenNumber !== 0 && 
+                        <div className="bulle">
+                            {MessagesUnseenNumber}
+                        </div>
+                    }
                     <i className="fa-solid fa-envelope"></i>
                 </button>
                 

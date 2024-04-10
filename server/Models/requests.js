@@ -11,6 +11,10 @@ const RequestsSchema = new mongoose.Schema({
         default : "twoPeople", 
         enum : ['twoPeople', 'groupPeople']
     }, 
+    seen : {
+        type : Boolean, 
+        default : false
+    }
     
 }, {
     timestamps : true
