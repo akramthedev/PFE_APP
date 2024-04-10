@@ -13,6 +13,7 @@
     font-size: 1.1rem;
     font-weight: 600;
     color: #e4e6eb;
+    position: relative;
     margin-bottom: 0.777rem;
 }
 .rowAds{
@@ -52,4 +53,97 @@
 }
 .rowAds:hover{
     background-color: #232527;
+}
+.createYourAds{
+    position: absolute;
+    right: 0;
+    font-size: 13px;
+    text-decoration: underline;
+    color: grey;
+    font-weight: 400;
+    cursor: pointer;
+    transition: .13s all ease-in-out;
+}
+.createYourAds:hover{
+    color: rgb(196, 196, 196);
+}
+.containerEditProfile33{
+    background-color: white !important;
+}
+.containerEditProfile33 .titleXXXX{
+    color: #3c16f8 !important; 
+    font-weight: 700;
+}
+.containerEditProfile33 .rowConYinp input{
+    border: 1px solid #3c16f8;
+}
+.containerEditProfile33 .submitBtnbbb{
+    background-color: #3c16f8;
+    color: rgb(255, 255, 255);
+}
+.containerEditProfile33 .notSubmiutibtn{
+    background-color: #3c16f8;
+    color: white;
+}
+.containerEditProfile33 .suo{
+    background-color: white;
+    color: #3c16f8;
+    border: 1px solid #3c16f8;
+}
+.containerEditProfile33 .yesyes, .containerEditProfile33 .nono{
+    border: 2px solid #3c16f8;
+    background-color: #cec6f9;
+}
+.containerEditProfile33 .jqfd{
+    width: 44%;
+}
+
+.ApplicationAlreadySubmited{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #232527;
+    color: gainsboro;
+    font-weight: 400;
+}
+
+.ApplicationAlreadySubmited h3{
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: .3rem;
+}
+
+.ApplicationAlreadySubmited .jackkk{
+    width: 100%;
+    padding: 0 2rem;
+    align-items: center;
+    justify-content: space-between;
+
+    display: flex;
+}
+.ApplicationAlreadySubmited .zquhdç{
+    font-size: 13px;
+    color: rgb(169, 169, 169);
+    margin-bottom: 1.5rem;
+}
+
+.ApplicationAlreadySubmited .deleteApplication{
+    color: red;
+    width: 230px;
+    margin:  0 auto;
+    height: 29px;
+    border-radius: 0.3rem ;
+    border: 1px solid red;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: .23s all ease-in-out;
+}
+
+.ApplicationAlreadySubmited .deleteApplication:hover{
+    background-color: red;
+    color: white;
 }
