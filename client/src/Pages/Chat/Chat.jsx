@@ -145,7 +145,7 @@ const Chat = ({render, setrender,socket, ChatEntered}) => {
         if(receivedMsg){
           if(receivedMsg.sentTo === idUser && ChatEntered === receivedMsg.roomId){
             if(allMessages!== null){
-              
+              setrender(!render);
               setallMessages(prev=>[
                 ...prev, 
                 receivedMsg
@@ -155,7 +155,6 @@ const Chat = ({render, setrender,socket, ChatEntered}) => {
                   Authorization : `Bearer ${token}`
                 }
               });
-              setrender(!render);
             }
             playAudioNotificationDISCORD();
           }

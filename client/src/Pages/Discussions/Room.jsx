@@ -139,23 +139,54 @@ const Room = ({allRooms, socket,setdataUserEntered,isFetchingUser,dataUserCurren
           </span>
           <span className="jozdqcs">
           {
-            lasMessageSentIntoThisRoom.message.length > 30  ? 
-            lasMessageSentIntoThisRoom.message.slice(0,35)+'...'
-            :
-            lasMessageSentIntoThisRoom.message 
-          }
-          </span>
-          {unSeenMessages && 
+            lasMessageSentIntoThisRoom && 
             <>
             {
-              unSeenMessages  &&
-              <span className="numberUnseen">
-              {
-                unSeenMessages && unSeenMessages
-              }
-              </span>
-              
+                lasMessageSentIntoThisRoom.message.length > 30  ? 
+                
+                <>
+                  {
+                    idUser === lasMessageSentIntoThisRoom.senderId ? <>You : {lasMessageSentIntoThisRoom.message.slice(0,31)+'...'}</>
+                    :
+                    lasMessageSentIntoThisRoom.message.slice(0,31)+'...'
+                  }
+                </>
+                :
+                <>
+                  {
+                    idUser === lasMessageSentIntoThisRoom.senderId ? <>You : {lasMessageSentIntoThisRoom.message}</>
+                    :
+                    lasMessageSentIntoThisRoom.message
+                  }
+                </>
             }
+            </>
+          }
+          
+          </span>
+          {
+            ChatEntered && 
+            <>
+            {
+              ChatEntered !== room._id &&  
+              <>
+              {
+                  unSeenMessages && 
+                  <>
+                  {
+                    unSeenMessages  &&
+                    <span className="numberUnseen">
+                    {
+                      unSeenMessages && unSeenMessages
+                    }
+                    </span>
+                    
+                  }
+                  </>
+              }
+              </>
+            }
+            
             </>
           }
           <span className="timytim">
