@@ -324,6 +324,25 @@ router.post('/createSingleAds', verifyToken, async (req, res) => {
 
 
 
+router.get('/getAllAdsForAdmin', verifyToken, async (req, res) => {
+    try {
+
+        const areFound = await ads.find().sort({
+            createdAt : -1
+        });
+
+        if (areFound) {
+            res.status(200).send(areFound);
+        } else {
+            res.status(202).send("No");
+        }
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+
+
 
 
 

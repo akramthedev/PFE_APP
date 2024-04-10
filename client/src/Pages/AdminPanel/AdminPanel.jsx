@@ -11,37 +11,38 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
 
   const [isReqAdsClick, setisReqAdsClick] = useState(true);
   const [loader, setloader] = useState(true);
-  const [nav1, setnav1] = useState(false);
-  const [nav2, setnav2] = useState(false);
+  const [AllAdsClicked, setAllAdsClicked] = useState(false);
   const [allRequestsAds, setallRequestsAds] = useState([]);
+  const [allAds, setallAds] = useState([]);
   const idUser = localStorage.getItem('idUser');
   const token = localStorage.getItem('token');
 
 
-  const fetchNav1 = async ()=>{
-    try{
-      setloader(true)
+    const fetchAllAds = async ()=>{
+      try{
+        setloader(true);
+        const resp = await axios.get('http://localhost:3001/ads/getAllAdsForAdmin', {
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
+        if(resp.status === 200){
+          setallAds(resp.data);
+        }  
+        else{
+          setallAds([]);
+        }
+      }
+      catch(e){
+        console.log(e.message);
+      } finally{
+        setloader(false);
+      }
     }
-    catch(e){
-      console.log(e.message);
-    } finally{
-      setloader(false);
-    }
-  }
 
-  
-  const fetchNav2 = async ()=>{
-    try{
-      setloader(true)
-    }
-    catch(e){
-      console.log(e.message);
-    } finally{
-      setloader(false);
-    }
-  }
+   
 
-  
+
   const fetchAllRequestsAds = async ()=>{
     try{
       setloader(true);
@@ -64,24 +65,25 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
     }
   }
 
+  
 
-  /*
-  useEffect(()=>{
-    const x = ()=>{
-      setloader(true);
-      if(isReqAdsClick){
-        fetchAllRequestsAds();
-      }
-      else if(nav1){
-        fetchNav1();
-      }
-      else if(nav2){
-        fetchNav2();
-      }
 
+  const x = ()=>{
+    if(isReqAdsClick){
+      fetchAllRequestsAds();
     }
-  }, [nav1, nav2, isReqAdsClick]);
-  */
+    else if(AllAdsClicked){
+      fetchAllAds();
+    }
+  }
+
+  useEffect(()=>{
+    x();
+  }, [ isReqAdsClick, AllAdsClicked]);
+
+
+
+
 
   useEffect(()=>{
     fetchAllRequestsAds();
@@ -106,6 +108,38 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
   }
 
 
+  const [loaderOfDelete,setloaderOfDelete] = useState(false);
+
+  const deleteAds = async (id)=>{
+    setloaderOfDelete(true);
+    if(token){
+        
+      try{
+        const resp = await axios.get(`http://localhost:3001/ads/delete/${id}`, {
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
+        if(resp.status === 200){
+          setloaderOfDelete(false);
+          fetchAllAds();
+          console.log(resp);
+        } 
+        else{
+          setloaderOfDelete(false);
+          console.log(resp);
+          fetchAllAds();
+        }
+      }
+      catch(e){
+        setloaderOfDelete(false);
+        console.log(e.message);
+      } 
+    
+    }
+
+  }
+ 
 
   const RejectDemand = async(id)=>{
     try{
@@ -133,29 +167,32 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
             <div className="rowJJJ">
               Dashboard
             </div>
-            <div className="rowJJJ">
-              Ads Requests
+            <div 
+              onClick={()=>{
+                setAllAdsClicked(false);
+                setisReqAdsClick(true);
+              }}
+              className="rowJJJ">
+              New Ads Application 
             </div>
-            <div className="rowJJJ">
-              Other Nav bar
+
+            <div 
+              onClick={()=>{
+                setisReqAdsClick(false);
+                setAllAdsClicked(true);
+              }}
+              className="rowJJJ">
+              All Ads List
             </div>
-            <div className="rowJJJ">
-              Other Nav bar
-            </div>
-            <div className="rowJJJ">
-              Other Nav bar
-            </div>
-            <div className="rowJJJ">
-              Other Nav bar
-            </div>
+            
           </div>    
           <div className="otherBarAp">
           {
-            isReqAdsClick &&
+            isReqAdsClick ?
             <>
             {
               loader ? <div className="nodata">
-                <span>Loading...</span>
+                <span>Loading Ads Applications...</span>
               </div>
               :
               <>
@@ -247,6 +284,103 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                 </>
               }
               </>
+             
+            }
+            </>
+            :
+            AllAdsClicked && 
+            <>
+            {
+              loader ? <div className="nodata">
+                <span>Loading Ads...</span>
+              </div>
+              :
+              <>
+              {
+                allAds.length === 0 ? <div className="nodata nodatanodata">
+                  <span>
+                  No Ads yet
+                  </span>
+                </div>
+                :
+                <>
+                {
+                  allAds.map((ad, index)=>{
+                    return(
+                      <div className="RowApplicatn RowApplicatn2">
+                         <div className="rowjijiji rowjijiji2">
+                          <span>
+                          Ads Title 
+                          </span>
+                          <span>
+                          :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+                          ad.title
+                        } 
+                          </span>
+                        </div>
+                       
+                         <div className="rowjijiji rowjijiji2">
+                          <span>
+                          Ads Descripton
+                          </span> 
+                          <span>
+                          :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+                            ad.description
+                          }
+                          </span>
+                        </div> 
+
+                        <div className="rowjijiji rowjijiji2">
+                          <span>
+                          Total Clicks
+                          </span> 
+                          <span>
+                          :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+                            ad.click
+                          }
+                          </span>
+                        </div> 
+                        
+                         <div className="rowjijiji rowjijiji2">
+                          <img 
+                            className='imageAds'
+                            src={ad.image}
+                          />
+                        </div>
+                        
+                        <div className="rowjijiji">
+                          <button
+                          className='qodc'
+                            onClick={()=>{
+                              nav(`/profile/${ad.adser}`)
+                            }}
+                          >
+                            Visit User Profile
+                          </button>
+                        </div>
+                        <div className="rowjijiji">
+                          <button
+                          className='qodc'
+                            onClick={()=>{
+                              deleteAds(ad._id);
+                            }}
+                          >
+                          {
+                            loaderOfDelete ? "Processing deleting ads..."
+                            :
+                            "Delete Ads"
+                          }
+                          </button>
+                        </div>
+                        
+                      </div>
+                    )
+                  })
+                }
+                </>
+              }
+              </>
+             
             }
             </>
           }
