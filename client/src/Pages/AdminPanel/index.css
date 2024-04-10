@@ -4,3 +4,127 @@
     width: 100%;
     padding: 0 2rem;
 }
+
+.sideBarAP{
+    height: 100%;
+    width: 20%;
+}
+.otherBarAp{
+    width: 80%;
+    height: 100%;
+    background-color: #292b2d;
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap : 1rem ;
+    padding: 1rem;
+    justify-content: center;
+    align-items: baseline;
+}
+    .kakakkak{
+    display: flex;
+    height: calc(100vh - 80px);
+    width: 100%;
+    align-items: center;
+}
+.rowJJJ{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding-left: 1.3rem;
+    cursor: pointer;
+    color: gainsboro;
+    border-bottom: 1px solid gainsboro;
+}
+.rowJJJ:hover{
+    background-color: #2a2c2d;
+}
+
+.RowApplicatn{
+    width: 100%;
+    height: 215px;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    background-color: #303034;
+    border: 1px solid rgb(72, 67, 67);
+}
+
+.rowjijiji{
+    color: gainsboro;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.rowjijiji2{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.rowjijiji button, .rowjijiji .qodc{
+    background-color: #404346;
+    color: gainsboro;
+    border-radius: .24rem;
+    border: none;
+    outline: none;
+    width: 49%;
+
+    margin-top: .4rem;
+    height: 33px;
+    cursor: pointer;
+    transition: .14s all ease-in-out;
+}
+.rowjijiji button:hover{
+    background-color: #515559;
+}
+.rowjijiji .qodc{
+    width: 100%;
+}
+.rowjijiji2 span:first-child{
+    width: 135px;
+    margin-right: 0em;
+    font-size: 14px;
+}
+.rowjijiji2 span:last-child{
+    font-size: 14px;
+    color: rgb(194, 194, 194);
+}
+
+
+.rowjijiji .rejectRAds{
+    background-color: transparent;
+    color: red;
+    border: 1px solid red;
+    font-weight: 500;
+}
+
+
+.rowjijiji .rejectRAds:hover{
+    background-color: red;
+    color: white;
+    border: 1px solid red;
+    font-weight: 500;
+}
+
+
+.rowjijiji .acceptRAds{
+    background-color: transparent;
+    color: #7700ff;
+    border: 1px solid #7700ff;
+    font-weight: 500;
+}
+
+
+.rowjijiji .acceptRAds:hover{
+    background-color: #7700ff;
+    color: white;
+    border: 1px solid #7700ff;
+    font-weight: 500;
+}
+
+.rowjijiji3{
+    margin-top: 0.6rem;
+}

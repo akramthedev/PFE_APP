@@ -18,7 +18,7 @@ const Schemax = new mongoose.Schema({
     },
     companySite : {
         type : String, 
-        required : true
+        required : false
     },
     isForAdults : {
         type : Boolean, 

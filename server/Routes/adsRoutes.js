@@ -3,6 +3,7 @@ const users = require('../Models/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const sendEmail = require('../Helpers/EmailSender');
+const notifs = require('../Models/notifs');
 const nodemailer = require('nodemailer');
 const generateRandomNumber = require("../Helpers/generateOTP");
 const reqAdsers = require('../Models/reqAdsers');
@@ -71,6 +72,103 @@ router.delete('/:idrequest',verifyToken,async (req, res)=>{
     } 
     catch (error) {
         res.status(500).send(error.message);    
+    }
+});
+
+router.get('/getAll',verifyToken,async (req, res)=>{
+    try {
+       const areFound = await reqAdsers.find();
+       if(areFound){
+         res.status(200).send(areFound);
+       }
+       else{
+        res.status(202).send("sdc");
+       }
+    } 
+    catch (error) {
+        res.status(500).send(error.message);    
+    }
+});
+
+
+
+
+
+router.get('/accept-request/:id' ,async(req, res)=>{
+    try{
+        const {id} = req.params;
+        const isFound = await reqAdsers.findOne({
+            _id : id
+        });
+        if(isFound){
+            await reqAdsers.deleteOne({
+                _id : id
+            });
+            let dataNotification = {
+                title: `🔥 Your application for adsers has been accepeted by Admins!`,
+                description1: "We're happy to inform you this. Enjoy your new role SIR!",
+                idNotifSentTo: isFound.applicant,
+                type: "Post Created", 
+                idPost : isFound.applicant, 
+                isPostClicked : true
+            }
+            await notifs.create(dataNotification); 
+            const isUpdated = await users.findByIdAndUpdate(isFound.applicant, {
+                role : "adser"
+            });
+            if(isUpdated){
+                res.status(200).send('Is updated')
+            }
+            else{
+                res.status(202).send("Not updated");
+            }
+        }
+        else{
+            res.status(202).send('qs<')
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+
+router.get('/reject-request/:id' ,async(req, res)=>{
+    try{
+        const {id} = req.params;
+        
+
+        const isFound = await reqAdsers.findOne({
+            _id : id
+        });
+        if(isFound){
+            const isDeleted = await reqAdsers.deleteOne({
+                _id : id
+            });
+            //send notification...
+            let dataNotification = {
+                title: `❌ Your application for adser role was rejected.`,
+                description1: "We are sorry to inform you this. Have a great day!",
+                idNotifSentTo: isFound.applicant,
+                type: "Post Created", 
+                idPost : isFound.applicant, 
+                isPostClicked : true
+            }
+            await notifs.create(dataNotification);            
+            if(isDeleted){
+                res.status(200).send(isDeleted);
+            }
+            else{
+                res.status(202).send("Not Deleted...");
+            }
+        }
+        else{
+            res.status(202).send('Not Founds...');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
     }
 });
 
