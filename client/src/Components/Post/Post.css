@@ -361,3 +361,58 @@
     object-fit: cover;
     border-radius: 0.25rem;
 }
+
+.PostSuggUsers{
+    display: flex;
+    overflow-x: scroll;
+    flex-direction: row;
+    padding: 1rem 2rem;
+    overflow-y: hidden
+}
+
+.suggestedUserCompoent{
+    height: 100px;
+    width: 300px;
+    background-color: red;
+    margin: 1rem;
+}
+.Postjjj{
+    height: 150px;
+    width: 500px;
+    display: flex;
+    overflow-x: scroll;
+}
+.carousel .carousel__img{
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+}
+
+.carousel {
+    position: relative;
+     overflow: hidden;
+  }
+
+  .carousel__btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 1.5rem;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    z-index: 1;
+    transition: background-color 0.3s;
+  }
+  .carousel__btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  .carousel__btn--prev {
+    left: 0;
+  }
+  .carousel__btn--next {
+    right: 0;
+  }
+   

@@ -172,11 +172,8 @@ router.get('/suggested-contacts/:userId', async (req, res) => {
             _id: { $nin: user.contacts.concat(userId) } // Exclude the user's own ID
         });
 
-        let sugg = [];
-        recommendations.forEach(recommendation=>{
-            sugg.push(recommendation.fullName);
-        });
-        res.status(200).send(sugg);
+       
+        res.status(200).send(recommendations);
     } catch (e) {
         res.status(500).send(e.message);
     }

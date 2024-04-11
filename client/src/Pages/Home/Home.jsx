@@ -46,15 +46,18 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
     
     const [isBClicked,setisBClicked] = useState(false);
     const [TheOnesWhoHaveBirthday,setTheOnesWhoHaveBirthday] = useState(null);
-
+    const [suggestedUsers, setsuggestedUsers] = useState(null);
+    const [loaderSuggested, setloaderSuggested] = useState(true);
+    const [counter, setCounter] = useState(0);
 
     HidePopUp(popUpRef2,setisCreatedPageCLicked );
 
     const refref = useRef(null); 
-  useOutsideAlerter(refref, setisBClicked);
+    useOutsideAlerter(refref, setisBClicked);
 
     const fetchAllPosts = async ()=>{
       try{
+        setCounter(0);
         setpostLoading(true);
         const resp = await axios.get('http://localhost:3001/post/', {
           headers : {
@@ -69,6 +72,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
         }
       }
       catch(e){
+        setAllPosts([]);
         console.log(e.message);
       } finally{
         setpostLoading(false);
@@ -76,8 +80,35 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
     }
 
 
+    const fetchAllSuggestedUsers = async ()=>{
+      try{
+        setloaderSuggested(true);
+        if(idUser){
+          const resp = await axios.get(`http://localhost:3001/graph/suggested-contacts/${idUser}`, {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+          if(resp.status === 200){
+            setsuggestedUsers(resp.data);
+          }
+          else{
+            setsuggestedUsers([]);
+          }
+        }
+      }
+      catch(e){
+        console.log(e.message);
+        setsuggestedUsers([]);
+      } finally{
+        setloaderSuggested(false);
+      }
+    }
+
+
     useEffect(()=>{
       fetchAllPosts();
+      fetchAllSuggestedUsers();
     }, []);
 
     
@@ -344,7 +375,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
             <div className="h2">
               <CreatePost reRenderParentCompo={fetchAllPosts}  ajusting="home" isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
               {
-                postLoading ? 
+                (postLoading && loaderSuggested) ? 
                 <>
                   <SkeltonPost />
                   <SkeltonPost /><SkeltonPost />
@@ -353,8 +384,9 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                 :
                 <>
                 {
-                  allPosts && <>
+                  (allPosts && suggestedUsers) && <>
                     {
+
                       allPosts.length === 0 ? 
                       <span className='zsjdqoczsjdqoc'>
                         Be the pioneer and make the first post on the platform!
@@ -363,26 +395,54 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                       <>
                         {
                           allPosts.map((post, index)=>{
-                           if(post.isPagePost){
-                            return(
-                              <PagePost reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
-                            )
-                           }
-                           else{
-                            return(
-                              <Post reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
-                            )
-                           }
+                            
+
+                            if(index === 2 && allPosts.length > 3){
+
+                                if(post.isPagePost){
+                                  return(
+                                    <>
+                                      <PostSuggestedUsers suggestedUsers={suggestedUsers}  />
+                                      <PagePost reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                                    </>
+                                  )
+                                 }
+                                 else{
+                                  return(
+                                    <>
+                                      <PostSuggestedUsers suggestedUsers={suggestedUsers}  />
+                                      <Post reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                                    </>
+                                  )
+                                 }
+                            }
+                            else{
+                              if(post.isPagePost){
+                                return(
+                                  <PagePost reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                                )
+                               }
+                               else{
+                                return(
+                                  <Post reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                                )
+                               }
+                            }
                           })
                         }
-                        <PostAds />
-                        <PostSuggestedUsers  />
                       </>
                     }
                   </>
                 }
                 </>
               } 
+              {
+                (allPosts && allPosts.length <= 3) &&    
+                <>
+                  <PostSuggestedUsers suggestedUsers={suggestedUsers}  />
+                  <PostAds />
+                </>
+              }
             </div>
             <div className="h3">
             {
