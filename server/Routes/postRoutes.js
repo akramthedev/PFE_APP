@@ -37,7 +37,7 @@ router.post('/create', verifyToken ,async(req, res)=>{
             }
             
             await notifs.create(dataNotification);
-            res.status(200).send("Post Created...");
+            res.status(200).send(isCreated);
         }
         else{
             res.status(201).send('Post Not Created ... ');

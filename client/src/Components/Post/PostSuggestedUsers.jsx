@@ -10,7 +10,7 @@ const PostSuggestedUsers = ({suggestedUsers}) => {
 
     const settings = {
         dots: false,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: 3,
         slidesToScroll: 1
@@ -33,21 +33,20 @@ const PostSuggestedUsers = ({suggestedUsers}) => {
     
 
     return (
-    <div className='Post'>
+    <div className='Post adjust'>
     {
         suggestedUsers && 
         <>
         {
             suggestedUsers.length !== 0 && 
-            <Slider {...settings}>
+            <Slider   
+                className='sliderX'
+                {...settings}
+            >
             {
                 suggestedUsers.map((user, index)=>{
                     return(
-                        <div className='singleOneX' key={index} >
-                        {
-                            user.fullName
-                        }
-                        </div>
+                        <SuggestedUserSingleCompoent user={user} index={index} />
                     )
                 })
             }

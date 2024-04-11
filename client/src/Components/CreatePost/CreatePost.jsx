@@ -12,7 +12,7 @@ import axios from 'axios';
 
 
 
-const CreatePost = ({ajusting, isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
+const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
   
 
     const idUser = localStorage.getItem('idUser');
@@ -63,7 +63,9 @@ const CreatePost = ({ajusting, isFetchingUser, dataUserCurrent, reRenderParentCo
               }
             }); 
             if(resp.status=== 200){
-              reRenderParentCompo();
+              //reRenderParentCompo();
+              setThePostCreated(resp.data);
+              setPostCreated(!PostCreated);
               setisCreateClicked(false);
               setimages("");
               settextArea("");

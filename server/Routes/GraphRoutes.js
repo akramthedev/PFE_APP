@@ -1,6 +1,6 @@
 const express = require('express');
 const users = require('../Models/users');
-
+const requests = require('../Models/requests');
 
 const router = express.Router();
 
@@ -157,6 +157,9 @@ async function generateFriendRecommendations(userId) {
 
 
 
+
+
+
 router.get('/suggested-contacts/:userId', async (req, res) => {
     try {
         const { userId } = req.params;
@@ -172,12 +175,38 @@ router.get('/suggested-contacts/:userId', async (req, res) => {
             _id: { $nin: user.contacts.concat(userId) } // Exclude the user's own ID
         });
 
-       
-        res.status(200).send(recommendations);
+        let recommendationsAfterCheckRequests = [];
+
+        // Function to check request for each recommendation
+        const checkRequests = async (recommendation) => {
+            const request = await requests.findOne({
+                $or: [
+                    { sender: userId, sentTo: recommendation._id },
+                    { sender: recommendation._id, sentTo: userId }
+                ]
+            });
+            return !request; // Return true if no request exists
+        };
+
+        // Map over recommendations and make multiple requests concurrently
+        const requestsPromises = recommendations.map(checkRequests);
+        const results = await Promise.all(requestsPromises);
+
+        // Add recommendations for which no request exists to recommendationsAfterCheckRequests
+        recommendations.forEach((recommendation, index) => {
+            if (results[index]) {
+                recommendationsAfterCheckRequests.push(recommendation);
+            }
+        });
+
+        res.status(200).json(recommendationsAfterCheckRequests);
+
     } catch (e) {
         res.status(500).send(e.message);
     }
 });
+
+
 
  
 module.exports = router
