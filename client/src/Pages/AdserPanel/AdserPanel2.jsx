@@ -244,6 +244,10 @@ const AdserPanel2 = () => {
                   <br />
                   <span>Image Url : {ad.image}</span>
                   <br />
+                  <span>Total Clicks : {ad.click}</span>
+                  <br />
+                  <span>Total Views : {ad.views && ad.views.length}</span>
+                  <br />
                   <button
                     type='button'
                     disabled={loaderOfDelete}

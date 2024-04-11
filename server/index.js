@@ -73,6 +73,7 @@ io.on('connect', (socket)=>{
             usersOnline[existingUserIndex].idSocket = socket.id;
         }
     });
+    
 
     socket.on('logoutAndQuitGR', ()=>{
         const idUser = getUserBySocketID(socket.id);

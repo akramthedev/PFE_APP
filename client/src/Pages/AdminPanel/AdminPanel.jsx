@@ -157,6 +157,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
     }
   }
 
+ 
 
   return (
     <>
@@ -307,7 +308,9 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                 {
                   allAds.map((ad, index)=>{
                     return(
-                      <div className="RowApplicatn RowApplicatn2">
+                      <div 
+                        
+                      className="RowApplicatn RowApplicatn2">
                          <div className="rowjijiji rowjijiji2">
                           <span>
                           Ads Title 

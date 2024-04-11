@@ -342,6 +342,27 @@ router.get('/getAllAdsForAdmin', verifyToken, async (req, res) => {
 });
 
 
+router.get('/addClick/:id', verifyToken, async (req, res) => {
+    try {
+
+        const {id } = req.params;
+        const isFAU = await ads.findByIdAndUpdate(id, {
+            $inc : {
+                click : 1
+            }
+        });
+        
+        if (isFAU) {
+            res.status(200).send(isFAU);
+        } else {
+            res.status(202).send("No");
+        }
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+
 
 
 
