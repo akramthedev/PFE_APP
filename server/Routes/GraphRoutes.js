@@ -61,6 +61,12 @@ function SPBU(graph, startUserId, targetUserId){
 
 
 
+
+
+
+
+
+
 router.get('/ShortestPathBetweenUsers/:startUserId/:targetUserId', async(req, res)=>{
     try{
         const allUsers = await users.find();
@@ -105,7 +111,76 @@ router.get('/ShortestPathBetweenUsers/:startUserId/:targetUserId', async(req, re
         res.status(500).send(e.message)
     }
 });
+ 
+
+// Function to generate friend recommendations using BFS algorithm
+async function generateFriendRecommendations(userId) {
+    try {
+        
+        const visited = new Set();
+        const queue = [userId];
+        const recommendations = [];
+
+        while (queue.length > 0) {
+            const currentUserId = queue.shift();
+            visited.add(currentUserId);
+
+            // Find friends of the current user
+            const currentUser = await users.findById(currentUserId);
+            const friends = currentUser.contacts;
+
+            if (friends && friends.length > 0) {
+                friends.forEach(async (friendId) => {
+                    if (!visited.has(friendId)) {
+                        const friend = await users.findById(friendId);
+                        recommendations.push({
+                            userId: friend._id,
+                            fullName: friend.fullName,
+                            // Add other user details as needed
+                        });
+                        visited.add(friendId);
+                        queue.push(friendId);
+                    }
+                });
+            }
+        }
+
+        // Remove the user itself from recommendations
+        const index = recommendations.findIndex((user) => user.userId === userId);
+        recommendations.splice(index, 1);
+
+        return recommendations;
+    } catch (error) {
+        throw error;
+    }
+}
 
 
 
+router.get('/suggested-contacts/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        // Find the specified user
+        const user = await users.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Find users who are not already in the contacts list of the specified user
+        const recommendations = await users.find({
+            _id: { $nin: user.contacts.concat(userId) } // Exclude the user's own ID
+        });
+
+        let sugg = [];
+        recommendations.forEach(recommendation=>{
+            sugg.push(recommendation.fullName);
+        });
+        res.status(200).send(sugg);
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+ 
 module.exports = router
