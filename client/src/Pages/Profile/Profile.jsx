@@ -66,13 +66,22 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   const [moddateOfBirth, setmoddateOfBirth] = useState("");
   const [modphoneNumber, setmodphoneNumber] = useState("");
   const [modWebsite, setmodWebsite] = useState("");
-
+  const [ThePostCreated, setThePostCreated] = useState(null);
+  const [PostCreated, setPostCreated] = useState(null);
    
 
   useOutsideAlerter(popUpRef, setpopUp);
   useOutsideAlerter(popUpRef2, setIsModifyProfileClicked);
   useOutsideAlerter(popUpRef3, setIsModifyAboutClicked);
 
+
+
+  useEffect(()=>{
+    if(PostCreated !== null && ThePostCreated !== null){
+      allPosts.unshift(ThePostCreated);
+      console.log(ThePostCreated);
+    }
+  }, [PostCreated]);
 
 
   
@@ -94,7 +103,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                 ])
               }
             })
-          }, 700 );
+          },100 );
         }
       }
       else{
@@ -961,7 +970,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                           {
                             (dataUserCurrent && (dataUserCurrent._id === id))
                             &&
-                            <CreatePost reRenderParentCompo={fetchAllPosts}  ajusting="profile" dataUserCurrent={dataUserCurrent} isFetchingUser={isFetchingUser} />
+                            <CreatePost setThePostCreated={setThePostCreated}  PostCreated={PostCreated} setPostCreated={setPostCreated}  reRenderParentCompo={fetchAllPosts}  ajusting="profile" dataUserCurrent={dataUserCurrent} isFetchingUser={isFetchingUser} />
                           }
 
                           {

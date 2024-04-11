@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react'
 import "./Post.css";
 import {useNavigate} from 'react-router-dom'
+import Loader from '../../Assets/spin1.svg';
 import formatCreatedAt from '../../Helpers/GetTimeAndDate';
 import axios from 'axios';
 import SkeltonPost from './SkeltonPost';
@@ -10,7 +11,7 @@ import Adser from "../../Assets/AdserSymbol";
 import Admin from '../../Assets/AdminSymbol';
 
 
-const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
+const Post = ({reRenderParentCompo2, state, state2,state3, ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
 
 
     const navigate = useNavigate();
@@ -70,8 +71,14 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
 
     
     useEffect(()=>{
+        if(idUser === post.creator){
+            setAllComments([]);
+            setnumberComment(0);
+            setnumberLikes(0);
+            setnumberViews(0);
+        }
         fetchUser();
-    }, []);
+    }, [state, state2, state3]);
 
 
 
@@ -149,18 +156,23 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
         
     }
 
+    const [deleteLoader, setDeleteLoader] = useState(false);
 
     const handleDeletePost = async()=>{
         try{
+            setDeleteLoader(true);
             const resp = await axios.delete(`http://localhost:3001/post/${post._id}`);
             if(resp.status === 200){
-                reRenderParentCompo();
+                reRenderParentCompo2();
+                setDeleteLoader(false);
             }
             else{
                 setIsDeleted(false);
+                setDeleteLoader(false);
             }
         }
         catch(e){
+            setDeleteLoader(false);
             setIsDeleted(false);
         }
     }
@@ -247,7 +259,16 @@ const Post = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderP
                     >
                     {
                         !isDeleted &&
-                        <i class="fa-solid fa-trash"></i>
+                        <>
+                        {
+                            deleteLoader ? 
+                            <img 
+                                src={Loader}
+                            />
+                            :
+                            <i class="fa-solid fa-trash"></i>
+                        }
+                        </>
                     }
                     </div>
                     :

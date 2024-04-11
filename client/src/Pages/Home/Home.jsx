@@ -52,12 +52,17 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
     HidePopUp(popUpRef2,setisCreatedPageCLicked );
     HidePopUp(refref, setisBClicked);
 
-    useEffect(()=>{
-      if(PostCreated !== null && ThePostCreated !== null){
-        allPosts.unshift(ThePostCreated);
+    useEffect(() => {
+      if (PostCreated !== null && ThePostCreated !== null) {
+        // Create a new array with the newly created post at the beginning
+        const updatedPosts = [ThePostCreated, ...allPosts];
+        // Update the state with the new array
+        setAllPosts(updatedPosts);
         console.log(ThePostCreated);
       }
-    }, [PostCreated]);
+    }, [PostCreated, ThePostCreated]);
+    
+
 
     useEffect(()=>{
       console.log("Post Added successfully!")
@@ -67,6 +72,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
       try{
         if(allPosts.length === 0){
           setpostLoading(true);
+          setloaderSuggested(true);
         }
         const resp = await axios.get('http://localhost:3001/post/', {
           headers : {
@@ -87,7 +93,6 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
             setsuggestedUsers([]);
           }
           setAllPosts(resp.data);
-
         }
         else{
           setAllPosts([]);
@@ -104,11 +109,48 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
     }
 
 
+    const fetchAllPostWithLoading = async()=>{
+      try{
+        setpostLoading(true);
+        setloaderSuggested(true);
+        const resp = await axios.get('http://localhost:3001/post/', {
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
+        if(resp.status === 200){
+          
+          const resp2 = await axios.get(`http://localhost:3001/graph/suggested-contacts/${idUser}`, {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+          if(resp2.status === 200){
+            setsuggestedUsers(resp2.data);
+          }
+          else{
+            setsuggestedUsers([]);
+          }
+          setAllPosts(resp.data);
+        }
+        else{
+          setAllPosts([]);
+          setsuggestedUsers([]);
+        }
+      }
+      catch(e){
+        setAllPosts([]);
+        setsuggestedUsers([]);
+        console.log(e.message);
+      } finally{
+        setpostLoading(false);
+      }
+    }
     
 
     useEffect(()=>{
       fetchAllPosts();
-     }, [allPosts, PostCreated]);
+     }, [PostCreated]);
 
     
   
@@ -405,7 +447,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                                         suggestedUsers.length !== 0 && 
                                         <PostSuggestedUsers suggestedUsers={suggestedUsers}  />
                                       }
-                                      <PagePost reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                                      <PagePost   reRenderParentCompo={fetchAllPostWithLoading} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
                                     </>
                                   )
                                  }
@@ -416,7 +458,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                                          suggestedUsers.length !== 0 && 
                                         <PostSuggestedUsers suggestedUsers={suggestedUsers}  />
                                       }
-                                      <Post reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                                      <Post reRenderParentCompo2={fetchAllPostWithLoading} state={ThePostCreated} state2={PostCreated} reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
                                     </>
                                   )
                                  }
@@ -424,12 +466,12 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                             else{
                               if(post.isPagePost){
                                 return(
-                                  <PagePost reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                                  <PagePost state3={allPosts} reRenderParentCompo={fetchAllPostWithLoading} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
                                 )
                                }
                                else{
                                 return(
-                                  <Post reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                                  <Post reRenderParentCompo2={fetchAllPostWithLoading}  state3={allPosts} state={ThePostCreated} state2={PostCreated} reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
                                 )
                                }
                             }
