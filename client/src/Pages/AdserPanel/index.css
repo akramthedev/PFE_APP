@@ -154,3 +154,42 @@
 .backHome:hover{
     text-decoration: underline;
 }
+
+
+.pageUnsuccess{
+    background-color: #18191a;
+    color: gainsboro;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+
+.pageUnsuccess span{
+    color: red;
+    margin-bottom: 1rem;
+}
+.pageUnsuccess button{
+    
+    width: 140px;
+    height: 34px;
+    background-color: transparent;
+    color: gainsboro;
+    font-size: 14px;
+    font-weight: 400;
+    outline: none;
+    border : none;
+    cursor: pointer;
+    border-radius: 0.3rem;
+    text-decoration: none;
+    transition: .2s all ease-in-out;
+    background-color: #242526;
+    }
+
+    .pageUnsuccess button:hover{
+        background-color: #353639;
+    }

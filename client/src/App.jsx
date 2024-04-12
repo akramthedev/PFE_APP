@@ -203,14 +203,14 @@ function App() {
           />
           
           <Route  
-            path='adser/panel/payment/unsuccessfull' 
+            path='/adser/panel/payment/unsuccessfull' 
             element={
               token ? <UnsuccessfullPanel isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
             } 
           />
 
 
-
+ 
           <Route  
             path='/adser/panel/plan/:token'
             element={
