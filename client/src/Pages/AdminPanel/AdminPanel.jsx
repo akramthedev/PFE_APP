@@ -1,14 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import "./index.css";
 import Navbar from '../../Components/Navbar/Navbar';
-
+import {PieChart, Pie, Tooltip, Cell, Label} from 'recharts';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import Loader from '../../Assets/spinwhite.svg';
 import getTime from '../../Helpers/GetTime';
-
 import getDate from '../../Helpers/getDate';
-import ChartX from './ChartX';
 
 
  
@@ -23,15 +21,8 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
   const [allAds, setallAds] = useState([]);
   const idUser = localStorage.getItem('idUser');
   const token = localStorage.getItem('token');
+  const COLORS = ["#ffbb00", '#20a71b', '#1867c7']; // Colors for each segment
   
-  
-
-
-
-  
-
-
-
 
     const fetchAllAds = async ()=>{
       try{
@@ -165,21 +156,54 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
 
     const [allUsers, setAllUsers] = useState(null);
     const [allAdsers, setallAdsers] = useState(null);
+    const [dataChart, setdataChart] = useState(null);
 
 
     const fetchAllUsers = async()=>{
         try{
+              let admins = 0;
+              let adser = 0;
+              let users = 0;
+
                 const resp = await axios.get(`http://localhost:3001/user/`, {
                     headers : {
                         Authorization : `Bearer ${token}`
                     }
                 });
                 if(resp.status === 200){
+                    let data = []
                     let adsersX = resp.data.filter(user => user.role === "adser");
                     setallAdsers(adsersX);
-                    setAllUsers(resp.data);
-                     
-                  }
+                    for(let i=0 ; i<resp.data.length ; i++){
+                        if(resp.data[i].role === "admin"){
+                            admins++;
+                        }
+                        else if(resp.data[i].role === "adser"){
+                            adser++;
+                        }
+                        else{
+                            users++;
+                        }
+                    }
+                    data = [
+                      {
+                          name : "Moderators", 
+                          value : admins, 
+                      },
+                      {
+                          name : "Advertisers", 
+                          value : adser, 
+                      },
+                      {
+                          name : "Users", 
+                          value : users, 
+                      },
+                    ]
+                    setdataChart(data);
+                    setTimeout(()=>{
+                      setAllUsers(resp.data);
+                    }, 300 );
+                }
                 else{
                     setAllUsers([]);
                     setallAdsers([]);
@@ -216,18 +240,63 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
             :
             <>
                 <Navbar isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
-                <div className="ChartJs">
-               
-                {allUsers  ? (
+                <div className="ChartJs ChartJsuoaeqfs">
+                
+                  <div className="PieChart">
+                    {allUsers && dataChart  ? (
+                      <>
+                        <PieChart
+                            width={200}
+                            height={200}
+                            className='qoejdfs'    
+                        >
+                            <Pie
+                                dataKey="value"
+                                isAnimationActive={true}
+                                data={dataChart}
+                                cx="50%" 
+                                cy="50%"
+                                outerRadius={80}
+                                fill="red"
+                                label
+                            >
+                                {
+                                  dataChart.map((entry, index) => (
+                                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
+                                  ))
+                                }
+                            </Pie>
+                        </PieChart>
 
-                    <ChartX chartData={allUsers} />
+                        <div className="hiqdcs">
+                          <div className="caeozqd mod" />
+                          &nbsp;&nbsp;&nbsp;Moderators&nbsp;&nbsp;({dataChart[0].value})
+                        </div>
+                        <div className="hiqdcs">
+                          <div className="caeozqd adserx" />
+                          &nbsp;&nbsp;&nbsp;Advertisers&nbsp;&nbsp;({dataChart[1].value})
+                        </div>
+                        <div className="hiqdcs">
+                          <div className="caeozqd userx" />
+                          &nbsp;&nbsp;&nbsp;Users&nbsp;&nbsp;({dataChart[2].value})
+                        </div>
+                        
+                      </>
+                      ) : (
+                        <p>No data to display</p>
+                      )
+                      }
 
-                  ) : (
-                      <p>No data to display</p>
-                  )
-                }
-               
+                      
+                  </div>
+                  <div className="chartOfRevenuesine">
+                    Here we gonna put a Line Chart for revenue made from ads plan purchase 
+                  </div>
+                  <div className="othersozqeodsc">
+                      Others Charts and data display if needed
+                  </div>
                 </div>
+                <br />
                 <div className="ChartJs colorizeWhite">
                     User Summary&nbsp;&nbsp;{
                       allUsers && allUsers.length-1
@@ -331,7 +400,8 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                             }
                     </table>
                 </div> 
-               
+                <br />
+
                 <div className="ChartJs colorizeWhite">
                     Advertiser Summary&nbsp;&nbsp;{allAdsers && allAdsers.length}
                 </div>
@@ -464,7 +534,8 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                             }
                     </table>
                 </div> 
-                
+                <br />
+
                 <div className="ChartJs colorizeWhite">
                     Ads Summary&nbsp;&nbsp;{allAds && allAds.length}
                 </div>
@@ -582,8 +653,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                             }
                     </table>
                 </div> 
-
-
+                <br />
                 <div className="ChartJs colorizeWhite">
                     New Ads Application Summary&nbsp;&nbsp;{allRequestsAds && allRequestsAds.length}
                 </div>

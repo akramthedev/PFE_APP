@@ -170,14 +170,15 @@ table .textAlignCenter{
 
 
 table button{
-    width: 130px;
-    height: 28px;
+    width: 120px;
+    height: 31px;
     background-color: blueviolet;
     color: white;
     border-radius: 0.24rem;
     outline: none;
     border: none;
     cursor: pointer;
+    margin: 0 .5rem;
     transition: .14s all ease-in-out;
 }
 table button:hover{
@@ -204,4 +205,66 @@ table .displayFLexAlignCnete{
     justify-content: center;
     margin: 0 auto;
     padding: 0;
+}
+
+.PieChart{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+.hiqdcs{
+    height: 22px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    margin-bottom: 0.3rem;
+}
+ 
+
+.userx{
+    background-color: #1867c7;
+    height: 22px;
+    width: 22px;
+}
+.adserx{
+    background-color: #1b9317;
+    height: 22px;
+    width: 22px;
+}
+.mod{
+    background-color: #ffbb00;
+    height: 20px;
+    width: 20px;
+    margin-left: 1.4px;
+}
+
+.hiqdcs{
+    color: rgb(217, 217, 217);
+    font-size: 13px;
+    font-weight: 400;
+}
+
+
+.qoejdfs{
+    margin-bottom: 1.3rem !important;
+}
+
+.chartOfRevenuesine{
+    background-color: red;
+    height: 300px;
+    margin-left: 2rem;
+    width: 800px;
+    margin-right: 2rem;
+}
+.othersozqeodsc{
+    width: 400px;
+    height: 300px;
+    background-color: blueviolet;
+}
+.ChartJsuoaeqfs{
+    display: flex;
+    justify-content: space-between;
 }
