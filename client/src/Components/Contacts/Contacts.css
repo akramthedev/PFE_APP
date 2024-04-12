@@ -87,3 +87,11 @@
     border-radius: 50% !important;
     margin-right:1rem !important;
 }
+
+
+.containerImg img{
+    object-fit: cover;
+    border-radius: 50%;
+    height: 38px;
+    width: 38px;
+}

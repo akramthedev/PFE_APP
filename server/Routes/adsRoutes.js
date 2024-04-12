@@ -249,7 +249,13 @@ router.get('/delete/:idAds', verifyToken, async (req, res) => {
         const isDeleted = await ads.findByIdAndDelete(idAds);
 
         if (isDeleted) {
+            const isUp = await users.findByIdAndUpdate(req.user._id, {
+                $inc : {
+                    adsNumber : -1
+                }
+            });
             res.status(200).send("Yes");
+
         } else {
             res.status(202).send("No");
         }
@@ -260,66 +266,85 @@ router.get('/delete/:idAds', verifyToken, async (req, res) => {
 
 
 
+ 
 
-router.post('/createSingleAds', verifyToken, async (req, res) => {
+const createSingleAd = async (idUser, title, description, image) => {
+    const user = await users.findOne({ _id: idUser });
+    if (!user) {
+        throw new Error('User not found');
+    }
+
+    const adsByUser = await ads.find({ adser: idUser });
+    const plan = user.plan;
+    let maxAds = 0;
+
+    switch (plan) {
+        case 1:
+            maxAds = 3;
+            break;
+        case 2:
+            maxAds = 5;
+            break;
+        case 3:
+            maxAds = 7;
+            break;
+        default:
+            maxAds = 0;
+            break;
+    }
+
+    if (adsByUser.length >= maxAds) {
+        throw new Error('Maximum ads limit reached for this user');
+    }
+
+    const newAd = await ads.create({
+        adser: idUser,
+        title,
+        description,
+        image
+    });
+
+    await users.findByIdAndUpdate(idUser, { $inc: { adsNumber: 1 } });
+
+    return newAd;
+};
+
+// Route to create single ad
+router.post('/createSingleAds', verifyToken,  async (req, res) => {
     try {
-        const {
-            idUser, 
-            title, 
-            description, 
-            image, 
-        } = req.body
+        const { idUser, title, description, image } = req.body;
 
-        const isFound = await users.findOne({
-            _id: idUser
-        });
+        const createdAd = await createSingleAd(idUser, title, description, image);
 
-        const areFounds = await ads.find({
-            adser : idUser
-        });
-
-        if (isFound && areFounds) {
-            const plan = isFound.plan;
-            let max  = 0;
-            if(plan === 1){
-                max = 3
-            }    
-            else if (plan === 2){
-                max = 5
-            }
-            else if (plan === 3){
-                max = 7
-            }
-            if(max !== 0){
-                if(areFounds.length < max){
-                    const isCreated2 = await ads.create({
-                        adser : idUser, 
-                        title : title, 
-                        description : description, 
-                        image : image
-                    });
-                    if(isCreated2){
-                        res.status(200).send(isCreated2);
-                    }
-                    else{
-                        res.status(202).send("Not Created...");
-                    }
-                }
-                else{
-                    res.status(202).send("Not Created...");
-                }
-            }
-            else{
-                res.status(202).send("Not Created...");
-            }
-        } 
-        else {
-            res.status(202).send("N");
-        }
-    } catch (e) {
-        res.status(500).send(e.message);
+        res.status(200).json(createdAd);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 });
+
+
+router.post('/deletespecific',verifyToken ,async (req, res)=>{
+    try {
+       const {idAds,adser} = req.body;
+       const isDlete = await ads.deleteOne({_id : idAds});
+       await users.findByIdAndUpdate(adser, {
+            $inc : {
+                adsNumber : -1
+            }
+       })
+       if(isDlete){
+         res.status(200).send("Deleted");
+       }
+       else{
+        res.status(202).send("sdc");
+       }
+    } 
+    catch (error) {
+        res.status(500).send(error.message);    
+    }
+});
+
+
 
 
 

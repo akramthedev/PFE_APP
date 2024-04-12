@@ -3,156 +3,205 @@
     min-height: 100vh;
     width: 100%;
     padding: 0 2rem;
+    padding-bottom: 4rem;
 }
 
-.sideBarAP{
-    height: 100%;
-    width: 20%;
+.ChartJs{
+    width: 100%;
+    height: auto;
 }
-.otherBarAp{
-    width: 80%;
-    height: 100%;
-    background-color: #292b2d;
-    overflow-y: scroll;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap : 1rem ;
-    padding: 1rem;
+
+.qoesc{
+    width: 100%;
+    background-color: #242526;
+    border-radius: 0.7rem;
+    color: #e4e6eb;
+    padding: 0.6rem;
+}
+.qoesc td{
+    padding-left: 0.5rem ;
+}
+.qoesc th{
+    text-align: left;
+    padding-left: 0.5rem;
+}
+
+.fa-ckeckRed{
+    color: red;
+}
+.fa-ckeckLimgreen{
+    color: limegreen;
+}
+.qoesc .verified2{
+    text-align: left;
+}
+.qoesc .verified{
+    text-align: left;
+}
+.colorizeWhite{
+    color: rgb(130, 130, 130);
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    padding-left: .2rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+.qoesc .num{
+    padding-left: 1.2rem;
+}
+.unspecified{
+    background-color: rgb(48, 0, 0);
+    color: rgb(255, 216, 216);
+    display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: baseline;
-}
-    .kakakkak{
-    display: flex;
-    height: calc(100vh - 80px);
-    width: 100%;
-    align-items: center;
-}
-.rowJJJ{
-    height: 50px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    padding-left: 1.3rem;
-    cursor: pointer;
-    color: gainsboro;
-    border-bottom: 1px solid gainsboro;
-}
-.rowJJJ:hover{
-    background-color: #2a2c2d;
+
+    font-size: 13px;
+    font-weight: 500;
+    width:100px;
+    height: 27px;
+
+    border-radius: 4rem;
+    border:1px solid rgb(112, 61, 61);
 }
 
-.RowApplicatn{
-    width: 100%;
-    height: 215px;
-    padding: 1rem;
-    border-radius: 0.3rem;
-    background-color: #303034;
-    border: 1px solid rgb(72, 67, 67);
-}
 
-.rowjijiji{
-    color: gainsboro;
-    font-size: 15px;
+.verifiedxxx{
+    background-color: rgb(4, 64, 1);
+    color: rgb(212, 255, 215);
+    font-size: 13px;
+    font-weight: 500;
+    width:100px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    border-radius: 4rem;
+    border:1px solid rgb(99, 143, 98);
 }
-.rowjijiji2{
-    display: flex;
-    align-items: center;
-    justify-content: left;
+.qoesc td{
+    margin-bottom: 0.4rem;
 }
 
-.rowjijiji button, .rowjijiji .qodc{
-    background-color: #404346;
-    color: gainsboro;
-    border-radius: .24rem;
-    border: none;
+.xoui{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    width:80px;
+    margin: 0 auto;
+    border-radius: 4rem;
+}
+.active{
+    background-color:rgb(25, 194, 37);
+    color: rgb(0, 0, 0);
+    border: 1px solid rgb(59, 246, 65);
+}
+.inactive{
+    background-color: #924a02;
+    color: rgb(255, 254, 254);
+    border: 1px solid #f38907;
+}
+.suspended{
+    background-color: rgb(80, 0, 0);
+    color: white;
+    border: 1px solid rgb(158, 0, 0);
+}
+table {
+    border-collapse: collapse;
+    overflow: hidden;
+}
+
+ table td, table th {
+    border: 1px solid rgb(59, 59, 59);
+  }
+  table th{
+    color :#b2b5b9;
+    height: 40px;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+  }
+  table td{
+    height: 40px;
+    font-size: 14px;
+    color: #d1d4da;
+  }
+
+
+
+
+table .noPaddingleft{
+    padding-left: 0 !important;
+}
+
+table .textAlignCenter{
+}
+.nodata{
+    height: 100vh;
+    width : 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.nodata span{
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.6rem;
+}
+.nodata img{
+    height: 25px;
+    width: 25px;
+}
+
+.Nodata{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: gray;
+    background-color: none;
+    margin: 0 auto;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+
+table button{
+    width: 130px;
+    height: 28px;
+    background-color: blueviolet;
+    color: white;
+    border-radius: 0.24rem;
     outline: none;
-    width: 49%;
-
-    margin-top: .4rem;
-    height: 33px;
+    border: none;
     cursor: pointer;
     transition: .14s all ease-in-out;
 }
-.rowjijiji button:hover{
-    background-color: #515559;
+table button:hover{
+    background-color: rgb(91, 0, 176);
 }
-.rowjijiji .qodc{
-    width: 100%;
-}
-.rowjijiji2 span:first-child{
-    width: 135px;
-    margin-right: 0em;
-    font-size: 14px;
-}
-.rowjijiji2 span:last-child{
-    font-size: 14px;
-    color: rgb(194, 194, 194);
-}
-
-
-.rowjijiji .rejectRAds{
-    background-color: transparent;
-    color: red;
-    border: 1px solid red;
-    font-weight: 500;
-}
-
-
-.rowjijiji .rejectRAds:hover{
+table .zsc{
+    transition: .14s all ease-in-out;
+    width: 130px;
+    height: 28px;
     background-color: red;
     color: white;
-    border: 1px solid red;
-    font-weight: 500;
+    border-radius: 0.24rem;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+table .zsc:hover{
+    background-color: rgb(197, 0, 0);
 }
 
-
-.rowjijiji .acceptRAds{
-    background-color: transparent;
-    color: #7700ff;
-    border: 1px solid #7700ff;
-    font-weight: 500;
-}
-
-
-.rowjijiji .acceptRAds:hover{
-    background-color: #7700ff;
-    color: white;
-    border: 1px solid #7700ff;
-    font-weight: 500;
-}
-
-.rowjijiji3{
-    margin-top: 0.6rem;
-}
-
-
-.AdminPanel .nodata{
-    height : 100%;
-    width: 100%;
+table .displayFLexAlignCnete{
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgb(118, 118, 118);
-    font-size: 14px;
-    font-weight: 500;
-    position: relative;
-}
-.AdminPanel .nodata span{
-    position: absolute;
-    right: -66px;
-}
-
-
-.rowjijiji .imageAds{
-    height: 40px;
-    width: auto;
     margin: 0 auto;
-}
-
-.RowApplicatn2{
-    height: auto;
+    padding: 0;
 }

@@ -72,11 +72,16 @@ const schemaUsers = new mongoose.Schema({
         default : "none", 
         required : false
     },
-    contacts: [],
+    contacts: [], 
     pages : [], 
     groups : [],
     bookmarks : [], 
     attemptstoConnect : {
+        type : Number, 
+        required : false, 
+        default : 0
+    },
+    adsNumber : {
         type : Number, 
         required : false, 
         default : 0

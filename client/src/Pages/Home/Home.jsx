@@ -419,7 +419,8 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                 (postLoading && loaderSuggested) ? 
                 <>
                   <SkeltonPost />
-                  <SkeltonPost /><SkeltonPost />
+                  <SkeltonPost />
+                  <SkeltonPost />
                   <SkeltonPost />
                 </>
                 :
@@ -436,10 +437,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                       <>
                         {
                           allPosts.map((post, index)=>{
-                            
-
                             if(index === 2 && allPosts.length > 3){
-
                                 if(post.isPagePost){
                                   return(
                                     <>
@@ -464,16 +462,18 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
                                  }
                             }
                             else{
+                              
                               if(post.isPagePost){
                                 return(
                                   <PagePost state3={allPosts} reRenderParentCompo={fetchAllPostWithLoading} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
                                 )
                                }
-                               else{
+                              else{
                                 return(
                                   <Post reRenderParentCompo2={fetchAllPostWithLoading}  state3={allPosts} state={ThePostCreated} state2={PostCreated} reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
                                 )
-                               }
+                              }
+
                             }
                           })
                         }
@@ -499,9 +499,9 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
               !isFetchingUser && dataUserCurrent
               &&
               <>
-              <Ads />
-              <BirthDays setTheOnesWhoHaveBirthday={setTheOnesWhoHaveBirthday} setisBClicked={setisBClicked}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
-              <Contacts    isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}   />
+                <Ads />
+                <BirthDays setTheOnesWhoHaveBirthday={setTheOnesWhoHaveBirthday} setisBClicked={setisBClicked}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
+                <Contacts    isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}   />
               </>
             }
             </div>

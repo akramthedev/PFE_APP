@@ -3,6 +3,8 @@ const users = require('../Models/users');
 const sendEmail = require('../Helpers/EmailSender');
 const verifyToken = require('../Middlewares/verifyToken');
 
+
+
 const router = express.Router();
 
 
@@ -21,6 +23,24 @@ router.get('/:id', verifyToken ,async(req, res)=>{
         res.status(500).send(e.message);
     }
 });
+
+
+router.get('/', verifyToken ,async(req, res)=>{
+    try{
+        const areFound = await users.find();
+        if(areFound){
+            res.status(200).send(areFound);
+        }
+        else{
+            res.status(202).send('Not Found...');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
 
 
 router.post('/updateinfos', verifyToken ,async(req, res)=>{
