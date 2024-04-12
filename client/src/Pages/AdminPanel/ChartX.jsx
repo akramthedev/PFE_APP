@@ -7,7 +7,7 @@ const ChartX = ({chartData}) => {
 
     return (
         <>
-        
+            Hello World...
         </>
     );
 };
