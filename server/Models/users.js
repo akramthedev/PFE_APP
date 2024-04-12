@@ -81,6 +81,11 @@ const schemaUsers = new mongoose.Schema({
         required : false, 
         default : 0
     },
+    isPaymentDone : {
+        type : Boolean, 
+        required : false, 
+        default : false
+    },
     adsNumber : {
         type : Number, 
         required : false, 

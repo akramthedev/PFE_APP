@@ -50,8 +50,8 @@
     padding-left: 1.2rem;
 }
 .unspecified{
-    background-color: rgb(48, 0, 0);
-    color: rgb(255, 216, 216);
+    background-color: rgb(255, 182, 182);
+    color: rgb(139, 0, 0);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -59,23 +59,23 @@
     font-size: 13px;
     font-weight: 500;
     width:100px;
-    height: 27px;
+    height: 22px;
 
-    border-radius: 4rem;
-    border:1px solid rgb(112, 61, 61);
+    border-radius: .25rem;
+    border:1px solid rgb(147, 0, 0);
 }
 
 
 .verifiedxxx{
-    background-color: rgb(4, 64, 1);
-    color: rgb(212, 255, 215);
+    background-color: rgb(138, 255, 132);
+    color: rgb(0, 99, 7);
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
     width:100px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 4rem;
+    border-radius: .25rem;
     border:1px solid rgb(99, 143, 98);
 }
 .qoesc td{
@@ -90,7 +90,7 @@
     font-weight: 500;
     width:80px;
     margin: 0 auto;
-    border-radius: 4rem;
+    border-radius: .25rem;
 }
 .active{
     background-color:rgb(25, 194, 37);
@@ -98,9 +98,9 @@
     border: 1px solid rgb(59, 246, 65);
 }
 .inactive{
-    background-color: #924a02;
-    color: rgb(255, 254, 254);
-    border: 1px solid #f38907;
+    background-color: #ffd148;
+    color: rgb(90, 68, 0);
+    border: 1px solid #ffe250;
 }
 .suspended{
     background-color: rgb(80, 0, 0);
@@ -267,4 +267,13 @@ table .displayFLexAlignCnete{
 .ChartJsuoaeqfs{
     display: flex;
     justify-content: space-between;
+}
+
+.quedfuuqfhdsc{
+    color: red;
+    background-color: transparent !important;
+    border: none;
+    width: auto;
+    display: flex;
+    justify-content: left;
 }

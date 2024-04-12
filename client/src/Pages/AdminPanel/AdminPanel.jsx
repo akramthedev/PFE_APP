@@ -345,22 +345,22 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                             </td>
                                             <td className='FullName'>
                                             {
-                                                user.fullName ? user.fullName : <div  className='unspecified'>Unspecified</div>
+                                                user.fullName ? user.fullName : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                             }
                                             </td>
                                             <td className='EmailAddress'>
                                             {
-                                                user.email ?  user.email : <div  className='unspecified'>Unspecified</div>
+                                                user.email ?  user.email : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                             }
                                             </td>
                                             <td className='Location'>
                                             {
-                                                user.address ?  user.address : <div  className='unspecified'>Unspecified</div>
+                                                user.address ?  user.address : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                             }
                                             </td>
                                             <td className='phoneNumber'>
                                             {
-                                                user.phoneNumber ? user.phoneNumber : <div  className='unspecified'>Unspecified</div>
+                                                user.phoneNumber ? user.phoneNumber : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                             }
                                             </td>
                                             <td className='noPaddingleft textAlignCenter'>
@@ -375,17 +375,17 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                                         Suspended
                                                     </div>
                                                 }
-                                                </> : <div  className='unspecified'>Unspecified</div>
+                                                </> : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                             }
                                             </td>
                                             <td className='portfolio'>
                                             {
-                                                user.portfolio ? user.portfolio : <div  className='unspecified'>Unspecified</div>
+                                                user.portfolio ? user.portfolio : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                             }
                                             </td>
                                             <td className='role'>
                                             {
-                                                user.role ? user.role :  <div  className='unspecified'>Unspecified</div> 
+                                                user.role ? user.role :  <div  className='unspecified quedfuuqfhdsc'>Unspecified</div> 
                                             }
                                             </td>
                                             <td className=' textAlignCenter'>
@@ -433,6 +433,9 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                 Plan
                             </th>
                             <th className='website'>
+                                Payement
+                            </th>
+                            <th className='website'>
                                 Ads Number 
                             </th>
                             <th className='Location'>
@@ -459,18 +462,18 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                                     </td>
                                                     <td className='FullName'>
                                                     {
-                                                        user.fullName ? user.fullName : <div  className='unspecified'>Unspecified</div>
+                                                        user.fullName ? user.fullName : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                                     }
                                                     </td>
                                                     <td className='EmailAddress'>
                                                     {
-                                                        user.email ?  user.email : <div  className='unspecified'>Unspecified</div>
+                                                        user.email ?  user.email : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                                     }
                                                     </td>
                                                     
                                                     <td className='phoneNumber'>
                                                     {
-                                                        user.phoneNumber ? user.phoneNumber : <div  className='unspecified'>Unspecified</div>
+                                                        user.phoneNumber ? user.phoneNumber : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                                     }
                                                     </td>
                                                     <td className='noPaddingleft textAlignCenter'>
@@ -485,7 +488,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                                                 Suspended
                                                             </div>
                                                         }
-                                                        </> : <div  className='unspecified'>Unspecified</div>
+                                                        </> : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                                     }
                                                     </td>
                                                     <td className=' textAlignCenter'>
@@ -501,10 +504,15 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                                             user.plan === 2 ? "Standard" :
                                                             user.plan === 3 && "Premium"
                                                         }
-                                                        </> : <div  className='unspecified'>Unspecified</div>
+                                                        </> : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                                     }
                                                     </td>
-                                                    <td className='role'>
+                                                    <td className='role noPaddingleft'>
+                                                    {
+                                                      user.isPaymentDone ? <div className="xoui verifiedxxx">Successed</div> : <div className="xoui inactive">Pending</div>
+                                                    }
+                                                    </td>
+                                                    <td className='role '>
                                                     {
                                                       user.adsNumber
                                                     }
@@ -520,7 +528,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                                         }
                                                       </>
                                                       :
-                                                      <div  className='unspecified'>Unspecified</div>
+                                                      <div  className='unspecified quedfuuqfhdsc quedfuuqfhdsc'>Unspecified</div>
                                                     }
                                                     </td>
                                                     
@@ -588,12 +596,12 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                                     </td>
                                                     <td className='FullName'>
                                                     {
-                                                        ads.title ? ads.title : <div  className='unspecified'>Unspecified</div>
+                                                        ads.title ? ads.title : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                                     }
                                                     </td>
                                                     <td className='EmailAddress'>
                                                     {
-                                                        ads.description ?  ads.description : <div  className='unspecified'>Unspecified</div>
+                                                        ads.description ?  ads.description : <div  className='unspecified quedfuuqfhdsc '>Unspecified</div>
                                                     }
                                                     </td>
                                                     
@@ -607,7 +615,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                                         >
                                                           Visit Adser
                                                         </button>  
-                                                           : <div  className='unspecified'>Unspecified</div>
+                                                           : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                                     }
                                                     </td>
                                                     <td className=' textAlignCenter'>
@@ -709,17 +717,17 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                                     </td>
                                                     <td className='FullName'>
                                                     {
-                                                        application.companyName ? application.companyName : <div  className='unspecified'>Unspecified</div>
+                                                        application.companyName ? application.companyName : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                                     }
                                                     </td>
                                                     <td className='EmailAddress'>
                                                     {
-                                                        application.companyDesc ?  application.companyDesc : <div  className='unspecified'>Unspecified</div>
+                                                        application.companyDesc ?  application.companyDesc : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                                     }
                                                     </td>
                                                     <td className='EmailAddress'>
                                                     {
-                                                        application.companySite ?  application.companySite : <div  className='unspecified'>Unspecified</div>
+                                                        application.companySite ?  application.companySite : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                                     }
                                                     </td>
                                                     
