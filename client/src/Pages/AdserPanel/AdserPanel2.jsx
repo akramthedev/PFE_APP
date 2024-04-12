@@ -3,6 +3,7 @@ import {useNavigate , useParams} from 'react-router-dom'
 import axios from 'axios';
 import Navbar from '../../Components/Navbar/Navbar';
 import LoaderSvg from '../../Assets/spinwhite.svg';
+import SingleAds from './SingleAds';
 
 
 const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
@@ -134,46 +135,11 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
 
 
 
-    const [loaderOfDelete, setloaderOfDelete] = useState(false);
-
-
-    const DeleteAd = async (id)=>{
-      setloaderOfDelete(true);
-      if(token){
-          
-        try{
-          const resp = await axios.get(`http://localhost:3001/ads/delete/${id}`, {
-            headers : {
-              Authorization : `Bearer ${token}`
-            }
-          });
-          if(resp.status === 200){
-            setloaderOfDelete(false);
-            handlFetchAllAds();
-            console.log(resp);
-          } 
-          else{
-            setloaderOfDelete(false);
-            console.log(resp);
-            handlFetchAllAds();
-          }
-        }
-        catch(e){
-          setloaderOfDelete(false);
-          console.log(e.message);
-        } 
-      
-      }
-
-    }
-
-
-
     return (
-    <div className='Home'>
+    <div className='Home22'>
 
         { planOfUser !== null && maxAdsToCreated !== null ?
-        <div className="home2 oqd779">
+        <div className="home2888 oqd779">
           
           <Navbar  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent}  />
           
@@ -186,7 +152,23 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                 
                 <div className="headerxjs">
                     <h1>
-                    <>Plan : {planOfUser && <>{planOfUser === 1 ? "Basic" : planOfUser === 2 ? "Standard" : planOfUser === 3 && "Premium" }</>}</>
+                    <>Plan : {planOfUser && <>{planOfUser === 1 ? "Basic" : planOfUser === 2 ? "Standard" : planOfUser === 3 && "Premium" }</>}
+                    {
+                      planOfUser && <>
+                        {
+                          planOfUser === 1 ? <>&nbsp;<i className='fa-solid fa-star'></i></>
+                          :
+                          planOfUser === 2 ? <>
+                            &nbsp;<i className='fa-solid fa-star'></i>&nbsp;<i className='fa-solid fa-star'></i>
+                          </>
+                          :
+                          <>
+                            &nbsp;<i className='fa-solid fa-star'></i>&nbsp;<i className='fa-solid fa-star'></i>&nbsp;<i className='fa-solid fa-star'></i>
+                          </>
+                        }
+                      </>
+                    }
+                    </>
                     </h1>
                     <div className="uoqefds">
                       <span>
@@ -202,15 +184,24 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                   allAds && maxAdsToCreated && 
                   <>
                   {
-                    maxAdsToCreated !== allAds.length && 
+                     
                     <form className='zuqdc' onSubmit={handlCreate}>
-                        <div className="createnewadfg">
-                          Create a new Ad
-                        </div>
+                        {
+                          maxAdsToCreated === allAds.length ? 
+                          <div className="createnewadfg youHaveReachedMax">
+                            You have reached the limit. Upgrade your plan!
+                          </div>
+                          :
+                          <div className="createnewadfg">
+                            Create a new Ad
+                          </div>
+                        }
                         <input
                           value={title} 
                           type="text"
+                          disabled={maxAdsToCreated === allAds.length}
                           spellCheck={false}
+                          className={maxAdsToCreated === allAds.length && "noCursorallowed noCursorallowed2"}
                           onChange={(e)=>{
                             settitle(e.target.value);
                           }}
@@ -220,6 +211,8 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                         <input
                           value={description} 
                           type="text"
+                          className={maxAdsToCreated === allAds.length && "noCursorallowed noCursorallowed2"}
+                          disabled={maxAdsToCreated === allAds.length}
                           spellCheck={false}
                           onChange={(e)=>{
                             setdescription(e.target.value);
@@ -230,6 +223,8 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                         <input
                           value={image} 
                           type="text"
+                          className={maxAdsToCreated === allAds.length && "noCursorallowed noCursorallowed2"}
+                          disabled={maxAdsToCreated === allAds.length}
                           spellCheck={false}
                           onChange={(e)=>{
                             setimage(e.target.value);
@@ -270,38 +265,24 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                     allAds && 
                     <>
                     {
-                      allAds.length === 0 ? "No ads was created By You..."
+                      allAds.length === 0 ? <div className="noDatanoData">
+                        <span>
+                          No ads have been created yet. Get started by creating your first ad!
+                        </span>
+                        <span>
+                          <i className='fa-solid fa-arrow-left'></i>&nbsp;&nbsp;There !
+                        </span>
+                      </div>
                       :
-                      allAds.map((ad, index)=>{
-                        return(
-                          <>
-                            <span>Title : {ad.title}</span>
-                            <br />
-                            <span>Description : {ad.description}</span>
-                            <br />
-                            <span>Image Url : {ad.image}</span>
-                            <br />
-                            <span>Total Clicks : {ad.click}</span>
-                            <br />
-                            <span>Total Views : {ad.views && ad.views.length}</span>
-                            <br />
-                            <button
-                              type='button'
-                              disabled={loaderOfDelete}
-                              onClick={()=>{
-                                DeleteAd(ad._id);
-                              }}
-                            >
-                            {
-                              loaderOfDelete ? "Deleting..."
-                              :
-                              "Delete this Ad"
-                            }
-                            </button>
-                            <br />
-                          </>
-                        )
-                      })
+                      <div className="allAdsContTainer">
+                        {
+                          allAds.map((ad, index)=>{
+                            return(
+                              <SingleAds handlFetchAllAds={handlFetchAllAds} ad={ad} index={index} />
+                            )
+                          })
+                        }
+                      </div>
                     }
                     </>
                   }
