@@ -1,16 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import "./index.css";
 import Navbar from '../../Components/Navbar/Navbar';
+
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import Loader from '../../Assets/spinwhite.svg';
 import getTime from '../../Helpers/GetTime';
+
 import getDate from '../../Helpers/getDate';
+import ChartX from './ChartX';
 
 
-
-
-
+ 
 
 const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
   const nav = useNavigate();
@@ -22,6 +23,14 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
   const [allAds, setallAds] = useState([]);
   const idUser = localStorage.getItem('idUser');
   const token = localStorage.getItem('token');
+  
+  
+
+
+
+  
+
+
 
 
     const fetchAllAds = async ()=>{
@@ -47,7 +56,8 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
     }
 
    
-
+  
+    
 
   const fetchAllRequestsAds = async ()=>{
     try{
@@ -156,6 +166,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
     const [allUsers, setAllUsers] = useState(null);
     const [allAdsers, setallAdsers] = useState(null);
 
+
     const fetchAllUsers = async()=>{
         try{
                 const resp = await axios.get(`http://localhost:3001/user/`, {
@@ -164,16 +175,11 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                     }
                 });
                 if(resp.status === 200){
-                    let adsersX = [];
-                    for(let i = 0;i<resp.data.length ;i++){
-                        
-                        if(resp.data[i].role === "adser"){
-                            adsersX.push(resp.data[i]);
-                        }
-                    }
+                    let adsersX = resp.data.filter(user => user.role === "adser");
                     setallAdsers(adsersX);
                     setAllUsers(resp.data);
-                }
+                     
+                  }
                 else{
                     setAllUsers([]);
                     setallAdsers([]);
@@ -210,8 +216,22 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
             :
             <>
                 <Navbar isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
+                <div className="ChartJs">
+               
+                {allUsers  ? (
+
+                    <ChartX chartData={allUsers} />
+
+                  ) : (
+                      <p>No data to display</p>
+                  )
+                }
+               
+                </div>
                 <div className="ChartJs colorizeWhite">
-                    User Summary
+                    User Summary&nbsp;&nbsp;{
+                      allUsers && allUsers.length-1
+                    }
                 </div>
                 <div className="ChartJs addMargin">
                     <table className='qoesc'>
@@ -313,7 +333,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                 </div> 
                
                 <div className="ChartJs colorizeWhite">
-                    Advertiser Summary
+                    Advertiser Summary&nbsp;&nbsp;{allAdsers && allAdsers.length}
                 </div>
                 <div className="ChartJs addMargin">
                     <table className='qoesc'>
@@ -446,7 +466,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                 </div> 
                 
                 <div className="ChartJs colorizeWhite">
-                    Ads Summary
+                    Ads Summary&nbsp;&nbsp;{allAds && allAds.length}
                 </div>
                 <div className="ChartJs addMargin">
                     <table className='qoesc'>
@@ -565,7 +585,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
 
 
                 <div className="ChartJs colorizeWhite">
-                    New Ads Application Summary
+                    New Ads Application Summary&nbsp;&nbsp;{allRequestsAds && allRequestsAds.length}
                 </div>
                 <div className="ChartJs addMargin">
                     <table className='qoesc'>
@@ -636,7 +656,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                                     <td className='displayFLexAlignCnete'>
                                                     {
                                                         application.isForAdults ? 
-                                                        "yes":"no"
+                                                        "Adults Only":"All Categories"
                                                     }
                                                     </td>
                                                     <td className=' textAlignCenter'>

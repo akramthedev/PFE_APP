@@ -158,3 +158,51 @@
     text-align: left;
     font-size: 13px !important;
 }
+
+
+
+/* Track */
+  .UtilsAndNavigations::-webkit-scrollbar-track {
+    background: #2b2b2b; /* color of the track */
+  }
+  
+  /* Handle */
+  .UtilsAndNavigations::-webkit-scrollbar-thumb {
+    background: #888; /* color of the scrollbar handle */
+    border-radius: 1rem; /* radius of the scrollbar handle */
+  }
+  
+  /* Handle on hover */
+  .UtilsAndNavigations::-webkit-scrollbar-thumb:hover {
+    background: #555; /* color of the scrollbar handle on hover */
+  }
+  
+  /* Width of the scrollbar */
+  .UtilsAndNavigations::-webkit-scrollbar {
+    width: 0;
+  }
+  
+  /* Height of the scrollbar */
+  .UtilsAndNavigations::-webkit-scrollbar {
+    height: 0;
+  }
+  
+  /* Width of the scrollbar track */
+  .UtilsAndNavigations::-webkit-scrollbar-track {
+    width: 0;
+  }
+  
+  /* Width of the scrollbar handle */
+  .UtilsAndNavigations::-webkit-scrollbar-thumb {
+    width: 0;
+    background-color: rgb(68, 68, 68);
+  }
+  
+  /* Width of the scrollbar corner */
+   
+  
+  /* Visibility of the scrollbar */
+  .UtilsAndNavigations::-webkit-scrollbar {
+    scrollbar-width: thin; /* thin, auto, or none */
+  }
+  

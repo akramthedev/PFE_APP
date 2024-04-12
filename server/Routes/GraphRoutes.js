@@ -172,7 +172,11 @@ router.get('/suggested-contacts/:userId', async (req, res) => {
 
         // Find users who are not already in the contacts list of the specified user
         const recommendations = await users.find({
-            _id: { $nin: user.contacts.concat(userId) } // Exclude the user's own ID
+            _id: { 
+                $nin: user.contacts.concat(userId) 
+            }, 
+            isVerified : true
+            // Exclude the user's own ID
         });
 
         let recommendationsAfterCheckRequests = [];
