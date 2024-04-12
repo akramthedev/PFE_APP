@@ -173,8 +173,7 @@
     color: red;
     margin-bottom: 1rem;
 }
-.pageUnsuccess button{
-    
+.pageUnsuccess button{    
     width: 140px;
     height: 34px;
     background-color: transparent;
@@ -188,8 +187,215 @@
     text-decoration: none;
     transition: .2s all ease-in-out;
     background-color: #242526;
-    }
+}
 
-    .pageUnsuccess button:hover{
-        background-color: #353639;
-    }
+.pageUnsuccess button:hover{
+    background-color: #353639;
+}
+.home2{
+    width: 100%;
+    display: flex;
+}
+.Home{
+    background-color: #18191a;
+    padding: 0 2rem;
+    height: 100vh;
+}
+.oqd779{
+    flex-direction: column;
+    height: calc(100vh - 20px);
+    background-color: #242526;
+    overflow: hidden !important;
+}
+
+.eqdhoqe{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #18191a;
+}
+.eqdhoqe span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;    
+    color: white;
+    font-weight: 400;
+}
+.eqdhoqe span span{
+    margin-left: 0.4rem;
+}
+.zurqeuzeqfuuo{
+    width: 70%;
+    height: 100%;
+}
+.oqdconqsoc{
+    width: 30%;
+    height: 100%;
+    padding: 1rem;
+}
+
+
+
+.containerFlexingh{
+    height: 100%;
+    width:  100%;
+    display: flex;
+    overflow: hidden;
+}
+
+.headerxjs{
+    min-height:100px;
+    height: auto;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.eqdhoqe .zueoqcd{
+    height: 27px;
+    width: 27px;
+    object-fit: cover;
+}
+
+.headerxjs h1{
+    font-size: 1.6rem;
+    color: rgb(244, 244, 244);
+    font-family: "DM Serif Display", serif;
+    font-weight: 500;
+    margin-bottom: 0.777rem;
+    text-align: center;
+}
+
+.headerxjs span{
+    font-size: 13px;
+    font-weight: 500;
+    background-color: rgb(156, 255, 136);
+    color: rgb(33, 94, 0);
+    margin-right: 1rem;
+    border-radius: 4rem;
+    width: 80px;
+    height: 20px;
+    text-align: center;
+    border: 1px solid rgb(33, 94, 0);
+
+}
+.headerxjs span:last-child{
+    background-color: rgb(255, 182, 134);
+    margin: 0 ;
+    color: rgb(138, 60, 0);
+    border: 1px solid rgb(138, 60, 0);
+}
+
+.uoqefds{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.zuqdc{
+    width: 77%;
+    margin: 0 auto;
+    margin-top: 2rem;
+    height: auto;
+}
+.zuqdc input{
+    height: 38px;
+    margin-bottom: 1.2rem;
+    width: 100% !important;
+    border-radius: 0.3rem;
+    border: none;
+    background-color: #2e2f30;
+    outline: none;
+    padding: 0 1rem;
+    text-align: center;
+    color: white;
+    border: 1px solid #505254;
+}
+.zuqdc input::placeholder{
+    color: gainsboro;
+}
+.zuqdc .createnewadfg{
+    color: rgb(110, 110, 110);
+    font-weight: 400;
+    font-size: 14px;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+.zuqdc button{
+    height: 38px;
+    border: 1px solid #505254;
+    margin-top: 1.2rem;
+    width: 100% !important;
+    border-radius: 0.3rem;
+    border: none;
+    background-color: #3d3f41;
+    outline: none;
+    transition: .15s all ease-in-out;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+}
+.zuqdc button:hover{
+    background-color: #4a4c50 !important;
+}
+.zuqdc input:focus{
+    border: 1px solid #7300ff;
+}
+.zuqdc button:focus{
+    border: 1px solid #7300ff;
+}
+
+.bycreatingnewadsyou{
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 13px;
+    line-height: 1.2;
+    color: gray;
+    font-weight: 300;
+    text-align: center;
+    width: 200px;
+}
+
+.upgradePlann{
+    height: 38px;
+    margin: 0 auto;
+    margin-top: 5rem;
+    width: 76%;
+    border-radius: 0.3rem;
+    border: none;
+    background-color: #3d3f41;
+    outline: none;
+    transition: .15s all ease-in-out;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #5f00b9;
+    border: 1px solid #b05cff;
+
+}
+.upgradePlann i{
+    color: white;
+}
+.upgradePlann:hover{
+    background-color: #3e0079;
+}
+
+.noCursorallowed{
+    cursor: not-allowed !important;
+}
+.zuqdc .noCursorallowed:hover{
+    background-color: #3d3f41 !important;
+}
+.zuqdc .noCursorallowed:focus{
+    border: none !important;
+}

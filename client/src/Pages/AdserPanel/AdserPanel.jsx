@@ -3,7 +3,7 @@ import './index.css'
 import axios from "axios";
 import {useNavigate} from 'react-router-dom';
 import {loadStripe} from '@stripe/stripe-js';
-
+import SpinSvg from '../../Assets/spinwhite.svg'
 
 
 const AdserPanel = ({dataUserCurrent, fetchCurrentUser }) => {
@@ -59,7 +59,7 @@ const AdserPanel = ({dataUserCurrent, fetchCurrentUser }) => {
     <>
     {
       dataUserCurrent && dataUserCurrent.role === "adser" && (dataUserCurrent.plan === 0  || dataUserCurrent.plan === "" || dataUserCurrent.plan === "0") 
-      && 
+      ?
       <div className='allPlans'>
 
         <button
@@ -217,6 +217,15 @@ const AdserPanel = ({dataUserCurrent, fetchCurrentUser }) => {
           You Already Have a plan 
         </>
       }
+      </div>
+      :
+      <div className="eqdhoqe">
+        <span>
+          <img src={SpinSvg} className='zueoqcd' alt="" />
+          <span>
+            Loading...
+          </span>
+        </span>
       </div>
     }
     </>
