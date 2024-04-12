@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import './index.css'
 import axios from "axios";
 import {useNavigate} from 'react-router-dom';
+import {loadStripe} from '@stripe/stripe-js';
+
 
 
 const AdserPanel = ({dataUserCurrent, fetchCurrentUser }) => {
@@ -15,15 +17,22 @@ const AdserPanel = ({dataUserCurrent, fetchCurrentUser }) => {
 
   const handleSubmit = async(event)=>{
     event.preventDefault();
-    if(planClicked !== null){
+    if(planClicked !== null && token){
       try{
-        const resp = await axios.get(`http://localhost:3001/ads/choose-plan/${planClicked}`, {
+
+        const stripe = await loadStripe('pk_test_51P4dtbJ7Wuh8P9GANTiZYjKQCCHK5xKDozPeDD4iK22V7cXzvjOCSdI9eK0mvLRUxEDlMUz2EwTYib0Y8hbg6Twn00B7Z3GNEr');
+
+    
+        const resp = await axios.get(`http://localhost:3001/ads/choose-plan/${planClicked}/${token}`, {
           headers : {
             Authorization : `Bearer ${token}`
           }
         });
         if(resp.status === 200){
-          navigate(`/adser/panel/plan/${token}`);
+          const session = resp.data;
+          const result = stripe.redirectToCheckout({
+            sessionId : session.id
+          });
         }
         else{
           navigate(0);
@@ -40,9 +49,7 @@ const AdserPanel = ({dataUserCurrent, fetchCurrentUser }) => {
       if(dataUserCurrent && (dataUserCurrent.role === "adser" && (dataUserCurrent.plan === 1 || dataUserCurrent.plan===2 || dataUserCurrent.plan === 3))){
         navigate(`/adser/panel/plan/${token}`);
       }
-      else{
-
-      }
+     
     }
     x();
   }, [dataUserCurrent]);
@@ -66,7 +73,7 @@ const AdserPanel = ({dataUserCurrent, fetchCurrentUser }) => {
               setPlanClicked(1);
             }}
           >
-            Plan 1 (view paper for more details)
+            Plan 1 : 20$
           </button>
           <br />
           <button
@@ -76,7 +83,7 @@ const AdserPanel = ({dataUserCurrent, fetchCurrentUser }) => {
               setPlanClicked(2);
             }}
           >
-            Plan 2 (view paper for more details)
+            Plan 2 : 30$
           </button>
           <br />
           <button
@@ -86,16 +93,25 @@ const AdserPanel = ({dataUserCurrent, fetchCurrentUser }) => {
               setPlanClicked(3);
             }}
           >
-            Plan 3 (view paper for more details)
+            Plan 3 : 45$
           </button>
           <br /><br /><br />
           {
             planClicked !== null && 
-            <button
-             type='submit'
+            <span
             >
               You choosed plan {planClicked}, Submit it 
-            </button>
+            </span>
+          }
+          {
+            planClicked !== null && 
+             
+              <button
+                type='submit'
+              >
+                Purchase Plan  
+              </button>
+           
           }
         </form>
         :

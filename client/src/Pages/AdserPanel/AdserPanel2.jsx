@@ -20,9 +20,11 @@ const AdserPanel2 = () => {
     const [loader2, setloader2] = useState(true);
     const [allAds, setallAds] = useState(null);
     const [Impossible,setImpossible] = useState(false);
+    const navigate = useNavigate();
+    
+
 
     useEffect(()=>{
-      
       const x = async ()=>{
         
         if(token){
@@ -34,15 +36,20 @@ const AdserPanel2 = () => {
               }
             });
             if(resp.status === 200){
-              setplanOfUser(resp.data.plan);
-              if(parseInt(resp.data.plan) === 1){
-                setmaxAdsToCreated(3);
+              if(resp.data.plan === 0){
+                navigate('/adser/panel');
               }
-              else if(parseInt(resp.data.plan) === 2){
-                setmaxAdsToCreated(5);
-              }
-              else if(parseInt(resp.data.plan) === 3){
-                setmaxAdsToCreated(7);
+              else{
+                setplanOfUser(resp.data.plan);
+                if(parseInt(resp.data.plan) === 1){
+                  setmaxAdsToCreated(3);
+                }
+                else if(parseInt(resp.data.plan) === 2){
+                  setmaxAdsToCreated(5);
+                }
+                else if(parseInt(resp.data.plan) === 3){
+                  setmaxAdsToCreated(7);
+                }
               }
             } 
             else{

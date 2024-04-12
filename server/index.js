@@ -15,11 +15,8 @@ const http              =  require('http');
 const cors              =  require('cors');
 const clc               =  require("cli-color");
 const { Server }        =  require('socket.io');
- 
-
-
-//    CONFIGURATIONS
 require('dotenv').config();
+
 const app = express();
 app.set('trust proxy', true);   
 app.use(express.json());

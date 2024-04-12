@@ -143,6 +143,25 @@ router.get('/visitedClicked/:idPost' ,async(req, res)=>{
 });
 
 
+router.get('/visitedDashboardClicked/:idNotif' ,async(req, res)=>{
+    try{
+        const {idNotif} = req.params;
+        const isUpdated = await notifs.findByIdAndUpdate(idNotif, {
+            description2 : ""
+        });
+        if(isUpdated){
+            res.status(200).send("The notification updated successfully!");
+        }
+        else{
+            res.status(202).send('Something went wrong! The notification not updated..');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
 
 router.delete('/user/:idUser' ,async(req, res)=>{
     try{

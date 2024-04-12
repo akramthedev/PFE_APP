@@ -19,6 +19,7 @@ import Help from "./Pages/Help/Help";
 import Accessibility from "./Pages/Accessibility/Accessibility";
 import AdminPanel from "./Pages/AdminPanel/AdminPanel";
 import AdserPanel from "./Pages/AdserPanel/AdserPanel";
+import UnsuccessfullPanel from './Pages/AdserPanel/UnsuccessfullPanel';
 import { useSocket } from './Helpers/SocketContext';
 
 
@@ -200,11 +201,23 @@ function App() {
               token ? <AdserPanel isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
             } 
           />
+          
+          <Route  
+            path='adser/panel/payment/unsuccessfull' 
+            element={
+              token ? <UnsuccessfullPanel isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
+            } 
+          />
+
+
 
           <Route  
             path='/adser/panel/plan/:token'
             element={
-              token ? <AdserPanel2 isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
+              (token && dataUserCurrent && dataUserCurrent.plan !== 0) ? 
+                <AdserPanel2 isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  />
+                : 
+                <Navigate to="/" />
             } 
           />
           

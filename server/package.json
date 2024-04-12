@@ -25,11 +25,12 @@
     "nodemon": "^3.1.0",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.7.5",
+    "stripe": "^15.1.0"
   },
   "devDependencies": {
-    "node-dev": "^8.0.0", 
-    "loadtest" : "^5.2.0", 
-    "pm2" : "^5.2.2"
+    "loadtest": "^5.2.0",
+    "node-dev": "^8.0.0",
+    "pm2": "^5.2.2"
   }
 }

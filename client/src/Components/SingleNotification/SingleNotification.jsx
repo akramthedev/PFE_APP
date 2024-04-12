@@ -67,6 +67,17 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
 
 
 
+    const dashboardWasVisited = async()=>{
+      try{
+        await axios.get(`http://localhost:3001/notif/visitedDashboardClicked/${notif._id}`);
+      }
+      catch(e){
+        console.log(e.message);
+      }
+    }
+
+
+
     return (
       <>
        
@@ -232,6 +243,20 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
                     }}
                   >
                     View Post
+                  </button>
+                }
+                </div>
+                <div className="content content2">
+                {
+                  notif.description2 ==="dashboard" &&
+                  <button
+                    className='visitPost'
+                    onClick={()=>{
+                      dashboardWasVisited();
+                      navigate(`/adser/panel/`);
+                    }}
+                  >
+                    View Dashboard
                   </button>
                 }
                 </div>
