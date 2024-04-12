@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import "./Post.css";
 import axios from 'axios';
-
+import {useNavigate } from 'react-router-dom'
 
 
 const SuggestedUserSingleCompoent = ({user, index}) => {
 
   const [isClick, setIsClick] =  useState(false);
   const idUser = localStorage.getItem('idUser');
-  
+  const nav = useNavigate();
+
   
   const handleAddContact = async (id)=>{
     if(isClick === false){
@@ -33,10 +34,18 @@ const SuggestedUserSingleCompoent = ({user, index}) => {
     {
         user && 
         <div key={index} className='suggestedUserCompoent' > 
-          <div className="rowImg">
+          <div className="rowImg"
+            onClick={()=>{
+              nav(`/profile/${user._id}`);
+            }}
+          >
             <img src={user.profilePic} alt="" />
           </div>
-          <div className="rowFullNaMe">
+          <div
+            onClick={()=>{
+              nav(`/profile/${user._id}`);
+            }}
+            className="rowFullNaMe">
           {
             user.fullName
           }

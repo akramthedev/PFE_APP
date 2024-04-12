@@ -185,7 +185,7 @@
     height: 212px;
     width: 100%;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .containerOfAllComents::-webkit-scrollbar{
     width: 5px;

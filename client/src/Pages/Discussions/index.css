@@ -17,7 +17,7 @@
     background-color:#242526;
     height: 100%;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     align-items: center;
     display: flex;
     flex-direction: column;

@@ -7,9 +7,47 @@
   font-family: "Mukta", sans-serif;
 }
 
-::-webkit-scrollbar-track{
-  width: 0px;
+/* Track */
+::-webkit-scrollbar-track {
+  background: #2b2b2b; /* color of the track */
 }
-::-webkit-scrollbar{
-  width: 0px;
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; /* color of the scrollbar handle */
+  border-radius: 1rem; /* radius of the scrollbar handle */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* color of the scrollbar handle on hover */
+}
+
+/* Width of the scrollbar */
+::-webkit-scrollbar {
+  width:3px;
+}
+
+/* Height of the scrollbar */
+::-webkit-scrollbar {
+  height: 3px;
+}
+
+/* Width of the scrollbar track */
+::-webkit-scrollbar-track {
+  width: 3px;
+}
+
+/* Width of the scrollbar handle */
+::-webkit-scrollbar-thumb {
+  width: 3px;
+  background-color: rgb(83, 83, 83);
+}
+
+/* Width of the scrollbar corner */
+ 
+
+/* Visibility of the scrollbar */
+::-webkit-scrollbar {
+  scrollbar-width: thin; /* thin, auto, or none */
 }
