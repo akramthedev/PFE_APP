@@ -99,8 +99,8 @@ const AdserPanel2 = () => {
 
     const handlCreate = async(e)=>{
       e.preventDefault();
-      setloader(true);
       if(token &&  title.length >= 10 && description.length >= 20 && image.length >= 14){
+        setloader(true);
         try {
           const resp = await axios.post('http://localhost:3001/ads/createSingleAds/', {
             idUser : idUser, 

@@ -229,7 +229,8 @@ router.get('/choose-plan/:numPlan/:token', verifyToken, async(req, res)=>{
 
         if(session){
             await users.findByIdAndUpdate(idUser, {
-                plan : numPlan
+                plan : numPlan, 
+                isPaymentDone : true
             }, {new : true});
 
             res.status(200).send({
