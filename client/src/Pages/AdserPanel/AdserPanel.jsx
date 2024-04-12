@@ -60,66 +60,164 @@ const AdserPanel = ({dataUserCurrent, fetchCurrentUser }) => {
     {
       dataUserCurrent
       && 
-      <>
+      <div className='allPlans'>
+
+        <button
+        className='backHome'
+          onClick={()=>{
+            navigate('/');
+          }}
+        >
+          Back Home
+        </button>
+      
       {
         (dataUserCurrent.plan !== 1 || dataUserCurrent.plan !== 2 || dataUserCurrent.plan !== 3) ? 
         <form onSubmit={handleSubmit} className='plans'>
-          Please Choose a plan
-          <br /><br />
-          <button
-            type="button"
-            className={planClicked === 1 && "activatedPlan"}
-            onClick={()=>{
-              setPlanClicked(1);
-            }}
-          >
-            Plan 1 : 20$
-          </button>
-          <br />
-          <button
-            type="button"
-            className={planClicked === 2 && "activatedPlan"}
-            onClick={()=>{
-              setPlanClicked(2);
-            }}
-          >
-            Plan 2 : 30$
-          </button>
-          <br />
-          <button
-            type="button"
-            className={planClicked === 3 && "activatedPlan"}
-            onClick={()=>{
-              setPlanClicked(3);
-            }}
-          >
-            Plan 3 : 45$
-          </button>
-          <br /><br /><br />
-          {
-            planClicked !== null && 
-            <span
-            >
-              You choosed plan {planClicked}, Submit it 
-            </span>
-          }
+          <div className="containeruoqedf">
+            <h1>
+              Choose a plan
+            </h1>
           {
             planClicked !== null && 
              
               <button
+              className='purchasePlan'
                 type='submit'
               >
-                Purchase Plan  
+                Purchase Plan : {planClicked === 1 ? "Team":  planClicked === 2 ? "Agency" : "Entreprise"}&nbsp;&nbsp;&nbsp;&nbsp;<i className='fa-solid fa-arrow-right'></i>
               </button>
            
           }
+          </div>
+          <div className="containerOfAllPlans">
+          <div className={planClicked && planClicked === 1  ? "cartI activated":"cartI"}>
+              <div className="rowzuqefd">
+                Team
+              </div>
+              <div className="eqifcd">
+                $50
+              </div>
+                    
+                    <div className="rowGetStarted">
+                      <button
+                        type="button"
+                        className={planClicked === 1 && "activatedPlan"}
+                        onClick={()=>{
+                          setPlanClicked(1);
+                        }}
+                      >
+                        {
+                       planClicked !== 1 ? "Select it"
+                       : <>
+                       <i className='fa-solid fa-check'></i>&nbsp;&nbsp;Selected</>
+                          }
+                      </button>
+                    </div>
+                 
+                 <div className="zrjoqfe">
+                 <i className='fa-solid fa-check'></i>&nbsp;&nbsp;Maximum Ads : 3
+                </div>
+                
+                <div className="zrjoqfe">
+                <i className='fa-solid fa-check'></i>&nbsp;&nbsp;Help & Support 
+                </div>
+                <div className="zrjoqfe">
+                <i className='fa-solid fa-check'></i>&nbsp;&nbsp;Secure 
+                </div>
+             </div>
+            <div className={planClicked && planClicked === 2  ? "cartI activated":"cartI"}>
+                <div className="rowzuqefd">
+                    Agency
+                  </div>
+                  <div className="eqifcd">
+                    $100
+                  </div>
+                   
+                    <div className="rowGetStarted">
+                      <button
+                        type="button"
+                        className={planClicked === 2 && "activatedPlan"}
+                        onClick={()=>{
+                          setPlanClicked(2);
+                        }}
+                      >
+                        {
+                       planClicked !== 2 ? "Select it"
+                       : <><i className='fa-solid fa-check'></i>&nbsp;&nbsp;Selected</>
+                          }
+                      </button>
+                    </div>
+                  
+                     <div className="zrjoqfe">
+                      <i className='fa-solid fa-check'></i>&nbsp;&nbsp;Maximum Ads : 5
+                      </div>
+                      <div className="zrjoqfe">
+                      <i className='fa-solid fa-check'></i>&nbsp;&nbsp;Highly Secure 
+                      </div>
+                      <div className="zrjoqfe">
+                      <i className='fa-solid fa-check'></i>&nbsp;&nbsp;Help & Support 
+                      </div>
+                      <div className="zrjoqfe">
+                      <i className='fa-solid fa-check'></i>&nbsp;&nbsp;Issues Fixing
+                      </div>
+                      <div className="zrjoqfe">
+                      <i className='fa-solid fa-check'></i>&nbsp;&nbsp;Analytics Plateform
+                      </div>
+                 </div>
+            <div className={planClicked && planClicked === 3  ? "cartI activated":"cartI"}>
+              <div className="rowzuqefd">
+                      Entreprise
+                    </div>
+                    <div className="eqifcd">
+                      $299
+                    </div>
+                    
+                      <div className="rowGetStarted">
+                        <button
+                          type="button"
+                          className={planClicked === 3 && "activatedPlan"}
+                          onClick={()=>{
+                            setPlanClicked(3);
+                          }}
+                        >
+                          {
+                       planClicked !== 3 ? "Select it"
+                       : <><i className='fa-solid fa-check'></i>&nbsp;&nbsp;Selected</>
+                          }
+                        </button>
+                      </div>
+                   
+                      <div className="zrjoqfe">
+                      <i className='fa-solid fa-check'></i>&nbsp;&nbsp;Maximum Ads : 5
+                      </div>
+                      <div className="zrjoqfe">
+                      <i className='fa-solid fa-check'></i>&nbsp;&nbsp;Highly Secure 
+                      </div>
+                      <div className="zrjoqfe">
+                      <i className='fa-solid fa-check'></i>&nbsp;&nbsp;Help & Support 
+                      </div>
+                      <div className="zrjoqfe">
+                      <i className='fa-solid fa-check'></i>&nbsp;&nbsp;Issues Fixing
+                      </div>
+                      <div className="zrjoqfe">
+                      <i className='fa-solid fa-check'></i>&nbsp;&nbsp;Analytics Plateform
+                      </div>
+                      <div className="zrjoqfe">
+                      <i className='fa-solid fa-check'></i>&nbsp;&nbsp;Monetization Tracking
+                      </div>
+                  </div> 
+              </div>
+                        
+          
+          
         </form>
         :
         <>
           You Already Have a plan 
         </>
       }
-      </>
+      </div>
     }
     </>
   )

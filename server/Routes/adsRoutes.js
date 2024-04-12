@@ -195,15 +195,15 @@ router.get('/choose-plan/:numPlan/:token', verifyToken, async(req, res)=>{
         let productPrice ;
         if(numPlan === "1"){
             name = "Basic"
-            productPrice = 20;
+            productPrice = 50;
         }
         else if(numPlan === "2"){
             name = "Standard"
-            productPrice = 30
+            productPrice = 100
         }
         else if(numPlan === "3"){
             name = "Premium"
-            productPrice = 45
+            productPrice = 299
         }
         
 

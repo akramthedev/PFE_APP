@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap');
+
 .plans{
     display: flex;
     align-items: center;
@@ -6,7 +8,149 @@
     height: 100vh;
     width: 100%;
 }
-.activatedPlan{
-    background-color: orangered;
+
+.allPlans{
+    height: 100%;
+    width: 100%;
+    background-color: #18191a;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.cartI{
+    background-color: #242526;
+    height: auto;
+    border: 1px solid #3f4142;
+    min-height: 288px;
+    width: 230px;
+    margin: 1rem;
+    padding-bottom: .8rem;
+    transition: .22s all ease-in-out;
+    border-radius: 0.6666rem;
+}
+.cartI:hover{
+    box-shadow: 0 0 20px rgba(119, 4, 165, 0.5);
+}
+.containerOfAllPlans{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.activated{
+    background-color: #8400ff;
+}
+
+.rowzuqefd{
+    height: 50px;
     color: white;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+}
+.eqifcd{
+    height: 66px;
+    color: #ba70ff;
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    font-family: "DM Serif Display", serif;
+    font-weight: 600;
+    justify-content: center;
+}
+
+.activated .eqifcd{
+    color: white;
+}
+
+.rowGetStarted{
+    height: 66px;
+    color: #cacaca;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.rowGetStarted button{
+    height: 35px;
+    width: 140px;
+    border-radius: 0.55rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #8400ff;
+    color: white;
+    transition: .2s all ease-in-out;
+}
+.rowGetStarted button:hover{
+    background-color: #5f00b9;
+}
+
+.zrjoqfe{
+    padding: 0 1rem;
+    margin-bottom: 0.3rem;
+    color: white;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+
+.activatedPlan{
+    background-color: #5f00b9 !important;
+    color: white;
+}
+
+.purchasePlan{
+    background-color: #dcb7ff;
+    color: rgb(146, 4, 255);
+    height: 45px;
+    min-width: 200px;
+    border-radius: 0.77rem;
+    outline: none;
+    padding: 0 1.5rem;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: .2s all ease-in-out;
+    cursor: pointer;
+}
+.containeruoqedf{
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    width: 760px;
+    justify-content: space-between;
+}
+
+.containeruoqedf h1{
+    color: white;
+    font-weight: 500;
+    font-family: "DM Serif Display", serif;
+}
+.containeruoqedf .purchasePlan:hover{
+    background-color: #5f00b9;
+    color: white;
+}
+
+.backHome{
+    position: absolute;
+    left: 2rem;
+    top: 2rem;
+    width: 140px;
+    height: 34px;
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    outline: none;
+    border : none;
+    cursor: pointer;
+
+}
+.backHome:hover{
+    text-decoration: underline;
 }

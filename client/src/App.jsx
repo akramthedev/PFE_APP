@@ -214,7 +214,7 @@ function App() {
           <Route  
             path='/adser/panel/plan/:token'
             element={
-              (token && dataUserCurrent && dataUserCurrent.plan !== 0) ? 
+              token ? 
                 <AdserPanel2 isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  />
                 : 
                 <Navigate to="/" />
