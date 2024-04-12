@@ -85,15 +85,9 @@ const SingleRequest = ({request, index, reRenderParentComponent, renderUserInfos
     return (
       <>
       {
-         (request && dataUser) ? 
-          
-          
-
-
+         (request && dataUser) &&
+         
           <div key={index} className='SingleNotification'>
-             
-            
-            
             <div className="rowii">
             <div className="rowTitleNotif">
               <img onClick={()=>{
@@ -123,14 +117,6 @@ const SingleRequest = ({request, index, reRenderParentComponent, renderUserInfos
               }
               </span>
 
-          </div>
-
-
-
-
-          :
-          <div key={index} className='SingleNotification'>
-            Loading...
           </div>
       }
       </>
