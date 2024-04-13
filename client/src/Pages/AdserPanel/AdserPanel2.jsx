@@ -87,93 +87,7 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
     }, [token]);
 
 
-    const handlFetchAllAds = async()=>{
-      setloader2(true);
-      try {
-        const resp = await axios.get(`http://localhost:3001/ads/getAllAdsCreatedByUser/${idUser}`, {
-          headers : {
-            Authorization : `Bearer ${token}`
-          }
-        });
-        if(resp.status === 200){
-          setallAds(resp.data);
-          
-     
-          /*if (resp.data && resp.data.length !== 0) {
-            // Create an object to store views data per day
-            const ViewsPerDay = {};
-        
-            resp.data.forEach(ads => {
-                const date = new Date(ads.createdAt);
-                const day = date.toISOString().split('T')[0]; // Get date in YYYY-MM-DD format
-        
-                // If the day doesn't exist in the ViewsPerDay object, initialize it
-                if (!ViewsPerDay[day]) {
-                    ViewsPerDay[day] = 0;
-                }
-        
-                // Add the number of views for the corresponding day
-                ViewsPerDay[day] += ads.views.length;
-            });
-        
-            // Find the minimum date among all ads
-            const minDate = new Date(Math.min(...resp.data.map(ads => new Date(ads.createdAt))));
-            
-            // Generate all dates from minDate to current date
-            const currentDate = new Date();
-            const allDates = [];
-            for (let d = new Date(minDate); d <= currentDate; d.setDate(d.getDate() + 1)) {
-                allDates.push(d.toISOString().split('T')[0]);
-            }
-        
-            // Populate ViewsPerDay with all dates, even if no ads were created on those days
-            allDates.forEach(day => {
-                if (!ViewsPerDay[day]) {
-                    ViewsPerDay[day] = 0;
-                }
-            });
-        
-            // Convert the ViewsPerDay object into arrays for Chart.js
-            const labels = Object.keys(ViewsPerDay).sort();
-            const data = labels.map(day => ViewsPerDay[day]);
-        
-        
-            const dataX = {
-                labels: labels,
-                datasets: [
-                    {
-                        label: 'Views',
-                        data: data,
-                        fill: false,
-                        borderColor: 'blueviolet',
-                        tension: 0.1,
-                    },
-                ],
-            };
-        
-            setdataViewsAds(dataX);
-        } else {
-            setdataViewsAds(null);
-        }
-        
-
-        
-      */
-          
-      
-        }
-        else{
-          setallAds([]); 
-        }
-      }
-      catch(er){
-        setallAds([]); 
-        console.log(er.message);
-      } finally{
-        setloader2(false);
-      }
-    }
-
+   
 
     
 
@@ -329,6 +243,32 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
           setdataAdsViews(null);
           console.log(e.message);
         } 
+      }
+    }
+
+
+
+    const handlFetchAllAds = async()=>{
+      setloader2(true);
+      try {
+        const resp = await axios.get(`http://localhost:3001/ads/getAllAdsCreatedByUser/${idUser}`, {
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
+        if(resp.status === 200){
+          setallAds(resp.data);
+          
+        }
+        else{
+          setallAds([]); 
+        }
+      }
+      catch(er){
+        setallAds([]); 
+        console.log(er.message);
+      } finally{
+        setloader2(false);
       }
     }
 
@@ -502,7 +442,10 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                 }
               </div>
                 <div className='zurqeuzeqfuuo'>
-                  <div className="iqesciq">
+                {
+                  planOfUser && planOfUser === 3 && 
+                  <>
+                                      <div className="iqesciq">
                     <div className='zuqdfios'>Chart : Total Views Per Days</div>
                     {
                       dataAdsViewsTOTAL && 
@@ -560,6 +503,8 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                       </div>
                     }
                   </div>
+                  </>
+                }
                 {
                   loader2 ? "Fetching All Ads Created..."
                   :
