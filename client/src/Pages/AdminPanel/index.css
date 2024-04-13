@@ -255,14 +255,16 @@ table .displayFLexAlignCnete{
 .chartOfRevenuesine{
     height: 300px;
     margin-left: 2rem;
-    width: 800px;
+    width: 900px;
     margin-right: 2rem;
+
     overflow: hidden;
 }
 .othersozqeodsc{
-    width: 400px;
+    width: 300px;
     height: 300px;
-    background-color: blueviolet;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
 .ChartJsuoaeqfs{
     display: flex;
@@ -288,4 +290,61 @@ table .displayFLexAlignCnete{
     color: gray;
     font-size: 13px;
     font-weight: 500;
+}
+.gridElement1{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+ 
+.centeredJJJ{
+    height: 140px;
+    width: 140px;
+    background-color: #242526;
+    border-radius: 0.35rem;
+    overflow: hidden;
+}
+
+
+.caseLogoS{
+    height: 45px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+
+}
+
+.numberDs{
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 500;
+    font-family: "DM Serif Display", serif;
+    color: white;
+}
+.meaningDS{
+    height: 33px;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 500;
+    color: white;
+}
+
+.Loading{
+    margin-top: 5px;
+    height:33px;
+    width: 33px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.oqdnscoqdnsc{
+    width: 300px;
+    height: 300px;
 }

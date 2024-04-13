@@ -1,16 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import "./index.css";
+import AllViewsImg from './voir.png';
+import Album from './jacki.png'
 import Navbar from '../../Components/Navbar/Navbar';
+import Cus from './cus.png';
 import {PieChart, Pie, Tooltip, Cell, Label} from 'recharts';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import Loader from '../../Assets/spinwhite.svg';
 import getTime from '../../Helpers/GetTime';
 import getDate from '../../Helpers/getDate';
-
-
-
 import { Line } from 'react-chartjs-2';
+import Dollar from './dollar.png';
 import 'chartjs-adapter-date-fns'; // Import date-fns adapter for Chart.js
 import { 
     Chart as ChartJS,
@@ -20,11 +21,7 @@ import {
     PointElement,
     TimeScale
 } from "chart.js"; 
-
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement,TimeScale);
-
-
-
 
 
 
@@ -383,10 +380,39 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
         }
     }
 
+    const [dataSingleBar, setdataSingleBar] = useState(null);
+
+    const fetchdataSingleBar = async()=>{
+      if(token){
+        try{
+          const resp = await axios.post('http://localhost:3001/user/getSomeInfos',{
+            data : "Hello World..."
+          },{
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+          if(resp.status === 200){
+            setdataSingleBar(resp.data);
+          }
+          else{
+            setdataSingleBar(null);
+          }
+        }
+        catch(e){
+          setdataSingleBar(null);
+          console.log(e.message);
+        }
+      }
+    }
+
+
+
     useEffect(()=>{
         fetchAllUsers();
         fetchAllAds();
         fetchAllRequestsAds();
+        fetchdataSingleBar();
     }, []);
 
 
@@ -487,14 +513,104 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                     </>
                   } 
                   </div>
-                  <div className="othersozqeodsc">
-                  {(!Turnover && LoaderTurnover) ? "Loading..."
-                    :
+
+                  {
+                    dataSingleBar ?
                     <>
-                    Turnover : {Turnover && Turnover}
-                    </>
-                  }
+                     
+                  <div className="othersozqeodsc">
+                    <div className="gridElement1 gridElement2">
+                      <div className="centeredJJJ">
+                        <div className="caseLogoS">
+                          <img 
+                            src={Dollar} 
+                            alt=""
+                            className='Loading'
+                          />
+                        </div>
+                        <div className="numberDs">
+                          {(!Turnover && LoaderTurnover) ? ""
+                            :
+                            <>$&nbsp;{Turnover/100}</>
+                          }
+                        </div>
+                        <div className="meaningDS">
+                          Turnover
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="gridElement1 ">
+                    <div className="centeredJJJ">
+                        <div className="caseLogoS">
+                          <img 
+                            src={AllViewsImg} 
+                            alt=""
+                            className='Loading'
+                          />
+                        </div>
+                        <div className="numberDs">
+                        <>
+                          {
+                            dataSingleBar.adsviewsLength === -1 ? "Undefined" : dataSingleBar.adsviewsLength
+                          }
+                          </>
+                        </div>
+                        <div className="meaningDS">
+                          Ads Views
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="gridElement1 ">
+                    <div className="centeredJJJ">
+                        <div className="caseLogoS">
+                          <img 
+                            src={Album} 
+                            alt=""
+                            className='Loading'
+                          />
+                        </div>
+                        <div className="numberDs">
+                        <>
+                          {
+                            dataSingleBar.postsLength === -1 ? "Undefined" : dataSingleBar.postsLength
+                          }
+                          </>
+                        </div>
+                        <div className="meaningDS">
+                          Posts
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="gridElement1 gridElement2">
+                    <div className="centeredJJJ">
+                        <div className="caseLogoS">
+                          <img 
+                            src={Cus} 
+                            alt=""
+                            className='Loading'
+                          />
+                        </div>
+                        <div className="numberDs">
+                          <>
+                          {
+                            dataSingleBar.usersLength === -1 ? "Undefined" : dataSingleBar.usersLength-1
+                          }
+                          </>
+                        </div>
+                        <div className="meaningDS">
+                          Customers
+                        </div>
+                      </div>
+                    </div>
+                   
                   </div>
+                  </>
+                  :
+                  <div className="oqdnscoqdnsc" />
+                }
                 </div>
                 <br />
                 <div className="ChartJs colorizeWhite">
