@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import Home from './Pages/Home/Home';
+import Successfull from './Pages/AdserPanel/Successfull';
 import Auth from './Pages/Auth/Auth';
 import OTPverify from './Pages/OTPverify/OTPverify';
 import AdserPanel2 from './Pages/AdserPanel/AdserPanel2'
@@ -206,6 +207,12 @@ function App() {
             path='/adser/panel/payment/unsuccessfull' 
             element={
               token ? <UnsuccessfullPanel isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
+            } 
+          />
+          <Route  
+            path='/adser/panel/payment/successfull' 
+            element={
+              token ? <Successfull isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
             } 
           />
 

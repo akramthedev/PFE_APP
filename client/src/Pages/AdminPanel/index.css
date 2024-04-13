@@ -253,11 +253,11 @@ table .displayFLexAlignCnete{
 }
 
 .chartOfRevenuesine{
-    background-color: red;
     height: 300px;
     margin-left: 2rem;
     width: 800px;
     margin-right: 2rem;
+    overflow: hidden;
 }
 .othersozqeodsc{
     width: 400px;
@@ -266,6 +266,7 @@ table .displayFLexAlignCnete{
 }
 .ChartJsuoaeqfs{
     display: flex;
+    padding-top: 5rem;
     justify-content: space-between;
 }
 
@@ -276,4 +277,15 @@ table .displayFLexAlignCnete{
     width: auto;
     display: flex;
     justify-content: left;
+}
+
+.nodataXXX{
+    height: 200px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: gray;
+    font-size: 13px;
+    font-weight: 500;
 }

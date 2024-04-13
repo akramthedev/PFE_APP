@@ -9,7 +9,24 @@ import getTime from '../../Helpers/GetTime';
 import getDate from '../../Helpers/getDate';
 
 
- 
+
+import { Line } from 'react-chartjs-2';
+import 'chartjs-adapter-date-fns'; // Import date-fns adapter for Chart.js
+import { 
+    Chart as ChartJS,
+    LineElement,
+    CategoryScale, 
+    LinearScale,
+    PointElement,
+    TimeScale
+} from "chart.js"; 
+
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement,TimeScale);
+
+
+
+
+
 
 const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
   const nav = useNavigate();
@@ -154,6 +171,156 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
     }
 
 
+
+    const [Turnover, setTurnover] = useState(null);
+    const [LoaderTurnover, setLoaderTurnover] = useState(true);
+    const [dataPayments, setdataPayments] = useState(null);
+
+
+    const getTurnoverPerDays = async () => {
+      try {
+        setLoaderTurnover(true);
+        const resp = await axios.get(`http://localhost:3001/stripe/getTurnover`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        if (resp.status === 200) {
+          setTurnover(resp.data.totalAmount);
+    
+          if (resp.data.payments && resp.data.payments.data.length !== 0) {
+            // Create an object to store revenue data per day
+            const revenuePerDay = {};
+    
+            resp.data.payments.data.forEach(payment => {
+              const date = new Date(payment.created * 1000);
+              const day = date.toISOString().split('T')[0]; // Get date in YYYY-MM-DD format
+    
+              // If the day doesn't exist in the revenuePerDay object, initialize it
+              if (!revenuePerDay[day]) {
+                revenuePerDay[day] = 0;
+              }
+    
+              // Add the payment amount to the revenue for the corresponding day
+              revenuePerDay[day] += payment.amount / 100;
+            });
+    
+            // Convert the revenuePerDay object into arrays for Chart.js
+            const labels = Object.keys(revenuePerDay).sort();;
+            const data = labels.map(day => revenuePerDay[day]);
+
+
+    
+            const dataX = {
+              labels: labels,
+              datasets: [
+                {
+                  label: 'Revenues',
+                  data: data,
+                  fill: false,
+                  borderColor: 'blueviolet',
+                  tension: 0.1,
+                },
+              ],
+            };
+    
+            setdataPayments(dataX);
+          } else {
+            setdataPayments(null);
+          }
+        } else {
+          setdataPayments(null);
+          setTurnover(null);
+        }
+      } catch (error) {
+        setdataPayments(null);
+        setTurnover(null);
+        console.log(error.message);
+      } finally {
+        setLoaderTurnover(false);
+      }
+    }
+
+
+    
+    
+
+
+    const getTurnoverPerHours = async () => {
+      try {
+        setLoaderTurnover(true);
+        const resp = await axios.get(`http://localhost:3001/stripe/getTurnover`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        if (resp.status === 200) {
+          setTurnover(resp.data.totalAmount);
+    
+          if (resp.data.payments && resp.data.payments.data.length !== 0) {
+            // Create an object to store revenue data per hour
+            const revenuePerHour = {};
+    
+            resp.data.payments.data.forEach(payment => {
+              const date = new Date(payment.created * 1000);
+              const hour = date.getHours(); // Get hour of the day
+    
+              // If the hour doesn't exist in the revenuePerHour object, initialize it
+              if (!revenuePerHour[hour]) {
+                revenuePerHour[hour] = 0;
+              }
+    
+              // Add the payment amount to the revenue for the corresponding hour
+              revenuePerHour[hour] += payment.amount / 100;
+            });
+    
+            // Convert the revenuePerHour object into arrays for Chart.js
+            const labels = Array.from({ length: 24 }, (_, i) => i) // Array of hours from 0 to 23
+                            .sort((a, b) => b - a); // Sort the hours in descending order
+            const data = labels.map(hour => revenuePerHour[hour] || 0); // Use 0 if revenue is not available for an hour
+    
+            const dataX = {
+              labels: labels,
+              datasets: [
+                {
+                  label: 'Revenues',
+                  data: data,
+                  fill: false,
+                  borderColor: 'rgb(75, 192, 192)',
+                  tension: 0.1,
+                },
+              ],
+            };
+    
+            setdataPayments(dataX);
+          } else {
+            setdataPayments(null);
+          }
+        } else {
+          setdataPayments(null);
+          setTurnover(null);
+        }
+      } catch (error) {
+        setdataPayments(null);
+        setTurnover(null);
+        console.log(error.message);
+      } finally {
+        setLoaderTurnover(false);
+      }
+    }
+    
+    
+    
+    
+
+
+    useEffect(()=>{
+      getTurnoverPerDays();
+    }, []);
+
+ 
+  
+ 
     const [allUsers, setAllUsers] = useState(null);
     const [allAdsers, setallAdsers] = useState(null);
     const [dataChart, setdataChart] = useState(null);
@@ -283,17 +450,50 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                         
                       </>
                       ) : (
-                        <p>No data to display</p>
+                        <p style={{color: 'transparent'}} >No data to display</p>
                       )
                       }
 
                       
                   </div>
                   <div className="chartOfRevenuesine">
-                    Here we gonna put a Line Chart for revenue made from ads plan purchase 
+                  {
+                    (!Turnover && LoaderTurnover) ? "Loading..."
+                    :
+                    <>
+ 
+                    {
+                      dataPayments ?
+                      <Line  
+                        data={dataPayments} 
+                        options={{
+                          maintainAspectRatio : false,
+                          plugins: {
+                            title: {
+                              display: true,
+                              text: "Revenues"
+                            },
+                            legend: {
+                              display: false
+                            }
+                          }
+                        }}
+                      />
+                      :
+                      <div className='nodataXXX'>
+                        No data available
+                      </div>
+                    }
+                    </>
+                  } 
                   </div>
                   <div className="othersozqeodsc">
-                      Others Charts and data display if needed
+                  {(!Turnover && LoaderTurnover) ? "Loading..."
+                    :
+                    <>
+                    Turnover : {Turnover && Turnover}
+                    </>
+                  }
                   </div>
                 </div>
                 <br />

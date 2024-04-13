@@ -4,6 +4,7 @@ import {useNavigate, useLocation } from 'react-router-dom';
 import { useSocket } from '../../Helpers/SocketContext';
 import '../../Pages/Profile/index.css';
 import SinglePageCOmpo from '../SinglePageCompo/SinglePageCompo';
+import axios from 'axios';
 
 
 const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageCLicked}) => {
@@ -13,7 +14,34 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageC
     const navigate = useNavigate();
     const { pathname } = location;
     const { socket, onlineUsers } = useSocket();  
+    const token = localStorage.getItem('token');
 
+
+    const [allUsersLenght,setallUsersLenght] = useState(null);
+
+    
+    const getAllUsersLength = async()=>{
+      try {
+        const resp = await axios.get('http://localhost:3001/user/', {
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
+        if(resp.status === 200){
+          setallUsersLenght(resp.data.length);
+        }
+        else{
+          setallUsersLenght(37)
+        }
+      } catch (error) {
+        setallUsersLenght(37);
+        console.log(error);
+      }
+    }
+    
+    useEffect(()=>{
+      getAllUsersLength();
+    }, []);
 
 
   return (
@@ -23,6 +51,12 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageC
     
     <div className='UtilsAndNavigations' >
       
+      <div className="rowX rowXNoHover">
+         <div className="connectedBull" />
+        <span style={{ color : "limegreen", fontWeight : '500'}} >Members Online&nbsp;&nbsp;:&nbsp;&nbsp;{onlineUsers && socket  && `${onlineUsers }`}{allUsersLenght && <>&nbsp;/&nbsp;{allUsersLenght}</>}</span>
+      </div>
+
+
       <div className="rowX"
         onClick={()=>{
           navigate("/");
@@ -59,12 +93,7 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageC
       </div>
 
 
-      <div className="rowX rowXNoHover">
-        <div className="xxx">
-            <i className="fa-solid fa-earth-americas"></i>
-        </div>
-        <span style={{ color : "limegreen", fontWeight : "bold"}} >Online members&nbsp;&nbsp;:&nbsp;&nbsp;{onlineUsers && socket  && `${onlineUsers }`}</span>
-      </div>
+      
 
       <div className="ruler"/>
 

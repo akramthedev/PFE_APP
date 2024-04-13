@@ -99,7 +99,7 @@
     display: flex;
     align-items: center;
 }
-.rowX span .connectedBull{
+.rowX .connectedBull{
     height: 6px;
     width: 6px;
     margin: 0 0.5rem;
@@ -163,7 +163,7 @@
 
 /* Track */
   .UtilsAndNavigations::-webkit-scrollbar-track {
-    background: #2b2b2b; /* color of the track */
+    background: #2b2b2b; /* color oullf the track */
   }
   
   /* Handle */

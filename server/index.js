@@ -7,6 +7,7 @@ const pagesRoutes       =  require('./Routes/pageRoutes');
 const roomsRoutes       =  require('./Routes/roomsRoutes');
 const messagesRoutes    =  require('./Routes/messageRoutes');
 const adsRoutes         =  require('./Routes/adsRoutes');
+const stripeRoutes      =  require('./Routes/stripeRoute');
 const GraphRoutes       =  require('./Routes/GraphRoutes');
 const mongoose          =  require('mongoose');
 const express           =  require('express');
@@ -46,6 +47,7 @@ app.use('/room', roomsRoutes);
 app.use('/message', messagesRoutes);
 app.use('/ads', adsRoutes);
 app.use('/graph', GraphRoutes);
+app.use('/stripe',stripeRoutes);
 
 //   WEBSOCKETS EVENTS
 

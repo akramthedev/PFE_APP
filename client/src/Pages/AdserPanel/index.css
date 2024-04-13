@@ -173,6 +173,11 @@
     color: red;
     margin-bottom: 1rem;
 }
+
+.pageSucess span{
+    color: rgb(24, 158, 24);
+}
+
 .pageUnsuccess button{    
     width: 140px;
     height: 34px;

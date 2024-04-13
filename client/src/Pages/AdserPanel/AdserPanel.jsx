@@ -58,7 +58,7 @@ const AdserPanel = ({dataUserCurrent, fetchCurrentUser }) => {
   return (
     <>
     {
-      dataUserCurrent && dataUserCurrent.role === "adser" && (dataUserCurrent.plan === 0  || dataUserCurrent.plan === "" || dataUserCurrent.plan === "0") 
+      dataUserCurrent && dataUserCurrent.role === "adser" &&  (dataUserCurrent.plan === null || dataUserCurrent.plan === 0 || dataUserCurrent.plan === undefined) 
       ?
       <div className='allPlans'>
 
