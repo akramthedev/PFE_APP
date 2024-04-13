@@ -7,7 +7,8 @@ const SingleAds = ({handlFetchAllAds,ad, index}) => {
 
     const token = localStorage.getItem('token');
     const [loaderOfDelete, setloaderOfDelete] = useState(false);
-
+    const idUser = localStorage.getItem('idUser');
+    
 
     const DeleteAd = async (id)=>{
       setloaderOfDelete(true);
@@ -39,6 +40,37 @@ const SingleAds = ({handlFetchAllAds,ad, index}) => {
 
     }
 
+    const AddClick = async (id, idAdser)=>{
+      if(token){
+        try{
+          await axios.get(`http://localhost:3001/ads/addClick/${id}/${idAdser}`, {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+        }
+        catch(e){
+          console.log(e.message);
+        } 
+      }
+    }
+
+    const AddViews = async (id, idAdser)=>{
+      if(token){
+        try{
+          await axios.get(`http://localhost:3001/ads/addViews/${id}/${idAdser}`, {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+        }
+        catch(e){
+          console.log(e.message);
+        } 
+      }
+    }
+
+
 
 
 
@@ -53,7 +85,12 @@ const SingleAds = ({handlFetchAllAds,ad, index}) => {
             </div>
             <div className="descxxxx">{ad.description}</div>
             <div className="omgxxxx">
-              <img src={ad.image} alt="" />
+              <img
+                onClick={()=>{
+                  AddClick(ad.adser, ad.adser);
+                  AddViews(ad.adser, ad.adser)
+                }} 
+                src={ad.image} alt="" />
             </div>
             <div className="rowkkkk">
               <div className="clicksxxxx"><i className='fa-solid fa-arrow-pointer'></i>&nbsp;&nbsp;{ad.click}</div>

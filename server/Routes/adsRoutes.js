@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const sendEmail = require('../Helpers/EmailSender');
 const notifs = require('../Models/notifs');
 const ads = require('../Models/ads');
+const adsclicks = require('../Models/AdsClicks');
+const adsviews = require('../Models/AdsViews');
 const nodemailer = require('nodemailer');
 const generateRandomNumber = require("../Helpers/generateOTP");
 const reqAdsers = require('../Models/reqAdsers');
@@ -412,14 +414,14 @@ router.get('/getAllAdsForAdmin', verifyToken, async (req, res) => {
 });
 
 
+
+
 router.get('/addClick/:id', verifyToken, async (req, res) => {
     try {
 
-        const {id } = req.params;
-        const isFAU = await ads.findByIdAndUpdate(id, {
-            $inc : {
-                click : 1
-            }
+        const {id} = req.params;
+        const isFAU = await adsclicks.create({
+            ads : id
         });
         
         if (isFAU) {
@@ -432,6 +434,84 @@ router.get('/addClick/:id', verifyToken, async (req, res) => {
     }
 });
 
+
+router.get('/addClick/:id/:idAdser', verifyToken, async (req, res) => {
+    try {
+
+        const {id, idAdser} = req.params;
+        const isFAU = await adsclicks.create({
+            ads : id, 
+            adser : idAdser
+        });
+        
+        if (isFAU) {
+            res.status(200).send(isFAU);
+        } else {
+            res.status(202).send("No");
+        }
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+router.get('/addViews/:id/:idAdser', verifyToken, async (req, res) => {
+    try {
+
+        const {id, idAdser} = req.params;
+        const isFAU = await adsviews.create({
+            ads : id, 
+            adser : idAdser 
+        });
+        
+        if (isFAU) {
+            res.status(200).send(isFAU);
+        } else {
+            res.status(202).send("No");
+        }
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+
+router.get('/fetchAdsClick/:idUser', verifyToken, async (req, res) => {
+    try {
+
+        const {idUser} = req.params;
+        const isFAU = await adsclicks.find({
+            adser : idUser
+        });
+        
+        if (isFAU) {
+            res.status(200).send(isFAU);
+        } else {
+            res.status(202).send("No");
+        }
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+
+
+
+router.get('/fetchAdsViews/:idUser', verifyToken, async (req, res) => {
+    try {
+
+        const {idUser} = req.params;
+        const isFAU = await adsviews.find({
+            adser : idUser
+        });
+        
+        if (isFAU) {
+            res.status(200).send(isFAU);
+        } else {
+            res.status(202).send("No");
+        }
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
 
 
 

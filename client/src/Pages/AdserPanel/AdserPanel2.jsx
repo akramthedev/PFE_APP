@@ -4,6 +4,20 @@ import axios from 'axios';
 import Navbar from '../../Components/Navbar/Navbar';
 import LoaderSvg from '../../Assets/spinwhite.svg';
 import SingleAds from './SingleAds';
+import { Line } from 'react-chartjs-2';
+import 'chartjs-adapter-date-fns'; // Import date-fns adapter for Chart.js
+import { 
+    Chart as ChartJS,
+    LineElement,
+    CategoryScale, 
+    LinearScale,
+    PointElement,
+    TimeScale
+} from "chart.js"; 
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement,TimeScale);
+
+
+
 
 
 const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
@@ -23,8 +37,11 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
     const [allAds, setallAds] = useState(null);
     const [Impossible,setImpossible] = useState(false);
     const navigate = useNavigate();
-    
-
+    const [dataAdsClick, setdataAdsClick] = useState(null);
+    const [dataAdsViews, setdataAdsViews] = useState(null);
+    const [dataAdsClickTOTAL, setdataAdsClickTOTAL] = useState(null);
+    const [dataAdsViewsTOTAL, setdataAdsViewsTOTAL] = useState(null);
+   
 
     useEffect(()=>{
       const x = async ()=>{
@@ -55,11 +72,11 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
               }
             } 
             else{
-            alert('Error.......');
+            alert('Oops, something went wrong!');
             }
           }
           catch(e){
-          alert('Error.......');
+          alert('Internal Server Error');
             console.log(e.message);
           }
         
@@ -80,7 +97,70 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
         });
         if(resp.status === 200){
           setallAds(resp.data);
+          
+     
+          /*if (resp.data && resp.data.length !== 0) {
+            // Create an object to store views data per day
+            const ViewsPerDay = {};
+        
+            resp.data.forEach(ads => {
+                const date = new Date(ads.createdAt);
+                const day = date.toISOString().split('T')[0]; // Get date in YYYY-MM-DD format
+        
+                // If the day doesn't exist in the ViewsPerDay object, initialize it
+                if (!ViewsPerDay[day]) {
+                    ViewsPerDay[day] = 0;
+                }
+        
+                // Add the number of views for the corresponding day
+                ViewsPerDay[day] += ads.views.length;
+            });
+        
+            // Find the minimum date among all ads
+            const minDate = new Date(Math.min(...resp.data.map(ads => new Date(ads.createdAt))));
+            
+            // Generate all dates from minDate to current date
+            const currentDate = new Date();
+            const allDates = [];
+            for (let d = new Date(minDate); d <= currentDate; d.setDate(d.getDate() + 1)) {
+                allDates.push(d.toISOString().split('T')[0]);
+            }
+        
+            // Populate ViewsPerDay with all dates, even if no ads were created on those days
+            allDates.forEach(day => {
+                if (!ViewsPerDay[day]) {
+                    ViewsPerDay[day] = 0;
+                }
+            });
+        
+            // Convert the ViewsPerDay object into arrays for Chart.js
+            const labels = Object.keys(ViewsPerDay).sort();
+            const data = labels.map(day => ViewsPerDay[day]);
+        
+        
+            const dataX = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Views',
+                        data: data,
+                        fill: false,
+                        borderColor: 'blueviolet',
+                        tension: 0.1,
+                    },
+                ],
+            };
+        
+            setdataViewsAds(dataX);
+        } else {
+            setdataViewsAds(null);
+        }
+        
 
+        
+      */
+          
+      
         }
         else{
           setallAds([]); 
@@ -94,9 +174,174 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
       }
     }
 
+
+    
+
+
+    const handleFetchAdsClicks = async ()=>{
+      if(token && idUser){
+        try{
+          const resp = await axios.get(`http://localhost:3001/ads/fetchAdsClick/${idUser}`, {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+
+
+          if (resp.data && resp.data.length !== 0) {
+            // Create an object to store revenue data per day
+            const ViewsPerDay = {};
+        
+            resp.data.forEach(ads => {
+                const date = new Date(ads.createdAt);
+                const day = date.toISOString().split('T')[0]; // Get date in YYYY-MM-DD format
+        
+                // If the day doesn't exist in the ViewsPerDay object, initialize it
+                if (!ViewsPerDay[day]) {
+                    ViewsPerDay[day] = 0;
+                }
+        
+                // Add the ads views to the revenue for the corresponding day
+                ViewsPerDay[day] += 1;
+            });
+        
+            // Find the minimum date among all ads
+            const minDate = new Date(Math.min(...resp.data.map(ads => new Date(ads.createdAt))));
+            
+            // Generate all dates from minDate to current date
+            const currentDate = new Date();
+            const allDates = [];
+            for (let d = new Date(minDate); d <= currentDate; d.setDate(d.getDate() + 1)) {
+                allDates.push(d.toISOString().split('T')[0]);
+            }
+        
+            // Populate ViewsPerDay with all dates, even if no ads were created on those days
+            allDates.forEach(day => {
+                if (!ViewsPerDay[day]) {
+                    ViewsPerDay[day] = 0;
+                }
+            });
+        
+            // Convert the ViewsPerDay object into arrays for Chart.js
+            const labels = Object.keys(ViewsPerDay).sort();
+            const data = labels.map(day => ViewsPerDay[day]);
+        
+        
+            const dataX = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Views',
+                        data: data,
+                        fill: false,
+                        borderColor: 'blueviolet',
+                        tension: 0.1,
+                    },
+                ],
+            };
+            setdataAdsClickTOTAL(resp.data.length)
+            setdataAdsClick(dataX);
+        } else {
+            setdataAdsClick(null);
+        }
+
+
+        }
+        catch(e){
+          console.log(e.message);
+          setdataAdsClick(null);
+        } 
+      }
+    }
+
+
+    const handleFetchAdsViews = async ()=>{
+      if(token && idUser){
+        try{
+          const resp = await axios.get(`http://localhost:3001/ads/fetchAdsViews/${idUser}`, {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+
+
+          if (resp.data && resp.data.length !== 0) {
+            // Create an object to store revenue data per day
+            const ViewsPerDay = {};
+        
+            resp.data.forEach(ads => {
+                const date = new Date(ads.createdAt);
+                const day = date.toISOString().split('T')[0]; // Get date in YYYY-MM-DD format
+        
+                // If the day doesn't exist in the ViewsPerDay object, initialize it
+                if (!ViewsPerDay[day]) {
+                    ViewsPerDay[day] = 0;
+                }
+        
+                // Add the ads views to the revenue for the corresponding day
+                ViewsPerDay[day] += 1;
+            });
+        
+            // Find the minimum date among all ads
+            const minDate = new Date(Math.min(...resp.data.map(ads => new Date(ads.createdAt))));
+            
+            // Generate all dates from minDate to current date
+            const currentDate = new Date();
+            const allDates = [];
+            for (let d = new Date(minDate); d <= currentDate; d.setDate(d.getDate() + 1)) {
+                allDates.push(d.toISOString().split('T')[0]);
+            }
+        
+            // Populate ViewsPerDay with all dates, even if no ads were created on those days
+            allDates.forEach(day => {
+                if (!ViewsPerDay[day]) {
+                    ViewsPerDay[day] = 0;
+                }
+            });
+        
+            // Convert the ViewsPerDay object into arrays for Chart.js
+            const labels = Object.keys(ViewsPerDay).sort();
+            const data = labels.map(day => ViewsPerDay[day]);
+        
+        
+            const dataX = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Views',
+                        data: data,
+                        fill: false,
+                        borderColor: 'blueviolet',
+                        tension: 0.1,
+                    },
+                ],
+            };
+        
+            setdataAdsViews(dataX);
+            setdataAdsViewsTOTAL(resp.data.length);
+        } else {
+          setdataAdsViews(null);
+        }
+
+
+        }
+        catch(e){
+          setdataAdsViews(null);
+          console.log(e.message);
+        } 
+      }
+    }
+
+
+
     useEffect(()=>{
       handlFetchAllAds();
+      handleFetchAdsClicks();
+      handleFetchAdsViews();
     }, []);
+
+
+
 
 
     const handlCreate = async(e)=>{
@@ -255,8 +500,66 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                   </div>
                   </>
                 }
-                </div>
+              </div>
                 <div className='zurqeuzeqfuuo'>
+                  <div className="iqesciq">
+                    <div className='zuqdfios'>Chart : Total Views Per Days</div>
+                    {
+                      dataAdsViewsTOTAL && 
+                      <div className='allViewsInfos'><i style={{fontSize : "13px"}}  className='fa-solid fa-eye'></i>&nbsp;&nbsp;Total : {dataAdsViewsTOTAL} </div>
+                    }
+                    {
+                      (dataAdsViews ) ?
+                      <Line
+                        data={dataAdsViews} 
+                        options={{
+                          maintainAspectRatio : false,
+                          plugins: {
+                            title: {
+                              display: true,
+                              text: "Revenues"
+                            },
+                            legend: {
+                              display: false
+                            }
+                          }
+                        }}
+                      />
+                      :
+                      <div className='nodataXXX'>
+                        No data available
+                      </div>
+                    }
+                  </div>
+                  <div className="iqesciq">
+                    <div className='zuqdfios'>Chart : Total Clicks Per Days</div>
+                    {
+                      dataAdsClickTOTAL && 
+                      <div className='allViewsInfos'><i style={{fontSize : "13px"}} className='fa-solid fa-arrow-pointer'></i>&nbsp;&nbsp;Total : {dataAdsClickTOTAL} </div>
+                    }
+                  {
+                      (dataAdsClick ) ?
+                      <Line  
+                        data={dataAdsClick} 
+                        options={{
+                          maintainAspectRatio : false,
+                          plugins: { 
+                            title: {
+                              display: true,
+                              text: "Revenues"
+                            },
+                            legend: {
+                              display: false
+                            }
+                          }
+                        }}
+                      />
+                      :
+                      <div className='nodataXXX'>
+                        No data available
+                      </div>
+                    }
+                  </div>
                 {
                   loader2 ? "Fetching All Ads Created..."
                   :

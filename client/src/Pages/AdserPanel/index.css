@@ -235,6 +235,7 @@
 .zurqeuzeqfuuo{
     width: 70%;
     height: 100%;
+    overflow-y: scroll;
 }
 .oqdconqsoc{
     width: 30%;
@@ -442,10 +443,13 @@
     font-weight: 500;
 }
 .allAdsContTainer{
-    height:calc(100% - 4rem);
-    margin-top: 2rem;
+    height:calc(100% - 250px);
+    margin-top: .5rem;
     width: 100%;
-    padding: 2rem;
+    position: sticky;
+    top: 20px;
+    z-index: 99;
+    padding: 0.5rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: center;
@@ -546,4 +550,27 @@
 }
 .rowkkkk .fa-trash{
     color: rgb(173, 0, 0);
+}
+
+.iqesciq{
+    height: 220px;
+    margin: 0.5rem;
+    width: 94.5%;
+    position: relative;
+    margin-bottom: 3rem;
+}
+.zuqdfios{
+    width:auto;
+    height: 20px;
+    font-size: 14px;
+    color: gainsboro;
+    margin-bottom: 1rem;
+    position: absolute;
+    color: gray;
+    right: 0px;
+    top: -3px;
+}
+
+.allViewsInfos{
+    color: gainsboro;
 }
