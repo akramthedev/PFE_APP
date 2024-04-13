@@ -60,7 +60,16 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
       }
     }
 
-   
+
+    function formatNumber(num) {
+      if (num < 1000) {
+          return num.toString();
+      } else if (num >= 1000 && num < 1000000) {
+          return (num / 1000).toFixed(1) + 'k';
+      } else {
+          return (num / 1000000).toFixed(1) + 'M';
+      }
+  }
   
     
 
@@ -531,7 +540,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                         <div className="numberDs">
                           {(!Turnover && LoaderTurnover) ? ""
                             :
-                            <>$&nbsp;{Turnover/100}</>
+                            <>$&nbsp;{formatNumber(Turnover/100)}</>
                           }
                         </div>
                         <div className="meaningDS">
@@ -552,7 +561,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                         <div className="numberDs">
                         <>
                           {
-                            dataSingleBar.adsviewsLength === -1 ? "Undefined" : dataSingleBar.adsviewsLength
+                            dataSingleBar.adsviewsLength === -1 ? "Undefined" : formatNumber(dataSingleBar.adsviewsLength)
                           }
                           </>
                         </div>
@@ -574,7 +583,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                         <div className="numberDs">
                         <>
                           {
-                            dataSingleBar.postsLength === -1 ? "Undefined" : dataSingleBar.postsLength
+                            dataSingleBar.postsLength === -1 ? "Undefined" : formatNumber(dataSingleBar.postsLength)
                           }
                           </>
                         </div>
@@ -596,7 +605,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                         <div className="numberDs">
                           <>
                           {
-                            dataSingleBar.usersLength === -1 ? "Undefined" : dataSingleBar.usersLength-1
+                            dataSingleBar.usersLength === -1 ? "Undefined" : formatNumber(dataSingleBar.usersLength-1)
                           }
                           </>
                         </div>
