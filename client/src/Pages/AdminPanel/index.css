@@ -348,3 +348,19 @@ table .displayFLexAlignCnete{
     width: 300px;
     height: 300px;
 }
+
+.ocddoqvnoc{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    height: 100%;
+    color: white !important;
+    font-size: 15px;
+}
+.ocddoqvnoc img{
+    margin-right: 0.4rem;
+    height: 24px;
+    width: 24px;
+    object-fit: cover;
+}

@@ -437,7 +437,7 @@ router.get('/addClick/:id', verifyToken, async (req, res) => {
 
 router.get('/addClick/:id/:idAdser', verifyToken, async (req, res) => {
     try {
-
+        const idOfTheUserWhoClicks = req.user._id;
         const {id, idAdser} = req.params;
         const isFAU = await adsclicks.create({
             ads : id, 
@@ -456,13 +456,13 @@ router.get('/addClick/:id/:idAdser', verifyToken, async (req, res) => {
 
 router.get('/addViews/:id/:idAdser', verifyToken, async (req, res) => {
     try {
-
+        const idOfTheUserWhoViewd = req.user._id;
         const {id, idAdser} = req.params;
+        console.log(idOfTheUserWhoViewd);
         const isFAU = await adsviews.create({
             ads : id, 
             adser : idAdser 
         });
-        
         if (isFAU) {
             res.status(200).send(isFAU);
         } else {
@@ -472,6 +472,7 @@ router.get('/addViews/:id/:idAdser', verifyToken, async (req, res) => {
         res.status(500).send(e.message);
     }
 });
+
 
 
 router.get('/fetchAdsClick/:idUser', verifyToken, async (req, res) => {
@@ -513,6 +514,23 @@ router.get('/fetchAdsViews/:idUser', verifyToken, async (req, res) => {
     }
 });
 
+router.get('/fetchAllViewsHH', async (req, res) => {
+    try {
+
+        const isFAU = await adsviews.find();
+        
+        if (isFAU) {
+            res.status(200).send(isFAU);
+        } else {
+            res.status(202).send("No");
+        }
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+
+ 
 
 
 

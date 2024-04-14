@@ -36,7 +36,8 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
   const idUser = localStorage.getItem('idUser');
   const token = localStorage.getItem('token');
   const COLORS = ["#ffbb00", '#20a71b', '#1867c7']; // Colors for each segment
-  
+  const [dataAdsViewsTOTAL, setdataAdsViewsTOTAL] = useState(null);
+
 
     const fetchAllAds = async ()=>{
       try{
@@ -183,72 +184,92 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
     const [dataPayments, setdataPayments] = useState(null);
 
 
+    
+
+
+
+
     const getTurnoverPerDays = async () => {
       try {
-        setLoaderTurnover(true);
-        const resp = await axios.get(`http://localhost:3001/stripe/getTurnover`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        if (resp.status === 200) {
-          setTurnover(resp.data.totalAmount);
-    
-          if (resp.data.payments && resp.data.payments.data.length !== 0) {
-            // Create an object to store revenue data per day
-            const revenuePerDay = {};
-    
-            resp.data.payments.data.forEach(payment => {
-              const date = new Date(payment.created * 1000);
-              const day = date.toISOString().split('T')[0]; // Get date in YYYY-MM-DD format
-    
-              // If the day doesn't exist in the revenuePerDay object, initialize it
-              if (!revenuePerDay[day]) {
-                revenuePerDay[day] = 0;
+          setLoaderTurnover(true);
+          const resp = await axios.get(`http://localhost:3001/stripe/getTurnover`, {
+              headers: {
+                  Authorization: `Bearer ${token}`
               }
-    
-              // Add the payment amount to the revenue for the corresponding day
-              revenuePerDay[day] += payment.amount / 100;
-            });
-    
-            // Convert the revenuePerDay object into arrays for Chart.js
-            const labels = Object.keys(revenuePerDay).sort();;
-            const data = labels.map(day => revenuePerDay[day]);
-
-
-    
-            const dataX = {
-              labels: labels,
-              datasets: [
-                {
-                  label: 'Revenues',
-                  data: data,
-                  fill: false,
-                  borderColor: 'blueviolet',
-                  tension: 0.1,
-                },
-              ],
-            };
-    
-            setdataPayments(dataX);
+          });
+          if (resp.status === 200) {
+              setTurnover(resp.data.totalAmount);
+  
+              if (resp.data.payments && resp.data.payments.data.length !== 0) {
+                  // Create an object to store revenue data per day
+                  const revenuePerDay = {};
+  
+                  resp.data.payments.data.forEach(payment => {
+                      const date = new Date(payment.created * 1000);
+                      const day = date.toISOString().split('T')[0]; // Get date in YYYY-MM-DD format
+  
+                      // If the day doesn't exist in the revenuePerDay object, initialize it
+                      if (!revenuePerDay[day]) {
+                          revenuePerDay[day] = 0;
+                      }
+  
+                      // Add the payment amount to the revenue for the corresponding day
+                      revenuePerDay[day] += payment.amount / 100;
+                  });
+  
+                  // Find the minimum date among all payments
+                  const minDate = new Date(Math.min(...resp.data.payments.data.map(payment => payment.created * 1000)));
+                  
+                  // Generate all dates from minDate to current date
+                  const currentDate = new Date();
+                  const allDates = [];
+                  for (let d = new Date(minDate); d <= currentDate; d.setDate(d.getDate() + 1)) {
+                      allDates.push(d.toISOString().split('T')[0]);
+                  }
+  
+                  // Populate revenuePerDay with all dates, even if no payments were made on those days
+                  allDates.forEach(day => {
+                      if (!revenuePerDay[day]) {
+                          revenuePerDay[day] = 0;
+                      }
+                  });
+  
+                  // Convert the revenuePerDay object into arrays for Chart.js
+                  const labels = Object.keys(revenuePerDay).sort();
+                  const data = labels.map(day => revenuePerDay[day]);
+  
+                  const dataX = {
+                      labels: labels,
+                      datasets: [
+                          {
+                              label: 'Revenues',
+                              data: data,
+                              fill: false,
+                              borderColor: 'blueviolet',
+                              tension: 0.1,
+                          },
+                      ],
+                  };
+  
+                  setdataPayments(dataX);
+              } else {
+                  setdataPayments(null);
+              }
           } else {
-            setdataPayments(null);
+              setdataPayments(null);
+              setTurnover(null);
           }
-        } else {
+      } catch (error) {
           setdataPayments(null);
           setTurnover(null);
-        }
-      } catch (error) {
-        setdataPayments(null);
-        setTurnover(null);
-        console.log(error.message);
+          console.log(error.message);
       } finally {
-        setLoaderTurnover(false);
+          setLoaderTurnover(false);
       }
-    }
+  }
+  
 
 
-    
     
 
 
@@ -417,11 +438,35 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
 
 
 
+
+
+
+
+    const handleFetchAdsViews = async ()=>{
+      if(token && idUser){
+        try{
+            const resp = await axios.get(`http://localhost:3001/ads/fetchAllViewsHH`);
+            if (resp.data && resp.data.length !== 0) {
+              setdataAdsViewsTOTAL(resp.data.length);
+            } else {
+              setdataAdsViewsTOTAL(-1);
+            }
+            console.log(resp.data);
+        }
+        catch(e){
+          setdataAdsViewsTOTAL(-1);
+          console.log(e.message);
+        } 
+      }
+    }
+
+
     useEffect(()=>{
         fetchAllUsers();
         fetchAllAds();
         fetchAllRequestsAds();
         fetchdataSingleBar();
+        handleFetchAdsViews();
     }, []);
 
 
@@ -432,12 +477,12 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
       <div className='AdminPanel'>  
         {
             !allUsers && !allAds && !allRequestsAds ? <div className="nodata">
-                <span>
+                <div className='ocddoqvnoc'>
                     <img
                         src={Loader}                        
                     />
                     Loading...
-                </span>
+                </div>
             </div>
             :
             <>
@@ -493,7 +538,13 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                   </div>
                   <div className="chartOfRevenuesine">
                   {
-                    (!Turnover && LoaderTurnover) ? "Loading..."
+                    (!Turnover && LoaderTurnover) ? 
+                  <div className='ocddoqvnoc'>
+                    <img
+                        src={Loader}                        
+                    />
+                    Loading...
+                </div>
                     :
                     <>
  
@@ -561,7 +612,12 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                         <div className="numberDs">
                         <>
                           {
-                            dataSingleBar.adsviewsLength === -1 ? "Undefined" : formatNumber(dataSingleBar.adsviewsLength)
+                            dataAdsViewsTOTAL && 
+                            <>
+                            {
+                              dataAdsViewsTOTAL === -1 ? "--" : formatNumber(dataAdsViewsTOTAL)
+                            }
+                            </>
                           }
                           </>
                         </div>
@@ -583,7 +639,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                         <div className="numberDs">
                         <>
                           {
-                            dataSingleBar.postsLength === -1 ? "Undefined" : formatNumber(dataSingleBar.postsLength)
+                            dataSingleBar.postsLength === -1 ? "--" : formatNumber(dataSingleBar.postsLength)
                           }
                           </>
                         </div>
@@ -605,12 +661,12 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                         <div className="numberDs">
                           <>
                           {
-                            dataSingleBar.usersLength === -1 ? "Undefined" : formatNumber(dataSingleBar.usersLength-1)
+                            dataSingleBar.usersLength === -1 ? "--" : formatNumber(dataSingleBar.usersLength-1)
                           }
                           </>
                         </div>
                         <div className="meaningDS">
-                          Customers
+                          Users
                         </div>
                       </div>
                     </div>
@@ -770,7 +826,14 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                         </tr>
                         }
                         {
-                                !allAdsers ? "Loading..."
+                                !allAdsers ? 
+                                
+                            <div className='ocddoqvnoc'>
+                                <img
+                                    src={Loader}                        
+                                />
+                                Loading...
+                            </div>
                                 :
                                 <>
                                 {

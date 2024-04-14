@@ -5,7 +5,6 @@ const Schemax = new mongoose.Schema({
 
     ads : {
         type : String, 
-        ref: 'ads'
     },
     adser : {
         type : String, 

@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 
 
 
-const SingleAds = ({handlFetchAllAds,ad, index}) => {
+const SingleAds = ({adsViews,handlFetchAllAds,ad, index}) => {
 
     const token = localStorage.getItem('token');
     const [loaderOfDelete, setloaderOfDelete] = useState(false);
@@ -35,10 +35,9 @@ const SingleAds = ({handlFetchAllAds,ad, index}) => {
           setloaderOfDelete(false);
           console.log(e.message);
         } 
-      
       }
-
     }
+ 
 
     const AddClick = async (id, idAdser)=>{
       if(token){
@@ -55,6 +54,7 @@ const SingleAds = ({handlFetchAllAds,ad, index}) => {
       }
     }
 
+     
     const AddViews = async (id, idAdser)=>{
       if(token){
         try{
@@ -70,11 +70,8 @@ const SingleAds = ({handlFetchAllAds,ad, index}) => {
       }
     }
 
-
-
-
-
-
+  
+   
   return (
     <React.Fragment key={index}>
     {
@@ -92,10 +89,7 @@ const SingleAds = ({handlFetchAllAds,ad, index}) => {
                 }} 
                 src={ad.image} alt="" />
             </div>
-            <div className="rowkkkk">
-              <div className="clicksxxxx"><i className='fa-solid fa-arrow-pointer'></i>&nbsp;&nbsp;{ad.click}</div>
-              &nbsp;&nbsp;&nbsp;&nbsp;<div className="viewsxxxx"><i className='fa-solid fa-eye'></i>&nbsp;&nbsp;{ad.views && ad.views.length}</div>
-            </div>
+            <div className="rowkkkk" />
             <button
                     type='button'
                     className={loaderOfDelete && "noCursorXX"}

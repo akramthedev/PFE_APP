@@ -10,6 +10,7 @@ const adsRoutes         =  require('./Routes/adsRoutes');
 const stripeRoutes      =  require('./Routes/stripeRoute');
 const GraphRoutes       =  require('./Routes/GraphRoutes');
 const mongoose          =  require('mongoose');
+const adsviews          =  require('./Models/AdsViews');
 const express           =  require('express');
 const Connect           =  require('./Helpers/Database');
 const http              =  require('http');
@@ -48,6 +49,8 @@ app.use('/message', messagesRoutes);
 app.use('/ads', adsRoutes);
 app.use('/graph', GraphRoutes);
 app.use('/stripe',stripeRoutes);
+ 
+
 
 //   WEBSOCKETS EVENTS
 

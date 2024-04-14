@@ -168,6 +168,7 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
       }
     }
 
+    const [adsViews, setAdsViews] = useState(null);
 
     const handleFetchAdsViews = async ()=>{
       if(token && idUser){
@@ -180,9 +181,8 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
 
 
           if (resp.data && resp.data.length !== 0) {
-            // Create an object to store revenue data per day
+            setAdsViews(resp.data);
             const ViewsPerDay = {};
-        
             resp.data.forEach(ads => {
                 const date = new Date(ads.createdAt);
                 const day = date.toISOString().split('T')[0]; // Get date in YYYY-MM-DD format
@@ -522,11 +522,18 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                         </span>
                       </div>
                       :
-                      <div className="allAdsContTainer">
+                      <div className={planOfUser && planOfUser === 3 ? "allAdsContTainer" : "allAdsContTainer allAdsContTainerAddHeihgt"}>
                         {
                           allAds.map((ad, index)=>{
                             return(
-                              <SingleAds handlFetchAllAds={handlFetchAllAds} ad={ad} index={index} />
+                              
+                              <SingleAds 
+                                adsViews={adsViews ? adsViews : null}
+                                handlFetchAllAds={handlFetchAllAds}
+                                ad={ad} 
+                                index={index}
+                              />
+                            
                             )
                           })
                         }
@@ -538,10 +545,7 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                 }
                 </div>
          </div>
-
-                
         </div>
-
       :
       <div className='eqdhoqe'>
         <span>
@@ -552,10 +556,7 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
         </span>
       </div>
       }
-     
-
   </div>
   )
 }
-
 export default AdserPanel2
