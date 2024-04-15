@@ -174,9 +174,7 @@ router.get('/suggested-contacts/:userId', async (req, res) => {
         const recommendations = await users.find({
             _id: { 
                 $nin: user.contacts.concat(userId) 
-            }, 
-            isVerified : true
-            // Exclude the user's own ID
+            }
         });
 
         let recommendationsAfterCheckRequests = [];

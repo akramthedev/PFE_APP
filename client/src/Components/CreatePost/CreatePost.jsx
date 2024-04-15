@@ -67,6 +67,7 @@ const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFe
 
               if(res){
                 setFile(null);
+                
                 const resp = await axios.post("http://localhost:3001/post/create", {
                   creator : idUser, 
                   image : res.data.url, 

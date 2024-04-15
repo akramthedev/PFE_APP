@@ -29,11 +29,13 @@ const schemaUsers = new mongoose.Schema({
     },
     BigAbout :{
         type : String, 
-        required : false
+        required : false, 
+        default : "",
     },
     address: {
         type : String, 
-        required : false
+        required : false, 
+        default : "", 
     },
     phoneNumber: {
         type: String,
@@ -96,7 +98,10 @@ const schemaUsers = new mongoose.Schema({
         required : false
     },
     adsSeen : {
-        type : String, 
+        type : [{
+            ads : String, 
+            count : Number
+        }], 
         required : false
     }
     
