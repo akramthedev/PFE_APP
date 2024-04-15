@@ -50,25 +50,20 @@
     padding-left: 1.2rem;
 }
 .unspecified{
-    background-color: rgb(255, 182, 182);
-    color: rgb(139, 0, 0);
+    color: rgb(241, 0, 0);
     display: flex;
     align-items: center;
     justify-content: center;
-
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     width:100px;
     height: 22px;
-
     border-radius: .25rem;
-    border:1px solid rgb(147, 0, 0);
 }
 
 
 .verifiedxxx{
-    background-color: rgb(138, 255, 132);
-    color: rgb(0, 99, 7);
+    color: rgb(0, 193, 13);
     font-size: 13px;
     font-weight: 600;
     width:100px;
@@ -76,7 +71,6 @@
     align-items: center;
     justify-content: center;
     border-radius: .25rem;
-    border:1px solid rgb(99, 143, 98);
 }
 .qoesc td{
     margin-bottom: 0.4rem;
@@ -98,9 +92,7 @@
     border: 1px solid rgb(59, 246, 65);
 }
 .inactive{
-    background-color: #ffd148;
-    color: rgb(90, 68, 0);
-    border: 1px solid #ffe250;
+    color: rgb(253, 190, 0);
 }
 .suspended{
     background-color: rgb(80, 0, 0);
@@ -363,4 +355,55 @@ table .displayFLexAlignCnete{
     height: 24px;
     width: 24px;
     object-fit: cover;
+}
+
+ 
+.qsuoe{
+    position: relative;
+
+}
+.suoqrdcs{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    top: 0px;
+    right: 0;
+    height: 130px;
+    z-index: 99;
+    width: 200px;
+    border-radius: 0.3rem;
+    background-color: rgb(24, 23, 23);
+}
+
+
+.quiodcsx{
+    background-color: rgb(61, 57, 57);
+    color: rgb(255, 255, 255);
+    margin-bottom: 0.5rem;
+}
+.suoqrdcs .close{
+    position: absolute;
+    right: 5px;
+    top: 8px;
+    background-color: white;
+    color: black;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.quiodcsx:hover{
+    background-color: rgb(81, 81, 81);
+}
+
+.activated99{
+    background-color: rgb(220, 151, 0);
+}
+.activated99:hover{
+    background-color: rgb(159, 108, 0);
 }

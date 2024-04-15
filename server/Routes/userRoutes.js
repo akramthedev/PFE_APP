@@ -26,6 +26,26 @@ router.get('/:id', verifyToken ,async(req, res)=>{
 });
 
 
+
+router.post('/updateStatus' ,async(req, res)=>{
+    try{
+        const {status, userId} = req.body;
+        const isFound = await users.findByIdAndUpdate(userId, {
+            status : status
+        }, {new : true});
+        if(isFound){
+            res.status(200).send(isFound);
+        }
+        else{
+            res.status(202).send('Not Found...');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
 router.get('/', verifyToken ,async(req, res)=>{
     try{
         const areFound = await users.find();

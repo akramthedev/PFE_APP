@@ -209,6 +209,7 @@ const Auth = () => {
           status={error.status}
           isEnabled={error.isEnabled}
         />
+        <br />
 
       </form>
 

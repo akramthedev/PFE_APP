@@ -21,6 +21,7 @@ import {
     PointElement,
     TimeScale
 } from "chart.js"; 
+import SingleTr from './SingleTr';
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement,TimeScale);
 
 
@@ -695,14 +696,14 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                             <th className='EmailAddress'>
                                 Email Address
                             </th>
+                            <th className='verified2 textAlignCenter'>
+                                Email Verified
+                            </th>
                             <th className='Location'>
                                 Location
                             </th>
                             <th className='phoneNumber'>
                                 Phone Num
-                            </th>
-                            <th className='status textAlignCenter'>
-                                Status
                             </th>
                             <th className='website'>
                                 Website
@@ -710,71 +711,18 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                             <th className='website'>
                                 Role
                             </th>
-                            <th className='verified2 textAlignCenter'>
-                                Email Verified
-                            </th>
+                            <th className='status textAlignCenter'>
+                                Status
+                            </th> 
+                            <th className='status textAlignCenter'>
+                                Modify Status
+                            </th>                            
                         </tr>
                         {
                                 allUsers && allUsers.map((user, index)=>{
                                     
                                    if(user._id !== idUser){return(
-                                        <tr >
-                                            <td className='num'>
-                                            {
-                                                index+1
-                                            }
-                                            </td>
-                                            <td className='FullName'>
-                                            {
-                                                user.fullName ? user.fullName : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
-                                            }
-                                            </td>
-                                            <td className='EmailAddress'>
-                                            {
-                                                user.email ?  user.email : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
-                                            }
-                                            </td>
-                                            <td className='Location'>
-                                            {
-                                                user.address ?  user.address : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
-                                            }
-                                            </td>
-                                            <td className='phoneNumber'>
-                                            {
-                                                user.phoneNumber ? user.phoneNumber : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
-                                            }
-                                            </td>
-                                            <td className='noPaddingleft textAlignCenter'>
-                                            {
-                                                user.status  ? <>
-                                                {
-                                                    user.status === "active" ? <div className="xoui verifiedxxx">Active</div>
-                                                    :
-                                                    user.status === "inactive" ? <div className=" xoui inactive">Inactive</div>
-                                                    :
-                                                    <div className=" xoui unspecified">
-                                                        Suspended
-                                                    </div>
-                                                }
-                                                </> : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
-                                            }
-                                            </td>
-                                            <td className='portfolio'>
-                                            {
-                                                user.portfolio ? user.portfolio : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
-                                            }
-                                            </td>
-                                            <td className='role'>
-                                            {
-                                                user.role ? user.role :  <div  className='unspecified quedfuuqfhdsc'>Unspecified</div> 
-                                            }
-                                            </td>
-                                            <td className=' textAlignCenter'>
-                                            {
-                                                user.isVerified  ? <div  className='verifiedxxx'>Verified</div> : <div  className='unspecified'>Unverified</div>
-                                            }
-                                            </td>
-                                        </tr>
+                                        <SingleTr renderParent={fetchAllUsers} index={index} user={user} />
                                     ) 
                                   }
                                 })
@@ -950,19 +898,14 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                 Description
                             </th>
                             <th className='phoneNumber'>
-                                Adser
-                            </th>
-                            <th className='status textAlignCenter'>
-                                Clicks
-                            </th>
-                            <th className='website'>
-                                Views
+                                Visit Adser
                             </th>
                             <th className='website'>
                                 Created At
                             </th>
+                           
                             <th className='website'>
-                                Delete
+                                Delete Ads
                             </th>
                         </tr>
                         }
@@ -992,7 +935,6 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                                         ads.description ?  ads.description : <div  className='unspecified quedfuuqfhdsc '>Unspecified</div>
                                                     }
                                                     </td>
-                                                    
                                                     <td className='displayFLexAlignCnete'>
                                                     {
                                                         ads.adser ? 
@@ -1001,21 +943,14 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                                           nav(`/profile/${ads.adser}`)
                                                         }}
                                                         >
-                                                          Visit Adser
+                                                          <i className='fa-solid fa-eye'></i>&nbsp;&nbsp;Adser
                                                         </button>  
                                                            : <div  className='unspecified quedfuuqfhdsc'>Unspecified</div>
                                                     }
                                                     </td>
-                                                    <td className=' textAlignCenter'>
-                                                    {
-                                                      ads.click
-                                                    }
-                                                    </td>
-                                                    <td className=' textAlignCenter'>
-                                                    {
-                                                      ads.views.length
-                                                    }
-                                                    </td>
+                                                     
+                                                   
+                                                   
                                                     <td className='portfolio'>
                                                     {
                                                       getTime(ads.createdAt)
@@ -1026,6 +961,8 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                                     }
                                                     </td>
 
+                                                    
+
                                                     <td className='displayFLexAlignCnete'>
                                                       <button
                                                         onClick={()=>{
@@ -1034,7 +971,7 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                                                         className='zsc'
                                                         disabled={loaderOfDelete}
                                                       >
-                                                        Delete This Ads
+                                                        <i className='fa-solid fa-trash'></i>&nbsp;&nbsp;Delete
                                                       </button>  
                                                     </td>   
 
