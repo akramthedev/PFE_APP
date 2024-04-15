@@ -56,7 +56,7 @@
 .cp1{
     height:80px;
     width: 100%;
-    padding: 0 1.5rem;
+    padding: 0;
     display: flex;
     cursor: pointer;
     align-items: center;
@@ -91,9 +91,7 @@
     object-fit: cover;
     margin-bottom: 0.3rem;
 }
-.cp1{
-
-}
+ 
 .cp1 img{
     height: 50px;
     width: 50px;
@@ -279,4 +277,11 @@
     filter: invert(77%) !important;
     height: 22px !important;
     width: 22px !important;
+}
+
+.createPost .qidoscjn{
+    height: 40px !important;
+    width: 44px !important;
+    border-radius: 50% !important;
+    object-fit:cover !important;
 }

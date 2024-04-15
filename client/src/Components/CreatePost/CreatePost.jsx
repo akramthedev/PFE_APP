@@ -29,6 +29,10 @@ const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFe
     ClickOutsider(pôpUpEmojis, setEmojiShow); 
     
 
+    const [file, setFile] = useState(null);
+    const handleSelectFile = (e) => setFile(e.target.files[0]);
+
+
 
     const emojis = [
       "😊", "😂", "😍", "🥰", "😎", "🤩", "😜", "😇", "😘", "🤗",
@@ -47,31 +51,67 @@ const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFe
       setisSubmitClicked(true);
       event.preventDefault();
       if(token && idUser){
-        if(images === "" && textArea === ""){
+        if(!file && textArea === ""){
           console.log("Empty Field");
         }
         else{
           try{
-            const resp = await axios.post("http://localhost:3001/post/create/", {
-              creator : idUser, 
-              image : images, 
-              description : textArea, 
-              type : "normal"          
-            }, {
-              headers : {
-                Authorization : `Bearer ${token}`
+
+
+            if(file){
+              const dataCreatePostPicture = new FormData();
+              dataCreatePostPicture.append("my_file", file);
+              const res = await axios.post("http://localhost:3001/cloudinary/uploadCreatePost", dataCreatePostPicture);
+              
+              console.log(res);
+
+              if(res){
+                setFile(null);
+                const resp = await axios.post("http://localhost:3001/post/create", {
+                  creator : idUser, 
+                  image : res.data.url, 
+                  description : textArea, 
+                  type : "normal"          
+                }, {
+                  headers : {
+                    Authorization : `Bearer ${token}`
+                  }
+                }); 
+  
+                if(resp.status=== 200){
+                  reRenderParentCompo();
+                  setThePostCreated(resp.data);
+                  setPostCreated(!PostCreated);
+                  setisCreateClicked(false);
+                  settextArea("");
+                }
+                else{
+                  alert("Error Creating Post");
+                }
               }
-            }); 
-            if(resp.status=== 200){
-              //reRenderParentCompo();
-              setThePostCreated(resp.data);
-              setPostCreated(!PostCreated);
-              setisCreateClicked(false);
-              setimages("");
-              settextArea("");
             }
             else{
-              alert("Error Creating Post");
+              const resp = await axios.post("http://localhost:3001/post/create", {
+                creator : idUser, 
+                image : "", 
+                description : textArea, 
+                type : "normal"          
+              }, {
+                headers : {
+                  Authorization : `Bearer ${token}`
+                }
+              }); 
+
+              if(resp.status=== 200){
+                //reRenderParentCompo();
+                setThePostCreated(resp.data);
+                setPostCreated(!PostCreated);
+                setisCreateClicked(false);
+                settextArea("");
+              }
+              else{
+                alert("Error Creating Post");
+              }
             }
           }
           catch(error){
@@ -130,7 +170,14 @@ const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFe
             </button>
           </div>
           <div className="zowZ2">
-            <input value={images} onChange={(e)=>{setisSubmitClicked(false);setimages(e.target.value)}} type="text" placeholder='Your image URL' spellCheck={false} />
+  
+            <input
+              id="file"
+              type="file"
+              onChange={handleSelectFile}
+              multiple={false}
+            />
+
           </div>
           <div className="zowZ2">
             <button
@@ -138,7 +185,11 @@ const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFe
               type='submit'
               disabled={isSubmitClicked}
             >
-              Lunch the post
+              {
+                isSubmitClicked ? "Creating the post..."
+                :
+                "Lunch the post"
+              }
             </button>
           </div>
         </form>
@@ -156,7 +207,7 @@ const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFe
           
 
             <div className={ajusting === "home" ? "cp1" : "cp1 cp1Profile"}>
-                <img  src={dataUserCurrent && dataUserCurrent.profilePic} alt=""
+                <img className='qidoscjn'  src={dataUserCurrent && dataUserCurrent.profilePic} alt=""
                 onClick={()=>{
                   if(!isFetchingUser && dataUserCurrent){
                     setisCreateClicked(true);

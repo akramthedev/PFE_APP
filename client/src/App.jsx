@@ -23,6 +23,7 @@ import AdminPanel from "./Pages/AdminPanel/AdminPanel";
 import AdserPanel from "./Pages/AdserPanel/AdserPanel";
 import UnsuccessfullPanel from './Pages/AdserPanel/UnsuccessfullPanel';
 import { useSocket } from './Helpers/SocketContext';
+import Cloudinary from './Pages/Cloudinary';
 
 
 
@@ -214,6 +215,13 @@ function App() {
             path='/adser/panel/payment/successfull' 
             element={
               token ? <Successfull isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
+            } 
+          />
+
+          <Route  
+            path='/cloudinary' 
+            element={
+              token ? <Cloudinary /> : <Navigate to="/auth" />
             } 
           />
 

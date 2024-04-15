@@ -11,7 +11,7 @@ import Adser from "../../Assets/AdserSymbol";
 import Admin from '../../Assets/AdminSymbol';
 
 
-const Post = ({reRenderParentCompo2, state, state2,state3, ajusting, post, index, isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
+const Post = ({reRenderParentCompo, state, state2,state3, ajusting, post, index, isFetchingUser, dataUserCurrent}) => {
 
 
     const navigate = useNavigate();
@@ -163,11 +163,12 @@ const Post = ({reRenderParentCompo2, state, state2,state3, ajusting, post, index
             setDeleteLoader(true);
             const resp = await axios.delete(`http://localhost:3001/post/${post._id}`);
             if(resp.status === 200){
-                reRenderParentCompo2();
+                reRenderParentCompo();
                 setDeleteLoader(false);
             }
             else{
                 setIsDeleted(false);
+                reRenderParentCompo();
                 setDeleteLoader(false);
             }
         }

@@ -412,7 +412,7 @@
     margin: 1.3rem 0rem;
 }
 .containerEditProfile{
-    height: 540px;
+    height: 650px;
     width: 600px;
     background-color: #242526;
     border-radius: 0.4rem;
@@ -481,7 +481,9 @@
     width: 100%;
     padding: 1rem;
 }
-
+.About68 textarea{
+    height: 66px;
+}
 
 .About777 button{
     height: 35px ;

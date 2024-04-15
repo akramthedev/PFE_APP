@@ -25,6 +25,9 @@ const CreatePostForPages = ({ajusting,pageId, isFetchingUser, dataUserCurrent, r
     ClickOutsider(pôpUpEmojis, setEmojiShow); 
     
 
+    const [file, setFile] = useState(null);
+    const handleSelectFile = (e) => setFile(e.target.files[0]);
+
 
     const emojis = [
       "😊", "😂", "😍", "🥰", "😎", "🤩", "😜", "😇", "😘", "🤗",
@@ -48,25 +51,59 @@ const CreatePostForPages = ({ajusting,pageId, isFetchingUser, dataUserCurrent, r
         }
         else{
           try{
-            const resp = await axios.post("http://localhost:3001/post/createPagePost/", {
-              creator : pageId, 
-              image : images, 
-              description : textArea, 
-              type : "normal" , 
-              isPagePost : true        
-            }, {
-              headers : {
-                Authorization : `Bearer ${token}`
+            if(file){
+
+
+              const dataCreatePostPicture = new FormData();
+              dataCreatePostPicture.append("my_file", file);
+              const res = await axios.post("http://localhost:3001/cloudinary/uploadCreatePost", dataCreatePostPicture);
+              
+              if(res){
+                setFile(null);
+                const resp = await axios.post("http://localhost:3001/post/createPagePost/", {
+                  creator : pageId, 
+                  image : res.data.url, 
+                  description : textArea, 
+                  type : "normal" , 
+                  isPagePost : true        
+                }, {
+                  headers : {
+                    Authorization : `Bearer ${token}`
+                  }
+                }); 
+                if(resp.status=== 200){
+                  renderParent();
+                  setisCreateClicked(false);
+                  setimages("");
+                  settextArea("");
+                }
+                else{
+                  alert("Error Creating Post");
+                }
               }
-            }); 
-            if(resp.status=== 200){
-              renderParent();
-              setisCreateClicked(false);
-              setimages("");
-              settextArea("");
+              
             }
             else{
-              alert("Error Creating Post");
+              const resp = await axios.post("http://localhost:3001/post/createPagePost/", {
+                creator : pageId, 
+                image : "", 
+                description : textArea, 
+                type : "normal" , 
+                isPagePost : true        
+              }, {
+                headers : {
+                  Authorization : `Bearer ${token}`
+                }
+              }); 
+              if(resp.status=== 200){
+                renderParent();
+                setisCreateClicked(false);
+                setimages("");
+                settextArea("");
+              }
+              else{
+                alert("Error Creating Post");
+              }
             }
           }
           catch(error){
@@ -125,7 +162,12 @@ const CreatePostForPages = ({ajusting,pageId, isFetchingUser, dataUserCurrent, r
             </button>
           </div>
           <div className="zowZ2">
-            <input value={images} onChange={(e)=>{setisSubmitClicked(false);setimages(e.target.value)}} type="text" placeholder='Your image URL' spellCheck={false} />
+            <input
+              id="file"
+              type="file"
+              onChange={handleSelectFile}
+              multiple={false}
+            />
           </div>
           <div className="zowZ2">
             <button
@@ -133,7 +175,11 @@ const CreatePostForPages = ({ajusting,pageId, isFetchingUser, dataUserCurrent, r
               type='submit'
               disabled={isSubmitClicked}
             >
-              Lunch the post
+            {
+              isSubmitClicked ? "Creating your post"
+              :
+              "Lunch the post"
+            }
             </button>
           </div>
         </form>

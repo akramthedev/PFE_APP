@@ -110,8 +110,6 @@ router.post('/updateinfos', verifyToken ,async(req, res)=>{
         const {
             idUser ,
             fullName , 
-            profilePic  , 
-            coverPic ,
             bio  ,
             BigAbout , 
             address , 
@@ -125,8 +123,6 @@ router.post('/updateinfos', verifyToken ,async(req, res)=>{
         if(idToken === idUser){
             const isUpdated = await users.findByIdAndUpdate(idUser, {
                 fullName, 
-                profilePic, 
-                coverPic,
                 bio,
                 BigAbout, 
                 address, 

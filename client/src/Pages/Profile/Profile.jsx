@@ -345,33 +345,85 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
   }, [isAboutClicked, isContactsClicked, isGroupsClicked, isMediaClicked, isPostsClicked]);
 
 
+  
+
+
+  const updateBigAbout = async(e)=>{
+    setloaderUpdating2(true);
+    e.preventDefault();
+    if( modAbout !== "" ){
+      try{
+        const resp = await axios.post('http://localhost:3001/user/updateBigAbout',{
+          idUser : currentId, 
+          BigAbout : modAbout   
+        }, {
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
+        if(resp.status === 200){
+          setVisitedUser(resp.data);
+          setIsModifyAboutClicked(false);
+        }
+        else{
+          alert('Something went wrong...');
+        }
+      }
+      catch(er){
+        alert('Something went wrong...');
+        console.log(er.message);
+      } finally{
+        setloaderUpdating2(false);
+      }
+    }
+  }
+
+
+  const [file, setFile] = useState(null);
+  const [file2, setFile2] = useState(null);
+
+  const handleSelectFile = (e) => setFile(e.target.files[0]);
+  const handleSelectFile2 = (e) => setFile2(e.target.files[0]);
+
+
+
   const handleSubmitUpdatedDocuments = async (e)=>{
     e.preventDefault();
     try{
+
+
       if(modFullname.length >= 3 && token){
         setloaderUpdating(true);
-        let ProfilP;
-        let CoverP;
-        if(modCoverPicture === "" || modCoverPicture.length < 20){
-          CoverP = "https://live.staticflickr.com/3745/10353673376_ec7a400972_b.jpg"
+       
+        
+        if(file){
+          const dataProfilePicture = new FormData();
+          dataProfilePicture.append("my_file", file);
+          const res = await axios.post(`http://localhost:3001/cloudinary/uploadProfilePicture/${dataUserCurrent._id}`, dataProfilePicture);
+          setModPictureProfile(res.data.url);
+          setFile(null);
         }
         else{
-          CoverP = modCoverPicture
+          setModCoverPicture(dataUserCurrent.profilePic);
         }
-        if(modPictureProfile === "" || modPictureProfile.length < 20){
-          ProfilP = "https://oasys.ch/wp-content/uploads/2019/03/photo-avatar-profil.png"
+
+        if(file2){
+          const dataProfileCover = new FormData();
+          dataProfileCover.append("my_file2", file2);
+          const res = await axios.post(`http://localhost:3001/cloudinary/uploadProfileCover/${dataUserCurrent._id}`, dataProfileCover);
+          setModCoverPicture(res.data.url);
+          setFile2(null);
         }
         else{
-          ProfilP = modPictureProfile
+          setModCoverPicture(dataUserCurrent.coverPic);
         }
+
+
 
         const resp = await axios.post('http://localhost:3001/user/updateinfos',{
             idUser      :   currentId,
             fullName    :   modFullname, 
-            profilePic  :   ProfilP, 
-            coverPic    :   CoverP,
             bio         :   modBio ,
-            
             BigAbout    :   modAbout, 
             address     :   modAdress, 
             dateOfBirth :   moddateOfBirth, 
@@ -423,37 +475,6 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
 
 
 
-  const updateBigAbout = async(e)=>{
-    setloaderUpdating2(true);
-    e.preventDefault();
-    if( modAbout !== "" ){
-      try{
-        const resp = await axios.post('http://localhost:3001/user/updateBigAbout',{
-          idUser : currentId, 
-          BigAbout : modAbout   
-        }, {
-          headers : {
-            Authorization : `Bearer ${token}`
-          }
-        });
-        if(resp.status === 200){
-          setVisitedUser(resp.data);
-          setIsModifyAboutClicked(false);
-        }
-        else{
-          alert('Something went wrong...');
-        }
-      }
-      catch(er){
-        alert('Something went wrong...');
-        console.log(er.message);
-      } finally{
-        setloaderUpdating2(false);
-      }
-    }
-  }
-
-
 
   return (
     <div className='Home Profile'>
@@ -503,27 +524,25 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
           </div>
           <div className="About About66"> 
             <span>Profile Picture : </span> 
-            <input 
-              type="text"
-              value={modPictureProfile}
-              onChange={(e)=>{
-                setModPictureProfile(e.target.value)
-              }}
-              placeholder='Modify your profile picture...'
-              spellCheck={false}  
+
+            <input
+              id="file"
+              type="file"
+              onChange={handleSelectFile}
+              multiple={false}
             />
+
           </div>
           <div className="About About66"> 
             <span>Cover Picture : </span> 
-            <input 
-              type="text"
-              value={modCoverPicture}
-              onChange={(e)=>{
-                setModCoverPicture(e.target.value);
-              }}
-              placeholder='Modify your cover picture...'
-              spellCheck={false}  
+           
+            <input
+              id="file2"
+              type="file"
+              onChange={handleSelectFile2}
+              multiple={false}
             />
+
           </div>
           <div className="About About66"> 
             <span>Phone Number : </span> 
@@ -970,7 +989,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                           {
                             (dataUserCurrent && (dataUserCurrent._id === id))
                             &&
-                            <CreatePost setThePostCreated={setThePostCreated}  PostCreated={PostCreated} setPostCreated={setPostCreated}  reRenderParentCompo={fetchAllPosts}  ajusting="profile" dataUserCurrent={dataUserCurrent} isFetchingUser={isFetchingUser} />
+                            <CreatePost setThePostCreated={setThePostCreated}  PostCreated={PostCreated} setPostCreated={setPostCreated}  reRenderParentCompo={fetchAllPosts}   ajusting="profile" dataUserCurrent={dataUserCurrent} isFetchingUser={isFetchingUser} />
                           }
 
                           {

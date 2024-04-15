@@ -2,6 +2,7 @@ const authRoutes        =  require('./Routes/authRoutes');
 const userRoutes        =  require('./Routes/userRoutes');
 const notifsRoutes      =  require('./Routes/notifRoutes');
 const postsRoutes       =  require('./Routes/postRoutes');
+const cloudinaryRoutes  =  require('./Routes/cloudinaryRoutes');
 const requestsRoutes    =  require('./Routes/requestRoutes');
 const pagesRoutes       =  require('./Routes/pageRoutes');
 const roomsRoutes       =  require('./Routes/roomsRoutes');
@@ -49,7 +50,7 @@ app.use('/message', messagesRoutes);
 app.use('/ads', adsRoutes);
 app.use('/graph', GraphRoutes);
 app.use('/stripe',stripeRoutes);
- 
+app.use('/cloudinary', cloudinaryRoutes)
 
 
 //   WEBSOCKETS EVENTS
