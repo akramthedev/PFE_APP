@@ -59,17 +59,17 @@ const Bookmark = ({isFetchingUser, index, dataUserCurrent, bookmark}) => {
 
     useEffect(()=>{
         const x = ()=>{
-            if(dataUserCurrent && data){
-                if(dataUserCurrent.bookmarks.includes(data._id)){
+            
+                if(dataUserCurrent.bookmarks.includes(bookmark)){
                     setIsBookMarked(true);
                 }
                 else{
                     setIsBookMarked(false);
                 }
-            }
+            
         }
         x();
-    }, [dataUserCurrent]);
+    }, [dataUserCurrent, bookmark]);
 
 
     useEffect(()=>{
