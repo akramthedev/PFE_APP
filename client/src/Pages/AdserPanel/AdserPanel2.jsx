@@ -319,6 +319,8 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
     }
 
 
+    
+
 
     return (
     <div className='Home22'>
@@ -374,7 +376,7 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                         {
                           maxAdsToCreated === allAds.length ? 
                           <div className="createnewadfg youHaveReachedMax">
-                            You have reached the limit. Upgrade your plan!
+                            You have reached the limit.&nbsp;{planOfUser && <>{planOfUser !== 3 && "Upgrade your plan!"}</>}
                           </div>
                           :
                           <div className="createnewadfg">
@@ -435,9 +437,23 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                     </form> 
                     
                   }
-                  <div className="upgradePlann">
-                    <i className='fa-solid fa-rocket' ></i>&nbsp;&nbsp;Upgrade you plan
-                  </div>
+                  {
+                    planOfUser && 
+                    <>
+                    {
+                      planOfUser !== 3 &&
+                      <div 
+                        className="upgradePlann"
+                        onClick={()=>{
+                             nav(`/adser/panel/upgrade/${planOfUser}`);
+                        
+                        }}
+                      >
+                        <i className='fa-solid fa-rocket' ></i>&nbsp;&nbsp;Upgrade you plan
+                      </div>
+                    }
+                    </>
+                  }
                   </>
                 }
               </div>

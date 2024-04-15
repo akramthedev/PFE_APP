@@ -95,6 +95,10 @@ const schemaUsers = new mongoose.Schema({
         type : String, 
         required : false
     },
+    adsSeen : {
+        type : String, 
+        required : false
+    }
     
 }, {
     timestamps : true

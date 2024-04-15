@@ -250,6 +250,70 @@ router.get('/choose-plan/:numPlan/:token', verifyToken, async(req, res)=>{
 })
 
 
+router.get('/upgrade-plan/:numPlan/:token', verifyToken, async(req, res)=>{
+    try{
+        
+        const {numPlan, token} = req.params;
+        const idUser = req.user._id;
+        
+        let name = ""
+        let productPrice ;
+        if(numPlan === "1"){
+            name = "Basic"
+            productPrice = 50;
+        }
+        else if(numPlan === "2"){
+            name = "Standard"
+            productPrice = 100
+        }
+        else if(numPlan === "3"){
+            name = "Premium"
+            productPrice = 299
+        }
+        
+
+        let line_items = [{
+            price_data : {
+                currency : "usd", 
+                product_data : {
+                    name : name, 
+                    images : [], 
+                }, 
+                unit_amount : productPrice * 100
+            }, 
+            quantity : 1
+        }];
+
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types : ["card"], 
+            line_items : line_items, 
+            mode : "payment", 
+            success_url:`http://localhost:3000/adser/panel/payment/successfull`, 
+            cancel_url : "http://localhost:3000/adser/panel/payment/unsuccessfull"
+        });
+
+        if(session){
+            await users.findByIdAndUpdate(idUser, {
+                plan : numPlan, 
+                isPaymentDone : true
+            }, {new : true});
+
+            res.status(200).send({
+                id : session.id
+            })
+        }
+        else{
+            res.status(409).send("Error Stripe...");
+        }
+
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+})
+
+
+
 router.get('/getPlanOfUserWithToken/:idUser', verifyToken, async (req, res) => {
     try {
         const { idUser } = req.params;

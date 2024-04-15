@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 import axios from 'axios';
+import UpgradeYourPlan from "./Pages/AdserPanel/UpgradeYourPlan";
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import Successfull from './Pages/AdserPanel/Successfull';
@@ -215,6 +216,15 @@ function App() {
               token ? <Successfull isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
             } 
           />
+
+          <Route  
+            path='/adser/panel/upgrade/:plan' 
+            element={
+              token ? <UpgradeYourPlan isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
+            } 
+          />
+
+
 
 
  
