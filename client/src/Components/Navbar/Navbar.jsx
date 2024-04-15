@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import "./Navbar.css";
+import LoaderSpin from "../../Assets/spinwhite.svg";
 import {useNavigate, useLocation} from 'react-router-dom';
 import useOutsideAlerter  from '../../Helpers/HidePopUp';
 import { useSocket } from '../../Helpers/SocketContext';
@@ -10,6 +11,7 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
 
     const navigate = useNavigate();
     const popupRef = useRef(null);  
+    const popupRef2 = useRef(null);  
     const location = useLocation();
     const {pathname} = location;
     const { socket, onlineUsers } = useSocket();
@@ -19,8 +21,13 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
     const [unSeenNotifs, setunSeenNotifs] = useState(0);
     const [requestNumber, setrequestNumber] = useState(0);
     const [MessagesUnseenNumber, setMessagesUnseenNumber] = useState(0);
+    const [Search, setSearch] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [showPopUp, setshowPopUp] = useState(false);
+    const [dataSearch, setdataSearch] = useState(null);
 
     useOutsideAlerter(popupRef, setIsProfileClicked);
+    useOutsideAlerter(popupRef2, setshowPopUp);
 
     const fetchUnseenNotifNumber = async()=>{
         try{
@@ -102,30 +109,134 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
 
     
 
+
+    const handleSubmit = async(e)=>{
+        e.preventDefault();
+        setLoading(true);
+        setshowPopUp(true);
+        try{
+            const resp = await axios.get(`http://localhost:3001/search/${Search}`);
+            if(resp.status === 200){
+                setdataSearch(resp.data);
+            }
+        }
+        catch(error){
+            console.log(error.message);
+        } finally{
+            setTimeout(()=>{
+                setLoading(false);
+            }, 1111 );
+        }
+    }
+
+    
+
   return (
+    <>    
+    <div className={showPopUp ? "showpopUp676 popUp676" : "popUp676"}>
+    {
+        loading ? 
+        <>
+            <img 
+                width={20}
+                height={20}
+                src={LoaderSpin}
+            />
+            &nbsp;&nbsp;
+            <span style={{color : "white"}} >Searching...</span>
+        </>
+        :
+        <div className="container767" ref={popupRef2} >
+
+            <button 
+                onClick={()=>{
+                    setshowPopUp(!showPopUp);
+                }}
+                className="clos9Z8924">
+                <i className='fa-solid fa-xmark'></i>
+            </button>
+        {
+            !dataSearch ? <span style={{ color : "white"}} >No data was found</span> 
+            :
+            <>
+            <div className='row794795 zquoezquoe'>
+                <span>Users List</span>
+            </div>
+            {
+                dataSearch.users.length !== 0 ? 
+                dataSearch.users.map((user, index)=>{
+                    return(
+                        <div className='row794795'>
+                            <img src={user.profilePic} alt="" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{user.fullName}</span>
+                            <button
+                                onClick={()=>{                    setshowPopUp(!showPopUp);
+                                    navigate(`/profile/${user._id}`)}}  
+                            >
+                                Visit User
+                            </button>
+                        </div>
+                    )
+                })
+                :
+                <div className='row794795 row79479577'>
+                    <span style={{ color : "white"}} >No user was found</span> 
+                </div>
+            }
+            <div className='row794795 zquoezquoe'>
+                <span>Pages List</span>
+            </div>
+            {
+                dataSearch.pages.length !== 0 ? 
+                dataSearch.pages.map((page, index)=>{
+                    return(
+                        <div className='row794795'>
+                            <img src={page.profilePic} alt="" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{page.name}</span>
+                            <button
+                                onClick={()=>{                    setshowPopUp(!showPopUp);
+                                    navigate(`/page/${page._id}`)}} 
+                            >
+                                Visit Page
+                            </button>
+                        </div>
+                    )
+                })
+                :
+                <div className='row794795 row79479577'>
+                    <span style={{ color : "white"}} >No page was found</span> 
+                </div>
+            }
+            </>
+        }
+        </div>
+    }
+    </div>
     <div className='Navbar' >
         <div className="part1">
             <img 
                 title='Xplorium' 
                 src='https://res.cloudinary.com/dqprleeyt/image/upload/v1712318887/and_parkle___3_-removebg-preview_lyfila.png'
                 alt=""
+                
                 onClick={()=>{
                     
                     navigate("/");
                 }}
             />
         </div>
+
         <div className="part2121">
-            <form className="searchUser">
+            <form  onSubmit={handleSubmit}  className="searchUser">
                 <button type='submit' className='search' ><i className="fa-solid fa-magnifying-glass"></i></button>
-                <input type="text" placeholder='Search...' />
+                <input value={Search} onChange={(e)=>{setSearch(e.target.value)}} type="text" placeholder='Search for a friend or a page...' />
             </form>
         </div>
+
+
+
         <div className="part2">
             <div className={dataUserCurrent && dataUserCurrent.role !== "user" ? "part2p1 part2p1admin": "part2p1"}>
- 
-               
-
                 <button 
                     onClick={()=>{navigate('/requests');}}
                     className='linkNav'
@@ -281,6 +392,8 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
             </div>
         </div>
     </div>
+    </>
+
   )
 }
 

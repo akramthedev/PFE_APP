@@ -122,7 +122,7 @@
     outline: none;
     border: none;
     height: 100%;
-    color: #babdc1;
+    color: #e6e6e6;
     padding: 0 1rem;
     background-color: #353637;
     padding-right: 3.3rem;
@@ -228,4 +228,116 @@
 .part2p2 .fa-angle-up, .part2p2 .fa-angle-down{
     color: #babdc1;
 }
- 
+
+.popUp676{
+    position: fixed;
+    z-index: 999999999999999999999999999999999999;
+    backdrop-filter: blur(6px) saturate(200%);
+    -webkit-backdrop-filter: blur(6px) saturate(200%);
+    background-color: rgba(0, 0, 0, 0.666);
+    visibility: hidden;
+    opacity: 0;
+    height: 100vh;
+    width: 100%;
+    inset : 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.showpopUp676{
+    opacity: 1;
+    visibility: visible;
+}
+.container767{
+    height: 600px;
+    width: 555px;
+    overflow-y: scroll;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+}
+
+.row794795{
+    width: 100%;
+    height: 40px;
+    color: white;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+.row794795 img{
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.row79479577{
+    display: flex;
+    height: 200px;
+    background-color: transparent;
+    align-items: center;
+    justify-content: center;
+}
+.zquoezquoe{
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    text-align: center;
+    justify-content: center;
+}
+.zquoezquoe span{
+    padding: 0rem 1rem;
+    border-radius: 3rem;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: rgb(170, 0, 255);
+}
+
+
+.clos9Z8924{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    color: black;
+    background-color: white;
+    font-size: 1.1rem;
+    outline: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 999;
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.row794795{
+    position: relative;
+}
+.row794795 button{
+    position: absolute;
+    right: 0;
+    width: 140px;
+    height: 30px;
+    border-radius: 0.3rem;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    font-size: 15px;
+    font-weight: 500;
+    transition: .14s all ease-in-out;
+}
+.row794795 button:hover{
+    background-color: rgb(180, 180, 180);
+}
+
+.container767{
+    backdrop-filter: blur(6px) saturate(200%);
+    -webkit-backdrop-filter: blur(6px) saturate(200%);
+    background-color: rgba(216, 216, 216, 0.3);
+    border-radius: 1rem;
+    padding: 1rem 2.2rem;
+    padding-top: 3rem;
+}
