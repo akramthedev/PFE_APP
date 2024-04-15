@@ -207,3 +207,65 @@
     position: absolute;
     right: 0;
 }
+
+.allMediaOfThePage{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 3rem;
+    margin-top: 2rem;
+}
+.allMediaOfThePage img{
+    height: 250px;
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid #27292b;
+    object-fit: cover;
+    border-radius: 0.3rem;
+}
+
+.rowpictureKQEDF{
+    height: auto;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: left;
+}
+.rowpictureKQEDF img{
+    height: 100px;
+    width: 100px;
+    border-radius: 0.14rem;
+    object-fit: cover;
+}
+.ownerclicked{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 200px;
+}
+.infoshhh{
+    display: flex;
+    flex-direction: column;
+    color: gainsboro;
+    margin-left: 1rem;
+}
+.gotoprofile{
+    position: absolute;
+    height: 40px;
+    margin-top: 1rem;
+    width: 200px;
+    border-radius: 0.3rem;
+    background-color: blueviolet;
+    color: white;
+    outline: none;
+    border: none;
+    bottom: -50px;
+    width: 330px;
+    cursor: pointer;
+    transition: .15s all ease-in-out;
+}
+.gotoprofile:hover{
+    background-color: rgb(90, 4, 172);
+}

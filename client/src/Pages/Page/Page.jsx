@@ -15,6 +15,7 @@ import {useNavigate, useParams } from 'react-router-dom'
 import VerifiedPage from '../../Assets/VerifiedPage.jsx';
 import useOutsideAlerter from '../../Helpers/HidePopUp.js';
 import { TheOneWhoHasBirthDay } from '../Home/TheOneWhoHasBirthDay.jsx';
+import formatCreatedAt from '../../Helpers/GetTimeAndDate.js';
 
 
 
@@ -39,6 +40,12 @@ const Page = ({fetchUser,isFetchingUser, dataUserCurrent, reRenderParentCompo}) 
   const [FollowersNumber,setFollowersNumber] = useState(null);
   const [showVerifiedPopUp,setshowVerifiedPopUp] = useState(false);
   const [isVerified,setisVerified] = useState(false);
+  const [owner,setowner] = useState(null);
+
+
+  const [isHomeClicked,setisHomeClicked] = useState(true);
+  const [isMediaClicked,setisMediaClicked] = useState(false);
+  const [isOwnerClicked,setisOwnerClicked] = useState(false);
 
 
   useOutsideAlerter(refref, setisBClicked);
@@ -71,6 +78,17 @@ const Page = ({fetchUser,isFetchingUser, dataUserCurrent, reRenderParentCompo}) 
             setisFollowed(false);
           } 
           setData(resp.data);
+          const respowner = await axios.get(`http://localhost:3001/user/${resp.data.creator}`, {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+          if(respowner){
+            setowner(respowner.data);
+          }
+          else{
+            setowner(null);
+          }
         }
         else{
             console.log("Error");
@@ -264,21 +282,35 @@ const Page = ({fetchUser,isFetchingUser, dataUserCurrent, reRenderParentCompo}) 
               <div className="rowName8790">
                 <span>Posts</span><span>{allPosts && allPosts.length}</span>               
               </div>
-              <div className="rowName899 rowName899activated">
-                <div className="bar barActivated"  /> 
+              <div
+                onClick={()=>{
+                  setisOwnerClicked(false)
+                  setisMediaClicked(false);
+                  setisHomeClicked(true);
+                }}
+                className={isHomeClicked ? "rowName899activated rowName899" : "rowName899"}>
+                <div className={isHomeClicked ? "barActivated bar" : "bar"}  /> 
                 Home
               </div>
-              <div className="rowName899 ">
-                <div className="bar" /> 
-                About
-              </div>
-              <div className="rowName899 ">
-                <div className="bar" /> 
+              <div 
+                onClick={()=>{
+                  setisOwnerClicked(false)
+                  setisHomeClicked(false);
+                  setisMediaClicked(true);
+                }}
+                className={isMediaClicked ? "rowName899activated rowName899" : "rowName899"}>
+                <div className={isMediaClicked ? "barActivated bar" : "bar"}  /> 
                 Photos
               </div>
-              <div className="rowName899">
-                <div className="bar" /> 
-                Page Owner
+              <div 
+                onClick={()=>{
+                  setisHomeClicked(false);
+                  setisMediaClicked(false);
+                  setisOwnerClicked(true)
+                }}
+                className={isOwnerClicked ? "rowName899activated rowName899" : "rowName899"}>
+                <div className={isOwnerClicked ? "barActivated bar" : "bar"}  /> 
+                 Owner
               </div>
             </div>
             <div className="h2">
@@ -361,27 +393,97 @@ const Page = ({fetchUser,isFetchingUser, dataUserCurrent, reRenderParentCompo}) 
                 <CreatePostForPages pageId={id} ajusting={"yes"} isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} renderParent={renderParent} />
               }
               {
-                postLoading ? "Loading.."
-                :
+                isHomeClicked  ? 
                 <>
-                {
-                  allPosts && 
+                  {
+                  postLoading ? "Loading.."
+                  :
                   <>
                   {
-                    allPosts.length === 0 ?
-                    <div className="rowName899 rowName899rowName899rowName899">
-                      No Post Yet
-                    </div>
-                    :
-                    allPosts.map((post, index)=>{
-                      return(
-                        <PagePost ajusting={"yes"} post={post}  reRenderParentCompo={renderParent}  />
-                      )
-                    })
+                    allPosts && 
+                    <>
+                    {
+                      allPosts.length === 0 ?
+                      <div className="rowName899 rowName899rowName899rowName899">
+                        No Post Yet
+                      </div>
+                      :
+                      allPosts.map((post, index)=>{
+                        return(
+                          <PagePost ajusting={"yes"} post={post}  reRenderParentCompo={renderParent}  />
+                        )
+                      })
+                    }
+                    </>
                   }
                   </>
                 }
                 </>
+                : isMediaClicked ? 
+                <>
+                  {
+                  postLoading ? "Loading.."
+                  :
+                  <>
+                  {
+                    allPostsWithImages && 
+                    <>
+                    {
+                      allPostsWithImages.length === 0 ?
+                      <div className="rowName899 rowName899rowName899rowName899">
+                        No data
+                      </div>
+                      :
+                      <div className="allMediaOfThePage">
+                      {
+                        allPostsWithImages.map((image, index)=>{
+                          return(
+                            <img 
+                              className='scdsho'
+                              alt='vid'
+                              src={image}
+                            />
+                          )
+                        })
+                      }
+                      </div>
+                      
+                    }
+                    </>
+                  }
+                  </>
+                }
+                </>
+                : isOwnerClicked &&
+                <div className="ownerclicked">
+                {
+                  owner=== null ? <span style={{color : "gainsboro"}}>No Data</span> :
+                  <>
+                    <div className="rowpictureKQEDF">
+                      <img src={owner.profilePic}  alt="" />
+                      <div className="infoshhh">
+                        <span>{owner.fullName}</span>
+                        <span>{owner.email}</span>
+                        <span>Joined at {formatCreatedAt(owner.createdAt)}</span>
+                      </div>
+                       
+                      <button 
+                        onClick={()=>{
+                          navigate(`/profile/${owner._id}`)
+                        }}
+                        className="gotoprofile"
+                      >
+                        {
+                          owner._id == currentId ? "Go to your profile":"Visit his Profile"
+                        }
+                        
+                      </button>
+                     
+                    </div>
+                    
+                  </>
+                }
+                </div>
               }
             </div>
             <div className="h3">
