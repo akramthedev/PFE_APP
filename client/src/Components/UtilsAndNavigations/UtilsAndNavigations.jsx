@@ -180,69 +180,9 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageC
 
       <br />
       
-      <div className="rowX rowXNoHover">
-        <div className="xxx">
-          <i className='fa-solid fa-people-group'></i>
-        </div>
-        <span>Groups</span>
-      </div>
       
-        <div className="rowJaja">
-          
-          <div className="rowX rowXX"
-            onClick={()=>{
-              navigate("/group/666");
-            }}
-          >
-            <div className="flesh" />
-            <div className=" xxx xxxxxx">
-              <img 
-                src="https://cdn-media.threadless.com/submissions_wm/699345-d68e20b52df6f84fb8b491aca2c30f54.jpg" 
-                alt=""
-              />
-            </div>
-            <span>Red Pill MGTOW</span>
-          </div>
-
-          <div className="rowX rowXX"
-            onClick={()=>{
-              navigate("/group/666");
-            }}
-          >
-            <div className="flesh" />
-            <div className=" xxx xxxxxx">
-              <img 
-                src="https://cdn-media.threadless.com/submissions_wm/699345-d68e20b52df6f84fb8b491aca2c30f54.jpg" 
-                alt=""
-              />
-            </div>
-            <span>Red Pill MGTOW</span>
-          </div>
-
-          <div className="rowX rowXX"
-            onClick={()=>{
-              navigate("/group/666");
-            }}
-          >
-            <div className="flesh" />
-            <div className=" xxx xxxxxx">
-              <img 
-                src="https://cdn-media.threadless.com/submissions_wm/699345-d68e20b52df6f84fb8b491aca2c30f54.jpg" 
-                alt=""
-              />
-            </div>
-            <span>Red Pill MGTOW</span>
-          </div>
-          <div className="rowX rowXX"/>
-
-          </div>
-          <div className="rowX rowXNoHover">
-            <button className='CreatePage'>
-              Create Group
-            </button>
-          </div>
-
-        <br />
+       
+ 
 
         <div className="rowX"
           onClick={()=>{

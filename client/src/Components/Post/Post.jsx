@@ -68,6 +68,19 @@ const Post = ({reRenderParentCompo, state, state2,state3, ajusting, post, index,
         }
     }
 
+    useEffect(()=>{
+        const x = ()=>{
+            if(dataUserCurrent){
+                if(dataUserCurrent.bookmarks.includes(post._id)){
+                    setIsBookMarked(true);
+                }
+                else{
+                    setIsBookMarked(false);
+                }
+            }
+        }
+        x();
+    }, [dataUserCurrent]);
 
     
     useEffect(()=>{
@@ -211,6 +224,21 @@ const Post = ({reRenderParentCompo, state, state2,state3, ajusting, post, index,
     }
 
 
+    const handleBookMarkClick = async()=>{
+        setIsBookMarked(!IsBookMarked);
+        try{
+            await axios.get(`http://localhost:3001/user/updateBookMark/${idUser}/${post._id}`, {
+                headers : {
+                    Authorization : `Bearer ${token}`
+                }
+            });
+        }
+        catch(e){
+            console.log(e.message);
+        }
+    }
+
+
 
     return (
         <>
@@ -276,7 +304,7 @@ const Post = ({reRenderParentCompo, state, state2,state3, ajusting, post, index,
                     <div 
                         className={IsBookMarked ? "c2" : "c2"}
                         onClick={()=>{
-                            setIsBookMarked(!IsBookMarked);
+                            handleBookMarkClick();
                         }}
                     >
                     {

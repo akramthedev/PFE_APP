@@ -9,11 +9,44 @@ const router = express.Router();
 
 
 
+
 router.get('/:id', verifyToken ,async(req, res)=>{
     try{
         const {id} = req.params;
         const isFound = await users.findById(id);
         if(isFound){
+            res.status(200).send(isFound);
+        }
+        else{
+            res.status(202).send('Not Found...');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+router.get('/updateBookMark/:idUser/:idPost', verifyToken ,async(req, res)=>{
+    try{
+        const {idUser, idPost} = req.params;
+        const isFound = await users.findById(idUser);
+
+        if(isFound){
+            if(isFound.bookmarks.includes(idPost)){
+                await users.findByIdAndUpdate(idUser, {
+                    $pull : {
+                        bookmarks : idPost
+                    }
+                });
+            }
+            else{
+                await users.findByIdAndUpdate(idUser, {
+                    $push : {
+                        bookmarks : idPost
+                    }
+                });
+            }
             res.status(200).send(isFound);
         }
         else{

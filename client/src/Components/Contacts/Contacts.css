@@ -95,3 +95,10 @@
     height: 38px;
     width: 38px;
 }
+
+.Contacts::-webkit-scrollbar{
+    width: 0;
+}
+.Contacts::-webkit-scrollbar-thumb{
+    width: 0;
+}

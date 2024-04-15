@@ -11,7 +11,6 @@ import AdserPanel2 from './Pages/AdserPanel/AdserPanel2'
 import Contact from './Pages/Contact/Contact';
 import Profile from "./Pages/Profile/Profile";
 import  Page from "./Pages/Page/Page";
-import Group from "./Pages/Group/Group";
 import ADS from "./Pages/ADS/ADS";
 import Notifications from "./Pages/Notifications/Notifications";
 import Requests from "./Pages/Requests/Requests";
@@ -25,22 +24,13 @@ import UnsuccessfullPanel from './Pages/AdserPanel/UnsuccessfullPanel';
 import { useSocket } from './Helpers/SocketContext';
 import Cloudinary from './Pages/Cloudinary';
 
-
-
 function App() {
- 
   const token = localStorage.getItem('token');
   const idUser = localStorage.getItem('idUser');
   const { socket } = useSocket();
-
   const [isFetchingUser, setIsFetchingUser] = useState(true);
   const [dataUserCurrent, setdataUserCurrent] = useState(null);
   const [ResponseRequest, setResponseRequest] = useState(null);
-
-
-  
-
-   
   const fetchUser = async ()=>{
     if(idUser && token){
       try{
@@ -134,12 +124,7 @@ function App() {
               token ? <Page fetchUser={fetchUser}  isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser} /> : <Navigate to="/auth" />
             } 
           />
-          <Route  
-            path='/group/:id' 
-            element={
-              token ? <Group isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser}  /> : <Navigate to="/auth" />
-            } 
-          />
+         
           
           <Route  
             path='/ads/:id' 

@@ -16,6 +16,7 @@ import { useSocket } from '../../Helpers/SocketContext';
 import SkeltonPost2 from '../../Components/Post/SkeltonPost2.jsx';
 import SingleContact from '../../Components/SingleContact/SingleContact.jsx';
 import { TheOneWhoHasBirthDay } from '../Home/TheOneWhoHasBirthDay.jsx';
+import Bookmark from './Bookmark.jsx';
 
 
 
@@ -974,8 +975,8 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                           }
                         }}
                       >
-                        <i className='fa-solid fa-people-group'></i>
-                        <span>{visitedUser && visitedUser.groups.length} {visitedUser && visitedUser.groups.length <=1 ? "Group" : "Groups"}</span>
+                        <i className='fa-solid fa-bookmark'></i>
+                        <span>{visitedUser && visitedUser.bookmarks.length} {visitedUser && visitedUser.bookmarks.length <=1 ? "Saved Post" : "Saved Posts"}</span>
                       </button>
                     </div>
 
@@ -1120,7 +1121,27 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
                       </> :
                       isGroupsClicked &&
                       <>
-                        Groups Clicked
+                      {
+                        visitedUser && 
+                        <>
+                        {
+                          visitedUser.bookmarks.length === 0 ? 
+                          <span style={{fontSize : "13px", color : "gainsboro", textAlign : "center", width: "300px", marginTop : ".8rem"}}>
+                            No data
+                          </span>
+                          :
+                          <>
+                          {
+                            visitedUser.bookmarks.map((bookmark, index)=>{
+                              return(
+                                <Bookmark index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} bookmark={bookmark} />
+                              )
+                            })
+                          }
+                          </>
+                        }
+                        </>
+                      }
                       </>
                     }
 

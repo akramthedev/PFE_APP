@@ -147,3 +147,10 @@
 }
 .yesyes:hover, .nono:hover{
 }
+
+.h3::-webkit-scrollbar{
+    width: 0;
+}
+.h3::-webkit-scrollbar-thumb{
+    width: 0;
+}
