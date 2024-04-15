@@ -34,11 +34,15 @@ const Page = ({fetchUser,isFetchingUser, dataUserCurrent, reRenderParentCompo}) 
   const [isBClicked,setisBClicked] = useState(false);
   const [TheOnesWhoHaveBirthday,setTheOnesWhoHaveBirthday] = useState(null);
   const refref = useRef(null); 
+  const refrefref = useRef(null); 
   const [LikesNumber, setLikesNumber] = useState(null);
   const [FollowersNumber,setFollowersNumber] = useState(null);
+  const [showVerifiedPopUp,setshowVerifiedPopUp] = useState(false);
+  const [isVerified,setisVerified] = useState(false);
 
 
   useOutsideAlerter(refref, setisBClicked);
+  useOutsideAlerter(refrefref, setshowVerifiedPopUp);
 
   const [data, setData] = useState(null);
 
@@ -155,11 +159,59 @@ const Page = ({fetchUser,isFetchingUser, dataUserCurrent, reRenderParentCompo}) 
       }
     }
     
+
+    const handleVerifyPage = async()=>{
+      if(currentId){
+        try{
+          const resp = await axios.post('http://localhost:3001/page/verification-page-data', {
+            idPage : id, 
+            idUser : currentId
+          }, {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+          if(resp.status === 200){
+            setisVerified(true);
+            setTimeout(()=>{
+              setshowVerifiedPopUp(true);
+            }, 1300);
+          }
+          else{
+            setisVerified(false);
+            console.log("Not Verified");
+          }
+        }
+        catch(e){
+          console.log(e.message);
+        }
+      }
+    }
+    
+
+    useEffect(()=>{
+      handleVerifyPage();
+    }, [currentId]);
   
 
   return (
     <>
-        
+      <div className={showVerifiedPopUp ? "showVerifiedPopUp VerifiedPopUp" : "VerifiedPopUp"}>
+        <div ref={refrefref} className={showVerifiedPopUp ? "divX showdivX" : "divX"}>
+          <div className="row93791 row87824">
+            <VerifiedPage /> Congratulations! Your page has been successfully verified. 
+          </div>
+          <div className="row93791">
+             Indicating authenticity and credibility to your audience. This succinctly conveys the purpose and significance of the verification badge to the page owner.
+          </div>
+          <div className="row93791">
+            Keep up the great work!
+          </div>
+          <div className="row93791">
+            <img src="https://res.cloudinary.com/dqprleeyt/image/upload/v1712318887/and_parkle___3_-removebg-preview_lyfila.png" alt="" />
+          </div>
+        </div>
+      </div>
       <div className='Home Page'>
 
           <div className={isBClicked ? "isBClicked showisBClicked" : "isBClicked"}>
@@ -193,7 +245,7 @@ const Page = ({fetchUser,isFetchingUser, dataUserCurrent, reRenderParentCompo}) 
               }
               </div>
               {
-                data && data.isVerified &&
+                (data && (data.isVerified || isVerified ))&&
                
                 <div className="rowName879">
                 Verified By Xplorium

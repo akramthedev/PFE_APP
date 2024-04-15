@@ -20,7 +20,7 @@ const pagesSchema = new mongoose.Schema({
         required : false
     },
     isForAdults : {
-        type : String, 
+        type : Boolean, 
         required : true, 
         default : true
     },

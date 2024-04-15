@@ -1,6 +1,7 @@
 const express = require('express');
 const users = require('../Models/users');
 const pages = require('../Models/Pages');
+const posts = require('../Models/posts');
 const sendEmail = require('../Helpers/EmailSender');
 const verifyToken = require('../Middlewares/verifyToken');
 
@@ -119,6 +120,92 @@ router.post('/followThePage' ,verifyToken,async(req, res)=>{
                     }
                 });
                 res.status(200).send("Followed");
+            }
+        }
+        else{
+            res.status(202).send('Not found...');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+
+router.post('/verification-page-data' , verifyToken , async(req, res)=>{
+    try{
+        const {
+            idPage, 
+            idUser
+        } = req.body;
+        
+        const isFound = await pages.findById(idPage);
+        if(isFound){
+            if(isFound.isVerified){
+                res.status(202).send('Already Verified...');
+            }
+            else{
+                if(isFound.creator === idUser){
+                    const allPosts = await posts.find({
+                        creator : idPage
+                    });
+                    if(allPosts && allPosts.length !== 0){
+                        
+                        let totalViewsOfAllPosts    =  0;
+                        let totalLikesOfAllPosts    =  0;
+                        let totalCommentsOfAllPosts =  0;
+                        let totalFollowers          =  0;
+                        let totalLikesOfThePage     =  0;
+                        let totalPosts              =  0;
+                        
+                        for(let i = 0; i < allPosts.length;i++){
+                            totalViewsOfAllPosts += allPosts[i].views;
+                            totalLikesOfAllPosts += allPosts[i].likes.length;
+                            totalCommentsOfAllPosts += allPosts[i].comments.length;
+                        }
+    
+                        totalFollowers       =  isFound.followers.length;
+                        totalLikesOfThePage  =  isFound.likes.length;
+                        totalPosts           =  allPosts.length;
+    
+                        const viewsThreshold            =   10000;  
+                        const likesThreshold            =   5000;  
+                        const commentsThreshold         =   2500;  
+                        const allPostsLengthThreshold   =   10;  
+                        const followersThreshold        =   1000;  
+                        const pageLikesThreshold        =   500;
+
+                        if(
+                            totalViewsOfAllPosts >= viewsThreshold &&
+                            totalLikesOfAllPosts >= likesThreshold &&
+                            totalCommentsOfAllPosts >= commentsThreshold &&
+                            totalFollowers >= followersThreshold &&
+                            totalLikesOfThePage >= pageLikesThreshold &&
+                            totalPosts >= allPostsLengthThreshold
+                        ){
+                            //update the verification
+                            const isUpdated = await pages.findByIdAndUpdate(idPage, {
+                                isVerified : true
+                            }, {new : true});
+                            if(isUpdated){
+                                res.status(200).send(isUpdated);
+                            }
+                            else{
+                                res.status(666).send('nO TuPDATED');
+                            }
+                        }
+                        else{
+                            res.status(202).send("quo<s");
+                        }
+                    }
+                    else{
+                        res.status(202).send('Not The Creator...');
+                    }
+                }   
+                else{
+                    res.status(202).send('Not The Creator...');
+                }
             }
         }
         else{
