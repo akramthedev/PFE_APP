@@ -20,7 +20,7 @@ import formatCreatedAt from '../../Helpers/GetTimeAndDate.js';
 
 
 
-const Page = ({fetchUser,isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
+const Page = ({dataAds, fetchUser,isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
 
   const { id } = useParams();
   const { socket } = useSocket();
@@ -487,7 +487,7 @@ const Page = ({fetchUser,isFetchingUser, dataUserCurrent, reRenderParentCompo}) 
               }
             </div>
             <div className="h3">
-              <Ads />
+              <Ads dataAds={dataAds}  />
               <BirthDays  setisBClicked={setisBClicked} setTheOnesWhoHaveBirthday={setTheOnesWhoHaveBirthday }   isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
               <Contacts    isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}   />
             </div>

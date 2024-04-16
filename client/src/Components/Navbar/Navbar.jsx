@@ -115,7 +115,7 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
         setLoading(true);
         setshowPopUp(true);
         try{
-            const resp = await axios.get(`http://localhost:3001/search/${Search}`);
+            const resp = await axios.get(`http://localhost:3001/search/${Search}/${idUser}`);
             if(resp.status === 200){
                 setdataSearch(resp.data);
             }
