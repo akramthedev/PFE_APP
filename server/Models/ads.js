@@ -14,6 +14,10 @@ const Schemax = new mongoose.Schema({
         type : String, 
         required : true,
     },
+    website : {
+        type : String, 
+        required : false,
+    },
     adser : {
         type : String, 
         required : true

@@ -12,7 +12,7 @@ import { useSocket } from '../../Helpers/SocketContext';
 import useOutsideAlerter from '../../Helpers/HidePopUp';
 import { TheOneWhoHasBirthDay } from '../Home/TheOneWhoHasBirthDay';
 
-const Notifications = ({isFetchingUser, dataUserCurrent}) => {
+const Notifications = ({dataAds,isFetchingUser, dataUserCurrent}) => {
 
     const token = localStorage.getItem('token');
     const idUser = localStorage.getItem('idUser');
@@ -171,7 +171,7 @@ const Notifications = ({isFetchingUser, dataUserCurrent}) => {
               }
             </div>
             <div className="h3">
-              <Ads />
+              <Ads dataAds={dataAds} />
               <BirthDays setisBClicked={setisBClicked} setTheOnesWhoHaveBirthday={setTheOnesWhoHaveBirthday }  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
               <Contacts   isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} socket={socket}  />
             </div>

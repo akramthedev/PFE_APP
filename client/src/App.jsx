@@ -29,8 +29,13 @@ function App() {
   const idUser = localStorage.getItem('idUser');
   const { socket } = useSocket();
   const [isFetchingUser, setIsFetchingUser] = useState(true);
+  const [fetchingAds, setfetchingAds] = useState(true);
   const [dataUserCurrent, setdataUserCurrent] = useState(null);
+  const [dataAds, setdataAds] = useState(null);
   const [ResponseRequest, setResponseRequest] = useState(null);
+
+
+
   const fetchUser = async ()=>{
     if(idUser && token){
       try{
@@ -40,11 +45,7 @@ function App() {
           }
         });
         if(resp.status === 200){
-          setdataUserCurrent(null);
-          console.log(resp.data);
-          setTimeout(()=>{
-            setdataUserCurrent(resp.data);
-          }, 170);
+          setdataUserCurrent(resp.data);
           setResponseRequest({
             status : 200, 
             msg : "User Fetched"
@@ -70,9 +71,33 @@ function App() {
   }
 
 
+
+  const fetchAds = async ()=>{
+    if(token && idUser){
+      try{
+        const resp = await axios.get(`http://localhost:3001/ads/fetchSomeAds/${idUser}`, {
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
+        if(resp.status === 200){
+          console.log(resp.data);
+          setdataAds(resp.data);          
+        }
+         
+      }
+      catch(e){
+        console.log(e.message);
+      } finally{
+        setfetchingAds(false);
+      }
+    }
+  }
+
   
   useEffect(()=>{
     fetchUser();
+    fetchAds();
   }, []);
 
   const enterGlobalRoom = ()=>{
@@ -107,21 +132,21 @@ function App() {
           <Route  
             path='/' 
             element={
-              token ? <Home ResponseRequest={ResponseRequest}  isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} renderUser={fetchUser} /> : <Navigate to="/auth" />
+              token ? <Home dataAds={dataAds} ResponseRequest={ResponseRequest}  isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} renderUser={fetchUser} /> : <Navigate to="/auth" />
             } 
           />
 
           <Route  
             path='/profile/:id' 
             element={
-              token ? <Profile isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser} /> : <Navigate to="/auth" />
+              token ? <Profile dataAds={dataAds} isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser} /> : <Navigate to="/auth" />
             } 
           />
           
           <Route  
             path='/page/:id' 
             element={
-              token ? <Page fetchUser={fetchUser}  isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser} /> : <Navigate to="/auth" />
+              token ? <Page fetchUser={fetchUser} dataAds={dataAds}  isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} fetchCurrentUser={fetchUser} /> : <Navigate to="/auth" />
             } 
           />
          
@@ -136,7 +161,7 @@ function App() {
           <Route  
             path='/notifications' 
             element={
-              token ? <Notifications isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}  /> : <Navigate to="/auth" />
+              token ? <Notifications dataAds={dataAds} isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}  /> : <Navigate to="/auth" />
             } 
           />
           
@@ -144,7 +169,7 @@ function App() {
           <Route  
             path='/requests' 
             element={
-              token ? <Requests renderUserInfos={fetchUser} isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}  /> : <Navigate to="/auth" />
+              token ? <Requests dataAds={dataAds}  renderUserInfos={fetchUser} isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}  /> : <Navigate to="/auth" />
             } 
           />
           

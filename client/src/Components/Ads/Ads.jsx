@@ -12,7 +12,7 @@ import '../../Pages/Home/Home.css'
 
 
 
-const Ads = () => {
+const Ads = ({dataAds}) => {
 
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
@@ -148,6 +148,55 @@ const Ads = () => {
         setloaderDelete(false);
       }
     }
+
+
+
+    const AddClick = async (id, idAdser)=>{
+      if(token){
+        try{
+          await axios.get(`http://localhost:3001/ads/addClick/${id}/${idAdser}`, {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+        }
+        catch(e){
+          console.log(e.message);
+        } 
+      }
+    }
+
+
+
+
+    const AddViews = async (id, idAdser)=>{
+      if(token){
+        try{
+          await axios.get(`http://localhost:3001/ads/addViews/${id}/${idAdser}`, {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+        }
+        catch(e){
+          console.log(e.message);
+        } 
+      }
+    }
+
+
+    useEffect(()=>{
+      const x = ()=>{
+        if(dataAds){
+          AddViews(dataAds[0]._id, dataAds[0].adser);
+          AddViews(dataAds[1]._id, dataAds[1].adser);
+        }
+      };
+      x();
+    }, [dataAds]);
+
+    
+
 
   return (
     <>
@@ -405,45 +454,51 @@ const Ads = () => {
                 </span> 
             }
         </div>
-        <div className="rowAds"
-            onClick={()=>{
-                navigate("/ads/666");
-            }}
-        >
-            <img 
-                className='pictureAds'
-                src='https://media.istockphoto.com/id/1020968912/fr/vectoriel/ic%C3%B4ne-de-feuille-d%C3%A9rable-symbole-canadien-illustration-vectorielle.jpg?s=612x612&w=0&k=20&c=L5NAEshTBfIk9_QjmTfT0qDoIlH6tQEg0NRNQTvFBsM='
-                alt=""
-            />
-            <span className='jackijack'>
-                <span className="titleOftheAd">
-                    WORK IN CANADA
-                </span>
-                <span className="shortDescripton">
-                    job.workincancada.om
-                </span>
-            </span>
-        </div>
-        <div className="rowAds"
-              onClick={()=>{
-                navigate("/ads/666");
-              }}
-        >
-            <img 
-                className='pictureAds'
-                src = "https://i1.sndcdn.com/artworks-wIyqUD3yoZHgsnVm-K3Ozvg-t500x500.jpg"
-                alt=""
-            />
-            <span className='jackijack'>
-                <span className="titleOftheAd">
-                    ACCELERATE YOUR CAREER
-                </span>
-                <span className="shortDescripton">
-                    jobintechagency.org
-                </span>
-            </span>
-        </div>
-        
+        {
+          dataAds && 
+          <>
+              <div className="rowAds" onClick={() => {
+                AddClick(dataAds[0]._id, dataAds[0].adser);
+                const url = dataAds[0].website;
+                const absoluteUrl = url.startsWith('http://') || url.startsWith('https://') ? url : `https://${url}`;
+                window.open(absoluteUrl, '_blank');
+              }}>
+                  <img 
+                      className='pictureAds'
+                      src={dataAds[0].image} 
+                      alt=""
+                  />
+                  <span className='jackijack'>
+                      <span className="titleOftheAd">
+                        {dataAds[0].title} 
+                      </span>
+                      <span className="titleOftheAd">
+                        {dataAds[0].website} 
+                      </span>
+                  </span>
+              </div>
+              <div className="rowAds" onClick={() => {
+                AddClick(dataAds[1]._id, dataAds[1].adser);
+                const url = dataAds[1].website;
+                const absoluteUrl = url.startsWith('http://') || url.startsWith('https://') ? url : `https://${url}`;
+                window.open(absoluteUrl, '_blank');
+              }}>
+                  <img 
+                      className='pictureAds'
+                      src={dataAds[1].image} 
+                      alt=""
+                  />
+                  <span className='jackijack'>
+                      <span className="titleOftheAd">
+                        {dataAds[1].title} 
+                      </span>
+                      <span className="titleOftheAd">
+                        {dataAds[1].website ? dataAds[1].website : null} 
+                      </span>
+                  </span>
+              </div>
+          </>
+        }
     </div>
     </>
   )

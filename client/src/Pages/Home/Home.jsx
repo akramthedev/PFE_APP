@@ -24,7 +24,7 @@ import { TheOneWhoHasBirthDay } from './TheOneWhoHasBirthDay';
 
 
 
-const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) => {
+const Home = ({ dataAds, isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) => {
 
 
     const navigate = useNavigate();
@@ -499,7 +499,7 @@ const Home = ({ isFetchingUser, dataUserCurrent, ResponseRequest, renderUser}) =
               !isFetchingUser && dataUserCurrent
               &&
               <>
-                <Ads />
+                <Ads dataAds={dataAds} />
                 <BirthDays setTheOnesWhoHaveBirthday={setTheOnesWhoHaveBirthday} setisBClicked={setisBClicked}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
                 <Contacts    isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent}   />
               </>

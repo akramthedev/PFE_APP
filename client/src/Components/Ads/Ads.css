@@ -147,3 +147,7 @@
     background-color: red;
     color: white;
 }
+
+.Ads .rowAds .pictureAds{
+    object-fit: cover !important;
+}

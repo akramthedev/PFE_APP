@@ -20,7 +20,7 @@ import Bookmark from './Bookmark.jsx';
 
 
 
-const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
+const Profile = ({ dataAds,dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
 
 
   const { id } = useParams();
@@ -1160,8 +1160,7 @@ const Profile = ({ dataUserCurrent, isFetchingUser, fetchCurrentUser }) => {
           }
         </div>
         <div className="h3">
-          <Ads />
-          <BirthDays setisBClicked={setisBClicked} setTheOnesWhoHaveBirthday={setTheOnesWhoHaveBirthday } isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
+        <Ads dataAds={dataAds} />          <BirthDays setisBClicked={setisBClicked} setTheOnesWhoHaveBirthday={setTheOnesWhoHaveBirthday } isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
           <Contacts isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
         </div>
       </div>

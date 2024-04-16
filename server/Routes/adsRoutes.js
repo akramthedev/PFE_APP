@@ -334,6 +334,42 @@ router.get('/getPlanOfUserWithToken/:idUser', verifyToken, async (req, res) => {
 
 
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+
+router.get('/fetchSomeAds/:idUser', verifyToken, async (req, res) => {
+    try {
+        const {idUser} = req.params;
+        const areFound = await ads.find({
+            adser : {
+                $ne : idUser
+            }
+        });
+        if (areFound) {
+            if(areFound.length !== 0){
+                const shuffledAds = shuffleArray(areFound);
+                const twoAdsRandomlyFromTheList = shuffledAds.slice(0, 2);
+                res.status(200).send(twoAdsRandomlyFromTheList);
+            }
+            else{
+                res.status(202).send("");
+            }
+        } else {
+            res.status(202).send("N");
+        }
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+
+
 router.get('/getAllAdsCreatedByUser/:idUser', verifyToken, async (req, res) => {
     try {
         const { idUser } = req.params;
@@ -379,7 +415,7 @@ router.get('/delete/:idAds', verifyToken, async (req, res) => {
 
  
 
-const createSingleAd = async (idUser, title, description, image) => {
+const createSingleAd = async (idUser, title, description,website, image) => {
     const user = await users.findOne({ _id: idUser });
     if (!user) {
         throw new Error('User not found');
@@ -405,14 +441,14 @@ const createSingleAd = async (idUser, title, description, image) => {
     }
 
     if (adsByUser.length >= maxAds) {
-        throw new Error('Maximum ads limit reached for this user');
-    }
+     }
 
     const newAd = await ads.create({
         adser: idUser,
         title,
         description,
-        image
+        image, 
+        website
     });
 
     await users.findByIdAndUpdate(idUser, { $inc: { adsNumber: 1 } });
@@ -423,9 +459,9 @@ const createSingleAd = async (idUser, title, description, image) => {
 // Route to create single ad
 router.post('/createSingleAds', verifyToken,  async (req, res) => {
     try {
-        const { idUser, title, description, image } = req.body;
+        const { idUser, title, description, image ,website} = req.body;
 
-        const createdAd = await createSingleAd(idUser, title, description, image);
+        const createdAd = await createSingleAd(idUser, title, description,website, image);
 
         res.status(200).json(createdAd);
     } catch (error) {

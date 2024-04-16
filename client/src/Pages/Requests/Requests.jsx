@@ -13,7 +13,7 @@ import useOutsideAlerter from '../../Helpers/HidePopUp';
 import { TheOneWhoHasBirthDay } from '../Home/TheOneWhoHasBirthDay';
 
 
-const Requests = ({isFetchingUser, dataUserCurrent, renderUserInfos}) => {
+const Requests = ({dataAds, isFetchingUser, dataUserCurrent, renderUserInfos}) => {
 
     const token = localStorage.getItem('token');
     const idUser = localStorage.getItem('idUser');
@@ -163,7 +163,7 @@ const Requests = ({isFetchingUser, dataUserCurrent, renderUserInfos}) => {
               }
             </div>
             <div className="h3">
-              <Ads />
+              <Ads dataAds={dataAds}/>
               <BirthDays  setisBClicked={setisBClicked} setTheOnesWhoHaveBirthday={setTheOnesWhoHaveBirthday } isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
               <Contacts   isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} socket={socket}  />
             </div>

@@ -32,6 +32,7 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
     const [title, settitle] = useState("");
     const [description, setdescription] = useState("");
     const [image, setimage] = useState("");
+    const [website, setwebsite] = useState("");
     const [loader, setloader] = useState(false);
     const [loader2, setloader2] = useState(true);
     const [allAds, setallAds] = useState(null);
@@ -286,7 +287,7 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
 
     const handlCreate = async(e)=>{
       e.preventDefault();
-      if(token &&  title.length >= 10 && description.length >= 20 && image.length >= 14){
+      if(token && website.length>=5 && title.length >= 10 && description.length >= 20 && image.length >= 14){
         setloader(true);
         try {
           const resp = await axios.post('http://localhost:3001/ads/createSingleAds/', {
@@ -294,6 +295,7 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
             title : title, 
             description : description, 
             image : image,
+            website : website
           }, {
             headers : {
               Authorization : `Bearer ${token}`
@@ -417,6 +419,18 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                             setimage(e.target.value);
                           }}
                           placeholder='Enter the image of your ads...'
+                        />
+
+                        <input
+                          value={website} 
+                          type="text"
+                          className={maxAdsToCreated === allAds.length && "noCursorallowed noCursorallowed2"}
+                          disabled={maxAdsToCreated === allAds.length}
+                          spellCheck={false}
+                          onChange={(e)=>{
+                            setwebsite(e.target.value);
+                          }}
+                          placeholder='Enter the website of your company...'
                         />
                         
                         <button
