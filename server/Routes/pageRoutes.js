@@ -22,7 +22,14 @@ router.post('/create' ,verifyToken,async(req, res)=>{
                 }
             }, {new : true});
            if(isUpdatedUser){
-            res.status(200).send(isUpdatedUser);
+                let dataNotification = {
+                    title: `🎉 Congrats.. Your page is now alive!`,
+                    description1: "You will see it in your left navigation bar.",
+                    type: "Friend Accepted", 
+                    idNotifSentTo: data.creator,
+                }
+                await notifs.create(dataNotification);
+                res.status(200).send(isUpdatedUser);
            }
            else{
             res.status(202).send("");
@@ -120,6 +127,14 @@ router.post('/followThePage' ,verifyToken,async(req, res)=>{
                         pages : idPageFollowed
                     }
                 });
+                let dataNotification = {
+                    title: `✔️ You've started following ${isFound.name}!`,
+                    description1: "Any post created by this page, you'll see it in your home page.",
+                    type: "Friend Accepted", 
+                    idNotifSentTo: idFollower,
+                }
+                await notifs.create(dataNotification);
+
                 res.status(200).send("Followed");
             }
         }

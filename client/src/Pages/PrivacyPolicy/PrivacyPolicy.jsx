@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
 
-const Accessibility = () => {
+const PrivacyPolicy = () => {
 
   const nav = useNavigate();
 
@@ -16,7 +16,7 @@ const Accessibility = () => {
       <div className="container368 container763">
         
         <div className="row66 row65 row65row65">
-          <i style={{fontSize : "14px"}} className='fa-solid fa-thumbtack'></i>&nbsp;&nbsp;&nbsp;Display And Accessibility
+          <i style={{fontSize : "14px"}} className='fa-solid fa-thumbtack'></i>&nbsp;&nbsp;&nbsp;Privacy Policy
         </div> 
         <br />
 
@@ -89,4 +89,4 @@ const Accessibility = () => {
   )
 }
 
-export default Accessibility
+export default PrivacyPolicy

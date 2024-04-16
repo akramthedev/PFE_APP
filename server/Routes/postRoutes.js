@@ -70,6 +70,16 @@ router.post('/createPagePost', verifyToken ,async(req, res)=>{
             isPagePost
         });
         if(isCreated){
+
+            let dataNotification = {
+                title: `🎉 Congrats.. Your post was created!`,
+                description1: "You will see it in details in your page!",
+                type: "Friend Accepted", 
+                idNotifSentTo: creator,
+            }
+            await notifs.create(dataNotification);
+
+
             res.status(200).send("Post Created...");
         }
         else{

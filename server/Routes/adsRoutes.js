@@ -29,6 +29,13 @@ router.post('/send-request',verifyToken,async (req, res)=>{
             isForAdults : data.isForAdults
        });
        if(isCreated){
+        let dataNotification = {
+            title: `✔️ Your application was successfull!`,
+            description1: "Wait for the admins to review it and accept it!",
+            type: "Friend Accepted", 
+            idNotifSentTo: data.applicant,
+        }
+        await notifs.create(dataNotification);
         res.status(200).send(isCreated);
        }
        else{
@@ -66,8 +73,16 @@ router.get('/check/:idUser',verifyToken,async (req, res)=>{
 router.delete('/:idrequest',verifyToken,async (req, res)=>{
     try {
        const {idrequest} = req.params;
+       const idUser = req.user._id;
        const isDlete = await reqAdsers.deleteOne({_id : idrequest});
        if(isDlete){
+        let dataNotification = {
+            title: `❌ Your application was deleted.`,
+            description1: "Welcome to the advertisers community anytime!",
+            type: "Friend Accepted", 
+            idNotifSentTo: idUser,
+        }
+        await notifs.create(dataNotification);
          res.status(200).send("Deleted");
        }
        else{
@@ -235,6 +250,15 @@ router.get('/choose-plan/:numPlan/:token', verifyToken, async(req, res)=>{
                 isPaymentDone : true
             }, {new : true});
 
+            let dataNotification = {
+                title: `✔️ Your payment was successfull!`,
+                description1: "Welcome to the advertisers community, Congrats!",
+                type: "Friend Accepted", 
+                idNotifSentTo: idUser,
+            }
+            await notifs.create(dataNotification);
+
+
             res.status(200).send({
                 id : session.id
             })
@@ -297,6 +321,14 @@ router.get('/upgrade-plan/:numPlan/:token', verifyToken, async(req, res)=>{
                 plan : numPlan, 
                 isPaymentDone : true
             }, {new : true});
+
+            let dataNotification = {
+                title: `✔️ Your payment was successfull!`,
+                description1: "You have upgraded your advertising plan, congrats!",
+                type: "Friend Accepted", 
+                idNotifSentTo: idUser,
+            }
+            await notifs.create(dataNotification);
 
             res.status(200).send({
                 id : session.id
@@ -462,8 +494,19 @@ router.post('/createSingleAds', verifyToken,  async (req, res) => {
         const { idUser, title, description, image ,website} = req.body;
 
         const createdAd = await createSingleAd(idUser, title, description,website, image);
-
-        res.status(200).json(createdAd);
+        if(createdAd){
+            let dataNotification = {
+                title: `📢 Your ads has been successfully created!`,
+                description1: "Check your dashboard now and make sure it's there, otherwise contact us!",
+                type: "Friend Accepted", 
+                idNotifSentTo: idUser,
+            }
+            await notifs.create(dataNotification);
+            res.status(200).json(createdAd);
+        }
+        else{
+            res.status(202).send("Oops, something went wrong!");
+        }
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -480,6 +523,13 @@ router.post('/deletespecific',verifyToken ,async (req, res)=>{
             }
        })
        if(isDlete){
+            let dataNotification = {
+                title: `❌ Your ads has been deleted!`,
+                description1: "Check your dashboard now and make sure it's not there, otherwise contact us!",
+                type: "Friend Accepted", 
+                idNotifSentTo: adser,
+            }
+            await notifs.create(dataNotification);
          res.status(200).send("Deleted");
        }
        else{

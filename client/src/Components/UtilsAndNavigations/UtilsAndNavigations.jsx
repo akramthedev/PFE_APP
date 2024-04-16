@@ -187,7 +187,7 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageC
         <div className="rowX"
           onClick={()=>{
             localStorage.setItem('saved', "true");
-            navigate("/contact");
+            navigate("/contentpolicy");
           }}  
         >
           <div className="xxx">
@@ -199,7 +199,7 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageC
         <div className="rowX"
           onClick={()=>{
             localStorage.setItem('saved', "true");
-            navigate("/contact");
+            navigate("/privacypolicy");
           }}  
         >
           <div className="xxx">
@@ -211,7 +211,7 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageC
         <div className="rowX"
           onClick={()=>{
             localStorage.setItem('saved', "true");
-            navigate("/contact");
+            navigate("/termsofuse");
           }}  
         >
           <div className="xxx">

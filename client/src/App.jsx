@@ -23,6 +23,13 @@ import AdserPanel from "./Pages/AdserPanel/AdserPanel";
 import UnsuccessfullPanel from './Pages/AdserPanel/UnsuccessfullPanel';
 import { useSocket } from './Helpers/SocketContext';
 import Cloudinary from './Pages/Cloudinary';
+import TermsOfUse  from "./Pages/PrivacyPolicy/TermsOfUse";
+import ContentPolicy  from "./Pages/PrivacyPolicy/ContentPolicy";
+import PrivacyPolicy from "./Pages/PrivacyPolicy/PrivacyPolicy";
+
+
+
+
 
 function App() {
   const token = localStorage.getItem('token');
@@ -263,6 +270,27 @@ function App() {
               <Contact/>
             } 
           />
+
+
+          <Route  
+            path='/privacypolicy' 
+            element={
+              <PrivacyPolicy/>
+            } 
+          />
+          <Route  
+            path='/contentpolicy' 
+            element={
+              <ContentPolicy/>
+            } 
+          />
+          <Route  
+            path='/termsofuse' 
+            element={
+              <TermsOfUse/>
+            } 
+          />
+
 
           <Route  
             path='*' 

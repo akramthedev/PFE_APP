@@ -2,12 +2,11 @@ const express = require('express');
 const users = require('../Models/users');
 const sendEmail = require('../Helpers/EmailSender');
 const verifyToken = require('../Middlewares/verifyToken');
+const notifs = require('../Models/notifs');
 const posts = require('../Models/posts');
 const ads = require('../Models/ads');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-
-
 
 
 
@@ -44,6 +43,13 @@ router.post('/change-password/:idUser', verifyToken ,async(req, res)=>{
                     password : hashedPassword 
                 });
 
+                let dataNotification = {
+                    title: `🔐 Your password has been successfully updated!`,
+                    description1: "Protect it and do not show it in front of anyone..",
+                    type: "Friend Accepted", 
+                    idNotifSentTo: isFound._id,
+                }
+                await notifs.create(dataNotification);
                 res.status(200).send(isFound);
             }
             else{
@@ -247,6 +253,13 @@ router.post('/updateBigAbout', verifyToken ,async(req, res)=>{
                 BigAbout
             }, {new : true});
             if(isUpdated){
+                let dataNotification = {
+                    title: `🎉 Your about section was updated!`,
+                    description1: "Check out yout profile..",
+                    type: "Friend Accepted", 
+                    idNotifSentTo: idUser,
+                }
+                await notifs.create(dataNotification);
                 res.status(200).send(isUpdated);
             }
             else{
