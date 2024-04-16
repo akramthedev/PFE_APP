@@ -189,11 +189,14 @@ const Page = ({dataAds, fetchUser,isFetchingUser, dataUserCurrent, reRenderParen
               Authorization : `Bearer ${token}`
             }
           });
+          console.log("---------------------------");
+          console.log(resp.data);
+          console.log("---------------------------");
           if(resp.status === 200){
             setisVerified(true);
             setTimeout(()=>{
               setshowVerifiedPopUp(true);
-            }, 1300);
+            }, 200);
           }
           else{
             setisVerified(false);

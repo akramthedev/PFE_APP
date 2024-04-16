@@ -240,7 +240,12 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
                       navigate(`/profile/${idUser}`);
                     }}
                   >
-                    View Post
+                  {
+                    notif.title === "✨ Congrats! Your page is now verified by Xplorium." ? 
+                    "Go to your page"
+                    :
+                    "View Post"
+                  }
                   </button>
                 }
                 </div>

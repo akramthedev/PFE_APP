@@ -1,5 +1,6 @@
 const express = require('express');
 const users = require('../Models/users');
+const notifs = require('../Models/notifs');
 const pages = require('../Models/Pages');
 const posts = require('../Models/posts');
 const sendEmail = require('../Helpers/EmailSender');
@@ -169,12 +170,12 @@ router.post('/verification-page-data' , verifyToken , async(req, res)=>{
                         totalLikesOfThePage  =  isFound.likes.length;
                         totalPosts           =  allPosts.length;
     
-                        const viewsThreshold            =   10000;  
-                        const likesThreshold            =   5000;  
-                        const commentsThreshold         =   2500;  
+                        const viewsThreshold            =   1000;  
+                        const likesThreshold            =   500;  
+                        const commentsThreshold         =   200;  
                         const allPostsLengthThreshold   =   10;  
-                        const followersThreshold        =   1000;  
-                        const pageLikesThreshold        =   500;
+                        const followersThreshold        =   300;  
+                        const pageLikesThreshold        =   400;
 
                         if(
                             totalViewsOfAllPosts >= viewsThreshold &&
@@ -189,6 +190,14 @@ router.post('/verification-page-data' , verifyToken , async(req, res)=>{
                                 isVerified : true
                             }, {new : true});
                             if(isUpdated){
+                                let dataNotification = {
+                                    title: `✨ Congrats! Your page is now verified by Xplorium.`,
+                                    description1: "Keep sharing your thoughts and experiences with other people!",
+                                    idNotifSentTo: isFound.creator,
+                                    type: "Post Created", 
+                                    idPost :  isFound._id
+                                }
+                                await notifs.create(dataNotification);
                                 res.status(200).send(isUpdated);
                             }
                             else{
