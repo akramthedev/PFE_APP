@@ -190,9 +190,7 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
                   notif.description1
                 }
                 </div>
-              <span className={isseen ? " isnotseen isseen" : "isnotseen"}>
-                 <i className='fa-solid fa-check-double'></i>
-              </span>
+               
               <span className="timeOuDate">
               {
                 notif && notif.createdAt && 
@@ -260,9 +258,7 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
                   </button>
                 }
                 </div>
-              <span className={isseen ? " isnotseen isseen" : "isnotseen"}>
-                 <i className='fa-solid fa-check-double'></i>
-              </span>
+              
               <span className="timeOuDate">
               {
                 notif && notif.createdAt && 

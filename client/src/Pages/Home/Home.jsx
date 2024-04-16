@@ -5,7 +5,6 @@ import Navbar from '../../Components/Navbar/Navbar';
 import CreatePost from '../../Components/CreatePost/CreatePost';
 import Post from '../../Components/Post/Post';
 import PagePost from '../../Components/Post/PagePost';
-import PostAds from '../../Components/Post/PostAds';
 import Ads from '../../Components/Ads/Ads';
 import Contacts from '../../Components/Contacts/Contacts';
 import BirthDays from '../../Components/BirthDays/BirthDays';
@@ -490,7 +489,6 @@ const Home = ({ dataAds, isFetchingUser, dataUserCurrent, ResponseRequest, rende
                      suggestedUsers && suggestedUsers.length !== 0 && 
                     <PostSuggestedUsers suggestedUsers={suggestedUsers}  />
                   }
-                  <PostAds />
                 </>
               }
             </div>
