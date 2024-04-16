@@ -5,6 +5,7 @@ const verifyToken = require('../Middlewares/verifyToken');
 const posts = require('../Models/posts');
 const ads = require('../Models/ads');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 
 
 
@@ -16,6 +17,38 @@ router.get('/:id', verifyToken ,async(req, res)=>{
         const isFound = await users.findById(id);
         if(isFound){
             res.status(200).send(isFound);
+        }
+        else{
+            res.status(202).send('Not Found...');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+router.post('/change-password/:idUser', verifyToken ,async(req, res)=>{
+    try{
+        const {pass, newpass} = req.body;
+        const {idUser} = req.params;
+
+        const isFound = await users.findById(idUser);
+        if(isFound){
+            const isMatch = await bcrypt.compare(pass, isFound.password);
+            if(isMatch){
+                
+                const saltRound = await bcrypt.genSalt(4);
+                const hashedPassword = await bcrypt.hash(newpass, saltRound);
+
+                const isChanged = await users.findByIdAndUpdate(idUser, {
+                    password : hashedPassword 
+                });
+
+                res.status(200).send(isFound);
+            }
+            else{
+                res.status(202).send(isFound);
+            }
         }
         else{
             res.status(202).send('Not Found...');

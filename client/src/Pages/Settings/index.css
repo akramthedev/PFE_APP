@@ -1,0 +1,92 @@
+.Settings{
+    background-color: #18191a;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.backHome{
+    position: absolute;
+    top: 2rem;
+    left: 3rem;
+    cursor: pointer;
+    font-weight: 400;
+    text-decoration: none;
+}
+.backHome:hover{
+    text-decoration: none;
+    color: rgb(201, 201, 201);
+}
+.backHome i{
+    font-size: 14px;
+}
+.container368{
+    min-height: 400px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+.row66{
+    min-height: 44px;
+    display: flex;
+    justify-content: left;
+    color: white;
+    font-size: 1.1rem;
+    flex-direction: column;
+}
+.row65{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+.row78{
+    margin-bottom: 1.5rem;
+}
+.row66 span{
+    font-size: 14px;
+    margin-bottom: 0.3rem;
+    color: rgb(165, 165, 165);
+}
+.row66 input{
+    height: 36px;
+    width: 100%;
+    border-radius: 0.26rem;
+    outline: none;
+    border: 2px solid transparent;
+    color: gainsboro;
+    background-color: #3a3b3c;
+    padding: 0 .666rem;
+    font-size: 14px;
+    font-weight: 600;
+}
+.row66 input:focus{
+    border: 2px solid rgb(115, 13, 210);
+}   
+.row66 input::placeholder{
+    color:rgb(190, 190, 190);
+}   
+.row66 button{
+    height: 34px;
+    width: 100%;
+    border-radius: 0.26rem;
+    outline: none;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.2s all ease-in-out;
+    background-color: rgb(120, 12, 222);
+    color: white;
+    cursor: pointer;
+}
+.row66 button:hover{
+    background-color: rgb(97, 0, 188);
+}
+
+.row66 .NoPointerX{
+    cursor: not-allowed;
+}
+.row66 .NoPointerX:hover{
+    background-color: rgb(120, 12, 222);
+}

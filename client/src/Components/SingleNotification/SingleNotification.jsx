@@ -237,7 +237,12 @@ const SingleNotification = ({notif, index, reRenderParentComponent}) => {
                     className='visitPost'
                     onClick={()=>{
                       postVisitedAxiosReq();
-                      navigate(`/profile/${idUser}`);
+                      if(notif.title === "✨ Congrats! Your page is now verified by Xplorium."){
+                        navigate(`/page/${notif.idPost}`);
+                      }
+                      else{
+                        navigate(`/profile/${idUser}`);
+                      }
                     }}
                   >
                   {
