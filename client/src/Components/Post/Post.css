@@ -490,6 +490,12 @@
     justify-content: center;
     color: white;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
     margin-right: 0.42rem;
+}
+
+.topic .colorizeWhite{
+    color: black !important;
+    font-size: 13px;
+    font-weight: 600;
 }

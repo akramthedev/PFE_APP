@@ -78,38 +78,107 @@ router.post('/create', verifyToken, async (req, res) => {
 
 router.post('/createPagePost', verifyToken ,async(req, res)=>{
     try{
+
         const {
             creator,
             image, 
             description, 
             type , 
-            isPagePost
-            
+            isPagePost, 
         } = req.body;
 
-        const isCreated = await posts.create({
-            creator, 
-            image, 
-            description, 
-            type, 
-            isPagePost
-        });
-        if(isCreated){
+        const pythonServerUrl = 'http://localhost:5000/extract-topics'; // Change if needed
+        const pythonResponse = await axios.post(pythonServerUrl, { description });
 
-            let dataNotification = {
-                title: `🎉 Congrats.. Your post was created!`,
-                description1: "You will see it in details in your page!",
-                type: "Friend Accepted", 
-                idNotifSentTo: creator,
+        if(pythonResponse){
+            let topics = pythonResponse.data['eden-ai'].items;
+
+            // Function to generate a random color
+            const getRandomColor = () => {
+                const colors = [
+                    '#7600e5',
+                    '#ed4700',
+                    '#008200',
+                    '#ac009a',
+                    '#c00000',
+                    '#2b3de2',
+                    '#2bd3e2',
+                    '#000000',
+                    '#ae8000'
+                ];
+                return colors[Math.floor(Math.random() * colors.length)];
+            };
+
+            // Add background color to each topic object
+            topics.forEach(topic => {
+                topic.backgroundColor = getRandomColor();
+            });
+
+
+            const isCreated = await posts.create({
+                creator, 
+                image, 
+                description, 
+                type, 
+                isPagePost, 
+                topic: topics
+            });
+
+            if(isCreated){
+
+                let dataNotification = {
+                    title: `🎉 Congrats.. Your post was created!`,
+                    description1: "You will see it in details in your page!",
+                    type: "Friend Accepted", 
+                    idNotifSentTo: creator,
+                }
+                await notifs.create(dataNotification);
+
+
+                res.status(200).send("Post Created...");
             }
-            await notifs.create(dataNotification);
-
-
-            res.status(200).send("Post Created...");
+            else{
+                res.status(201).send('Post Not Created ... ');
+            }
         }
         else{
-            res.status(201).send('Post Not Created ... ');
+
+            const {
+                creator,
+                image, 
+                description, 
+                type , 
+                isPagePost, 
+            } = req.body;
+
+            const isCreated = await posts.create({
+                creator, 
+                image, 
+                description, 
+                type, 
+                isPagePost, 
+            });
+
+            if(isCreated){
+
+                let dataNotification = {
+                    title: `🎉 Congrats.. Your post was created!`,
+                    description1: "You will see it in details in your page!",
+                    type: "Friend Accepted", 
+                    idNotifSentTo: creator,
+                }
+                await notifs.create(dataNotification);
+
+
+                res.status(200).send("Post Created...");
+            }
+            else{
+                res.status(201).send('Post Not Created ... ');
+            }
         }
+
+
+        
 
     }
     catch(e){

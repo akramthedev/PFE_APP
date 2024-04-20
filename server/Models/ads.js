@@ -27,7 +27,9 @@ const Schemax = new mongoose.Schema({
         required : false, 
         default : 0
     }, 
-    
+    topic : {
+        type : []
+    },
     views : [
         {
             idUser : String, 

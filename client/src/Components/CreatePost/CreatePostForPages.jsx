@@ -177,7 +177,7 @@ const CreatePostForPages = ({ajusting,pageId, isFetchingUser, dataUserCurrent, r
               disabled={isSubmitClicked}
             >
             {
-              isSubmitClicked ? "Creating your post"
+              isSubmitClicked ? "Creating your post..."
               :
               "Lunch the post"
             }

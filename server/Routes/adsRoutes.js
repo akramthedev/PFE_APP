@@ -2,6 +2,7 @@ const express = require('express');
 const users = require('../Models/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 const sendEmail = require('../Helpers/EmailSender');
 const notifs = require('../Models/notifs');
 const ads = require('../Models/ads');
@@ -375,30 +376,6 @@ function shuffleArray(array) {
 }
 
 
-router.get('/fetchSomeAds/:idUser', verifyToken, async (req, res) => {
-    try {
-        const {idUser} = req.params;
-        const areFound = await ads.find({
-            adser : {
-                $ne : idUser
-            }
-        });
-        if (areFound) {
-            if(areFound.length !== 0){
-                const shuffledAds = shuffleArray(areFound);
-                const twoAdsRandomlyFromTheList = shuffledAds.slice(0, 2);
-                res.status(200).send(twoAdsRandomlyFromTheList);
-            }
-            else{
-                res.status(202).send("");
-            }
-        } else {
-            res.status(202).send("N");
-        }
-    } catch (e) {
-        res.status(500).send(e.message);
-    }
-});
 
 
 
@@ -447,7 +424,7 @@ router.get('/delete/:idAds', verifyToken, async (req, res) => {
 
  
 
-const createSingleAd = async (idUser, title, description,website, image) => {
+const createSingleAd = async (idUser, title, description,website, image, topics) => {
     const user = await users.findOne({ _id: idUser });
     if (!user) {
         throw new Error('User not found');
@@ -480,7 +457,8 @@ const createSingleAd = async (idUser, title, description,website, image) => {
         title,
         description,
         image, 
-        website
+        website, 
+        topic : topics
     });
 
     await users.findByIdAndUpdate(idUser, { $inc: { adsNumber: 1 } });
@@ -493,20 +471,62 @@ router.post('/createSingleAds', verifyToken,  async (req, res) => {
     try {
         const { idUser, title, description, image ,website} = req.body;
 
-        const createdAd = await createSingleAd(idUser, title, description,website, image);
-        if(createdAd){
-            let dataNotification = {
-                title: `📢 Your ads has been successfully created!`,
-                description1: "Check your dashboard now and make sure it's there, otherwise contact us!",
-                type: "Friend Accepted", 
-                idNotifSentTo: idUser,
+        const pythonServerUrl = 'http://localhost:5000/extract-topics'; // Change if needed
+        const pythonResponse = await axios.post(pythonServerUrl, { description });
+        
+        if(pythonResponse){
+            let topics = pythonResponse.data['eden-ai'].items;
+
+            const createdAd = await createSingleAd(
+                     idUser, 
+                     title, 
+                     description,
+                     website, 
+                     image, 
+                     topics
+            );
+
+            if(createdAd){
+                let dataNotification = {
+                    title: `📢 Your ads has been successfully created!`,
+                    description1: "Check your dashboard now and make sure it's there, otherwise contact us!",
+                    type: "Friend Accepted", 
+                    idNotifSentTo: idUser,
+                }
+                await notifs.create(dataNotification);
+                res.status(200).json(createdAd);
             }
-            await notifs.create(dataNotification);
-            res.status(200).json(createdAd);
+            else{
+                res.status(202).send("Oops, something went wrong!");
+            }
         }
         else{
-            res.status(202).send("Oops, something went wrong!");
+
+            const topics = [];
+            
+            const createdAd = await createSingleAd(
+                     idUser, 
+                     title, 
+                     description,
+                     website, 
+                     image,
+                     topics 
+            );
+            if(createdAd){
+                let dataNotification = {
+                    title: `📢 Your ads has been successfully created!`,
+                    description1: "Check your dashboard now and make sure it's there, otherwise contact us!",
+                    type: "Friend Accepted", 
+                    idNotifSentTo: idUser,
+                }
+                await notifs.create(dataNotification);
+                res.status(200).json(createdAd);
+            }
+            else{
+                res.status(202).send("Oops, something went wrong!");
+            }
         }
+
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -680,10 +700,38 @@ router.get('/fetchAllViewsHH', async (req, res) => {
 });
 
 
- 
+
+router.get('/fetchSomeAds/:idUser', verifyToken, async (req, res) => {
+    try {
+        const {idUser} = req.params;
+        const areFound = await ads.find({
+            adser : {
+                $ne : idUser
+            }
+        });
+        if (areFound) {
+            if(areFound.length !== 0){
+                const shuffledAds = shuffleArray(areFound);
+                const twoAdsRandomlyFromTheList = shuffledAds.slice(0, 2);
+                res.status(200).send(twoAdsRandomlyFromTheList);
+            }
+            else{
+                res.status(202).send("");
+            }
+        } else {
+            res.status(202).send("N");
+        }
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+
 
 
 
 
 
 module.exports = router;
+
+
