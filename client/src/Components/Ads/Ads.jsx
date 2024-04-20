@@ -460,7 +460,7 @@ const Ads = ({dataAds}) => {
             }
         </div>
         {
-          dataAds && 
+          dataAds ?
           <>
           {
             dataAds.length === 1 ? 
@@ -530,6 +530,11 @@ const Ads = ({dataAds}) => {
               </div>
             </>
           }
+          </>
+          :
+          <>
+          <div className="rowAds rowAdSkelton" />
+          <div className="rowAds rowAdSkelton2" />
           </>
         }
     </div>

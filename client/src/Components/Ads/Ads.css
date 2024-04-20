@@ -151,3 +151,26 @@
 .Ads .rowAds .pictureAds{
     object-fit: cover !important;
 }
+
+.rowAdSkelton{
+    animation: skeleton-loading 0.3s linear infinite alternate;
+}
+
+.rowAdSkelton2{
+    animation: skeleton-loading 0.2s linear infinite alternate;
+}
+
+
+
+@keyframes skeleton-loading {
+    0% {
+      background-color: hsl(0, 3%, 17%);
+    }
+    100% {
+      background-color: hsl(0, 3%, 25%);
+    }
+}
+
+
+
+
