@@ -30,8 +30,7 @@ function SPBU(graph, startUserId, targetUserId){
         const currentNode = queue[currentNodeIndex];
         queue.splice(currentNodeIndex, 1); 
 
-        
-        console.log(currentNode);
+      
         
         if(currentNode === targetUserId){
             const path = [];
@@ -81,7 +80,7 @@ router.get('/ShortestPathBetweenUsers/:startUserId/:targetUserId', async(req, re
             if(allUsers.length>=2){
                 allUsers.forEach(user=>{
                     socialNetworkGraph[user._id] = {};
-                    if(user.contacts.lenght !== 0){
+                    if(user.contacts.length !== 0){
                         user.contacts.forEach(contactId => {
                             socialNetworkGraph[user._id][contactId] = true
                         });
@@ -113,47 +112,54 @@ router.get('/ShortestPathBetweenUsers/:startUserId/:targetUserId', async(req, re
 });
  
 
-// Function to generate friend recommendations using BFS algorithm
-async function generateFriendRecommendations(userId) {
+router.get('/SuggestCommonFriendsBasedOnSPBU/:idUser', async (req, res) => {
     try {
-        
-        const visited = new Set();
-        const queue = [userId];
-        const recommendations = [];
+        const { idUser } = req.params;
+        let socialNetworkGraph = {}
+        let suggestion = []
+        const user = await users.findById(idUser);
 
-        while (queue.length > 0) {
-            const currentUserId = queue.shift();
-            visited.add(currentUserId);
-
-            // Find friends of the current user
-            const currentUser = await users.findById(currentUserId);
-            const friends = currentUser.contacts;
-
-            if (friends && friends.length > 0) {
-                friends.forEach(async (friendId) => {
-                    if (!visited.has(friendId)) {
-                        const friend = await users.findById(friendId);
-                        recommendations.push({
-                            userId: friend._id,
-                            fullName: friend.fullName,
-                            // Add other user details as needed
-                        });
-                        visited.add(friendId);
-                        queue.push(friendId);
-                    }
-                });
-            }
+        if (!user) {
+            return res.status(202).json({ message: "User not found" });
         }
+        else{
 
-        // Remove the user itself from recommendations
-        const index = recommendations.findIndex((user) => user.userId === userId);
-        recommendations.splice(index, 1);
+            
 
-        return recommendations;
-    } catch (error) {
-        throw error;
+            const numFriends = user.contacts.length;
+            if(numFriends>=3){
+
+                    for (const userId of user.contacts) {
+                        const Contact = await users.findById(userId);
+                        socialNetworkGraph[userId] = {};
+                        if (Contact.contacts.length !== 0) {
+                            Contact.contacts.forEach(contactId => {
+                                socialNetworkGraph[userId][contactId] = true;
+                            });
+                        }
+                    }
+
+                    for(let i = 0;i<user.contacts.length;i++){
+                
+                        const SingleContact = await users.findById(user.contacts[i]);
+                        if(SingleContact.contacts.length>=2){
+                            let path = SPBU(socialNetworkGraph,SingleContact.contacts[0],SingleContact.contacts[1]);
+                            console.log(path);
+                        }
+
+                    }
+                    
+                res.status(200).send(suggestion);
+            }
+            else{
+                return res.status(202).json({ message: "User not found" });
+            }
+
+        }
+    } catch (e) {
+        res.status(500).send(e.message);
     }
-}
+});
 
 
 
