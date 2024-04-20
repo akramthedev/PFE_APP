@@ -7,7 +7,7 @@ import SinglePageCOmpo from '../SinglePageCompo/SinglePageCompo';
 import axios from 'axios';
 
 
-const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageCLicked}) => {
+const UtilsAndNavigations = ({isCreatedPageCLicked, isFetchingUser, dataUserCurrent, setisCreatedPageCLicked}) => {
    
 
     const location = useLocation();
@@ -43,6 +43,9 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageC
       getAllUsersLength();
     }, []);
 
+    useEffect(()=>{
+      console.log("Hello ? ");
+    }, [isCreatedPageCLicked, setisCreatedPageCLicked]);
 
   return (
     <>
@@ -171,7 +174,7 @@ const UtilsAndNavigations = ({isFetchingUser, dataUserCurrent, setisCreatedPageC
         <div className="rowX rowXNoHover">
           <button className='CreatePage'
             onClick={()=>{
-              setisCreatedPageCLicked(true);
+                setisCreatedPageCLicked(true);
             }}
           >
             Create Page

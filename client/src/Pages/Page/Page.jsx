@@ -16,7 +16,7 @@ import VerifiedPage from '../../Assets/VerifiedPage.jsx';
 import useOutsideAlerter from '../../Helpers/HidePopUp.js';
 import { TheOneWhoHasBirthDay } from '../Home/TheOneWhoHasBirthDay.jsx';
 import formatCreatedAt from '../../Helpers/GetTimeAndDate.js';
-
+import calculateAge from '../../Helpers/ageCalculator.js';
 
 
 
@@ -42,6 +42,7 @@ const Page = ({dataAds, fetchUser,isFetchingUser, dataUserCurrent, reRenderParen
   const [isVerified,setisVerified] = useState(false);
   const [owner,setowner] = useState(null);
 
+  const [censored, setShowCensored] = useState(false);
 
   const [isHomeClicked,setisHomeClicked] = useState(true);
   const [isMediaClicked,setisMediaClicked] = useState(false);
@@ -55,7 +56,7 @@ const Page = ({dataAds, fetchUser,isFetchingUser, dataUserCurrent, reRenderParen
 
 
   const fetch = async()=>{
-    if(id){
+    if(id && dataUserCurrent){
       try{
         const resp = await axios.get(`http://localhost:3001/page/${id}`, {
           headers : {
@@ -77,6 +78,19 @@ const Page = ({dataAds, fetchUser,isFetchingUser, dataUserCurrent, reRenderParen
           else{
             setisFollowed(false);
           } 
+          if(dataUserCurrent.dateOfBirth === null || dataUserCurrent.dateOfBirth === ""){
+          }
+          else{
+            const age = calculateAge(dataUserCurrent.dateOfBirth);
+            if(resp.data.isForAdults === true){
+              if(age >= 18){
+                setShowCensored(false);
+              }
+              else{
+                setShowCensored(true);
+              }
+            }
+          }
           setData(resp.data);
           const respowner = await axios.get(`http://localhost:3001/user/${resp.data.creator}`, {
             headers : {
@@ -217,6 +231,28 @@ const Page = ({dataAds, fetchUser,isFetchingUser, dataUserCurrent, reRenderParen
 
   return (
     <>
+
+
+      {
+        censored &&
+        <div className="censored">
+          <h1>
+          Access Restricted Content
+          </h1>
+          <br />
+          <p>This content contains sensitive information. By clicking "I Accept," you acknowledge that you understand the nature of the content and agree to view it.</p>
+          <br />
+          <button
+            onClick={()=>{
+              setShowCensored(false);
+            }}
+          >
+          I Accept and Want to View
+          </button>
+        </div>
+      }
+
+
       <div className={showVerifiedPopUp ? "showVerifiedPopUp VerifiedPopUp" : "VerifiedPopUp"}>
         <div ref={refrefref} className={showVerifiedPopUp ? "divX showdivX" : "divX"}>
           <div className="row93791 row87824">

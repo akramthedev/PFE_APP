@@ -45,6 +45,9 @@ const Auth = () => {
           localStorage.setItem('firstConnection', "yes");
           navigate(0);
         }
+        else if(resp.status === 237){
+          navigate('/account-blocked')
+        }
         else {
           if(resp.status === 266){
             localStorage.removeItem("idUser");

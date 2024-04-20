@@ -410,7 +410,7 @@ const Home = ({ dataAds, isFetchingUser, dataUserCurrent, ResponseRequest, rende
           <Navbar  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent}  />
           <div className="home2">
             <div className="h1">
-              <UtilsAndNavigations setisCreatedPageCLicked={setisCreatedPageCLicked}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
+              <UtilsAndNavigations isCreatedPageCLicked={isCreatedPageCLicked}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} setisCreatedPageCLicked={setisCreatedPageCLicked}  />
             </div>
             <div className="h2">
               <CreatePost setThePostCreated={setThePostCreated} PostCreated={PostCreated} setPostCreated={setPostCreated} reRenderParentCompo={fetchAllPosts}  ajusting="home" isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />

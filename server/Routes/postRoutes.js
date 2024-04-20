@@ -240,7 +240,7 @@ router.get('/', verifyToken, async (req, res) => {
     try {
         const areFound = await posts.find({
             isPagePost: false
-        }).sort({ createdAt: -1 });
+        }).sort({createdAt: -1 });
 
         const idUser = req.user._id;
         const allPosts = [];
@@ -265,7 +265,7 @@ router.get('/', verifyToken, async (req, res) => {
             }
             
             // Sort allPosts array based on createdAt field in descending order
-            allPosts.sort((a, b) => b.createdAt - a.createdAt);
+            allPosts.sort((a, b) => b.views - a.views);
             
             res.status(200).send(allPosts);
         } else {

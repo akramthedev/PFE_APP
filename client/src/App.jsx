@@ -6,6 +6,7 @@ import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import Successfull from './Pages/AdserPanel/Successfull';
 import Auth from './Pages/Auth/Auth';
+import AccountBlocked from './Pages/Auth/AccountBlocked'
 import OTPverify from './Pages/OTPverify/OTPverify';
 import AdserPanel2 from './Pages/AdserPanel/AdserPanel2'
 import Contact from './Pages/Contact/Contact';
@@ -128,6 +129,14 @@ function App() {
               !token ? <Auth /> : <Navigate to="/" />
             } 
           />
+
+          <Route  
+            path='/account-blocked' 
+            element={
+              !token ? <AccountBlocked /> : <Navigate to="/" />
+            } 
+          />
+
 
           <Route  
             path='/auth/verify-email' 
