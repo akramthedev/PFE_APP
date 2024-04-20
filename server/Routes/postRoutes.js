@@ -4,51 +4,75 @@ const users = require('../Models/users');
 const notifs = require('../Models/notifs');
 const sendEmail = require('../Helpers/EmailSender');
 const verifyToken = require('../Middlewares/verifyToken');
-
+const axios = require('axios')
 
 
 const router = express.Router();
 console.log('');
 
 
-router.post('/create', verifyToken ,async(req, res)=>{
-    try{
-        const {
-            creator,
-            image, 
-            description, 
-            type , 
-            
-        } = req.body;
+router.post('/create', verifyToken, async (req, res) => {
+    try {
+        const { creator, image, description, type } = req.body;
 
-        const isCreated = await posts.create({
-            creator, 
-            image, 
-            description, 
-            type
-        });
-        if(isCreated){
+        const pythonServerUrl = 'http://localhost:5000/extract-topics'; // Change if needed
+        const pythonResponse = await axios.post(pythonServerUrl, { description });
 
-            let dataNotification = {
-                title: `🚀 Success! Your post has been created!`,
-                description1: "Keep sharing your thoughts and experiences with other people!",
-                idNotifSentTo: creator,
-                type: "Post Created", 
-                idPost :  isCreated._id
+        if (pythonResponse) {
+            let topics = pythonResponse.data['eden-ai'].items;
+
+            // Function to generate a random color
+            const getRandomColor = () => {
+                const colors = [
+                    '#7600e5',
+                    '#ed4700',
+                    '#008200',
+                    '#ac009a',
+                    '#c00000',
+                    '#2b3de2',
+                    '#2bd3e2',
+                    '#000000',
+                    '#ae8000'
+                ];
+                return colors[Math.floor(Math.random() * colors.length)];
+            };
+
+            // Add background color to each topic object
+            topics.forEach(topic => {
+                topic.backgroundColor = getRandomColor();
+            });
+
+            const isCreated = await posts.create({
+                creator,
+                image,
+                description,
+                type,
+                topic: topics
+            });
+
+            if (isCreated) {
+                let dataNotification = {
+                    title: `🚀 Success! Your post has been created!`,
+                    description1: "Keep sharing your thoughts and experiences with other people!",
+                    idNotifSentTo: creator,
+                    type: "Post Created",
+                    idPost: isCreated._id
+                };
+
+                await notifs.create(dataNotification);
+                res.status(200).send(isCreated);
+            } else {
+                res.status(201).send('Post Not Created ... ');
             }
-            
-            await notifs.create(dataNotification);
-            res.status(200).send(isCreated);
+        } else {
+            res.status(404).send('Oops');
         }
-        else{
-            res.status(201).send('Post Not Created ... ');
-        }
-
-    }
-    catch(e){
+    } catch (e) {
         res.status(500).send(e.message);
+        console.log(e.message);
     }
 });
+
 
 
 
@@ -264,8 +288,7 @@ router.get('/', verifyToken, async (req, res) => {
                 }
             }
             
-            // Sort allPosts array based on createdAt field in descending order
-            allPosts.sort((a, b) => b.views - a.views);
+            allPosts.sort((a, b) => b.createdAt - a.createdAt);
             
             res.status(200).send(allPosts);
         } else {

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useRef, useState, useMemo} from 'react'
 import "./Post.css";
 import {useNavigate} from 'react-router-dom'
 import Loader from '../../Assets/spin1.svg';
@@ -9,6 +9,35 @@ import SkeltonPost2 from './SkeltonPost2';
 import SingleComment from '../SingleComment/SingleComment';
 import Adser from "../../Assets/AdserSymbol";
 import Admin from '../../Assets/AdminSymbol';
+
+
+
+const colors = [
+    { color: '#7600e5', weight: 3 },   // Higher weight for this color
+    { color: '#ed4700', weight: 2 },
+    { color: '#008200', weight: 2 },
+    { color: '#ac009a', weight: 2 },
+    { color: '#c00000', weight: 2 },
+    { color: '#2b3de2', weight: 2 },
+    { color: '#000000', weight: 1 },   // Lower weight for this color
+    { color: '#ae8000', weight: 1 }
+];
+
+// Calculate total weight
+const totalWeight = colors.reduce((acc, cur) => acc + cur.weight, 0);
+
+// Function to generate a random color
+const getRandomColor = () => {
+    let randomNumber = Math.random() * totalWeight;
+    for (const color of colors) {
+        if (randomNumber < color.weight) {
+            return color.color;
+        }
+        randomNumber -= color.weight;
+    }
+};
+
+
 
 
 const Post = ({reRenderParentCompo, state, state2,state3, ajusting, post, index, isFetchingUser, dataUserCurrent}) => {
@@ -240,6 +269,18 @@ const Post = ({reRenderParentCompo, state, state2,state3, ajusting, post, index,
 
 
 
+    /*
+    const memoizedColors = useMemo(() => {
+        const memoizedColors = {};
+        post.topic.forEach((topic, index) => {
+            memoizedColors[topic.category] = getRandomColor();
+        });
+        return memoizedColors;
+    }, [post.topic]);
+
+    */
+
+
     return (
         <>
         {
@@ -325,6 +366,16 @@ const Post = ({reRenderParentCompo, state, state2,state3, ajusting, post, index,
                     </>
                 ))}
             </div>
+            }
+            {post.topic && post.topic.length !== 0 &&
+                        
+                <div className="rowP0 rowP2">
+                    {post.topic.map((topic, index) => (
+                    <div key={index} className={`topic`} style={{ backgroundColor: topic.backgroundColor}}>
+                        {topic.category}
+                    </div>
+                    ))}
+                </div>
             }
             {
                 post.image !== "" && 

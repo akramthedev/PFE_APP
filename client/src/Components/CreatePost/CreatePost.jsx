@@ -130,6 +130,7 @@ const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFe
       <div   className={isCreateClicked ? "popUpCreatePost showpopUpCreatePost" : "popUpCreatePost"}>
         <form onSubmit={handleSubmit}  ref={popUpCP} className="containerpopUpCreatePost">
           <button 
+            type='button'
             className="closePcp"
             onClick={()=>{
               setisCreateClicked(false);

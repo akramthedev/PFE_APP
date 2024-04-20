@@ -480,3 +480,16 @@
 .addCotAcT .invitationsent{
     background-color: rgb(47, 13, 80);
 }
+.topic{
+    height: 19px;
+    width: auto;
+    padding: 0rem 0.5555rem;
+    border-radius: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    margin-right: 0.42rem;
+}

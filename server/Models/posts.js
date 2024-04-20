@@ -33,13 +33,13 @@ const postsSchema = new mongoose.Schema({
         type : Boolean, 
         default : false, 
         required : false
-    }
-    ,
+    },
     isPagePost : {
         type : Boolean, 
         default : false, 
         required : false
-    }
+    }, 
+    topic : []
     
 }, {
     timestamps : true

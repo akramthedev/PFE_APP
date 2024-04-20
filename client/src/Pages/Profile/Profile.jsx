@@ -976,7 +976,7 @@ const Profile = ({ dataAds,dataUserCurrent, isFetchingUser, fetchCurrentUser }) 
                         }}
                       >
                         <i className='fa-solid fa-bookmark'></i>
-                        <span>{visitedUser && visitedUser.bookmarks.length} {visitedUser && visitedUser.bookmarks.length <=1 ? "Saved Post" : "Saved Posts"}</span>
+                        <span>Saved Posts</span>
                       </button>
                     </div>
 

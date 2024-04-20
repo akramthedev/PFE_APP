@@ -121,6 +121,7 @@ const CreatePostForPages = ({ajusting,pageId, isFetchingUser, dataUserCurrent, r
       <div   className={isCreateClicked ? "popUpCreatePost showpopUpCreatePost" : "popUpCreatePost"}>
         <form onSubmit={handleSubmit}  ref={popUpCP} className="containerpopUpCreatePost">
           <button 
+            type='button'
             className="closePcp"
             onClick={()=>{
               setisCreateClicked(false);
