@@ -188,8 +188,13 @@ const Ads = ({dataAds}) => {
     useEffect(()=>{
       const x = ()=>{
         if(dataAds){
-          AddViews(dataAds[0]._id, dataAds[0].adser);
-          AddViews(dataAds[1]._id, dataAds[1].adser);
+          if(dataAds.length === 1){
+            AddViews(dataAds[0]._id, dataAds[0].adser);
+          }
+          else if(dataAds.length === 2){
+            AddViews(dataAds[0]._id, dataAds[0].adser);
+            AddViews(dataAds[1]._id, dataAds[1].adser);
+          }
         }
       };
       x();
@@ -457,7 +462,33 @@ const Ads = ({dataAds}) => {
         {
           dataAds && 
           <>
+          {
+            dataAds.length === 1 ? 
+            <>
               <div className="rowAds" onClick={() => {
+                AddClick(dataAds[0]._id, dataAds[0].adser);
+                const url = dataAds[0].website;
+                const absoluteUrl = url.startsWith('http://') || url.startsWith('https://') ? url : `https://${url}`;
+                window.open(absoluteUrl, '_blank');
+              }}>
+                  <img 
+                      className='pictureAds'
+                      src={dataAds[0].image} 
+                      alt=""
+                  />
+                  <span className='jackijack'>
+                      <span className="titleOftheAd">
+                        {dataAds[0].title} 
+                      </span>
+                      <span className="titleOftheAd">
+                        {dataAds[0].website} 
+                      </span>
+                  </span>
+              </div>
+            </>
+            :
+            <>  
+            <div className="rowAds" onClick={() => {
                 AddClick(dataAds[0]._id, dataAds[0].adser);
                 const url = dataAds[0].website;
                 const absoluteUrl = url.startsWith('http://') || url.startsWith('https://') ? url : `https://${url}`;
@@ -497,6 +528,8 @@ const Ads = ({dataAds}) => {
                       </span>
                   </span>
               </div>
+            </>
+          }
           </>
         }
     </div>

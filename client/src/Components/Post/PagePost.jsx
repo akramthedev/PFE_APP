@@ -287,14 +287,18 @@ const PagePost = ({ajusting, post, index, isFetchingUser, dataUserCurrent, reRen
             </div>
             }
             {post.topic && post.topic.length !== 0 &&
-                        
-                <div className="rowP0 rowP2">
+              <div className="rowP0 rowP2">
                     {post.topic.map((topic, index) => (
-                    <div key={index} className={`topic`} style={{ backgroundColor: topic.backgroundColor}}>
-                        <span className={topic.backgroundColor === "#2bd3e2" && "colorizeWhite"} >
-                            {topic.category}
-                        </span>
-                    </div>
+                    <>
+                    {
+                        
+                        <div key={index} className={`topic`} style={{ backgroundColor: topic.backgroundColor}}>
+                            <span className={topic.backgroundColor === "#2bd3e2" && "colorizeWhite"} >
+                            {topic.category}&nbsp;{topic.category.length}
+                            </span>
+                        </div>
+                    }
+                    </>
                     ))}
                 </div>
             }

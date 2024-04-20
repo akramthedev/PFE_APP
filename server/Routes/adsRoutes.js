@@ -1,6 +1,7 @@
 const express = require('express');
 const users = require('../Models/users');
 const bcrypt = require('bcrypt');
+const posts = require('../Models/posts');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const sendEmail = require('../Helpers/EmailSender');
@@ -703,24 +704,126 @@ router.get('/fetchAllViewsHH', async (req, res) => {
 
 router.get('/fetchSomeAds/:idUser', verifyToken, async (req, res) => {
     try {
-        const {idUser} = req.params;
-        const areFound = await ads.find({
-            adser : {
-                $ne : idUser
-            }
+        const { idUser } = req.params;
+
+        const allPostsWhereTheUserInteracted = await posts.find({
+            $or: [
+                { likes: { $in: [idUser] } }, 
+                { "comments.commentator": { $in: [idUser] } } 
+            ]
         });
-        if (areFound) {
-            if(areFound.length !== 0){
+
+
+        if (allPostsWhereTheUserInteracted && allPostsWhereTheUserInteracted.length >= 3) {
+            // Fetch based on the topics of the posts fetched 
+            let topicsUserMayLike = [];
+            for (let i = 0; i < allPostsWhereTheUserInteracted.length; i++) {
+                if (allPostsWhereTheUserInteracted[i].topic.length >= 1) {
+                    for (let j = 0; j < allPostsWhereTheUserInteracted[i].topic.length; j++) {
+                        if(!topicsUserMayLike.includes(allPostsWhereTheUserInteracted[i].topic[j].category)){
+                            topicsUserMayLike.push(allPostsWhereTheUserInteracted[i].topic[j].category);
+                        }
+                    }
+                }
+            }
+            //console.log("Topics Of Posts The User Interact With it : "+topicsUserMayLike.length);
+
+            if (topicsUserMayLike.length >= 1) {
+                
+                let topicsUserMayLike = [];
+                for (let i = 0; i < allPostsWhereTheUserInteracted.length; i++) {
+                    if (allPostsWhereTheUserInteracted[i].topic.length >= 1) {
+                        for (let j = 0; j < allPostsWhereTheUserInteracted[i].topic.length; j++) {
+                            const category = allPostsWhereTheUserInteracted[i].topic[j].category;
+                            // Check if the category contains "/" or ":"
+                            if (category.includes("/") || category.includes(":")) {
+                                const subCategories = category.split(/[\/:]/); // Split by "/" or ":"
+                                // Push each subcategory separately after trimming
+                                subCategories.forEach(subCategory => {
+                                    const trimmedSubCategory = subCategory.trim(); // Trim spaces
+                                    if (!topicsUserMayLike.includes(trimmedSubCategory)) {
+                                        topicsUserMayLike.push(trimmedSubCategory);
+                                    }
+                                });
+                            } else {
+                                // If no "/" or ":", push the whole category after trimming
+                                const trimmedCategory = category.trim(); // Trim spaces
+                                if (!topicsUserMayLike.includes(trimmedCategory)) {
+                                    topicsUserMayLike.push(trimmedCategory);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                let relevantAds = [];
+                let addedAdIds = [];
+                for (let k = 0; k < topicsUserMayLike.length; k++) {
+                    const regex = new RegExp(topicsUserMayLike[k], 'i');
+                    const adsForTopic = await ads.find({
+                        topic: { $elemMatch: { category: { $regex: regex } } },
+                        adser: { $ne: idUser }
+                    });
+
+
+                    adsForTopic.forEach(ad => {
+                        const adIdString = ad._id.toString(); 
+                        console.log(adIdString);
+                        console.log();
+                        console.log(addedAdIds);
+                        console.log('---------------')
+                        if (!addedAdIds.includes(adIdString)) {
+                            relevantAds.push(ad);
+                            addedAdIds.push(adIdString);
+                        }
+                    });
+
+                }
+                //console.log(relevantAds);
+
+                if (relevantAds.length >= 1) {
+                    if(relevantAds.length > 2){
+                        res.status(200).send(relevantAds.slice(0, 2));
+                    }
+                    else{
+                        res.status(200).send(relevantAds);
+                    }
+                } else {
+                    // If no relevant ads found, fallback to random ads
+                    const areFound = await ads.find({ adser: { $ne: idUser } });
+                    if (areFound.length !== 0) {
+                        const shuffledAds = shuffleArray(areFound);
+                        const twoAdsRandomlyFromTheList = shuffledAds.slice(0, 2);
+                        res.status(200).send(twoAdsRandomlyFromTheList);
+                    } else {
+                        res.status(202).send("");
+                    }
+                }
+            } else {
+                // If no topics found, fallback to random ads
+                const areFound = await ads.find({ adser: { $ne: idUser } });
+
+                if (areFound.length !== 0) {
+                    const shuffledAds = shuffleArray(areFound);
+                    const twoAdsRandomlyFromTheList = shuffledAds.slice(0, 2);
+                    res.status(200).send(twoAdsRandomlyFromTheList);
+                } else {
+                    res.status(202).send("");
+                }
+            }
+        } else {
+            // If not enough posts, fetch random ads
+            const areFound = await ads.find({ adser: { $ne: idUser } });
+
+            if (areFound.length !== 0) {
                 const shuffledAds = shuffleArray(areFound);
                 const twoAdsRandomlyFromTheList = shuffledAds.slice(0, 2);
                 res.status(200).send(twoAdsRandomlyFromTheList);
-            }
-            else{
+            } else {
                 res.status(202).send("");
             }
-        } else {
-            res.status(202).send("N");
         }
+
     } catch (e) {
         res.status(500).send(e.message);
     }

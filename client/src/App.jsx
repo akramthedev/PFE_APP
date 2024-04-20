@@ -90,7 +90,7 @@ function App() {
         });
         if(resp.status === 200){
           console.log(resp.data);
-          setdataAds(resp.data);          
+          setdataAds(resp.data);    
         }
          
       }
