@@ -5,7 +5,7 @@ import './index.css';
 import Camera from './c.png';
 import Picture from './i.png';
 import Feeling from './f.png';
-
+import Spin from '../../Assets/spinwhite.svg'
 
 import ClickOutsider from '../../Helpers/HidePopUp';
 import axios from 'axios';
@@ -67,9 +67,9 @@ const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFe
 
               if(res){
                 setFile(null);
-                
+                console.log("idUser : "+idUser);
                 const resp = await axios.post("http://localhost:3001/post/create", {
-                  creator : idUser, 
+                  creator : idUser.toString(), 
                   image : res.data.url, 
                   description : textArea, 
                   type : "normal"          
@@ -80,20 +80,22 @@ const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFe
                 }); 
   
                 if(resp.status=== 200){
-                  reRenderParentCompo();
+                  setisSubmitClicked(false);
                   setThePostCreated(resp.data);
                   setPostCreated(!PostCreated);
                   setisCreateClicked(false);
                   settextArea("");
                 }
                 else{
-                  alert("Error Creating Post");
+                  setisSubmitClicked(false);
+                  alert("202 | Error Creating Post");
                 }
               }
             }
             else{
+              console.log("idUser : "+idUser);
               const resp = await axios.post("http://localhost:3001/post/create", {
-                creator : idUser, 
+                creator : idUser.toString(), 
                 image : "", 
                 description : textArea, 
                 type : "normal"          
@@ -104,19 +106,21 @@ const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFe
               }); 
 
               if(resp.status=== 200){
-                //reRenderParentCompo();
+                setisSubmitClicked(false);
                 setThePostCreated(resp.data);
                 setPostCreated(!PostCreated);
                 setisCreateClicked(false);
                 settextArea("");
               }
               else{
-                alert("Error Creating Post");
+                setisSubmitClicked(false);
+                alert("202 | Error Creating Post");
               }
             }
           }
           catch(error){
-            alert("Error Creating Post");
+            setisSubmitClicked(false);
+            alert("500 | Error Creating Post");
             console.log(error.message);
           }
         }
@@ -126,6 +130,11 @@ const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFe
   return (
     <>
 
+      <div className={isSubmitClicked ? "zqerufusqf showzqerufusqf" : "zqerufusqf"}>
+        <span>
+          <img src={Spin} alt="" /><span>Creating new post... It may take a while.</span>
+        </span>
+      </div>
 
       <div   className={isCreateClicked ? "popUpCreatePost showpopUpCreatePost" : "popUpCreatePost"}>
         <form onSubmit={handleSubmit}  ref={popUpCP} className="containerpopUpCreatePost">
@@ -183,7 +192,7 @@ const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFe
           </div>
           <div className="zowZ2">
             <button
-              className='sjqdkc'
+              className={isSubmitClicked ? "sjqdkc nopointercreating" : "sjqdkc"}
               type='submit'
               disabled={isSubmitClicked}
             >

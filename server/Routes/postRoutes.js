@@ -15,7 +15,12 @@ router.post('/create', verifyToken, async (req, res) => {
     try {
         const { creator, image, description, type } = req.body;
 
-        const pythonServerUrl = 'http://localhost:5000/extract-topics'; // Change if needed
+        console.log("creator : "+creator);
+        console.log("image : "+image);
+        console.log("description : "+description);
+        console.log("type : "+type);
+
+        const pythonServerUrl = 'http://localhost:5000/extract-topics';
         const pythonResponse = await axios.post(pythonServerUrl, { description });
 
         if (pythonResponse) {
@@ -69,7 +74,7 @@ router.post('/create', verifyToken, async (req, res) => {
         }
     } catch (e) {
         res.status(500).send(e.message);
-        console.log(e.message);
+        console.log(e);
     }
 });
 
