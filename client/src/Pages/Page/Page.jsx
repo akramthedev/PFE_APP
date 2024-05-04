@@ -17,7 +17,7 @@ import useOutsideAlerter from '../../Helpers/HidePopUp.js';
 import { TheOneWhoHasBirthDay } from '../Home/TheOneWhoHasBirthDay.jsx';
 import formatCreatedAt from '../../Helpers/GetTimeAndDate.js';
 import calculateAge from '../../Helpers/ageCalculator.js';
-
+import SpinWhite from '../../Assets/spinwhite.svg';
 
 
 const Page = ({dataAds, fetchUser,isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
@@ -293,9 +293,14 @@ const Page = ({dataAds, fetchUser,isFetchingUser, dataUserCurrent, reRenderParen
         <Navbar  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent}  />
           <div className="home2">
             <div className="h1">
-              <div className="rowImg878">
-                <img src={data && data.profilePic} alt="" />
-              </div>
+              {
+                data ? 
+                <div className="rowImg878">
+                  <img src={data.profilePic} alt="" />
+                </div>
+                :
+                <div className="rowImg878 izrsqidf" />
+              }
               <div className="rowName878">
               {
                 data && data.name
@@ -353,9 +358,14 @@ const Page = ({dataAds, fetchUser,isFetchingUser, dataUserCurrent, reRenderParen
               </div>
             </div>
             <div className="h2">
-              <div className="coverPicture99">
-                <img src={ data && data.coverPic} alt="" />
-              </div>
+              {
+                data ? 
+                <div className="coverPicture99">
+                  <img src={data.coverPic} alt="" />
+                </div>
+                :
+                <div className="coverPicture99 izrsqidf" />
+              }
               <div className="btnsbts">
               {
                 data && 
@@ -435,7 +445,11 @@ const Page = ({dataAds, fetchUser,isFetchingUser, dataUserCurrent, reRenderParen
                 isHomeClicked  ? 
                 <>
                   {
-                  postLoading ? "Loading.."
+                  postLoading ? 
+                  <>
+                    <div className="postXyui" /> 
+                    <div className="postXyui2"/> 
+                  </>
                   :
                   <>
                   {

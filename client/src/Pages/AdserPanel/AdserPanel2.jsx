@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {useNavigate , useParams} from 'react-router-dom'
+import SpinWhite from '../../Assets/spinwhite.svg'
 import axios from 'axios';
 import Navbar from '../../Components/Navbar/Navbar';
 import LoaderSvg from '../../Assets/spinwhite.svg';
@@ -499,8 +500,8 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                         }}
                       />
                       :
-                      <div className='nodataXXX'>
-                        No data available
+                      <div className='nodataXXX' style={{ display : "flex", alignItems : "center", justifyContent : "center" }} >
+                        <img src={SpinWhite} height={25} width={25} />&nbsp;&nbsp;<span>Loading data...</span>
                       </div>
                     }
                   </div>
@@ -510,7 +511,7 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                       dataAdsClickTOTAL && 
                       <div className='allViewsInfos'><i style={{fontSize : "13px"}} className='fa-solid fa-arrow-pointer'></i>&nbsp;&nbsp;Total : {dataAdsClickTOTAL} </div>
                     }
-                  {
+                    {
                       (dataAdsClick ) ?
                       <Line  
                         data={dataAdsClick} 
@@ -528,8 +529,8 @@ const AdserPanel2 = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                         }}
                       />
                       :
-                      <div className='nodataXXX'>
-                        No data available
+                      <div className='nodataXXX' style={{ display : "flex", alignItems : "center", justifyContent : "center" }} >
+                        <img src={SpinWhite} height={25} width={25} />&nbsp;&nbsp;<span>Loading data...</span>
                       </div>
                     }
                   </div>
