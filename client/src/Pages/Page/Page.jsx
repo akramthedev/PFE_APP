@@ -224,9 +224,23 @@ const Page = ({dataAds, fetchUser,isFetchingUser, dataUserCurrent, reRenderParen
     }
     
 
+    const incrementViews = async()=>{
+      try{
+        await axios.get(`http://localhost:3001/page/incrementViews/${id}`);
+      }
+      catch(e){
+        console.log(e.message);
+      }
+    }
+
+
     useEffect(()=>{
       handleVerifyPage();
     }, [currentId]);
+
+    useEffect(()=>{
+      incrementViews();
+    }, []);
   
 
   return (
@@ -317,6 +331,9 @@ const Page = ({dataAds, fetchUser,isFetchingUser, dataUserCurrent, reRenderParen
                 </div>
                 
               }
+              <div className="rowName8790">
+                <span>Views</span><span>{data && <>{(data.views === null || data.views === 0) ? <>0</> : data.views}</>}</span>                
+              </div>
               <div className="rowName8790">
                 <span>Likes</span><span>{data && LikesNumber && LikesNumber}</span>                
               </div>

@@ -62,6 +62,26 @@ router.get('/:idPage' ,verifyToken,async(req, res)=>{
     }
 });
 
+router.get("/incrementViews/:idPage", async(req, res)=>{
+    try{
+        const {idPage} = req.params;
+        const isIncremented = await pages.findByIdAndUpdate(idPage, {
+            $inc : {
+                views : 1
+            }
+        });
+        if(isIncremented){
+            res.status(200).send(isIncremented);
+        }
+        else{
+            res.status(202).send('Not found...');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+})
+
 
 
 router.post('/likethepage' ,verifyToken,async(req, res)=>{

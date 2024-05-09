@@ -37,7 +37,12 @@ const pagesSchema = new mongoose.Schema({
         default : false, 
         required : false
     },
-    followers :  [String], 
+    followers :  [String],
+    views : {
+        type : Number, 
+        default : 0, 
+        required : false
+    },
     PostingStatus : {
         type : String, 
         required : false, 

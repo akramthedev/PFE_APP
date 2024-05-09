@@ -42,12 +42,14 @@ const Home = ({ dataAds, isFetchingUser, dataUserCurrent, ResponseRequest, rende
     const [website, setwebsite]=useState(""); //step = 4 ! not important can be skiped 
     const [step, setStep]=useState(1);
     const [loader, setLoader]=useState(false);
+    const [loaderAnnonce, setloaderAnnonce]=useState(true);
     
     const [isBClicked,setisBClicked] = useState(false);
     const [TheOnesWhoHaveBirthday,setTheOnesWhoHaveBirthday] = useState(null);
     const [suggestedUsers, setsuggestedUsers] = useState(null);
     const [loaderSuggested, setloaderSuggested] = useState(true);
     const refref = useRef(null); 
+    const [annonce, setannonce] = useState(null);
     HidePopUp(popUpRef2,setisCreatedPageCLicked );
     HidePopUp(refref, setisBClicked);
 
@@ -147,12 +149,40 @@ const Home = ({ dataAds, isFetchingUser, dataUserCurrent, ResponseRequest, rende
     }
     
 
+    const getAnnoucement = async ()=>{
+      try{
+        if(token){
+          const resp = await axios.get('http://localhost:3001/annoucement', {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+          if(resp.status === 200){
+              console.log(resp.data)
+            if(resp.data.length >= 1){
+              setannonce(resp.data[0]);
+            }
+          }
+          setTimeout(()=>{
+            setloaderAnnonce(false);
+          }, 250);
+        }
+      }
+      catch(e){
+        console.log(e.message);
+        setloaderAnnonce(false);
+      }
+    }
+  
     useEffect(()=>{
       fetchAllPosts();
      }, [PostCreated]);
 
-    
-  
+     useEffect(()=>{
+      getAnnoucement();
+     }, [token]);
+
+
     useEffect(()=>{
 
       const x = ()=>{
@@ -434,12 +464,31 @@ const Home = ({ dataAds, isFetchingUser, dataUserCurrent, ResponseRequest, rende
                       </span>
                       :
                       <>
+                      {
+                                      !loaderAnnonce && 
+                                      <div class="zuoefuoqeofyoqeo">
+                                          <div class="background"></div>
+                                          <div class="content">
+                                          {
+                                            annonce && 
+                                            annonce.annoucementX.split('\n').map((line, index) => (
+                                              <>
+                                              {line}
+                                              <br />
+                                              </>
+                                            ))
+                                          }
+                                          </div>
+                                      </div>
+                                        
+                                    }
                         {
                           allPosts.map((post, index)=>{
                             if(index === 2 && allPosts.length > 3){
                                 if(post.isPagePost){
                                   return(
                                     <>
+                                      
                                       {
                                         suggestedUsers.length !== 0 && 
                                         <PostSuggestedUsers suggestedUsers={suggestedUsers}  />
@@ -451,6 +500,7 @@ const Home = ({ dataAds, isFetchingUser, dataUserCurrent, ResponseRequest, rende
                                  else{
                                   return(
                                     <>
+                                       
                                       {
                                          suggestedUsers.length !== 0 && 
                                         <PostSuggestedUsers suggestedUsers={suggestedUsers}  />
@@ -464,12 +514,20 @@ const Home = ({ dataAds, isFetchingUser, dataUserCurrent, ResponseRequest, rende
                               
                               if(post.isPagePost){
                                 return(
-                                  <PagePost state3={allPosts} reRenderParentCompo={fetchAllPostWithLoading} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                                  <>
+                                  
+                                     
+                                      
+                                    <PagePost state3={allPosts} reRenderParentCompo={fetchAllPostWithLoading} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                                  </>
                                 )
                                }
                               else{
                                 return(
-                                  <Post reRenderParentCompo2={fetchAllPostWithLoading}  state3={allPosts} state={ThePostCreated} state2={PostCreated} reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                                  <>
+                                     
+                                    <Post reRenderParentCompo2={fetchAllPostWithLoading}  state3={allPosts} state={ThePostCreated} state2={PostCreated} reRenderParentCompo={fetchAllPosts} ajusting={"no"}  index={index}  isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} post={post} />
+                                  </>
                                 )
                               }
 

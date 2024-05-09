@@ -1,5 +1,6 @@
 const express = require('express');
 const users = require('../Models/users');
+const annoucement = require('../Models/annoucement');
 const sendEmail = require('../Helpers/EmailSender');
 const verifyToken = require('../Middlewares/verifyToken');
 const notifs = require('../Models/notifs');
@@ -270,6 +271,27 @@ router.post('/updateBigAbout', verifyToken ,async(req, res)=>{
             res.status(401).send("Not Authentified...")
         }
         
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
+
+router.post('/makeAnnoucement' ,async(req, res)=>{
+    try{
+        const {annoucementX} = req.body;
+        console.log(annoucementX)
+        const isCreated = await annoucement.findByIdAndUpdate("663c321aca9f84132235d321",{
+            annoucementX : annoucementX
+        });
+        if(isCreated){
+            res.status(200).send(isCreated);
+        }
+        else{
+            res.status(202).send('Not Found...');
+        }
     }
     catch(e){
         res.status(500).send(e.message);

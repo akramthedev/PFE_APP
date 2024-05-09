@@ -407,3 +407,41 @@ table .displayFLexAlignCnete{
 .activated99:hover{
     background-color: rgb(159, 108, 0);
 }
+.zefyoyoqeyod{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.case134989453{
+    height: 300px;
+    width: 400px;
+}
+.case134989453 textarea{
+    resize: none;
+    height: 200px;
+    width: 100%;
+    border-radius: 0.4rem;
+    outline: none;
+    margin-top: 50px;
+    background-color: #2d2e2f;
+    color: white;
+    font-size: 15px;
+    padding: 2rem;
+    border: 1px solid #292727;
+}
+.case134989453 button{
+    height: 40px;
+    width: 100%;
+    border-radius: 0.4rem;
+    outline: none;
+    border: 1px solid #292727;
+    background-color: #2d2e2f;
+    color: white;
+    transition: .2s all ease-in-out;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.case134989453 button:hover{
+    background-color: #47494a;
+}

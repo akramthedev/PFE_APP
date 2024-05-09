@@ -1,4 +1,5 @@
 const authRoutes        =  require('./Routes/authRoutes');
+const annoucement       =  require('./Models/annoucement');
 const userRoutes        =  require('./Routes/userRoutes');
 const notifsRoutes      =  require('./Routes/notifRoutes');
 const postsRoutes       =  require('./Routes/postRoutes');
@@ -53,11 +54,26 @@ app.use('/graph', GraphRoutes);
 app.use('/stripe',stripeRoutes);
 app.use('/cloudinary', cloudinaryRoutes);
 app.use('/search', searchRoutes);
+app.get('/annoucement', async(req, res)=>{
+    try{
+         
+        const areFound = await annoucement.find();
+        if(areFound){
+            res.status(200).send(areFound);
+        }
+        else{
+            res.status(202).send('Not Found...');
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+
 
 
 //   WEBSOCKETS EVENTS
-
-
 let usersOnline =  new Array();
 const GRI = "XPLORIUM";                                 //   GRI stands for Global Room Id
 

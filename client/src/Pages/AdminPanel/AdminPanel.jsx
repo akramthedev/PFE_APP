@@ -29,7 +29,7 @@ ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement,TimeScale
 const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
   const nav = useNavigate();
 
-  const [isReqAdsClick, setisReqAdsClick] = useState(true);
+  const [annoucement, setannoucement] = useState("");
   const [loader, setloader] = useState(true);
   const [AllAdsClicked, setAllAdsClicked] = useState(false);
   const [allRequestsAds, setallRequestsAds] = useState([]);
@@ -183,10 +183,67 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
     const [Turnover, setTurnover] = useState(null);
     const [LoaderTurnover, setLoaderTurnover] = useState(true);
     const [dataPayments, setdataPayments] = useState(null);
+    const [loaderAnnoucement, setloaderAnnoucement] = useState(false);
+
+
+    const handleSubmitAnnoucement = async (e)=>{
+      console.log(annoucement)
+      e.preventDefault();
+      if(annoucement.length>=10){
+        try {
+          setloaderAnnoucement(true);
+          const resp = await axios.post("http://localhost:3001/user/makeAnnoucement", {
+            annoucementX : annoucement,
+            id : "663c321aca9f84132235d321"
+          });
+          if(resp.status === 200){
+            nav('/');
+          }
+          else{
+            alert('Error : Not Submited...');
+          }
+        } catch (error) {
+          alert('Error : Internal Server');
+          console.log(error.message);
+        } finally{
+          setloaderAnnoucement(false);
+        }
+      }
+    }
+
+
 
 
     
+    const getAnnoucement = async ()=>{
+      try{
+        if(token){
+          const resp = await axios.get('http://localhost:3001/annoucement', {
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          });
+          if(resp.status === 200){
+              console.log(resp.data)
+            if(resp.data.length >= 1){
+              setannoucement(resp.data[0].annoucementX);
+            }
+            else{
+              setannoucement("");
+            }
+          }
+         
+        }
+      }
+      catch(e){
+        console.log(e.message);
+      }
+    }
+   
 
+     useEffect(()=>{
+      getAnnoucement();
+     }, [token]);
 
 
 
@@ -1118,6 +1175,26 @@ const AdminPanel = ({isFetchingUser, dataUserCurrent, fetchCurrentUser}) => {
                             }
                     </table>
                 </div> 
+                <br />
+                <div className="ChartJs colorizeWhite">
+                  Make Pinned Announcement
+                </div>
+                <div className="ChartJs addMargin zefyoyoqeyod">
+                  <form  
+                    onSubmit={handleSubmitAnnoucement}
+                   className="case134989453">
+                    <textarea 
+                      type="text"
+                      value={annoucement}
+                      onChange={(e)=>{
+                        setannoucement(e.target.value);
+                      }}
+                      placeholder='Writte the annoucement that all users will see...'
+                      spellCheck={false}  
+                    ></textarea>
+                    <button disabled={loaderAnnoucement} type='submit' >Lunch Annoucement</button>
+                  </form>
+                </div>
 
 
             </> 
