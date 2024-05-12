@@ -129,13 +129,14 @@
 }
 .uosuodfuofduo{
     position: absolute;
-    right: -3rem;
+    right: -3.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 70px;
+    height: 35px;
     width: 70px;
     font-size: 1.6rem;
+    border-left: 2px solid black;
 }
 .caseiooui{
     height: 100%;
@@ -203,4 +204,14 @@
 
 .showzuifuidqblack{
     background-color: black;
+}
+
+.uozsuofduosdf{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
 }

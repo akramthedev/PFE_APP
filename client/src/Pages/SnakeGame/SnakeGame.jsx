@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useInterval } from "./useInterval";
 import {useNavigate} from 'react-router-dom'
+import axios from 'axios';
 import './index.css';
 import {
   CANVAS_SIZE,
@@ -23,13 +24,54 @@ const SnakeGame = () => {
   const [dir, setDir] = useState([0, -1]);
   const [speed, setSpeed] = useState(null);
   const [gameOver, setGameOver] = useState(false);
-
+  const idUser = localStorage.getItem('idUser');
   useInterval(() => gameLoop(), speed);
 
-  const endGame = () => {
+  const endGame = async () => {
     setSpeed(null);
     setGameOver(true);
+    try{    
+      await axios.get(`http://localhost:3001/game/${idUser}/${appleEaten}`);
+    }
+    catch(e){
+      console.log(e.message);
+    }
   };
+
+  const [data, setData] = useState(null);
+  const [loader, setLoader] = useState(true);
+
+  const fetchData = async () => {
+    try{
+      setLoader(true);
+      const resp = await axios.get(`http://localhost:3001/gameAllData`);
+      if(resp.status === 200){
+        setData(resp.data);
+        setLoader(false);
+
+      }
+      else{
+        setData([]);
+        setLoader(false);
+
+      }
+    }
+    catch(e){
+      setData([]);
+      setLoader(false);
+
+      console.log(e.message);
+    }
+    
+  };
+
+  useEffect(()=>{
+    fetchData();
+  }, []);
+
+  useEffect(()=>{
+    fetchData();
+  }, [gameOver]);
 
   useEffect(()=>{
     setTimeout(()=>{
@@ -133,43 +175,43 @@ const SnakeGame = () => {
             </h1>
             <br />
             <div className="participants">
-              <div className="rowPpp">
-                <div className="uosuodfuofduo">
-                  🥇
-                </div>
-                <div className="caseiooui">
-                  <img src="https://akramelbasri.com/static/media/img2.2956d50aa62c1124aa40.jpg" alt="" />
-                  Akram El Basri
-                </div>
-                <div className="uzrfuozfuozuof">
-                  2478
-                </div>
+            {
+              loader ? <div className="uozsuofduosdf">
+                Loading...
               </div>
-              <div className="rowPpp">
-                <div className="uosuodfuofduo">
-                  🥈
-                </div>
-                <div className="caseiooui">
-                  <img src="https://akramelbasri.com/static/media/img2.2956d50aa62c1124aa40.jpg" alt="" />
-                  Akram El Basri
-                </div>
-                <div className="uzrfuozfuozuof">
-                  2478
-                </div>
-              </div>
-              <div className="rowPpp">
-                
-                <div className="caseiooui">
-                  <img src="https://akramelbasri.com/static/media/img2.2956d50aa62c1124aa40.jpg" alt="" />
-                  Akram El Basri
-                </div>
-                <div className="uzrfuozfuozuof">
-                  2478
-                </div>
-                <div className="uosuodfuofduo">
-                  🥉
-                </div>
-              </div>
+              :
+              <>
+              {
+                data.length === 0 ? "No one has played yet.. Be the first!"
+                :
+                <>
+                {
+                  data.map((score, index)=>{
+                    return(
+                      <div onClick={()=>{
+                        nav(`/profile/${score.player}`)
+                      }} className="rowPpp">
+                          <div className="uosuodfuofduo">
+                            {
+                              index === 0 ? "🥇" : index === 1 ? "🥈" : "🥉"
+                            }
+                          </div>
+                          <div className="caseiooui">
+                            <img src={score.picture} alt="" />
+                            {score.fullName}
+                          </div>
+                          <div className="uzrfuozfuozuof">
+                            {score.score}&nbsp;🍎
+                          </div>
+                      </div>
+                   
+                    )
+                  })
+                }
+                </>
+              }
+              </>
+            }
             </div>
           </div>  
         </div>

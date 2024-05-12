@@ -2,6 +2,7 @@ const authRoutes        =  require('./Routes/authRoutes');
 const annoucement       =  require('./Models/annoucement');
 const posts             =  require('./Models/posts');
 const ads               =  require('./Models/ads');
+const users             =  require('./Models/users');
 const userRoutes        =  require('./Routes/userRoutes');
 const notifsRoutes      =  require('./Routes/notifRoutes');
 const postsRoutes       =  require('./Routes/postRoutes');
@@ -22,6 +23,7 @@ const http              =  require('http');
 const cors              =  require('cors');
 const clc               =  require("cli-color");
 const { Server }        =  require('socket.io');
+const game              =  require('./Models/game');
 require('dotenv').config();
 
 const app = express();
@@ -207,3 +209,69 @@ app.get('/fetchSomeAds/:idUser', async (req, res) => {
 });
 
 
+app.get("/game/:idUser/:applesEaten",async(req, res)=>{
+    try{
+        const {idUser, applesEaten} = req.params;
+        const isFound = await game.findOne({
+            player : idUser
+        });
+        if(isFound && isFound.length !== 0){
+            if(isFound.score > parseInt(applesEaten)){
+                res.status(200).send('Cool');
+            }
+            else{
+                const isUpdated = await game.findOneAndUpdate({
+                    player : idUser
+                }, {
+                    score : parseInt(applesEaten)
+                });
+                if(isUpdated){
+                    res.status(200).send("Created...")
+                }
+                else{
+                    res.status(202).send('Not Created...')
+                }
+            }
+        }
+        else{
+            const isFOund = await users.findById(idUser);
+                if(isFOund){
+                    const isCreated = await game.create({
+                        player : idUser, score : parseInt(applesEaten), 
+                        picture : isFOund.profilePic, 
+                        fullName : isFOund.fullName
+                    });
+                    if(isCreated){
+                        res.status(200).send("Created...")
+                    }
+                    else{
+                        res.status(202).send('Not Created...')
+                    }
+                }
+                else{
+                    res.status(202).send('kaka');
+                }
+            
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+})
+
+app.get("/gameAllData",async(req, res)=>{
+    try{
+        const areFound = await game.find().sort({
+            score : -1
+        }).limit(3);
+        if(areFound){
+            res.status(200).send(areFound);
+        }
+        else{
+            res.status(202).send("uui");            
+        }
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+})
