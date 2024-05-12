@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { useInterval } from "./useInterval";
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
+import S1 from './1.mp3'
+import S2 from './2.mp3'
+import S3 from './waterdrop-86537.mp3'
 import './index.css';
 import {
   CANVAS_SIZE,
@@ -12,10 +15,19 @@ import {
   DIRECTIONS
 } from "./constants";
 
+
+
+
 const SnakeGame = () => {
 
   const nav = useNavigate();
   const canvasRef = useRef();
+  const eatingAppleSoundRef = useRef(null);
+
+  const [playGameOverSound, setPlayGameOverSound] = useState(false);
+  const [playGameStartSound, setPlayGameStartSound] = useState(false);
+  const [playAppleEatingSound, setplayAppleEatingSound] = useState(false);
+
   const [snake, setSnake] = useState(SNAKE_START);
   const [render, setRender] = useState(false);
   const [render2, setRender2] = useState(false);
@@ -30,6 +42,8 @@ const SnakeGame = () => {
   const endGame = async () => {
     setSpeed(null);
     setGameOver(true);
+    setPlayGameOverSound(true); 
+    setPlayGameStartSound(false);
     try{    
       await axios.get(`http://localhost:3001/game/${idUser}/${appleEaten}`);
     }
@@ -101,18 +115,32 @@ const SnakeGame = () => {
     return false;
   };
 
+  
+  
+
   const checkAppleCollision = newSnake => {
     if (newSnake[0][0] === apple[0] && newSnake[0][1] === apple[1]) {
       let newApple = createApple();
       while (checkCollision(newApple, newSnake)) {
         newApple = createApple();
       }
-      setappleEaten(appleEaten+1);
+
       setApple(newApple);
+      setappleEaten(prevAppleEaten => prevAppleEaten + 1);
+
+      if (eatingAppleSoundRef.current) {
+        eatingAppleSoundRef.current.currentTime = 0;
+        eatingAppleSoundRef.current.play();
+      }
+
       return true;
     }
     return false;
   };
+  
+
+
+
 
   const gameLoop = () => {
     const snakeCopy = JSON.parse(JSON.stringify(snake));
@@ -124,6 +152,9 @@ const SnakeGame = () => {
   };
 
   const startGame = () => {
+    setPlayGameStartSound(true);     
+    setPlayGameOverSound(false);
+    setplayAppleEatingSound(false);
     setappleEaten(0);
     setSnake(SNAKE_START);
     setApple(APPLE_START);
@@ -142,9 +173,41 @@ const SnakeGame = () => {
     context.fillRect(apple[0], apple[1], 1, 1);
   }, [snake, apple, gameOver]);
 
+
+
+
+  useEffect(() => {
+    if (playGameOverSound) {
+      const audio = document.getElementById('gameOverAudio');
+      audio.play();
+    }
+  }, [playGameOverSound]);
+  
+  
+  useEffect(() => {
+    if (playGameStartSound) {
+      const audio = document.getElementById('gameStartAudio');
+      audio.play();
+    }
+  }, [playGameStartSound]);
+  
+
+  useEffect(() => {
+    if (playAppleEatingSound) {
+      const audio = document.getElementById('eatingApple');
+      audio.play();
+    }
+  }, [playAppleEatingSound]);
+
+  
+
+
+
   return (
     <div className="pageSnakeGame">
-      {
+      <audio id="gameStartAudio" src={S3} />
+      <audio id="gameOverAudio" src={S2} />
+      <audio id="eatingApple" src={S1} ref={eatingAppleSoundRef} />      {
         !render && 
         <div className={!render ? "sfvuuosdv showsfvuuosdv" : "sfvuuosdv"}>
         <div className="caseuozfo">
