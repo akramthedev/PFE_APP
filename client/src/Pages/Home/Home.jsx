@@ -83,32 +83,39 @@ const Home = ({ dataAds, isFetchingUser, dataUserCurrent, ResponseRequest, rende
         });
         if(resp.status === 200){
           setAllPosts(resp.data);
-          const resp2 = await axios.get(`http://localhost:3001/graph/suggested-contacts/${idUser}`, {
-            headers : {
-              Authorization : `Bearer ${token}`
-            }
-          });
-          if(resp2.status === 200){
-            setsuggestedUsers(resp2.data);
-          }
-          else{
-            setsuggestedUsers([]);
-          }
         }
         else{
           setAllPosts([]);
-          setsuggestedUsers([]);
         }
       }
       catch(e){
         setAllPosts([]);
-        setsuggestedUsers([]);
         console.log(e.message);
       } finally{
         setpostLoading(false);
       }
     }
 
+
+    const fetchingsuggestedUsers = async()=>{
+      try{
+        const resp2 = await axios.get(`http://localhost:3001/graph/suggested-contacts/${idUser}`, {
+          headers : {
+            Authorization : `Bearer ${token}`
+          }
+        });
+        if(resp2.status === 200){
+          setsuggestedUsers(resp2.data);
+        }
+        else{
+          setsuggestedUsers([]);
+        }
+      }
+      catch(e){
+        console.log(e.message)
+          setsuggestedUsers([]);
+      }
+    }
 
     const fetchAllPostWithLoading = async()=>{
       try{
@@ -178,8 +185,12 @@ const Home = ({ dataAds, isFetchingUser, dataUserCurrent, ResponseRequest, rende
      }, [PostCreated]);
 
      useEffect(()=>{
+      fetchingsuggestedUsers();
+     }, []);
+
+     useEffect(()=>{
       getAnnoucement();
-     }, [token]);
+     }, []);
 
 
     useEffect(()=>{
@@ -444,8 +455,25 @@ const Home = ({ dataAds, isFetchingUser, dataUserCurrent, ResponseRequest, rende
             </div>
             <div className="h2">
               <CreatePost setThePostCreated={setThePostCreated} PostCreated={PostCreated} setPostCreated={setPostCreated} reRenderParentCompo={fetchAllPosts}  ajusting="home" isFetchingUser={isFetchingUser}  dataUserCurrent={dataUserCurrent} />
+                               
+              <div class="zuoefuoqeofyoqeo"
+                onClick={()=>{
+                  navigate('/snake-game')
+                }}
+              >
+                <div class="background" />
+                <div class="content">
+                  &nbsp;𝐏𝐥𝐚𝐲&nbsp; 𝐎𝐧𝐥𝐢𝐧𝐞&nbsp; 𝐒𝐧𝐚𝐤𝐞&nbsp; 𝐆𝐚𝐦𝐞&nbsp;&nbsp;🕹️
+                </div>
+              </div>
+                                        
+                       
+                      {
+                        suggestedUsers && suggestedUsers.length !== 0 && 
+                        <PostSuggestedUsers suggestedUsers={suggestedUsers}  />
+                      }
               {
-                (postLoading && loaderSuggested) ? 
+                postLoading ? 
                 <>
                   <SkeltonPost />
                   <SkeltonPost />
@@ -454,15 +482,8 @@ const Home = ({ dataAds, isFetchingUser, dataUserCurrent, ResponseRequest, rende
                 </>
                 :
                 <>
-                {
-                (allPosts && allPosts.length <= 3) &&    
-                <>
-                  {
-                     suggestedUsers && suggestedUsers.length !== 0 && 
-                    <PostSuggestedUsers suggestedUsers={suggestedUsers}  />
-                  }
-                </>
-              }
+                
+              
                 {
                   allPosts && <>
                     {
@@ -473,28 +494,8 @@ const Home = ({ dataAds, isFetchingUser, dataUserCurrent, ResponseRequest, rende
                       </span>
                       :
                       <>
-                      {
-                                      !loaderAnnonce && 
-                                      <div class="zuoefuoqeofyoqeo">
-                                          <div class="background"></div>
-                                          <div class="content">
-                                          {
-                                            annonce && 
-                                            annonce.annoucementX.split('\n').map((line, index) => (
-                                              <>
-                                              {line}
-                                              <br />
-                                              </>
-                                            ))
-                                          }
-                                          </div>
-                                      </div>
-                                        
-                      }
-                      {
-                        suggestedUsers && suggestedUsers.length !== 0 && 
-                        <PostSuggestedUsers suggestedUsers={suggestedUsers}  />
-                      }
+                      
+                      
                         {
                           allPosts.map((post, index)=>{
                             if(index === 0 && allPosts.length > 3){

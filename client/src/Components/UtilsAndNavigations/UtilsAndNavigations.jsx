@@ -87,7 +87,7 @@ const UtilsAndNavigations = ({isCreatedPageCLicked, isFetchingUser, dataUserCurr
       
       <div className="rowX rowXNoHover">
          <div className="connectedBull" />
-        <span style={{ color : "limegreen", fontWeight : '500'}} >Members Online&nbsp;&nbsp;:&nbsp;&nbsp;{onlineUsers && socket  && `${onlineUsers }`}{allUsersLenght && <>&nbsp;/&nbsp;{allUsersLenght}</>}</span>
+        <span style={{ color : "limegreen", fontWeight : '500'}} >Members Online&nbsp;&nbsp;:&nbsp;&nbsp;{socket && onlineUsers  && `${onlineUsers }`}{allUsersLenght && <>&nbsp;/&nbsp;{allUsersLenght}</>}</span>
       </div>
 
 

@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Press+Start+2P&display=swap');
+
+
+.pageSnakeGame{
+
+    height: 100vh;
+    width: 100%;
+}
+
+
+.sfvuuosdv{
+    visibility: hidden;
+    opacity: 0;
+    transition: 1s all ease-in-out;
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    height: 100vh;
+    inset: 0;
+    display: flex;
+}
+.showsfvuuosdv{
+    visibility: visible;
+    opacity : 1;
+}
+.caseuozfo{
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-image: url("./oh.png");
+}
+.caseuozfocaseuozfo{
+    background-size: cover;
+    background-image: url("./oh.png");
+    background-repeat: no-repeat;
+    transform: scaleX(-1);
+    display: flex;
+    align-items: center;
+}
+.zusefud{
+    position: absolute;
+    height: 550px;
+    width: 500px;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 11;
+    transition: 1s all ease-in-out;
+    right: -250px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 1.6rem;
+    box-shadow: 0 0 300px rgba(6, 6, 6, 0.952);
+    backdrop-filter: blur(6.6px);
+    -webkit-backdrop-filter: blur(7.6px);
+    padding: 2rem 1.5rem;
+}
+.showzusefud{
+    visibility: visible;
+    opacity: 1;
+}
+.zusefud h1{
+    font-family: "Press Start 2P", system-ui;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: rgb(0, 0, 0);
+    text-align: center;
+}
+
+.zusefud h1 span{
+    font-size: 1.9rem;
+}
+
+.contBik{
+    width: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+.contBik button{
+    height: 40px;
+    width: 48%;
+    border-radius: 5rem;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: 0.3s all ease-in-out;
+}
+.contBik button:first-child{
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+
+.contBik button:last-child{
+    background-color: rgb(204, 0, 255);
+    color: rgb(0, 0, 0);
+    border: 3px solid black;
+}
+
+.zuisdfwhi{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.zuisdfwhi .fa-star{
+    color: rgb(255, 238, 0);
+}
+
+.participants{
+    height: 210px;
+    width: 340px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+.rowPpp{
+    height: 70px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding-right: 2rem;
+}
+.uosuodfuofduo{
+    position: absolute;
+    right: -3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    width: 70px;
+    font-size: 1.6rem;
+}
+.caseiooui{
+    height: 100%;
+    width: auto;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: black;
+}
+.caseiooui img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 0.8rem;
+}
+
+.uzrfuozfuozuof{
+    font-size: 1.2rem;
+    font-weight:900;
+}
+
+.pageSnakeGame .addZIndex{
+    z-index: 9999;
+    background-color: #18191a;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.zuifuidq{
+    margin-bottom: 1.67rem;
+    background-color: #242526;
+    border-radius: 0rem;
+    outline: 4px solid #3a3b3c;
+    border-radius: 0.3rem;
+    position: relative;
+}
+
+.uiqduqduf{
+    color: #e4e6eb;
+    font-size: 2rem;
+    font-weight: 800;
+    position: relative;
+}
+.uiqduqduf span{
+    font-size: 2rem;
+    color: #e4e6eb;
+}
+.Gameover{
+    position: absolute;
+    color: red;
+    top: 240px;
+    font-size: 3.1rem;
+    width: 300px;
+    text-align: center;
+    right: -64px;
+    z-index: 999999;    
+}
+
+.showzuifuidqblack{
+    background-color: black;
+}

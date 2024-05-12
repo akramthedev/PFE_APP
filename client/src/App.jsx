@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './App.css';
 import axios from 'axios';
 import UpgradeYourPlan from "./Pages/AdserPanel/UpgradeYourPlan";
+import SnakeGame from './Pages/SnakeGame/SnakeGame';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import Successfull from './Pages/AdserPanel/Successfull';
@@ -310,6 +311,13 @@ function App() {
             path='*' 
             element={
               <Navigate to="/" />
+            } 
+          />
+
+          <Route  
+            path='/snake-game' 
+            element={
+              <SnakeGame/>
             } 
           />
           

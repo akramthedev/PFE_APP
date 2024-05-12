@@ -180,16 +180,28 @@
     background-repeat: no-repeat;
     background-size: cover;
     z-index: 1;
-    filter: brightness(35%);
+    filter: brightness(50%);
     background-position: center;
+    cursor: pointer;
+    transition: .2s all ease-in-out;
+}
+.zuoefuoqeofyoqeo .background:hover{
+    filter: brightness(30%);
 }
 
+.zuoefuoqeofyoqeo:hover .background{
+    filter: brightness(30%);
+
+}
 .zuoefuoqeofyoqeo .content {
     position: relative;
     color: rgb(255, 255, 255);
     line-height: 19px;
     z-index: 2;
-    font-size: 17px;
+    font-size: 20px;
+    cursor: pointer;
     font-weight: 500;
+    width: 300px;
+    margin: 0 auto;
 }
 

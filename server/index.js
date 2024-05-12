@@ -2,7 +2,6 @@ const authRoutes        =  require('./Routes/authRoutes');
 const annoucement       =  require('./Models/annoucement');
 const posts             =  require('./Models/posts');
 const ads               =  require('./Models/ads');
-const statusMonitor     =  require('express-status-monitor');
 const userRoutes        =  require('./Routes/userRoutes');
 const notifsRoutes      =  require('./Routes/notifRoutes');
 const postsRoutes       =  require('./Routes/postRoutes');
@@ -27,7 +26,6 @@ require('dotenv').config();
 
 const app = express();
 app.set('trust proxy', true); 
-app.use(statusMonitor());
 app.use(express.json());
 app.use(cors());
 const server = http.createServer(app);
