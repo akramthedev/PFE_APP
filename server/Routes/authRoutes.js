@@ -28,12 +28,11 @@ router.post('/register', async (req, res)=>{
                 email, 
                 password : hashedPassword, 
                 otp : randomNumber.toString(), 
-                isVerified : false
+                isVerified : true
             });
+            const token = jwt.sign({ _id: isCreated._id }, process.env.TOKEN_PASS, { expiresIn: "4d" });
             if(isCreated){
-                await sendEmail(email, randomNumber);
-                res.status(200).send(isCreated._id);
-
+                res.status(200).send({id : isCreated._id, token : token});
             }
             else{
                 res.status(202).send('Oops, something went wrong!');

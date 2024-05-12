@@ -4,8 +4,7 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import LoaderSpin from '../../Assets/spinwhite.svg';
 import Status from '../../Components/Status/Status';
-import OpenerMp3 from '../../MP3Sounds/openingAuth.wav'
-
+import Confetti from 'react-confetti';
 
 
 const Auth = () => {
@@ -13,7 +12,7 @@ const Auth = () => {
   const navigate = useNavigate();
   const Xplorium = "https://res.cloudinary.com/dqprleeyt/image/upload/v1712318887/and_parkle___3_-removebg-preview_lyfila.png";
   const [isRendered, setisRendered] = useState(false);
-  
+  const [showConfetti, setShowConfetti] = useState(false);
   const [isAudioReady, setIsAudioReady] = useState(false);
   const [fullName, setfullName] = useState("");
   const [email, setEmail] = useState("");
@@ -43,6 +42,7 @@ const Auth = () => {
           localStorage.setItem('token', resp.data.token);
           localStorage.setItem('idUser', resp.data._id);
           localStorage.setItem('firstConnection', "yes");
+          
           navigate(0);
         }
         else if(resp.status === 237){
@@ -77,11 +77,12 @@ const Auth = () => {
             description4 : "Best regards,",
             description5 : "Xplorium Team",
             type : "Welcoming", 
-            idNotifSentTo : resp.data,
+            idNotifSentTo : resp.data.id,
           };
           await axios.post('http://localhost:3001/notif/create', dataNotif)
-          localStorage.setItem('idUser', resp.data);
-          navigate("/auth/verify-email");
+          localStorage.setItem('idUser', resp.data.id);
+          localStorage.setItem('token', resp.data.token);
+          navigate('/entrance-point-initial-access')
         }
         else {
           seterror({
@@ -109,7 +110,7 @@ const Auth = () => {
 
         const timeoutId = setTimeout(() => {
             setisRendered(true);
-        }, 666);
+        }, 266);
 
         return () => clearTimeout(timeoutId);
     }, []);
@@ -117,17 +118,17 @@ const Auth = () => {
 
   return (
     <div id="x" className='Auth'>
-
-      <img 
-        src={Xplorium}
-        alt="Xplorium"
-        className={isRendered ? "Xplorium showXplorium" : "Xplorium"}
-      />
+      {showConfetti && <Confetti />}
+      
       <form
         onSubmit={handleSubmit}
         className={alreadyAccount ? "formLR" : "formLR extendsForm"}
       >
-
+        <img 
+          src="https://res.cloudinary.com/dqprleeyt/image/upload/v1712276227/and_parkle___2_-removebg-preview_b0dfnq.png"
+          alt="Xplorium"
+          className={isRendered ? "Xplorium showXplorium cuozrf" : "Xplorium cuozrf"}
+        />
         {/*<div className="rowZero" />*/}
         <div className="rowOne">
           <h1>
@@ -199,6 +200,13 @@ const Auth = () => {
 
 
         </button>
+        <p className='zjfd zjfdzjfd'>
+         {
+          alreadyAccount ? <>By login in you accept our <a href="/privacypolicy">privacy policy</a> and <a href="/termsofuse">Term Of Use</a></> 
+          :
+          <>By Creating an account you accept our <a href="/privacypolicy">privacy policy</a> and <a href="/termsofuse">Term Of Use</a></> 
+        }
+        </p>
         <p className='zjfd'>
           {
             !alreadyAccount ? 
@@ -206,6 +214,7 @@ const Auth = () => {
             <>No Account?&nbsp;&nbsp;<span onClick={()=>{setalreadyAccount(!alreadyAccount);seterror({status : null, isEnabled : false});setEmail("");setPassword("");}} className="linkSpan">Create one </span></>
           }
         </p>
+        
      
         <Status
           alreadyAccount={alreadyAccount}
@@ -213,7 +222,6 @@ const Auth = () => {
           isEnabled={error.isEnabled}
         />
         <br />
-
       </form>
 
      

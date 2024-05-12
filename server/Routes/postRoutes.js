@@ -336,48 +336,38 @@ router.get('/likeProcess/:idPost',verifyToken,async(req, res)=>{
 
 router.get('/', verifyToken, async (req, res) => {
     try {
-        const areFound = await posts.find({
-            isPagePost: false
-        }).sort({createdAt: -1 });
-
         const idUser = req.user._id;
-        const allPosts = [];
 
-        const isFoundUser = await users.findById(idUser);
+        // Récupérer les pages suivies par l'utilisateur
+        const user = await users.findById(idUser).select('pages');
 
-        if (areFound && isFoundUser) {
-
-            allPosts.push(...areFound);
-            
-            if (isFoundUser.pages.length !== 0) {
-                // Fetch all posts of the pages followed by the user
-                for (let i = 0; i < isFoundUser.pages.length; i++) {
-                    const postsOfThisPage = await posts.find({
-                        isPagePost: true,
-                        creator: isFoundUser.pages[i]
-                    }).sort({ createdAt: -1 });
-                    if (postsOfThisPage.length > 0) {
-                        allPosts.push(...postsOfThisPage);
-                    }
-                }
-            }
-            
-            allPosts.sort((a, b) => b.createdAt - a.createdAt);
-            
-            res.status(200).send(allPosts);
-        } else {
-            res.status(404).send('Posts not found...');
+        if (!user) {
+            return res.status(404).send('User not found');
         }
 
-    } catch (e) {
-        res.status(500).send(e.message);
+        // Créer un tableau des IDs de pages suivies
+        const pageIds = user.pages.map(page => page._id);
+
+        // Requête unique pour récupérer tous les posts
+        const allPosts = await posts.find({
+            $or: [
+                { isPagePost: false }, // Posts de l'utilisateur
+                { isPagePost: true, creator: { $in: pageIds } } // Posts des pages suivies
+            ]
+        }).sort({ createdAt: -1 });
+
+        if (allPosts.length === 0) {
+            return res.status(404).send('Posts not found');
+        }
+
+        res.status(200).send(allPosts);
+    } catch (error) {
+        res.status(500).send(error.message);
     }
 });
 
 
-
-
-
+ 
 
 
 router.post('/addComment' ,async(req, res)=>{

@@ -7,7 +7,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #18191a;
+    background-image: url("./back.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .Auth .formLR{
@@ -17,9 +19,11 @@
     min-height: 260px;
     overflow: hidden;
     transition: 0.33s all ease-in-out;
-    width: 510px;
+    width: 420px;
     margin-top:1rem;
-    background-color: #18191a;
+    backdrop-filter: blur(3px) saturate(200%);
+    -webkit-backdrop-filter: blur(3px) saturate(200%);
+    background-color: rgba(255, 255, 255, 0.3);    
     justify-content: center;
     border-radius: 0.77rem;
 }
@@ -39,7 +43,7 @@
     font-weight: 800;
     margin-bottom: .7rem;
     font-size: 1.3rem !important;
-    color: #e4e6eb;
+    color: #000000;
     transition: .3s all ease-in-out;
 }
 .rowOne p{
@@ -57,13 +61,14 @@
     border: none;
     border-radius: 0.2rem;
     outline: none;
-    background-color:#292a2b ;
-    color: #e4e6eb;
+    background-color:#ffffff ;
+    color: #000000;
     margin-bottom: 0.5rem;
     padding: 0 1rem;
     text-align: left;
     border: none !important;
     font-size: 15px;
+    font-weight: 500;
     padding-left: 1rem;
 }
 .formLR input::placeholder{
@@ -90,7 +95,7 @@
 .formLR .btnSubmitAuth{
     height: 38px;
     width: 290px;
-    border: 1px solid #8C52FF;
+    border: 1px solid #000000;
     border-radius: 0.2rem;
     outline: none;
     margin-top: .777rem;
@@ -98,31 +103,31 @@
     position: relative;
     font-weight: 500;
     font-size: 15px;
-    background-color: #8C52FF;
+    background-color: #000000;
     color: white;
     cursor: pointer;
     transition: .2s all ease-in-out;
-    margin-bottom: 1.67rem;
+    margin-bottom:3rem;
 }
 .formLR .btnSubmitAuth:hover{
-    background-color: #7d3efc;
+    background-color: #171717;
     color: white;
 }
 .formLR .zjfd{
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 600;
     cursor: default;
-    color: #d6d9e0 !important;
+    color: black !important;
 }
 .formLR .zjfd .linkSpan{
-    color: #b5b8bf !important;
+    color: #000000 !important;
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 600;
     text-decoration: underline;
     cursor: pointer;
 }
 .formLR .zjfd .linkSpan:hover{
-    color: #83858b !important;
+    color: #000000 !important;
 }
 
 .Auth .extendsForm {
@@ -167,7 +172,7 @@
 }
 
 .Auth .Xplorium{
-    height: 45px;
+    height: 50px;
     width: auto;
     object-fit: cover;
     visibility: hidden;
@@ -207,7 +212,97 @@
 }
 .AccountBlocked span .zhiqd{
     text-decoration: underline;
-    color: #d6d9e0;
+    color: black;
     font-weight: 500;
     
+}
+.Auth .formLR .cuozrf{
+    margin-top: 3rem !important;
+}
+
+.zjfdzjfd{
+    text-align: center;
+    width: 300px;
+    margin: 0 auto;
+    margin-bottom: .777rem;
+}
+
+.zjfdzjfd a{
+    color: rgb(98, 0, 255);
+    font-weight: 700;
+}
+
+
+
+.typewriter {
+    display: inline-block;
+    overflow: hidden;
+    border-right: 0.08em solid orange; 
+  }
+  
+  .cursor {
+    display: inline-block;
+    width: 0.2em;
+    height: 2rem;
+    background-color: rgb(128, 0, 255);
+    animation: blink 1s infinite;
+  }
+  
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+
+
+.EPIA{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+}
+
+.divContainer{
+    width: auto;
+    height: auto;
+    display: flex;
+}
+
+.divContainer .textOn{
+    font-size: 2rem;
+    font-family: "Merriweather", serif; 
+    font-weight: 700;
+}
+
+.completionButton{
+    width: 290px;
+    font-size: 1.5rem;
+    font-family: "Merriweather", serif; 
+    font-weight: 700;
+    height: 60px;
+    outline: none;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: .24s all ease-in-out;
+    background-color: rgb(235, 235, 235);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding-left: 3.5rem;
+}
+.completionButton:hover{
+    background-color: rgb(215, 215, 215);
+
+}
+.completionButton i{
+    position: absolute;
+    right: 5.5rem;
+    transition: 0.4s all ease-in-out;
+}
+.completionButton:hover i{
+    right: 3rem;
 }

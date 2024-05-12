@@ -27,8 +27,8 @@ import Cloudinary from './Pages/Cloudinary';
 import TermsOfUse  from "./Pages/PrivacyPolicy/TermsOfUse";
 import ContentPolicy  from "./Pages/PrivacyPolicy/ContentPolicy";
 import PrivacyPolicy from "./Pages/PrivacyPolicy/PrivacyPolicy";
-
-
+import Initialaccessentrancepoint from './Pages/Auth/Initial-access-entrance-point';
+import { TimerProvider } from './Components/TimeTracker';
 
 
 
@@ -83,11 +83,7 @@ function App() {
   const fetchAds = async ()=>{
     if(token && idUser){
       try{
-        const resp = await axios.get(`http://localhost:3001/ads/fetchSomeAds/${idUser}`, {
-          headers : {
-            Authorization : `Bearer ${token}`
-          }
-        });
+        const resp = await axios.get(`http://localhost:3001/fetchSomeAds/${idUser}`);
         if(resp.status === 200){
           console.log(resp.data);
           setdataAds(resp.data);    
@@ -119,7 +115,9 @@ function App() {
   }, []);
 
   return (
-      <BrowserRouter>
+    <TimerProvider>
+
+<BrowserRouter>
         <Routes> 
           
 
@@ -300,6 +298,13 @@ function App() {
             } 
           />
 
+          <Route  
+            path='/entrance-point-initial-access' 
+            element={
+              <Initialaccessentrancepoint/>
+            } 
+          />
+
 
           <Route  
             path='*' 
@@ -308,9 +313,13 @@ function App() {
             } 
           />
           
+
         </Routes>
       </BrowserRouter>
+      </TimerProvider>
+
   );
+
 }
 
 export default App;

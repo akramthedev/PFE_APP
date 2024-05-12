@@ -1,4 +1,5 @@
 import React, { useState,useRef, useEffect } from 'react';
+import Confetti from 'react-confetti';
 import { useParams, useNavigate} from 'react-router-dom';
 import './index.css';
 import '../Home/Home.css';
@@ -49,15 +50,12 @@ const Profile = ({ dataAds,dataUserCurrent, isFetchingUser, fetchCurrentUser }) 
   const [IsModifyAboutClicked,setIsModifyAboutClicked] = useState(false);
   const [loaderUpdating,setloaderUpdating] = useState(false);
   const [loaderUpdating2,setloaderUpdating2] = useState(false);
-
-  
+  const [showConfetti, setShowConfetti] = useState(false);
   const [isBClicked,setisBClicked] = useState(false);
   const [TheOnesWhoHaveBirthday,setTheOnesWhoHaveBirthday] = useState(null);
   const refref = useRef(null); 
   useOutsideAlerter(refref, setisBClicked);
-
   const navigate = useNavigate();
-
   const [modFullname, setModFullname] = useState("");
   const [modPictureProfile, setModPictureProfile] = useState("");
   const [modCoverPicture, setModCoverPicture] = useState("");
@@ -69,13 +67,9 @@ const Profile = ({ dataAds,dataUserCurrent, isFetchingUser, fetchCurrentUser }) 
   const [modWebsite, setmodWebsite] = useState("");
   const [ThePostCreated, setThePostCreated] = useState(null);
   const [PostCreated, setPostCreated] = useState(null);
-   
-
   useOutsideAlerter(popUpRef, setpopUp);
   useOutsideAlerter(popUpRef2, setIsModifyProfileClicked);
   useOutsideAlerter(popUpRef3, setIsModifyAboutClicked);
-
-
 
   useEffect(()=>{
     if(PostCreated !== null && ThePostCreated !== null){
@@ -316,6 +310,11 @@ const Profile = ({ dataAds,dataUserCurrent, isFetchingUser, fetchCurrentUser }) 
               sentTo : currentId, 
               type : "twoPeople"
             });
+            setShowConfetti(true);
+            // Optionally, reset the state after a certain duration
+            setTimeout(() => {
+              setShowConfetti(false);
+            }, 5000);
             fetchCurrentUser();
           }
           else{
@@ -454,6 +453,12 @@ const Profile = ({ dataAds,dataUserCurrent, isFetchingUser, fetchCurrentUser }) 
           }
           setmodphoneNumber(resp.data.phoneNumber);
           setmodWebsite(resp.data.portfolio);
+          setShowConfetti(true);
+
+    // Optionally, reset the state after a certain duration
+    setTimeout(() => {
+      setShowConfetti(false);
+    }, 5000);
           fetchCurrentUser();
         }
         else{
@@ -479,6 +484,8 @@ const Profile = ({ dataAds,dataUserCurrent, isFetchingUser, fetchCurrentUser }) 
 
   return (
     <div className='Home Profile'>
+            {showConfetti && <Confetti />}
+
       <Navbar isFetchingUser={isFetchingUser} dataUserCurrent={dataUserCurrent} />
       
           <div className={isBClicked ? "isBClicked showisBClicked" : "isBClicked"}>

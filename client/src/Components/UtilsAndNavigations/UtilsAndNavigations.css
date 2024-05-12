@@ -206,3 +206,39 @@
     scrollbar-width: thin; /* thin, auto, or none */
   }
   
+
+  .UISFEUIFQFUOD{
+    width: 40px;
+    height: 33px;
+    outline: none;
+    border-radius: 0.25rem;
+    border: none;
+    text-align: center;
+}
+.uçzsdfusdq{
+    width: 40px;
+    outline: none;
+    border: none;
+    height: 33px;
+    background-color: rgb(251, 173, 173);
+    color: rgb(220, 0, 0);
+    border-radius: 0.25rem;
+    font-size: 1.3rem;
+    cursor: not-allowed;
+}
+
+.rowXrowXrowX:hover{
+    background-color: transparent !important;
+    cursor: default;
+}
+.uçzsdfusdquçzsdfusdq{
+    width: 40px;
+    outline: none;
+    border: none;
+    height: 33px;
+    background-color: rgb(39, 142, 11);
+    color: rgb(255, 255, 255);
+    border-radius: 0.25rem;
+    font-size: 1.3rem;
+    cursor: pointer;
+}

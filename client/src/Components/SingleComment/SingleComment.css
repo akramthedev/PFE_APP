@@ -23,16 +23,19 @@
     font-size: 14px;
 }
 .hiqdkc span{
-    color: gainsboro;
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    font-weight: 600;
 }
 .qodfsfdw{
     width: 90%;
-    background-color: lmegreen;
     font-size: 14px;
-    min-height: 10px;
+    min-height: 30px;
     padding-left: 1rem;
     margin-left:.6rem;
     color: gainsboro;
     border-left: 1px solid #686868;
-    border-bottom: 1px solid #686868;
+}
+.qodfsfdw{
+    color: rgb(171, 171, 171) !important;
 }

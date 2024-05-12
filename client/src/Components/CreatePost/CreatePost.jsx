@@ -1,12 +1,10 @@
 import React, {useRef, useState} from 'react'
 import './index.css';
-
-
+import Confetti from 'react-confetti';
 import Camera from './c.png';
 import Picture from './i.png';
 import Feeling from './f.png';
 import Spin from '../../Assets/spinwhite.svg'
-
 import ClickOutsider from '../../Helpers/HidePopUp';
 import axios from 'axios';
 
@@ -14,7 +12,7 @@ import axios from 'axios';
 
 const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFetchingUser, dataUserCurrent, reRenderParentCompo}) => {
   
-
+  const [showConfetti, setShowConfetti] = useState(false);
     const idUser = localStorage.getItem('idUser');
     const token = localStorage.getItem('token');
     const popUpCP = useRef(null);
@@ -85,6 +83,12 @@ const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFe
                   setPostCreated(!PostCreated);
                   setisCreateClicked(false);
                   settextArea("");
+                  setShowConfetti(true);
+
+    // Optionally, reset the state after a certain duration
+    setTimeout(() => {
+      setShowConfetti(false);
+    }, 5000);
                 }
                 else{
                   setisSubmitClicked(false);
@@ -111,6 +115,12 @@ const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFe
                 setPostCreated(!PostCreated);
                 setisCreateClicked(false);
                 settextArea("");
+                setShowConfetti(true);
+
+    // Optionally, reset the state after a certain duration
+    setTimeout(() => {
+      setShowConfetti(false);
+    }, 5000);
               }
               else{
                 setisSubmitClicked(false);
@@ -129,6 +139,7 @@ const CreatePost = ({setThePostCreated,PostCreated,setPostCreated,ajusting, isFe
 
   return (
     <>
+      {showConfetti && <Confetti />}
 
       <div className={isSubmitClicked ? "zqerufusqf showzqerufusqf" : "zqerufusqf"}>
         <span>

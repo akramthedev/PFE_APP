@@ -5,10 +5,12 @@ import {useNavigate, useLocation} from 'react-router-dom';
 import useOutsideAlerter  from '../../Helpers/HidePopUp';
 import { useSocket } from '../../Helpers/SocketContext';
 import axios from 'axios';
+import { useTimer } from '../TimeTracker';
+
 
 
 const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
-
+    const { timeToDisconnect } = useTimer();
     const navigate = useNavigate();
     const popupRef = useRef(null);  
     const popupRef2 = useRef(null);  
@@ -106,7 +108,9 @@ const Navbar = ({ dataUserCurrent, isFetchingUser}) => {
         },100);
     }
 
-
+    if(timeToDisconnect){
+        navigate(0);
+    }
     
 
 

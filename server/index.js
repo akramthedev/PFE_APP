@@ -1,5 +1,8 @@
 const authRoutes        =  require('./Routes/authRoutes');
 const annoucement       =  require('./Models/annoucement');
+const posts             =  require('./Models/posts');
+const ads               =  require('./Models/ads');
+const statusMonitor     =  require('express-status-monitor');
 const userRoutes        =  require('./Routes/userRoutes');
 const notifsRoutes      =  require('./Routes/notifRoutes');
 const postsRoutes       =  require('./Routes/postRoutes');
@@ -23,7 +26,8 @@ const { Server }        =  require('socket.io');
 require('dotenv').config();
 
 const app = express();
-app.set('trust proxy', true);   
+app.set('trust proxy', true); 
+app.use(statusMonitor());
 app.use(express.json());
 app.use(cors());
 const server = http.createServer(app);
@@ -152,3 +156,56 @@ io.on('connect', (socket)=>{
     
     
 });
+
+
+
+
+
+app.get('/fetchSomeAds/:idUser', async (req, res) => {
+    try {
+        const { idUser } = req.params;
+
+        // Find all posts where the user interacted
+        const allPostsWhereTheUserInteracted = await posts.find({
+            $or: [
+                { likes: idUser },
+                { "comments.commentator": idUser }
+            ]
+        });
+
+        // Extract unique topics from the user's interactions
+        const topicsUserMayLike = new Set();
+        allPostsWhereTheUserInteracted.forEach(post => {
+            post.topic.forEach(topic => {
+                topicsUserMayLike.add(topic.category.trim());
+            });
+        });
+
+        // Find relevant ads based on extracted topics
+        const relevantAds = await ads.find({
+            topic: { $elemMatch: { category: { $in: [...topicsUserMayLike] } } },
+            adser: { $ne: idUser }
+        });
+
+        // If no relevant ads found, fallback to random ads
+        if (relevantAds.length === 0) {
+            // If no relevant ads found, fallback to fetching 2 random ads
+            const randomAds = await ads.find({ adser: { $ne: idUser } }).limit(2);
+            return res.status(200).send(randomAds);
+        } else if (relevantAds.length === 1) {
+            // If only one relevant ad found, fetch one more random ad to make it 2
+            const randomAd = await ads.findOne({ adser: { $ne: idUser } });
+            const limitedRelevantAds = [...relevantAds, randomAd];
+            return res.status(200).send(limitedRelevantAds);
+        } else {
+            // Return relevant ads, limited to 2 if more than 2 found
+            const limitedRelevantAds = relevantAds.slice(0, 2);
+            return res.status(200).send(limitedRelevantAds);
+        }
+        
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+
